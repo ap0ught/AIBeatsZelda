@@ -1,0 +1,124 @@
+[
+ {
+  "title": "day 1: 500 frames under the sword",
+  "video": "video/milestone1_overlay.mp4",
+  "start": 5,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ },
+ {
+  "title": "day 1: the emulator ran on its own",
+  "dur": 60,
+  "head": "journal 8",
+  "text": [
+   "same bookmark, same inputs, different result. impossible in a deterministic emulator.",
+   "Python had stepped 1690 times; the game was at frame 1987.",
+   "Three hundred frames had happened that nobody asked for."
+  ]
+ },
+ {
+  "title": "day 1: the five-Darknut room, again",
+  "video": "video/seg_5b_darknuts.mkv",
+  "start": 600,
+  "dur": 60,
+  "crop": null
+ },
+ {
+  "title": "day 1: the detector that could not see",
+  "video": "video/det_c.mkv",
+  "start": 0,
+  "dur": 60,
+  "crop": null
+ },
+ {
+  "title": "day 6: 15 s attacking a buried Leever",
+  "video": "video/second_run_2026-09-16/fullgame_run_overlay.mp4",
+  "start": 616,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ },
+ {
+  "title": "day 6: 30 s in a dark room (should be 5)",
+  "video": "video/second_run_2026-09-16/fullgame_run_overlay.mp4",
+  "start": 752,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ },
+ {
+  "title": "day 3: the raft that hadn't landed",
+  "video": "video/raft_chain.mkv",
+  "start": 10,
+  "dur": 60,
+  "crop": null
+ },
+ {
+  "title": "day 5: Level 9 with zero bombs",
+  "video": "video/first_run_2026-09-15/fullgame_run_overlay.mp4",
+  "start": 4995,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ },
+ {
+  "title": "day 5: ten minutes farming Wizzrobes",
+  "video": "video/first_run_2026-09-15/fullgame_run_overlay.mp4",
+  "start": 2020,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ },
+ {
+  "title": "day 6: the run that died at frame 1213",
+  "video": "video/fullgame_run_partial_died_1213.mkv",
+  "start": 8,
+  "dur": 60,
+  "crop": null
+ },
+ {
+  "title": "day 6: four ways to break your own run",
+  "dur": 60,
+  "head": "journal 36",
+  "text": [
+   "Reached Level 4, then five hours stuck. Every blocker was mine:",
+   "1. the optimisation that cost a heart per room",
+   "2. at one heart, the planner stops playing",
+   "3. the policy that trades damage for frames",
+   "4. killing a run badly starts a second one"
+  ]
+ },
+ {
+  "title": "day 11: the sword that went sideways",
+  "video": "video/fourth_run_2026-09-19/zelda_ai_run4_39m15s_overlay.mp4",
+  "start": 985,
+  "dur": 60,
+  "crop": [
+   768,
+   672,
+   0,
+   24
+  ]
+ }
+]

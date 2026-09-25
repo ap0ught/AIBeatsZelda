@@ -1,0 +1,58 @@
+
+=== LEVEL 1: 17 rooms, start 73, boss 35, Triforce 36
+    item cellars: 22=bow   passages: 
+    model path (13 room entries, 1 bombs, 7 keys, 1 shutter rooms): 73 K>63 53 B>43 33 K>23 K>22 K>23 K>33 43 K>44 45 K>35 S>36
+    third run  (16 room entries, 7955 frames): 73 72 73 63 53 43 33 23 22 7F 22 23 33 43 44 45 35
+
+=== LEVEL 2: 18 rooms, start 7D, boss 0E, Triforce 0D
+    item cellars:    passages: 
+    model path (9 room entries, 0 bombs, 0 keys, 3 shutter rooms): 7D 6D 6E 5E 4E 3E 2E S>1E S>0E S>0D
+    third run  (10 room entries, 4256 frames): 7D 6D 6E 5E 4E 3E 3F 3E 2E 1E 0E
+
+=== LEVEL 3: 18 rooms, start 7C, boss 4D, Triforce 3D
+    item cellars:    passages: 
+    model path (7 room entries, 1 bombs, 1 keys, 1 shutter rooms): 7C 7B 6B 5B 4B K>4C B>4D S>3D
+    third run  (16 room entries, 7525 frames): 7C 7B 6B 5B 4B 4A 49 59 69 0F 69 59 49 4A 4B 4C 4D
+
+=== LEVEL 4: 20 rooms, start 71, boss 13, Triforce 03
+    item cellars: 32=ladder   passages: 
+    model path (13 room entries, 2 bombs, 2 keys, 3 shutter rooms): 71 61 51 50 40 30 K>31 S>32 31 K>21 B>11 B>12 S>13 S>03
+    third run  (20 room entries, 12518 frames): 71 70 71 61 51 50 40 30 31 32 60 32 31 30 20 10 00 01 02 12 13
+
+=== LEVEL 5: 23 rooms, start 76, boss 24, Triforce 14
+    item cellars: 05=recorder   passages: 64<->06
+    model path (18 room entries, 4 bombs, 4 keys, 2 shutter rooms): 76 66 B>65 B>64 ~>06 K>05 K>06 ~>64 B>65 B>66 S>56 57 47 37 27 K>26 25 K>24 S>14
+    third run  (21 room entries, 13719 frames): 76 66 65 64 07 06 05 04 05 06 07 64 65 66 56 57 47 37 27 26 25 24
+
+=== LEVEL 6: 25 rooms, start 79, boss 1C, Triforce 0C
+    item cellars: 09=wand   passages: 3A<->1D
+    model path (14 room entries, 1 bombs, 2 keys, 4 shutter rooms): 79 K>78 68 58 S>48 38 S>28 B>29 39 S>3A ~>1D 2D 2C K>1C S>0C
+    third run  (14 room entries, 8574 frames): 79 78 68 58 48 38 28 29 39 3A 08 1D 2D 2C 1C
+
+=== LEVEL 7: 33 rooms, start 79, boss 2A, Triforce 2B
+    item cellars: 1A=red candle   passages: 29<->0D
+    model path (16 room entries, 5 bombs, 3 keys, 3 shutter rooms): 79 69 B>59 49 S>39 38 K>28 18 K>19 B>1A B>1B K>1C S>0C B>0D ~>29 B>2A S>2B
+    third run  (18 room entries, 10843 frames): 79 69 59 49 39 38 28 18 19 1A 4A 1A 1B 1C 0C 0D 7B 29 2A
+
+=== LEVEL 8: 25 rooms, start 7E, boss 3C, Triforce 2C
+    item cellars: 1F=magic key, 7C=book   passages: 4C<->3F
+    model path (8 room entries, 2 bombs, 1 keys, 3 shutter rooms): 7E 6E B>5E S>4E K>3E S>3F ~>4C B>3C S>2C
+    third run  (12 room entries, 9155 frames): 7E 7F 7E 6E 5E 5D 5E 4E 3E 3F 2F 4C 3C
+
+=== LEVEL 9: 57 rooms, start 76, boss 42, Triforce 32
+    item cellars: 07=red ring, 10=silver arrows   passages: 14<->55, 63<->05, 71<->74, 20<->61, 30<->04, 52<->03
+    model path (24 room entries, 6 bombs, 3 keys, 3 shutter rooms): 76 66 S>56 B>55 ~>14 K>15 16 K>06 B>05 ~>63 K>62 61 ~>20 B>10 B>20 ~>61 51 41 31 B>30 ~>04 B>03 ~>52 S>42 S>32
+    third run  (32 room entries, 22417 frames): 76 66 56 55 60 14 15 16 06 05 70 63 62 61 75 20 10 4F 10 20 75 61 51 41 31 30 67 04 03 77 52 42 32
+
+NOTES (2026-09-19, read with journal 41)
+* Level 3's raft cellar (room 0F under 69) is NOT in the level block's cellar array (all FF) - the tool does not see
+  it; Level 3's path is forced anyway: 7C 7B 6B 5B 4B 4A 49 59 69(raft) and back, 4C, 4D, 3D.
+* Locked doors are counted each way by the model; a door unlocked once stays open. The tool does not plan keys.
+* LEVEL 4 is the big one: after the ladder, 31 -N(locked)-> 21 -N(bomb)-> 11(dark) -E(bomb)-> 12 -> 13 replaces
+  31 -> 30 -> 20 -> 10 -> 00 -> 01 -> 02 -> 12 (3,626 frames in the third run incl. a fight, an old man's 150-frame
+  speech and the ladder room). Same key count on exit (1). Needs TWO bombs; the third run had one. ~2,000 frames.
+* LEVEL 2: the third run's 3E -> 3F -> 3E detour fetched bombs. With planned bomb drops it goes.
+* LEVEL 8: the 7F and 5D key detours (819 + 639 frames) exist only to carry keys into Level 9; re-count keys for
+  the new dungeon order before keeping either.
+* LEVEL 7: with a bought candle the 1A cellar (4A) goes: ~2,400 frames (already in the route planner).
+* LEVELS 1, 5, 6, 9: the walked path IS the model's cheapest path. What is left there is fighting, not pathing.

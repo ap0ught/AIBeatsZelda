@@ -1,0 +1,31 @@
+    CMP #$20                    ; Fire damage type
+    BEQ L74D8_Exit
+    CMP #$08                    ; Bomb damage type
+    BEQ L74D8_Exit
+    JMP PlayParryTune
+
+HandleMonsterDied:
+    ; Handle the monster dying.
+    INC WorldKillCount
+
+    ; Increase the help drop counter, if not at max ($A).
+    LDA HelpDropCount
+    CMP #$0A
+    BCS @SetDyingMetastate
+    INC HelpDropCount
+
+    ; If the help drop counter has reached the max, and damage type = bomb (8);
+    ; then set [51] HelpDropValue in order to drop a bomb next time.
+    LDA HelpDropCount
+    CMP #$0A
+    BNE @SetDyingMetastate
+    LDA $09
+    CMP #$08
+    BNE @SetDyingMetastate
+    INC HelpDropValue
+
+@SetDyingMetastate:
+    ; Set the dying metastate, and reset some object info.
+    JSR UpdateDeadDummy
+    LDA #$00
+    STA ObjStunTimer, X

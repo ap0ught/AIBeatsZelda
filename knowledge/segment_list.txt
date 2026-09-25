@@ -1,0 +1,609 @@
+  0	start	start_policy, lambda emu, s: s.sword >= 1 and s.mode == 5 and s.level == 0, 8))
+  1	ow_76	(via cross()/helper)
+  2	ow_66	(via cross()/helper)
+  3	ow_65	(via cross()/helper)
+  4	ow_64	(via cross()/helper)
+  5	ow_63	(via cross()/helper)
+  6	ow_73	(via cross()/helper)
+  7	ow_74	(via cross()/helper)
+  8	enter_L3	lambda nav: enter_level_policy(nav, 3),
+  9	7c_left	(via cross()/helper)
+ 10	7b_key	(via cross()/helper)
+ 11	6b_up	(via cross()/helper)
+ 12	5b_bombs	(via cross()/helper)
+ 13	4b_left	(via cross()/helper)
+ 14	4a_bombs	(via cross()/helper)
+ 15	49_key	(via cross()/helper)
+ 16	59_fight	(via cross()/helper)
+ 17	69_stairs	lambda nav: make_lareach_policy(nav, Goal(208, 141, 6), exit_ok=True),
+ 18	cellar	cellar_policy,
+ 19	69_up	lambda nav: make_lareach_policy(nav, Goal(120, 77, 4), then_exit="Up"),
+ 20	59_up	(via cross()/helper)
+ 21	49_right	(via cross()/helper)
+ 22	4a_right	(via cross()/helper)
+ 23	4b_right	(via cross()/helper)
+ 24	4c_bomb	lambda nav: bomb_policy(nav, "Right", 0x4D),
+ 25	manhandla	manhandla_policy,
+ 26	L3_done	lambda nav: triforce_policy(nav, 0x04),
+ 27	warp_L3	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+ 28	ow1_73	(via cross()/helper)
+ 29	ow1_63	(via cross()/helper)
+ 30	ow1_64	(via cross()/helper)
+ 31	ow1_65	(via cross()/helper)
+ 32	ow1_66	(via cross()/helper)
+ 33	ow1_67	(via cross()/helper)
+ 34	ow1_68	(via cross()/helper)
+ 35	ow1_58	(via cross()/helper)
+ 36	ow1_48	(via cross()/helper)
+ 37	ow1_38	(via cross()/helper)
+ 38	ow1_37	(via cross()/helper)
+ 39	enter_L1	lambda nav: enter_level_policy(nav, 1),
+ 40	l1_72	lambda nav: make_cross_policy(nav, "Left"),   ok(0x72), 30))
+ 41	l1_72_key	lambda nav: make_clear_grab_policy(nav, "Right"), ok(0x73, keys=1), 60))
+ 42	l1_74	lambda nav: make_cross_policy(nav, "Right"),  ok(0x74), 30))
+ 43	l1_74_key	lambda nav: make_clear_grab_policy(nav, "Left"),  ok(0x73, keys=2), 60))
+ 44	l1_63	lambda nav: make_cross_policy(nav, "Up"),     ok(0x63), 40))
+ 45	l1_53	lambda nav: make_cross_policy(nav, "Up"),     ok(0x53), 40))
+ 46	l1_53_key	lambda nav: make_clear_grab_policy(nav, None),    cleared, 60))
+ 47	l1_52	lambda nav: make_cross_policy(nav, "Left"),   ok(0x52), 40))
+ 48	l1_42	lambda nav: make_cross_policy(nav, "Up"),     ok(0x42), 40))
+ 49	l1_43	lambda nav: make_cross_policy(nav, "Right"),  ok(0x43), 40))
+ 50	l1_33	lambda nav: make_cross_policy(nav, "Up"),     ok(0x33), 40))
+ 51	l1_33_key	lambda nav: make_grab_policy(nav, "Up"),      ok(0x23), 50))
+ 52	l1_23_key	lambda nav: make_clear_grab_policy(nav, None),    cleared, 40))
+ 53	l1_22	lambda nav: make_cross_policy(nav, "Left"),   ok(0x22), 40))
+ 54	l1_bow_st	clear_push_stairs_policy,                     lambda emu, s: s.hearts > 0 and s.mode == 9, 30))
+ 55	l1_bow	lambda nav: cellar_item_policy(nav, 0x65A),
+ 56	l1_b23	lambda nav: make_cross_policy(nav, "Right"),  ok(0x23), 30))
+ 57	l1_b33	lambda nav: make_cross_policy(nav, "Down"),   ok(0x33), 30))
+ 58	l1_b43	lambda nav: make_cross_policy(nav, "Down"),   ok(0x43), 30))
+ 59	l1_44	lambda nav: make_cross_policy(nav, "Right"),  ok(0x44), 40))
+ 60	l1_44_boom	lambda nav: make_clear_grab_policy(nav, "Right"), ok(0x45), 60))
+ 61	l1_45_key	lambda nav: make_clear_grab_policy(nav, "Up"),   ok(0x35), 60))
+ 62	aquamentus	lambda nav: make_lafight_policy(nav, None),
+ 63	L1_done	lambda nav: triforce_policy(nav, 0x01, "Right"),
+ 64	warp_L1	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+ 65	ws_38	(via cross()/helper)
+ 66	ws_28	(via cross()/helper)
+ 67	ws_29	(via cross()/helper)
+ 68	ws_2a	(via cross()/helper)
+ 69	ws_2b	(via cross()/helper)
+ 70	ws_2c	(via cross()/helper)
+ 71	ws_1c	(via cross()/helper)
+ 72	ws_1b	(via cross()/helper)
+ 73	ws_1a	(via cross()/helper)
+ 74	ws_0a	(via cross()/helper)
+ 75	white_sword	lambda nav: cave_item_policy(nav, 0x657),
+ 76	l4w00_1a	(via cross()/helper)
+ 77	l4w01_1b	(via cross()/helper)
+ 78	l4w02_1a	(via cross()/helper)
+ 79	l4w03_19	(via cross()/helper)
+ 80	l4w04_18	(via cross()/helper)
+ 81	l4w05_17	(via cross()/helper)
+ 82	l4w06_27	(via cross()/helper)
+ 83	l4w07_28	(via cross()/helper)
+ 84	l4w08_38	(via cross()/helper)
+ 85	l4w09_48	(via cross()/helper)
+ 86	l4w10_47	(via cross()/helper)
+ 87	l4w11_46	(via cross()/helper)
+ 88	l4w12_56	(via cross()/helper)
+ 89	l4w13_55	(via cross()/helper)
+ 90	l4_sail	dock_policy, lambda emu, s: s.room == 0x45 and s.mode == 5 and s.hearts > 0, 20))
+ 91	enter_L4	lambda nav: enter_level_policy(nav, 4),
+ 92	l4_70	lambda nav: make_cross_policy(nav, "Left"),        ok(0x70), 40))
+ 93	l4_70_key	lambda nav: make_clear_grab_policy(nav, "Right"),  ok(0x71, keys=1), 60))
+ 94	l4_61	lambda nav: make_cross_policy(nav, "Up"),          ok(0x61), 40))
+ 95	l4_51	lambda nav: make_cross_policy(nav, "Up"),          ok(0x51), 50))
+ 96	l4_51_key	lambda nav: make_clear_grab_policy(nav, "Left"),   ok(0x50, keys=2), 60))
+ 97	l4_40	lambda nav: make_cross_policy(nav, "Up"),          ok(0x40), 50))
+ 98	l4_40_key	lambda nav: make_clear_grab_policy(nav, "Up"),     ok(0x30, keys=3), 60))
+ 99	l4_31	lambda nav: make_cross_policy(nav, "Right"),       ok(0x31), 50))
+100	l4_32	lambda nav: make_clear_policy(nav, "Right"),       ok(0x32), 60))
+101	l4_lad_st	clear_push_stairs_policy,
+102	l4_ladder	lambda nav: cellar_item_policy(nav, ram.LADDER),
+103	l4_b31	lambda nav: make_cross_policy(nav, "Left"),        ok(0x31), 40))
+104	l4_b30	lambda nav: make_cross_policy(nav, "Left"),        ok(0x30), 40))
+105	l4_20	lambda nav: make_cross_policy(nav, "Up"),          ok(0x20), 50))
+106	l4_10	lambda nav: make_cross_policy(nav, "Up"),          ok(0x10), 50))
+107	l4_00	lambda nav: make_lafight_policy(nav, "Up"),        ok(0x00), 40))
+108	l4_01	lambda nav: make_cross_policy(nav, "Right"),       ok(0x01), 40))
+109	l4_02	lambda nav: make_cross_policy(nav, "Right"),       ok(0x02), 50))
+110	l4_12	lambda nav: make_lareach_policy(nav, Goal(120, 189, 6), then_exit="Down"),
+111	l4_13	lambda nav: make_lafight_policy(nav, "Right"),     ok(0x13), 80))
+112	gleeok	gleeok_policy,
+113	l4_heart	lambda nav: make_grab_policy(nav, None),
+114	L4_done	lambda nav: triforce_policy(nav, 0x08, "Up"),
+115	warp_L4	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+116	l2_sail	dock_policy, lambda emu, s: s.room == 0x55 and s.mode == 5 and s.hearts > 0, 20))
+117	l2w00_56	(via cross()/helper)
+118	l2w01_57	(via cross()/helper)
+119	l2w02_58	(via cross()/helper)
+120	l2w03_59	(via cross()/helper)
+121	l2w04_5a	(via cross()/helper)
+122	l2w05_5b	(via cross()/helper)
+123	l2w06_5c	(via cross()/helper)
+124	l2w07_5d	(via cross()/helper)
+125	l2w08_4d	(via cross()/helper)
+126	l2w09_4c	(via cross()/helper)
+127	l2w10_3c	(via cross()/helper)
+128	enter_L2	lambda nav: enter_level_policy(nav, 2),
+129	l2_6d	lambda nav: make_cross_policy(nav, "Up"),      ok(0x6D), 40))
+130	l2_6e	lambda nav: make_cross_policy(nav, "Right"),   ok(0x6E), 40))
+131	l2_5e	lambda nav: make_cross_policy(nav, "Up"),      ok(0x5E), 50))
+132	l2_4e	lambda nav: make_cross_policy(nav, "Up"),      ok(0x4E), 50))
+133	l2_3e	lambda nav: make_cross_policy(nav, "Up"),      ok(0x3E), 50))
+134	l2_3f	lambda nav: make_cross_policy(nav, "Right"),   ok(0x3F), 50))
+135	l2_bombs	lambda nav: make_grab_policy(nav, "Left"),
+136	l2_2e	lambda nav: make_cross_policy(nav, "Up"),      ok(0x2E), 50))
+137	l2_1e	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x1E), 60))
+138	l2_0e	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x0E), 60))
+139	dodongo	dodongo_policy,
+140	L2_done	lambda nav: triforce_policy(nav, 0x02, "Left"),
+141	warp_L2	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+142	l5w00_4c	(via cross()/helper)
+143	l5w01_4d	(via cross()/helper)
+144	l5w02_3d	(via cross()/helper)
+145	l5w03_2d	(via cross()/helper)
+146	l5w04_2c	(via cross()/helper)
+147	l5w05_1c	(via cross()/helper)
+148	l5w06_1b	(via cross()/helper)
+149	hills_1	lambda nav: make_cross_policy(nav, "Up"), ok(0x1B), 30))
+150	hills_2	lambda nav: make_cross_policy(nav, "Up"), ok(0x1B), 30))
+151	hills_3	lambda nav: make_cross_policy(nav, "Up"), ok(0x1B), 30))
+152	hills_4	lambda nav: make_cross_policy(nav, "Up"), ok(0x0B), 30))
+153	enter_L5	lambda nav: enter_level_policy(nav, 5),
+154	l5_77	lambda nav: make_cross_policy(nav, "Right"),   ok(0x77), 40))
+155	l5_77_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x76, keys=1), 60))
+156	l5_66	lambda nav: make_cross_policy(nav, "Up"),      ok(0x66), 50))
+157	l5_66_key	lambda nav: make_grab_policy(nav, "Up"),       ok(0x56, keys=2), 50))
+158	l5_57	lambda nav: make_cross_policy(nav, "Right"),   ok(0x57), 50))
+159	l5_b56	lambda nav: make_cross_policy(nav, "Left"),    ok(0x56), 50))
+160	l5_66b	lambda nav: make_cross_policy(nav, "Down"),    ok(0x66), 50))
+161	l5_65	lambda nav: bomb_policy(nav, "Left", 0x65),    ok(0x65), 50))
+162	l5_65_clear	lambda nav: make_lafight_policy(nav, None), cleared, 60))
+163	l5_64	lambda nav: bomb_policy(nav, "Left", 0x64),    ok(0x64), 50))
+164	l5_rec_st	clear_push_stairs_policy,
+165	l5_passage	passage_policy,
+166	l5_05	lambda nav: make_cross_policy(nav, "Left"),    ok(0x05), 40))
+167	l5_rec_st2	clear_push_stairs_policy,
+168	l5_recorder	lambda nav: cellar_item_policy(nav, ram.WHISTLE),
+169	l5_b06	lambda nav: make_cross_policy(nav, "Right"),   ok(0x06), 40))
+170	l5_back_st	clear_push_stairs_policy,
+171	l5_back	passage_policy,
+172	l5_b65	lambda nav: make_cross_policy(nav, "Right"),   ok(0x65), 40))
+173	l5_b66	lambda nav: make_cross_policy(nav, "Right"),   ok(0x66), 40))
+174	l5_c56	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x56), 60))
+175	l5_c57	lambda nav: make_cross_policy(nav, "Right"),   ok(0x57), 40))
+176	l5_47b	lambda nav: make_cross_policy(nav, "Up"),      ok(0x47), 50))
+177	l5_47_key	lambda nav: make_clear_grab_policy(nav, "Up"), ok(0x37), 60))
+178	l5_27	lambda nav: make_cross_policy(nav, "Up"),      ok(0x27), 50))
+179	l5_27_key	lambda nav: make_grab_policy(nav, "Left"),     ok(0x26), 50))
+180	l5_26_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x25), 60))
+181	l5_24	lambda nav: make_cross_policy(nav, "Left"),    ok(0x24), 50))
+182	digdogger	digdogger_policy,
+183	l5_heart	lambda nav: make_grab_policy(nav, None),
+184	L5_done	lambda nav: triforce_policy(nav, 0x10, "Up"),
+185	warp_L5	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+186	l7_1b	lambda nav: make_cross_policy(nav, "Down"), ok(0x1B), 40))
+187	l7w00_1a	(via cross()/helper)
+188	l7w01_19	(via cross()/helper)
+189	l7w02_18	(via cross()/helper)
+190	l7w03_17	(via cross()/helper)
+191	l7w04_27	(via cross()/helper)
+192	l7w05_28	(via cross()/helper)
+193	l7w06_38	(via cross()/helper)
+194	l7w07_48	(via cross()/helper)
+195	l7w08_47	(via cross()/helper)
+196	l7w09_46	(via cross()/helper)
+197	l7w10_56	(via cross()/helper)
+198	l7w11_55	(via cross()/helper)
+199	l7w12_65	(via cross()/helper)
+200	l7w13_64	(via cross()/helper)
+201	l7w14_63	(via cross()/helper)
+202	l7w15_62	(via cross()/helper)
+203	l7w16_52	(via cross()/helper)
+204	l7w17_42	(via cross()/helper)
+205	l7_52	lambda nav: make_cross_policy(nav, "Down"),  ok(0x52), 40))
+206	l7_62	lambda nav: make_cross_policy(nav, "Down"),  ok(0x62), 40))
+207	l7_61	lambda nav: make_cross_policy(nav, "Left"),  ok(0x61), 40))
+208	woods_0	(via cross()/helper)
+209	woods_1	(via cross()/helper)
+210	woods_2	(via cross()/helper)
+211	woods_3	(via cross()/helper)
+212	l7w20_50	(via cross()/helper)
+213	l7w21_40	(via cross()/helper)
+214	l7w22_41	(via cross()/helper)
+215	l7w23_31	(via cross()/helper)
+216	l7w24_32	(via cross()/helper)
+217	l6_22	lambda nav: make_cross_policy(nav, "Up"),    ok(0x22), 40))
+218	enter_L6	lambda nav: enter_level_policy(nav, 6),
+219	l6_7a	lambda nav: make_cross_policy(nav, "Right"),   ok(0x7A), 40))
+220	l6_7a_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x79, keys=1), 60))
+221	l6_78	lambda nav: make_cross_policy(nav, "Left"),    ok(0x78), 50))
+222	l6_68	lambda nav: make_cross_policy(nav, "Up"),      ok(0x68), 50))
+223	l6_58	lambda nav: make_cross_policy(nav, "Up"),      ok(0x58), 50))
+224	l6_48	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x48), 60))
+225	l6_38	lambda nav: make_cross_policy(nav, "Up"),      ok(0x38), 50))
+226	l6_28	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x28), 60))
+227	l6_out	lambda nav: leave_dungeon_policy(nav),
+228	l6_back	lambda nav: enter_level_policy(nav, 6),
+229	farm33	(via cross()/helper)
+230	farm43	(via cross()/helper)
+231	farm53	(via cross()/helper)
+232	farm63	(via cross()/helper)
+233	farm68	(via cross()/helper)
+234	farm73	(via cross()/helper)
+235	farm78	(via cross()/helper)
+236	farm83	(via cross()/helper)
+237	farm85	(via cross()/helper)
+238	shop_out	lambda nav: leave_dungeon_policy(nav),
+239	whirl_east	whirlwind_policy,
+240	shop_1b	lambda nav: make_cross_policy(nav, "Down"), ok(0x1B), 40))
+241	shop00_1a	(via cross()/helper)
+242	shop01_19	(via cross()/helper)
+243	shop02_18	(via cross()/helper)
+244	shop03_17	(via cross()/helper)
+245	shop04_27	(via cross()/helper)
+246	shop05_28	(via cross()/helper)
+247	shop06_38	(via cross()/helper)
+248	shop07_48	(via cross()/helper)
+249	shop08_47	(via cross()/helper)
+250	shop09_46	(via cross()/helper)
+251	shop10_56	(via cross()/helper)
+252	shop11_55	(via cross()/helper)
+253	shop12_65	(via cross()/helper)
+254	shop13_64	(via cross()/helper)
+255	shop14_54	(via cross()/helper)
+256	shop15_44	(via cross()/helper)
+257	buy_arrows	lambda nav: shop_policy(nav, ram.ARROWS),
+258	shop_leave	lambda nav: cave_exit_policy(nav),
+259	whirl_l3	lambda nav: whirl_to_policy(nav, 0x74),
+260	back0_73	(via cross()/helper)
+261	back1_72	(via cross()/helper)
+262	back2_62	(via cross()/helper)
+263	back3_61	(via cross()/helper)
+264	bwoods_0	(via cross()/helper)
+265	bwoods_1	(via cross()/helper)
+266	bwoods_2	(via cross()/helper)
+267	bwoods_3	(via cross()/helper)
+268	bw0_50	(via cross()/helper)
+269	bw1_40	(via cross()/helper)
+270	bw2_41	(via cross()/helper)
+271	bw3_31	(via cross()/helper)
+272	bw4_32	(via cross()/helper)
+273	bw5_22	(via cross()/helper)
+274	l6_return	lambda nav: enter_level_policy(nav, 6),
+275	r6_7a	lambda nav: make_cross_policy(nav, "Right"),   ok(0x7A), 40))
+276	r6_7a_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x79, keys=1), 60))
+277	r6_78	lambda nav: make_cross_policy(nav, "Left"),    ok(0x78), 50))
+278	r6_68	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x68), 60))
+279	r6_58	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x58), 60))
+280	r6_48	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x48), 60))
+281	r6_38	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x38), 60))
+282	r6_28	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x28), 60))
+283	r6_18	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x18), 60))
+284	l6_mini	lambda nav: gleeok_policy(nav, budget=40000),
+285	l6_19	lambda nav: make_cross_policy(nav, "Right"),   ok(0x19), 50))
+286	l6_1a	lambda nav: make_lafight_policy(nav, "Right"), ok(0x1A), 60))
+287	l6_1b	lambda nav: make_lafight_policy(nav, "Right"), ok(0x1B), 60))
+288	l6_0b	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x0B), 60))
+289	l6_b1b	lambda nav: make_cross_policy(nav, "Down"),    ok(0x1B), 50))
+290	l6_b1a	lambda nav: make_lafight_policy(nav, "Left"),  ok(0x1A), 60))
+291	l6_b19	lambda nav: make_lafight_policy(nav, "Left"),  ok(0x19), 60))
+292	l6_29	lambda nav: make_lafight_policy(nav, "Down"),  ok(0x29), 60))
+293	l6_39	lambda nav: make_lafight_policy(nav, "Down"),  ok(0x39), 60))
+294	l6_3a	lambda nav: make_lafight_policy(nav, "Right"), ok(0x3A), 60))
+295	l6_3a_st	clear_push_stairs_policy,
+296	l6_pass	passage_policy,
+297	l6_1d	lambda nav: make_lafight_policy(nav, "Down"),  ok(0x2D), 60))
+298	l6_2d	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x2C, keys=4), 60))
+299	l6_2c	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x1C), 60))
+300	gohma	gohma_policy,
+301	l6_heart	lambda nav: make_grab_policy(nav, None),
+302	L6_done	lambda nav: triforce_policy(nav, 0x20, "Up"),
+303	warp_L6	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+304	p7_32	(via cross()/helper)
+305	p7_31	(via cross()/helper)
+306	p7_41	(via cross()/helper)
+307	p7_40	(via cross()/helper)
+308	p7_50	(via cross()/helper)
+309	p7_60	(via cross()/helper)
+310	p7_61	(via cross()/helper)
+311	p7_62	(via cross()/helper)
+312	p7_52	(via cross()/helper)
+313	p7_42	(via cross()/helper)
+314	l7_drain	pond_policy,
+315	enter_L7	lambda nav: stairs_entry_policy(nav, 7),
+316	l7_out	leave_dungeon_policy,
+317	w7_52	) + cross("Down", 0x52, 40))
+318	whirl_l6	lambda nav: whirl_to_policy(nav, 0x22),
+319	l6_farm_in	lambda nav: enter_level_policy(nav, 6),
+320	fd40	(via cross()/helper)
+321	fd47	(via cross()/helper)
+322	fd54	(via cross()/helper)
+323	fd61	(via cross()/helper)
+324	l6_farm_out	leave_dungeon_policy,
+325	m7_32	(via cross()/helper)
+326	m7_31	(via cross()/helper)
+327	m7_41	(via cross()/helper)
+328	m7_40	(via cross()/helper)
+329	m7_50	(via cross()/helper)
+330	m7_60	(via cross()/helper)
+331	m7_61	(via cross()/helper)
+332	m7_62	(via cross()/helper)
+333	m7_52	(via cross()/helper)
+334	m7_53	(via cross()/helper)
+335	heal_43	) + cross("Up", 0x43, 40))
+336	heal	fairy_policy,
+337	heal_b53	) + cross("Down", 0x53, 40))
+338	m7_54	(via cross()/helper)
+339	m7_44	(via cross()/helper)
+340	m7_34	(via cross()/helper)
+341	buy_food	lambda nav: grave_shop_policy(nav, ram.BAIT),
+342	food_leave	lambda nav: cave_exit_policy(nav),
+343	b7_44	(via cross()/helper)
+344	b7_54	(via cross()/helper)
+345	b7_53	(via cross()/helper)
+346	b7_52	(via cross()/helper)
+347	b7_42	(via cross()/helper)
+348	l7_drain2	pond_policy,
+349	enter_L7b	lambda nav: stairs_entry_policy(nav, 7),
+350	l7_69	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x69), 60))
+351	l7_59	lambda nav: bomb_policy(nav, "Up", 0x59),
+352	l7_49	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x49), 60))
+353	l7_39	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x39), 60))
+354	l7_3a	lambda nav: bomb_policy(nav, "Right", 0x3A),
+355	l7_3a_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x39, keys=4), 60))
+356	l7_38	lambda nav: digdogger_policy(nav, "Left"), ok(0x38), 40))
+357	l7_28	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x28), 60))
+358	l7_feed	feed_goriya_policy,
+359	l7_19	lambda nav: make_lafight_policy(nav, "Right"), ok(0x19), 60))
+360	l7_1a	lambda nav: bomb_policy(nav, "Right", 0x1A),
+361	l7_1a_st	clear_push_stairs_policy,
+362	l7_candle	lambda nav: cellar_item_policy(nav, ram.CANDLE),
+363	l7d_1b	lambda nav: bomb_policy(nav, "Right", 0x1B),
+364	l7_1c	lambda nav: make_lafight_policy(nav, "Right"), ok(0x1C), 60))
+365	l7_0c	lambda nav: digdogger_policy(nav, "Up"),       ok(0x0C), 40))
+366	l7_0d	lambda nav: bomb_policy(nav, "Right", 0x0D),
+367	l7_0d_st	clear_push_stairs_policy,
+368	l7_pass	passage_policy,
+369	l7_2a	lambda nav: bomb_policy(nav, "Right", 0x2A),
+370	l7_aqua	lambda nav: make_lafight_policy(nav, None),
+371	l7_heart	lambda nav: make_grab_policy(nav, None),
+372	L7_done	lambda nav: triforce_policy(nav, 0x40, "Right"),
+373	warp_L7	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+374	w8_52	) + cross("Down", 0x52, 40))
+375	w8_62	lambda nav: make_cross_at_policy(nav, "Down", at=160),
+376	w8_63	(via cross()/helper)
+377	w8_64	(via cross()/helper)
+378	w8_65	(via cross()/helper)
+379	w8_66	(via cross()/helper)
+380	w8_67	(via cross()/helper)
+381	w8_68	(via cross()/helper)
+382	w8_69	(via cross()/helper)
+383	w8_6a	(via cross()/helper)
+384	w8_6b	(via cross()/helper)
+385	w8_6c	(via cross()/helper)
+386	n8_6b	(via cross()/helper)
+387	n8_7b	(via cross()/helper)
+388	n8_7c	(via cross()/helper)
+389	n8_7d	(via cross()/helper)
+390	n8_7e	(via cross()/helper)
+391	n8_7f	(via cross()/helper)
+392	n8_6f	(via cross()/helper)
+393	n8_6e	(via cross()/helper)
+394	n8_6d	(via cross()/helper)
+395	enter_L8	lambda nav: burn_entry_policy(nav, (192, 109), "Left", 8),
+396	l8_7f	) + cross("Right", 0x7F, 40))
+397	l8_7f_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x7E, keys=2), 50))
+398	l8_6e	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x6E), 50))
+399	l8_5e	lambda nav: bomb_policy(nav, "Up", 0x5E),
+400	l8_5e_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x5D, keys=3), 50))
+401	l8_5d_key	lambda nav: make_clear_grab_policy(nav, "Left"), ok(0x5C, keys=4), 50))
+402	l8_5c_key	lambda nav: make_clear_grab_policy(nav, "Right"), ok(0x5D, keys=5), 50))
+403	l8_4d	lambda nav: make_lafight_policy(nav, "Up"),   ok(0x4D), 50))
+404	l8_4e	) + cross("Right", 0x4E, 50))
+405	l8_3e	) + cross("Up", 0x3E, 50))
+406	l8_2e	lambda nav: bomb_policy(nav, "Up", 0x2E),
+407	l8_1e	) + cross("Up", 0x1E, 50))
+408	l8_b2e	) + cross("Down", 0x2E, 40))
+409	l8_b3e	) + cross("Down", 0x3E, 40))
+410	o8_4e	(via cross()/helper)
+411	o8_5e	(via cross()/helper)
+412	o8_6e	(via cross()/helper)
+413	o8_7e	(via cross()/helper)
+414	o8_out	lambda nav: make_cross_policy(nav, "Down"),
+415	m8_6c	) + cross("Left", 0x6C, 40))
+416	m8_5c	lambda nav: make_cross_at_policy(nav, "Up", at=192),
+417	m8_5d	) + cross("Right", 0x5D, 40))
+418	m8_6d	lambda nav: make_cross_at_policy(nav, "Down", at=192),
+419	m8_6e	(via cross()/helper)
+420	m8_6f	(via cross()/helper)
+421	m8_7f	(via cross()/helper)
+422	m8_7e	(via cross()/helper)
+423	m8_7d	(via cross()/helper)
+424	m8_7c	(via cross()/helper)
+425	m8_7b	(via cross()/helper)
+426	m8_6b	(via cross()/helper)
+427	cave_6b	lambda nav: burn_cave_policy(nav, (128, 141), "Down"),
+428	s8_7b	(via cross()/helper)
+429	s8_7c	(via cross()/helper)
+430	s8_7d	(via cross()/helper)
+431	s8_7e	(via cross()/helper)
+432	s8_7f	(via cross()/helper)
+433	s8_6f	(via cross()/helper)
+434	r8_6e	) + cross("Left", 0x6E, 40))
+435	r8_6d	) + cross("Left", 0x6D, 40))
+436	r8_in	lambda nav: burn_entry_policy(nav, (192, 109), "Left", 8),
+437	r8_6e2	lambda nav: make_lafight_policy(nav, "Up"),  ok(0x6E), 50))
+438	r8_5e	lambda nav: bomb_policy(nav, "Up", 0x5E),
+439	r8_5d	lambda nav: make_lafight_policy(nav, "Left"), ok(0x5D), 50))
+440	r8_4d	) + cross("Up", 0x4D, 50))
+441	r8_4e	) + cross("Right", 0x4E, 50))
+442	r8_3e	) + cross("Up", 0x3E, 50))
+443	r8_3f	lambda nav: make_lafight_policy(nav, "Right"), ok(0x3F), 50))
+444	r8_3f_bombs	lambda nav: make_clear_grab_policy(nav, None),
+445	r8_3f_st	clear_push_stairs_policy,
+446	r8_pass	passage_policy,
+447	l8_4b	lambda nav: bow_fight_policy(nav, "Left"),  ok(0x4B), 50))
+448	l8_3b	lambda nav: make_lafight_policy(nav, "Up"),    ok(0x3B), 50))
+449	l8_3c	lambda nav: bomb_policy(nav, "Right", 0x3C),
+450	l8_gleeok	lambda nav: gleeok_policy(nav, budget=10000),
+451	l8_heart	lambda nav: make_grab_policy(nav, None),
+452	L8_done	lambda nav: triforce_policy(nav, 0x80, "Up"),
+453	warp_L8	warp_policy, lambda emu, s: s.mode == 5 and s.level == 0, 4))
+454	n9_6c	) + cross("Left", 0x6C, 40))
+455	whirl_l5	lambda nav: whirl_to_policy(nav, 0x0B),
+456	n9_1b	) + cross("Down", 0x1B, 40))
+457	n9_1a	(via cross()/helper)
+458	n9_19	(via cross()/helper)
+459	n9_18	(via cross()/helper)
+460	n9_17	(via cross()/helper)
+461	h9_27	) + cross("Down", 0x27, 40))
+462	h9_28	) + cross("Right", 0x28, 40))
+463	h9_38	) + cross("Down", 0x38, 40))
+464	h9_48	(via cross()/helper)
+465	h9_58	(via cross()/helper)
+466	h9_59	(via cross()/helper)
+467	h9_49	(via cross()/helper)
+468	h9_39	(via cross()/helper)
+469	h9_heal	fairy_policy,
+470	h9_b49	(via cross()/helper)
+471	h9_b59	(via cross()/helper)
+472	h9_b58	(via cross()/helper)
+473	h9_b48	(via cross()/helper)
+474	h9_b38	(via cross()/helper)
+475	h9_b28	) + cross("Up", 0x28, 40))
+476	h9_b27	) + cross("Left", 0x27, 40))
+477	h9_b17	) + cross("Up", 0x17, 40))
+478	n9_16	) + cross("Left", 0x16, 40))
+479	n9_15	) + cross("Left", 0x15, 40))
+480	n9_b16	(via cross()/helper)
+481	n9_b17	(via cross()/helper)
+482	n9_b07	(via cross()/helper)
+483	n9_b06	(via cross()/helper)
+484	n9_b05	(via cross()/helper)
+485	enter_L9	lambda nav: bomb_entry_policy(nav, (80, 173), "Up", (80, 157), 9),
+486	l9_66	) + cross("Up", 0x66, 40))
+487	l9_56	lambda nav: make_lafight_policy(nav, "Up"),  ok(0x56), 50))
+488	l9_56_key	lambda nav: make_clear_grab_policy(nav, None),
+489	l9_55	lambda nav: bomb_policy(nav, "Left", 0x55),
+490	l9_55_st	clear_push_stairs_policy,
+491	l9_pass	passage_policy,
+492	m9_15	lambda nav: bow_fight_policy(nav, "Right"), ok(0x15), 50))
+493	m9_16	lambda nav: make_lafight_policy(nav, "Right"), ok(0x16), 50))
+494	m9_16_bombs	lambda nav: make_clear_grab_policy(nav, None),
+495	x9_15	) + cross("Left", 0x15, 40))
+496	x9_14	) + cross("Left", 0x14, 40))
+497	x9_st	stairs_here_policy, lambda emu, s: s.mode == 9 and s.hearts > 0, 40))
+498	x9_pass	passage_policy,
+499	x9_out	leave_dungeon_policy,
+500	hc_w37	lambda nav: whirl_to_policy(nav, 0x37, counter=0x0B),
+501	hc_38	(via cross()/helper)
+502	hc_48	(via cross()/helper)
+503	hc_47	(via cross()/helper)
+504	hc_47_heart	lambda nav: hc_cave_policy(nav, (176, 157), "Down", "burn"),
+505	hc_w3c	lambda nav: whirl_to_policy(nav, 0x3C, counter=0x37),
+506	hc_b4c	(via cross()/helper)
+507	hc_b4d	(via cross()/helper)
+508	hc_b3d	(via cross()/helper)
+509	hc_b2d	(via cross()/helper)
+510	hc_b2c	(via cross()/helper)
+511	hc_2c_heart	lambda nav: hc_cave_policy(nav, (176, 157), "Left", "bomb"),
+512	ms_w22	lambda nav: whirl_to_policy(nav, 0x22, counter=0x3C),
+513	ms_32	(via cross()/helper)
+514	ms_31	(via cross()/helper)
+515	ms_21	(via cross()/helper)
+516	ms_sword	grave_sword_policy,
+517	r9_w0b	lambda nav: whirl_to_policy(nav, 0x0B, counter=0x22),
+518	r9_1b	(via cross()/helper)
+519	r9_1a	(via cross()/helper)
+520	r9_19	(via cross()/helper)
+521	r9_18	(via cross()/helper)
+522	r9_17	(via cross()/helper)
+523	r9_07	(via cross()/helper)
+524	r9_06	(via cross()/helper)
+525	r9_05	(via cross()/helper)
+526	r9_enter	lambda nav: bomb_entry_policy(nav, (80, 173), "Up", (80, 157), 9),
+527	r9_66	) + cross("Up", 0x66, 40))
+528	r9_56	lambda nav: make_lafight_policy(nav, "Up"), ok(0x56), 50))
+529	r9_55	lambda nav: open_or_bomb_policy(nav, "Left", 0x55),
+530	r9_55_st	clear_push_stairs_policy,
+531	r9_pass	passage_policy,
+532	r9_15	lambda nav: bow_fight_policy(nav, "Right"), ok(0x15), 50))
+533	r9_16	lambda nav: make_lafight_policy(nav, "Right"), ok(0x16), 50))
+534	s9_26	) + cross("Down", 0x26, 40))
+535	s9_25	) + cross("Left", 0x25, 40))
+536	rb_26	) + cross("Right", 0x26, 40))
+537	rb_16	) + cross("Up", 0x16, 40))
+538	rb_15	) + cross("Left", 0x15, 40))
+539	rb_14	) + cross("Left", 0x14, 40))
+540	rb_st	stairs_here_policy, lambda emu, s: s.mode == 9 and s.hearts > 0, 40))
+541	rb_pass	passage_policy,
+542	rb_out	leave_dungeon_policy,
+543	rb_w45	lambda nav: whirl_to_policy(nav, 0x45, counter=0x0B),
+544	rb_sail	dock_policy, lambda emu, s: s.room == 0x55 and s.mode == 5 and s.hearts > 0, 20))
+545	rb_land	lambda nav: settle_policy(nav, lambda q: q.y >= 125 and q.mode == 5),
+546	rb_shore	lambda nav: make_lareach_policy(nav, Goal(160, 173, 8)),
+547	rb_65	(via cross()/helper)
+548	rb_64	(via cross()/helper)
+549	rb_54	(via cross()/helper)
+550	rb_44	(via cross()/helper)
+551	rb_buy1	lambda nav: shop_policy(nav, 0x658, xs=(120,)),
+552	rb_leave1	lambda nav: cave_exit_policy(nav),
+553	rb_buy2	lambda nav: shop_policy(nav, 0x658, xs=(120,)),
+554	rb_leave2	lambda nav: cave_exit_policy(nav),
+555	rb_w0b	lambda nav: whirl_to_policy(nav, 0x0B, counter=0x45),
+556	rb_r1b	(via cross()/helper)
+557	rb_r1a	(via cross()/helper)
+558	rb_r19	(via cross()/helper)
+559	rb_r18	(via cross()/helper)
+560	rb_r17	(via cross()/helper)
+561	rb_r07	(via cross()/helper)
+562	rb_r06	(via cross()/helper)
+563	rb_r05	(via cross()/helper)
+564	rb_enter	lambda nav: bomb_entry_policy(nav, (80, 173), "Up", (80, 157), 9),
+565	rb_66	) + cross("Up", 0x66, 40))
+566	rb_56	lambda nav: make_lafight_policy(nav, "Up"), ok(0x56), 50))
+567	rb_55	lambda nav: open_or_bomb_policy(nav, "Left", 0x55),
+568	rb_55_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+569	rb_pass2	passage_policy,
+570	rb_15b	lambda nav: bow_fight_policy(nav, "Right"), ok(0x15), 50))
+571	rb_16b	lambda nav: make_lafight_policy(nav, "Right"), ok(0x16), 50))
+572	s9_06	) + cross("Up", 0x06, 40))
+573	s9_05	lambda nav: open_or_bomb_policy(nav, "Left", 0x05),
+574	s9_05_st	clear_push_stairs_policy,
+575	s9_pass	passage_policy,
+576	s9_53	) + cross("Up", 0x53, 40))
+577	s9_43	lambda nav: open_or_bomb_policy(nav, "Up", 0x43),
+578	s9_43_text	lambda nav: settle_policy(nav, lambda q: False, max_wait=600),
+579	s9_b53	) + cross("Down", 0x53, 40))
+580	s9_b63	lambda nav: bow_fight_policy(nav, "Down"), ok(0x63), 50))
+581	s9_62	) + cross("Left", 0x62, 40))
+582	s9_61	) + cross("Left", 0x61, 40))
+583	s9_patra	lambda nav: make_lafight_policy(nav, None),
+584	s9_61_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+585	s9_pass3	passage_policy,
+586	s9_10	lambda nav: open_or_bomb_policy(nav, "Up", 0x10),
+587	s9_10_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+588	s9_silver	lambda nav: cellar_item_policy(nav, 0x659),
+589	g9_20	) + cross("Down", 0x20, 40))
+590	g9_20_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+591	g9_pass_61	passage_policy,
+592	g9_51	) + cross("Up", 0x51, 40))
+593	g9_41	) + cross("Up", 0x41, 40))
+594	g9_31	) + cross("Up", 0x31, 40))
+595	g9_30	lambda nav: open_or_bomb_policy(nav, "Left", 0x30),
+596	g9_30_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+597	g9_pass_30	passage_policy,
+598	g9_04_bomb	bomb_drop_policy, ok(0x04, bombs=1), 40))
+599	g9_03	lambda nav: open_or_bomb_policy(nav, "Left", 0x03),
+600	g9_03_st	clear_push_stairs_policy, lambda emu, s: s.hearts > 0 and s.mode == 9, 40))
+601	g9_pass_03	passage_policy,
+602	g9_52_patra	lambda nav: make_lafight_policy(nav, None),
+603	g9_42	) + cross("Up", 0x42, 40))
+604	g9_ganon	ganon_policy,
+605	g9_power	take_triforce_policy,
+606	g9_32	lambda nav: walk_out_policy(nav, "Up", 0x32),
+607	g9_zelda	zelda_policy, lambda emu, s: emu.byte(0x12) == 0x13, 20))
+608	g9_credits	credits_policy,

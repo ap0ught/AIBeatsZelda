@@ -1,0 +1,46 @@
+SetUpWhirlwind:
+    ; Set the whirlwind's Y to Link's, X to 0, and type $2E.
+    LDA ObjY
+    STA ObjY, X
+    LDA #$00
+    STA ObjX, X
+    LDA #$2E
+    STA ObjType, X
+    RTS
+
+WhirlwindPrevRoomIdList:
+    .BYTE $36, $3B, $73, $44, $0A, $21, $41, $6C
+
+UpdateWhirlwind_Full:
+    ; Get Link's halted state.
+    LDA ObjState
+    AND #$40
+    TAY
+
+    ; Add 2 to whirlwind X.
+    LDA #$02
+    CLC
+    ADC ObjX, X
+    STA ObjX, X
+
+    ; If Link is not halted or teleporting state = 0, then
+    ; go check for collision with Link.
+    CPY #$40
+    BNE @CheckCollision
+    LDY WhirlwindTeleportingState
+    BEQ @CheckCollision
+
+    ; Else Link is halted (state $40) and teleporting state <> 0.
+    ;
+    ; Set Link's X to whirlwind's.
+    STA ObjX
+
+    ; If teleporting state = 1 or whirlwind's X <> $80, go check
+    ; the right screen edge and draw.
+    DEY
+    BEQ @CheckRightEdge
+    CMP #$80
+    BNE @CheckRightEdge
+
+    ; Teleporting state = 2 and whirlwind's X = $80.
+    ;

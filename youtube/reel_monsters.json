@@ -1,0 +1,8 @@
+[
+ {"title": "GOHMA", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 1837.0, "dur": 4.0, "lines": ["only an arrow hurts it, and only while the eye is open", "sword, bombs, boomerang: measured at zero"], "foot": "run 6, Level 6"},
+ {"title": "DODONGO", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 1105.0, "dur": 7.0, "lines": ["eats bombs. two of them.", "the sword does nothing"], "foot": "run 6, Level 2"},
+ {"title": "GLEEOK", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 993.5, "dur": 10.0, "lines": ["heads die one at a time", "a loose head keeps flying and spitting after its neck is gone"], "foot": "run 6, Level 8"},
+ {"title": "PATRA", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 2035.7, "dur": 6.5, "lines": ["the core cannot be touched until all eight eyes are gone", "bombs, arrows and the boomerang: zero damage, measured"], "foot": "run 6, Level 9"},
+ {"title": "THE STEPLADDER", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 678.4, "dur": 6.0, "lines": ["the game spawns Link's own ladder as an object in the monster table", "for a while every water crossing looked dangerous exactly when Link reached it"], "foot": "run 6, Level 4"},
+ {"title": "THE HUNGRY GORIYA", "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4", "start": 1535.0, "dur": 6.0, "lines": ["cannot be killed by anything", "moves aside for meat: sixty rupees of it, bought on the way"], "foot": "run 6, Level 7"}
+]

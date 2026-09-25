@@ -1,0 +1,1551 @@
+  attempt 3: success 1035 frames, hearts 3.0
+  (early stop after 63 attempts)
+  trimmed 2 idle frames off start
+[start] 1035 frames, hearts 3.0 -> f1034 mode=05/00 L0 room=77 pos=(64,88) dir=4 hp=3.0/3 rup=0 sword=1 lag=128 (total 1033 frames, 27s wall)
+  attempt 2: success 195 frames, hearts 3.0
+  attempt 12: success 194 frames, hearts 3.0
+  (early stop after 26 attempts)
+[ow_76] 194 frames, hearts 3.0 -> f1228 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=199 (total 1227 frames, 29s wall)
+  attempt 4: success 180 frames, hearts 3.0
+  attempt 2: success 172 frames, hearts 3.0
+  attempt 12: success 171 frames, hearts 3.0
+  (early stop after 26 attempts)
+[ow_66] 171 frames, hearts 3.0 -> f1399 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=251 (total 1398 frames, 30s wall)
+  attempt 2: success 287 frames, hearts 3.0
+  (early stop after 15 attempts)
+[ow_65] 287 frames, hearts 3.0 -> f1686 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=322 (total 1685 frames, 32s wall)
+  attempt 1: success 335 frames, hearts 3.0
+  attempt 7: success 326 frames, hearts 3.0
+  (early stop after 21 attempts)
+[ow_64] 326 frames, hearts 3.0 -> f2012 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=393 (total 2011 frames, 35s wall)
+  attempt 2: success 286 frames, hearts 2.5
+  attempt 5: success 332 frames, hearts 3.0
+  attempt 17: success 308 frames, hearts 3.0
+  attempt 24: success 306 frames, hearts 3.0
+  (early stop after 37 attempts)
+[ow_63] 306 frames, hearts 3.0 -> f2318 mode=05/00 L0 room=63 pos=(240,149) dir=2 hp=3.0/3 rup=0 sword=1 lag=464 (total 2317 frames, 43s wall)
+  attempt 1: success 169 frames, hearts 3.0
+  attempt 2: success 161 frames, hearts 3.0
+  attempt 12: success 160 frames, hearts 3.0
+  (early stop after 22 attempts)
+[ow_73] 160 frames, hearts 3.0 -> f2478 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=0 sword=1 lag=514 (total 2477 frames, 44s wall)
+  attempt 2: success 180 frames, hearts 3.0
+  attempt 12: success 179 frames, hearts 3.0
+  (early stop after 22 attempts)
+[ow_74] 179 frames, hearts 3.0 -> f2657 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=0 sword=1 lag=585 (total 2656 frames, 45s wall)
+  attempt 2: success 306 frames, hearts 3.0
+  attempt 10: success 302 frames, hearts 3.0
+  (early stop after 23 attempts)
+[enter_L3] 302 frames, hearts 3.0 -> f2959 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=604 (total 2958 frames, 47s wall)
+  attempt 2: success 322 frames, hearts 3.0
+  (early stop after 15 attempts)
+[7c_left] 322 frames, hearts 3.0 -> f3281 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=740 (total 3280 frames, 48s wall)
+  attempt 5: success 350 frames, hearts 2.0
+  attempt 9: success 332 frames, hearts 3.0
+  attempt 18: success 330 frames, hearts 3.0
+  attempt 27: success 323 frames, hearts 3.0
+  (early stop after 39 attempts)
+[7b_key] 323 frames, hearts 3.0 -> f3604 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=837 (total 3603 frames, 54s wall)
+  attempt 2: success 330 frames, hearts 2.5
+  attempt 3: success 381 frames, hearts 3.0
+  attempt 10: success 369 frames, hearts 3.0
+  attempt 12: success 323 frames, hearts 3.0
+  (early stop after 23 attempts)
+[6b_up] 323 frames, hearts 3.0 -> f3927 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=934 (total 3926 frames, 67s wall)
+  attempt 4: success 808 frames, hearts 3.0
+  (early stop after 49 attempts)
+[5b_bombs] 808 frames, hearts 3.0 -> f4735 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1031 (total 4734 frames, 85s wall)
+  attempt 2: success 331 frames, hearts 3.0
+  attempt 12: success 330 frames, hearts 3.0
+  (early stop after 23 attempts)
+[4b_left] 330 frames, hearts 3.0 -> f5065 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1167 (total 5064 frames, 88s wall)
+  attempt 2: success 858 frames, hearts 3.0
+  attempt 5: success 855 frames, hearts 3.0
+  (early stop after 52 attempts)
+[4a_bombs] 855 frames, hearts 3.0 -> f5920 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1303 (total 5919 frames, 97s wall)
+  attempt 4: success 295 frames, hearts 3.0
+  attempt 5: success 289 frames, hearts 3.0
+  attempt 10: success 286 frames, hearts 3.0
+  (early stop after 24 attempts)
+[49_key] 286 frames, hearts 3.0 -> f6206 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1396 (total 6205 frames, 99s wall)
+  attempt 5: success 695 frames, hearts 3.0
+  attempt 1: success 817 frames, hearts 3.0
+  attempt 16: success 857 frames, hearts 3.0
+  attempt 21: success 850 frames, hearts 3.0
+  attempt 44: success 772 frames, hearts 3.0
+  attempt 54: success 714 frames, hearts 3.0
+[59_fight] 714 frames, hearts 3.0 -> f6920 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=3.0/3 rup=6 sword=1 lag=1489 (total 6919 frames, 541s wall)
+  attempt 4: success 261 frames, hearts 3.0
+  attempt 6: success 253 frames, hearts 3.0
+  (early stop after 16 attempts)
+[69_stairs] 253 frames, hearts 3.0 -> f7173 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=1534 (total 7172 frames, 553s wall)
+  attempt 3: success 903 frames, hearts 3.0
+  attempt 1: success 902 frames, hearts 3.0
+  attempt 34: success 899 frames, hearts 3.0
+  attempt 74: success 898 frames, hearts 3.0
+[cellar] 898 frames, hearts 3.0 -> f8071 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=3.0/3 rup=6 sword=1 lag=1539 (total 8070 frames, 658s wall)
+  attempt 2: success 236 frames, hearts 3.0
+  (early stop after 15 attempts)
+[69_up] 236 frames, hearts 3.0 -> f8307 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=3.0/3 rup=6 sword=1 lag=1639 (total 8306 frames, 663s wall)
+  attempt 2: success 241 frames, hearts 3.0
+  attempt 12: success 240 frames, hearts 3.0
+  (early stop after 26 attempts)
+[59_up] 240 frames, hearts 3.0 -> f8547 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=3.0/3 rup=6 sword=1 lag=1736 (total 8546 frames, 664s wall)
+  attempt 2: success 325 frames, hearts 3.0
+  attempt 7: success 322 frames, hearts 3.0
+  (early stop after 20 attempts)
+[49_right] 322 frames, hearts 3.0 -> f8869 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=1872 (total 8868 frames, 668s wall)
+  attempt 2: success 361 frames, hearts 3.0
+  (early stop after 15 attempts)
+[4a_right] 361 frames, hearts 3.0 -> f9230 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=2008 (total 9229 frames, 669s wall)
+  attempt 2: success 440 frames, hearts 3.0
+  (early stop after 15 attempts)
+[4b_right] 440 frames, hearts 3.0 -> f9670 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=2144 (total 9669 frames, 675s wall)
+  attempt 5: success 502 frames, hearts 3.0
+  attempt 10: success 498 frames, hearts 3.0
+  (early stop after 22 attempts)
+[4c_bomb] 498 frames, hearts 3.0 -> f10168 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=2280 (total 10167 frames, 679s wall)
+  attempt 3: success 234 frames, hearts 4.0
+  attempt 4: success 231 frames, hearts 4.0
+  attempt 6: success 228 frames, hearts 3.0
+  attempt 30: success 222 frames, hearts 4.0
+  attempt 34: success 216 frames, hearts 4.0
+  attempt 46: success 215 frames, hearts 4.0
+  attempt 58: success 212 frames, hearts 4.0
+[manhandla] 212 frames, hearts 4.0 -> f10380 mode=05/00 L3 room=4d pos=(136,134) dir=4 hp=4.0/4 rup=6 sword=1 lag=2280 (total 10379 frames, 872s wall)
+  attempt 2: success 812 frames, hearts 4.0
+  (early stop after 49 attempts)
+[L3_done] 812 frames, hearts 4.0 -> f11192 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=6 sword=1 lag=2387 (total 11191 frames, 880s wall)
+  attempt 2: success 160 frames, hearts 4.0
+  (early stop after 15 attempts)
+[warp_L3] 160 frames, hearts 4.0 -> f11352 mode=05/00 L0 room=74 pos=(128,125) dir=4 hp=4.0/4 rup=6 sword=1 lag=2396 (total 11351 frames, 880s wall)
+  attempt 2: success 209 frames, hearts 4.0
+  attempt 12: success 208 frames, hearts 4.0
+  (early stop after 24 attempts)
+[ow1_73] 208 frames, hearts 4.0 -> f11560 mode=05/00 L0 room=73 pos=(240,133) dir=2 hp=4.0/4 rup=6 sword=1 lag=2467 (total 11559 frames, 882s wall)
+  attempt 1: success 177 frames, hearts 4.0
+  attempt 2: success 166 frames, hearts 4.0
+  attempt 12: success 165 frames, hearts 4.0
+  (early stop after 23 attempts)
+[ow1_63] 165 frames, hearts 4.0 -> f11725 mode=05/00 L0 room=63 pos=(208,221) dir=8 hp=4.0/4 rup=6 sword=1 lag=2519 (total 11724 frames, 883s wall)
+  attempt 2: success 178 frames, hearts 4.0
+  attempt 12: success 177 frames, hearts 4.0
+  (early stop after 22 attempts)
+[ow1_64] 177 frames, hearts 4.0 -> f11902 mode=05/00 L0 room=64 pos=(0,157) dir=1 hp=4.0/4 rup=6 sword=1 lag=2590 (total 11901 frames, 884s wall)
+  attempt 3: success 321 frames, hearts 3.5
+  attempt 4: success 323 frames, hearts 4.0
+  attempt 2: success 312 frames, hearts 4.0
+  (early stop after 18 attempts)
+[ow1_65] 312 frames, hearts 4.0 -> f12214 mode=05/00 L0 room=65 pos=(0,189) dir=1 hp=4.0/4 rup=6 sword=1 lag=2661 (total 12213 frames, 887s wall)
+  attempt 5: success 405 frames, hearts 4.0
+  attempt 4: success 369 frames, hearts 4.0
+  attempt 13: success 362 frames, hearts 4.0
+  (early stop after 27 attempts)
+[ow1_66] 362 frames, hearts 4.0 -> f12576 mode=05/00 L0 room=66 pos=(0,189) dir=1 hp=4.0/4 rup=6 sword=1 lag=2732 (total 12575 frames, 893s wall)
+  attempt 4: success 391 frames, hearts 4.0
+  attempt 2: success 380 frames, hearts 4.0
+  attempt 8: success 379 frames, hearts 4.0
+  attempt 14: success 363 frames, hearts 4.0
+  (early stop after 27 attempts)
+[ow1_67] 363 frames, hearts 4.0 -> f12939 mode=05/00 L0 room=67 pos=(0,117) dir=1 hp=4.0/4 rup=6 sword=1 lag=2803 (total 12938 frames, 897s wall)
+  attempt 5: success 351 frames, hearts 4.0
+  attempt 12: success 342 frames, hearts 4.0
+  (early stop after 26 attempts)
+[ow1_68] 342 frames, hearts 4.0 -> f13281 mode=05/00 L0 room=68 pos=(0,125) dir=1 hp=4.0/4 rup=6 sword=1 lag=2874 (total 13280 frames, 902s wall)
+  attempt 1: success 179 frames, hearts 4.0
+  attempt 4: success 176 frames, hearts 4.0
+  attempt 2: success 168 frames, hearts 4.0
+  attempt 12: success 167 frames, hearts 4.0
+  (early stop after 24 attempts)
+[ow1_58] 167 frames, hearts 4.0 -> f13448 mode=05/00 L0 room=58 pos=(48,221) dir=8 hp=4.0/4 rup=6 sword=1 lag=2926 (total 13447 frames, 903s wall)
+  attempt 5: success 315 frames, hearts 4.0
+  attempt 6: success 305 frames, hearts 4.0
+  attempt 2: success 282 frames, hearts 4.0
+  (early stop after 17 attempts)
+[ow1_48] 282 frames, hearts 4.0 -> f13730 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=6 sword=1 lag=2978 (total 13729 frames, 906s wall)
+  attempt 6: success 212 frames, hearts 3.5
+  attempt 17: success 211 frames, hearts 3.5
+  attempt 22: success 199 frames, hearts 3.5
+  attempt 27: success 197 frames, hearts 3.5
+  (early stop after 52 attempts)
+[ow1_38] 197 frames, hearts 3.5 -> f13927 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.5/4 rup=6 sword=1 lag=3030 (total 13926 frames, 909s wall)
+  attempt 2: success 208 frames, hearts 3.5
+  attempt 12: success 207 frames, hearts 3.5
+  (early stop after 25 attempts)
+[ws_28] 207 frames, hearts 3.5 -> f14134 mode=05/00 L0 room=28 pos=(112,221) dir=8 hp=3.5/4 rup=6 sword=1 lag=3082 (total 14133 frames, 910s wall)
+  attempt 3: success 257 frames, hearts 3.5
+  attempt 2: success 236 frames, hearts 3.5
+  (early stop after 16 attempts)
+[ws_29] 236 frames, hearts 3.5 -> f14370 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=6 sword=1 lag=3153 (total 14369 frames, 912s wall)
+  attempt 5: success 340 frames, hearts 2.5
+  attempt 11: success 339 frames, hearts 2.5
+  (early stop after 37 attempts)
+  attempt 41: success 331 frames, hearts 2.5
+[ws_2a] 331 frames, hearts 2.5 -> f14701 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.5/4 rup=6 sword=1 lag=3224 (total 14700 frames, 915s wall)
+  attempt 2: success 288 frames, hearts 2.5
+  (early stop after 15 attempts)
+[ws_2b] 288 frames, hearts 2.5 -> f14989 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.5/4 rup=6 sword=1 lag=3295 (total 14988 frames, 916s wall)
+  attempt 5: success 393 frames, hearts 2.0
+  attempt 1: success 376 frames, hearts 2.5
+  (early stop after 16 attempts)
+[ws_2c] 376 frames, hearts 2.5 -> f15365 mode=05/00 L0 room=2c pos=(0,125) dir=1 hp=2.5/4 rup=6 sword=1 lag=3366 (total 15364 frames, 920s wall)
+  attempt 2: success 848 frames, hearts 3.5
+  attempt 1: success 836 frames, hearts 3.5
+  (early stop after 53 attempts)
+[h2c_heart] 836 frames, hearts 3.5 -> f16201 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=3.5/5 rup=6 sword=1 lag=3425 (total 16200 frames, 952s wall)
+  attempt 5: success 200 frames, hearts 3.0
+  attempt 10: success 199 frames, hearts 3.0
+  (early stop after 35 attempts)
+[h2c_2d] 199 frames, hearts 3.0 -> f16400 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=3.0/5 rup=6 sword=1 lag=3496 (total 16399 frames, 955s wall)
+  attempt 5: success 265 frames, hearts 3.0
+  attempt 10: success 263 frames, hearts 3.0
+  (early stop after 21 attempts)
+[c0f_1d] 263 frames, hearts 3.0 -> f16663 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=3.0/5 rup=6 sword=1 lag=3549 (total 16662 frames, 958s wall)
+  attempt 1: success 263 frames, hearts 3.0
+  attempt 2: success 252 frames, hearts 3.0
+  (early stop after 19 attempts)
+[c0f_1e] 252 frames, hearts 3.0 -> f16915 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=3.0/5 rup=6 sword=1 lag=3620 (total 16914 frames, 959s wall)
+  attempt 2: success 333 frames, hearts 3.0
+  attempt 1: success 330 frames, hearts 3.0
+  attempt 8: success 325 frames, hearts 3.0
+  attempt 7: success 309 frames, hearts 3.0
+  (early stop after 23 attempts)
+[c0f_1f] 309 frames, hearts 3.0 -> f17224 mode=05/00 L0 room=1f pos=(0,165) dir=1 hp=3.0/5 rup=6 sword=1 lag=3691 (total 17223 frames, 962s wall)
+  attempt 3: success 414 frames, hearts 2.5
+  attempt 5: success 469 frames, hearts 3.0
+  (early stop after 16 attempts)
+[c0f_0f] 469 frames, hearts 3.0 -> f17693 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=3.0/5 rup=6 sword=1 lag=3743 (total 17692 frames, 967s wall)
+  attempt 2: success 759 frames, hearts 3.0
+  (early stop after 49 attempts)
+[cave_0f] 759 frames, hearts 3.0 -> f18452 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=3.0/5 rup=106 sword=1 lag=3802 (total 18451 frames, 976s wall)
+  attempt 4: success 183 frames, hearts 3.0
+  attempt 5: success 182 frames, hearts 3.0
+  attempt 2: success 177 frames, hearts 3.0
+  (early stop after 17 attempts)
+[c0f_b1f] 177 frames, hearts 3.0 -> f18629 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=3.0/5 rup=106 sword=1 lag=3852 (total 18628 frames, 976s wall)
+  attempt 2: success 263 frames, hearts 3.0
+  attempt 7: success 259 frames, hearts 3.0
+  (early stop after 20 attempts)
+[c0f_b1e] 259 frames, hearts 3.0 -> f18888 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=3.0/5 rup=106 sword=1 lag=3923 (total 18887 frames, 979s wall)
+  attempt 6: success 434 frames, hearts 3.0
+  attempt 1: success 411 frames, hearts 3.0
+  attempt 2: success 394 frames, hearts 3.0
+  attempt 10: success 393 frames, hearts 3.0
+  attempt 13: success 391 frames, hearts 3.0
+  attempt 15: success 386 frames, hearts 3.0
+  attempt 17: success 429 frames, hearts 5.0
+  attempt 26: success 392 frames, hearts 5.0
+  (early stop after 39 attempts)
+[c0f_b1d] 392 frames, hearts 5.0 -> f19280 mode=05/00 L0 room=1d pos=(240,125) dir=2 hp=5.0/5 rup=106 sword=1 lag=3994 (total 19279 frames, 985s wall)
+  attempt 6: success 197 frames, hearts 5.0
+  attempt 5: success 191 frames, hearts 5.0
+  (early stop after 16 attempts)
+[cdl_0d] 191 frames, hearts 5.0 -> f19471 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=5.0/5 rup=106 sword=1 lag=4046 (total 19470 frames, 986s wall)
+  attempt 5: success 326 frames, hearts 5.0
+  attempt 10: success 324 frames, hearts 5.0
+  (early stop after 23 attempts)
+[cdl_0c] 324 frames, hearts 5.0 -> f19795 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=5.0/5 rup=106 sword=1 lag=4117 (total 19794 frames, 990s wall)
+  attempt 2: success 496 frames, hearts 5.0
+  (early stop after 15 attempts)
+[buy_candle] 496 frames, hearts 5.0 -> f20291 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=5.0/5 rup=106 sword=1 lag=4146 (total 20290 frames, 993s wall)
+  attempt 4: success 310 frames, hearts 5.0
+  (early stop after 15 attempts)
+[candle_leave] 310 frames, hearts 5.0 -> f20601 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=5.0/5 rup=46 sword=1 lag=4176 (total 20600 frames, 994s wall)
+  attempt 2: success 275 frames, hearts 4.5
+  attempt 1: success 274 frames, hearts 4.5
+  (early stop after 30 attempts)
+[cdl_1c] 274 frames, hearts 4.5 -> f20875 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=4.5/5 rup=46 sword=1 lag=4226 (total 20874 frames, 998s wall)
+  attempt 4: success 232 frames, hearts 4.5
+  attempt 2: success 224 frames, hearts 4.5
+  attempt 12: success 223 frames, hearts 4.5
+  (early stop after 26 attempts)
+[ws_1b] 223 frames, hearts 4.5 -> f21098 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=4.5/5 rup=46 sword=1 lag=4297 (total 21097 frames, 999s wall)
+  attempt 4: success 363 frames, hearts 4.5
+  attempt 2: success 352 frames, hearts 4.5
+  (early stop after 16 attempts)
+[ws_1a] 352 frames, hearts 4.5 -> f21450 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=4.5/5 rup=46 sword=1 lag=4368 (total 21449 frames, 1001s wall)
+  attempt 2: success 213 frames, hearts 4.5
+  attempt 12: success 212 frames, hearts 4.5
+  (early stop after 23 attempts)
+[ws_0a] 212 frames, hearts 4.5 -> f21662 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.5/5 rup=46 sword=1 lag=4420 (total 21661 frames, 1002s wall)
+  attempt 2: success 1267 frames, hearts 4.5
+  attempt 39: success 1063 frames, hearts 4.5
+[white_sword] 1063 frames, hearts 4.5 -> f22725 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=4.5/5 rup=46 sword=2 lag=4479 (total 22724 frames, 1209s wall)
+  attempt 2: success 346 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4w00_1a] 346 frames, hearts 4.5 -> f23071 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=4.5/5 rup=46 sword=2 lag=4529 (total 23070 frames, 1212s wall)
+  attempt 5: success 501 frames, hearts 5.0
+  attempt 10: success 487 frames, hearts 5.0
+  (early stop after 22 attempts)
+[ws_19] 487 frames, hearts 5.0 -> f23558 mode=05/00 L0 room=19 pos=(240,149) dir=2 hp=5.0/5 rup=46 sword=2 lag=4600 (total 23557 frames, 1216s wall)
+  attempt 5: success 350 frames, hearts 5.0
+  attempt 4: success 339 frames, hearts 5.0
+  (early stop after 16 attempts)
+[l4w04_18] 339 frames, hearts 5.0 -> f23897 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=5.0/5 rup=46 sword=2 lag=4671 (total 23896 frames, 1218s wall)
+  attempt 5: success 346 frames, hearts 4.5
+  (early stop after 29 attempts)
+[l4w05_17] 346 frames, hearts 4.5 -> f24243 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=4.5/5 rup=46 sword=2 lag=4742 (total 24242 frames, 1222s wall)
+  attempt 2: success 227 frames, hearts 4.5
+  attempt 7: success 220 frames, hearts 4.5
+  (early stop after 21 attempts)
+  attempt 26: success 216 frames, hearts 4.5
+[l4w06_27] 216 frames, hearts 4.5 -> f24459 mode=05/00 L0 room=27 pos=(144,61) dir=4 hp=4.5/5 rup=46 sword=2 lag=4792 (total 24458 frames, 1223s wall)
+  attempt 2: success 240 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4w07_28] 240 frames, hearts 4.5 -> f24699 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=4.5/5 rup=46 sword=2 lag=4863 (total 24698 frames, 1225s wall)
+  attempt 2: success 231 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4w08_38] 231 frames, hearts 4.5 -> f24930 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=4.5/5 rup=46 sword=2 lag=4913 (total 24929 frames, 1226s wall)
+  attempt 5: success 321 frames, hearts 4.5
+  attempt 4: success 295 frames, hearts 4.5
+  attempt 2: success 287 frames, hearts 4.5
+  (early stop after 18 attempts)
+[ow1_37] 287 frames, hearts 4.5 -> f25217 mode=05/00 L0 room=37 pos=(240,141) dir=2 hp=4.5/5 rup=46 sword=2 lag=4984 (total 25216 frames, 1228s wall)
+  attempt 2: success 293 frames, hearts 4.5
+  attempt 10: success 289 frames, hearts 4.5
+  (early stop after 22 attempts)
+[enter_L1] 289 frames, hearts 4.5 -> f25506 mode=05/00 L1 room=73 pos=(120,205) dir=8 hp=4.5/5 rup=46 sword=2 lag=5003 (total 25505 frames, 1230s wall)
+  attempt 2: success 322 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l1_72] 322 frames, hearts 4.5 -> f25828 mode=05/00 L1 room=72 pos=(224,141) dir=2 hp=4.5/5 rup=46 sword=2 lag=5139 (total 25827 frames, 1231s wall)
+  attempt 3: success 621 frames, hearts 4.5
+  attempt 18: success 607 frames, hearts 4.5
+  (early stop after 64 attempts)
+  attempt 69: success 602 frames, hearts 4.5
+[l1_72_key] 602 frames, hearts 4.5 -> f26430 mode=05/00 L1 room=73 pos=(16,141) dir=1 hp=4.5/5 rup=46 sword=2 lag=5275 (total 26429 frames, 1407s wall)
+  attempt 2: success 295 frames, hearts 4.5
+  attempt 12: success 294 frames, hearts 4.5
+  (early stop after 26 attempts)
+[l1_63] 294 frames, hearts 4.5 -> f26724 mode=05/00 L1 room=63 pos=(120,205) dir=8 hp=4.5/5 rup=46 sword=2 lag=5372 (total 26723 frames, 1409s wall)
+  attempt 2: success 287 frames, hearts 4.5
+  attempt 12: success 286 frames, hearts 4.5
+  attempt 15: success 363 frames, hearts 5.0
+  (early stop after 27 attempts)
+[l1_53] 363 frames, hearts 5.0 -> f27087 mode=05/00 L1 room=53 pos=(120,205) dir=8 hp=5.0/5 rup=46 sword=2 lag=5469 (total 27086 frames, 1414s wall)
+  attempt 3: success 234 frames, hearts 5.0
+  attempt 5: success 188 frames, hearts 5.0
+  attempt 2: success 192 frames, hearts 5.0
+  (early stop after 17 attempts)
+[l1_53_key] 192 frames, hearts 5.0 -> f27279 mode=05/00 L1 room=53 pos=(136,109) dir=2 hp=5.0/5 rup=46 sword=2 lag=5469 (total 27278 frames, 1486s wall)
+  attempt 2: success 285 frames, hearts 5.0
+  attempt 5: success 283 frames, hearts 5.0
+  attempt 10: success 282 frames, hearts 5.0
+  (early stop after 23 attempts)
+[l1_43] 282 frames, hearts 5.0 -> f27561 mode=05/00 L1 room=43 pos=(120,189) dir=8 hp=5.0/5 rup=46 sword=2 lag=5566 (total 27560 frames, 1487s wall)
+  attempt 2: success 275 frames, hearts 5.0
+  attempt 12: success 274 frames, hearts 5.0
+  (early stop after 22 attempts)
+[l1_33] 274 frames, hearts 5.0 -> f27835 mode=05/00 L1 room=33 pos=(120,205) dir=8 hp=5.0/5 rup=46 sword=2 lag=5663 (total 27834 frames, 1493s wall)
+  attempt 5: success 299 frames, hearts 5.0
+  attempt 10: success 296 frames, hearts 5.0
+  (early stop after 21 attempts)
+[l1_33_key] 296 frames, hearts 5.0 -> f28131 mode=05/00 L1 room=23 pos=(120,205) dir=8 hp=5.0/5 rup=46 sword=2 lag=5760 (total 28130 frames, 1499s wall)
+  attempt 4: success 494 frames, hearts 5.0
+  attempt 5: success 443 frames, hearts 5.0
+  attempt 1: success 367 frames, hearts 5.0
+  attempt 8: success 329 frames, hearts 5.0
+  attempt 18: success 328 frames, hearts 5.0
+  (early stop after 31 attempts)
+[l1_23_key] 328 frames, hearts 5.0 -> f28459 mode=05/00 L1 room=23 pos=(136,117) dir=2 hp=5.0/5 rup=46 sword=2 lag=5760 (total 28458 frames, 1585s wall)
+  attempt 2: success 347 frames, hearts 5.0
+  (early stop after 15 attempts)
+[l1_22] 347 frames, hearts 5.0 -> f28806 mode=05/00 L1 room=22 pos=(224,141) dir=2 hp=5.0/5 rup=46 sword=2 lag=5896 (total 28805 frames, 1586s wall)
+  attempt 5: success 390 frames, hearts 4.0
+  attempt 6: success 389 frames, hearts 4.0
+  (early stop after 30 attempts)
+[l1_bow_st] 389 frames, hearts 4.0 -> f29195 mode=09/09 L1 room=7f pos=(48,65) dir=4 hp=4.0/5 rup=46 sword=2 lag=5898 (total 29194 frames, 1590s wall)
+  attempt 2: success 826 frames, hearts 3.5
+  attempt 5: success 821 frames, hearts 3.5
+  attempt 7: success 843 frames, hearts 4.0
+  attempt 28: success 825 frames, hearts 4.0
+  attempt 35: success 820 frames, hearts 4.0
+  (early stop after 81 attempts)
+[l1_bow] 820 frames, hearts 4.0 -> f30015 mode=05/00 L1 room=22 pos=(96,173) dir=4 hp=4.0/5 rup=46 sword=2 lag=5901 (total 30014 frames, 1712s wall)
+  attempt 3: success 403 frames, hearts 3.0
+  attempt 2: success 380 frames, hearts 3.0
+  attempt 4: success 353 frames, hearts 3.0
+  (early stop after 43 attempts)
+[l1_b23] 353 frames, hearts 3.0 -> f30368 mode=05/00 L1 room=23 pos=(16,141) dir=1 hp=3.0/5 rup=46 sword=2 lag=6037 (total 30367 frames, 1721s wall)
+  attempt 2: success 283 frames, hearts 3.0
+  attempt 12: success 282 frames, hearts 3.0
+  (early stop after 26 attempts)
+[l1_b33] 282 frames, hearts 3.0 -> f30650 mode=05/00 L1 room=33 pos=(120,77) dir=4 hp=3.0/5 rup=46 sword=2 lag=6130 (total 30649 frames, 1723s wall)
+  attempt 2: success 268 frames, hearts 3.0
+  attempt 12: success 267 frames, hearts 3.0
+  (early stop after 23 attempts)
+[l1_b43] 267 frames, hearts 3.0 -> f30917 mode=05/00 L1 room=43 pos=(120,77) dir=4 hp=3.0/5 rup=46 sword=2 lag=6223 (total 30916 frames, 1726s wall)
+  attempt 3: success 349 frames, hearts 3.0
+  attempt 8: success 331 frames, hearts 3.0
+  attempt 12: success 329 frames, hearts 3.0
+  (early stop after 25 attempts)
+[l1_44] 329 frames, hearts 3.0 -> f31246 mode=05/00 L1 room=44 pos=(16,141) dir=1 hp=3.0/5 rup=46 sword=2 lag=6359 (total 31245 frames, 1730s wall)
+  attempt 2: success 371 frames, hearts 3.0
+  attempt 7: success 364 frames, hearts 3.0
+  attempt 4: success 354 frames, hearts 3.0
+  (early stop after 33 attempts)
+[l1_45] 354 frames, hearts 3.0 -> f31600 mode=05/00 L1 room=45 pos=(16,141) dir=1 hp=3.0/5 rup=46 sword=2 lag=6495 (total 31599 frames, 1738s wall)
+  attempt 2: success 1192 frames, hearts 3.0
+  attempt 1: success 1318 frames, hearts 4.0
+  attempt 7: success 1311 frames, hearts 4.0
+  attempt 8: success 1160 frames, hearts 4.0
+  (early stop after 69 attempts)
+[l1_45_key] 1160 frames, hearts 4.0 -> f32760 mode=05/00 L1 room=35 pos=(120,205) dir=8 hp=4.0/5 rup=47 sword=2 lag=6592 (total 32759 frames, 2208s wall)
+  attempt 4: success 237 frames, hearts 4.0
+  attempt 8: success 208 frames, hearts 3.5
+  attempt 39: success 205 frames, hearts 4.0
+  attempt 63: success 201 frames, hearts 4.0
+  trimmed 8 idle frames off aquamentus
+[aquamentus] 201 frames, hearts 4.0 -> f32953 mode=05/00 L1 room=35 pos=(160,125) dir=4 hp=4.0/5 rup=47 sword=2 lag=6592 (total 32952 frames, 2320s wall)
+  attempt 4: success 859 frames, hearts 6.0
+  (early stop after 49 attempts)
+[L1_done] 859 frames, hearts 6.0 -> f33812 mode=02/00 L0 room=36 pos=(112,149) dir=8 hp=6.0/6 rup=47 sword=2 lag=6735 (total 33811 frames, 2328s wall)
+  attempt 3: success 180 frames, hearts 6.0
+  (early stop after 15 attempts)
+[warp_L1] 180 frames, hearts 6.0 -> f33992 mode=05/00 L0 room=37 pos=(112,125) dir=4 hp=6.0/6 rup=47 sword=2 lag=6747 (total 33991 frames, 2329s wall)
+  attempt 2: success 216 frames, hearts 6.0
+  attempt 12: success 215 frames, hearts 6.0
+  (early stop after 26 attempts)
+[ws_38] 215 frames, hearts 6.0 -> f34207 mode=05/00 L0 room=38 pos=(0,141) dir=1 hp=6.0/6 rup=47 sword=2 lag=6818 (total 34206 frames, 2331s wall)
+  attempt 2: success 245 frames, hearts 5.5
+  attempt 3: success 288 frames, hearts 6.0
+  attempt 1: success 278 frames, hearts 6.0
+  attempt 7: success 270 frames, hearts 6.0
+  (early stop after 21 attempts)
+  attempt 26: success 266 frames, hearts 6.0
+[l4w09_48] 266 frames, hearts 6.0 -> f34473 mode=05/00 L0 room=48 pos=(112,61) dir=4 hp=6.0/6 rup=47 sword=2 lag=6868 (total 34472 frames, 2333s wall)
+  attempt 4: success 259 frames, hearts 6.0
+  attempt 13: success 255 frames, hearts 6.0
+  attempt 27: success 254 frames, hearts 6.0
+  (early stop after 40 attempts)
+[l4w10_47] 254 frames, hearts 6.0 -> f34727 mode=05/00 L0 room=47 pos=(240,141) dir=2 hp=6.0/6 rup=47 sword=2 lag=6939 (total 34726 frames, 2335s wall)
+  attempt 2: success 796 frames, hearts 7.0
+  attempt 5: success 794 frames, hearts 7.0
+  attempt 7: success 793 frames, hearts 7.0
+  (early stop after 55 attempts)
+[h47_heart] 793 frames, hearts 7.0 -> f35520 mode=05/00 L0 room=47 pos=(176,157) dir=4 hp=7.0/7 rup=47 sword=2 lag=6998 (total 35519 frames, 2351s wall)
+  attempt 2: success 239 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4w11_46] 239 frames, hearts 7.0 -> f35759 mode=05/00 L0 room=46 pos=(240,157) dir=2 hp=7.0/7 rup=47 sword=2 lag=7069 (total 35758 frames, 2352s wall)
+  attempt 2: success 217 frames, hearts 7.0
+  attempt 12: success 216 frames, hearts 7.0
+  (early stop after 23 attempts)
+[l4w12_56] 216 frames, hearts 7.0 -> f35975 mode=05/00 L0 room=56 pos=(128,61) dir=4 hp=7.0/7 rup=47 sword=2 lag=7119 (total 35974 frames, 2353s wall)
+  attempt 2: success 263 frames, hearts 7.0
+  attempt 8: success 262 frames, hearts 7.0
+  (early stop after 22 attempts)
+[l4w13_55] 262 frames, hearts 7.0 -> f36237 mode=05/00 L0 room=55 pos=(240,141) dir=2 hp=7.0/7 rup=47 sword=2 lag=7190 (total 36236 frames, 2356s wall)
+  attempt 5: success 265 frames, hearts 7.0
+  attempt 10: success 264 frames, hearts 7.0
+  (early stop after 24 attempts)
+[l4_sail] 264 frames, hearts 7.0 -> f36501 mode=05/00 L0 room=45 pos=(128,221) dir=8 hp=7.0/7 rup=47 sword=2 lag=7242 (total 36500 frames, 2357s wall)
+  attempt 2: success 271 frames, hearts 7.0
+  attempt 10: success 267 frames, hearts 7.0
+  (early stop after 22 attempts)
+[enter_L4] 267 frames, hearts 7.0 -> f36768 mode=05/00 L4 room=71 pos=(120,205) dir=8 hp=7.0/7 rup=47 sword=2 lag=7261 (total 36767 frames, 2359s wall)
+  attempt 2: success 322 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_70] 322 frames, hearts 7.0 -> f37090 mode=05/00 L4 room=70 pos=(224,141) dir=2 hp=7.0/7 rup=47 sword=2 lag=7397 (total 37089 frames, 2360s wall)
+  attempt 3: success 780 frames, hearts 7.0
+  attempt 1: success 758 frames, hearts 7.0
+  attempt 7: success 736 frames, hearts 7.0
+  attempt 4: success 683 frames, hearts 7.0
+  attempt 16: success 629 frames, hearts 7.0
+  attempt 21: success 548 frames, hearts 7.0
+  (early stop after 70 attempts)
+[l4_70_key] 548 frames, hearts 7.0 -> f37638 mode=05/00 L4 room=71 pos=(16,141) dir=1 hp=7.0/7 rup=47 sword=2 lag=7533 (total 37637 frames, 2535s wall)
+  attempt 2: success 284 frames, hearts 7.0
+  attempt 12: success 283 frames, hearts 7.0
+  (early stop after 23 attempts)
+[l4_61] 283 frames, hearts 7.0 -> f37921 mode=05/00 L4 room=61 pos=(120,205) dir=8 hp=7.0/7 rup=47 sword=2 lag=7630 (total 37920 frames, 2536s wall)
+  attempt 5: success 303 frames, hearts 7.0
+  attempt 6: success 286 frames, hearts 7.0
+  attempt 2: success 275 frames, hearts 7.0
+  attempt 12: success 274 frames, hearts 7.0
+  attempt 14: success 272 frames, hearts 7.0
+  attempt 25: success 271 frames, hearts 7.0
+  (early stop after 35 attempts)
+[l4_51] 271 frames, hearts 7.0 -> f38192 mode=05/00 L4 room=51 pos=(120,205) dir=8 hp=7.0/7 rup=47 sword=2 lag=7727 (total 38191 frames, 2550s wall)
+  attempt 2: success 690 frames, hearts 7.0
+  attempt 37: success 661 frames, hearts 7.0
+  (early stop after 84 attempts)
+[l4_51_key] 661 frames, hearts 7.0 -> f38853 mode=05/00 L4 room=50 pos=(224,141) dir=2 hp=7.0/7 rup=47 sword=2 lag=7864 (total 38852 frames, 2758s wall)
+  attempt 3: success 482 frames, hearts 7.0
+  attempt 1: success 475 frames, hearts 7.0
+  attempt 10: success 432 frames, hearts 7.0
+  attempt 8: success 426 frames, hearts 7.0
+  (early stop after 21 attempts)
+[l4_40] 426 frames, hearts 7.0 -> f39279 mode=05/00 L4 room=40 pos=(120,205) dir=8 hp=7.0/7 rup=47 sword=2 lag=7962 (total 39278 frames, 2772s wall)
+  attempt 5: success 398 frames, hearts 7.0
+  attempt 10: success 392 frames, hearts 7.0
+  (early stop after 22 attempts)
+[l4_40_key] 392 frames, hearts 7.0 -> f39671 mode=05/00 L4 room=30 pos=(120,205) dir=8 hp=7.0/7 rup=47 sword=2 lag=8060 (total 39670 frames, 2774s wall)
+  attempt 2: success 356 frames, hearts 7.0
+  attempt 12: success 355 frames, hearts 7.0
+  (early stop after 23 attempts)
+  attempt 26: success 352 frames, hearts 7.0
+[l4_31] 352 frames, hearts 7.0 -> f40023 mode=05/00 L4 room=31 pos=(16,141) dir=1 hp=7.0/7 rup=47 sword=2 lag=8196 (total 40022 frames, 2777s wall)
+  attempt 5: success 1056 frames, hearts 7.0
+  attempt 3: success 1040 frames, hearts 7.0
+  attempt 6: success 766 frames, hearts 7.0
+  attempt 18: success 748 frames, hearts 7.0
+  (early stop after 63 attempts)
+[l4_32] 748 frames, hearts 7.0 -> f40771 mode=05/00 L4 room=32 pos=(16,141) dir=1 hp=7.0/7 rup=47 sword=2 lag=8332 (total 40770 frames, 3062s wall)
+  attempt 2: success 1016 frames, hearts 7.0
+  attempt 5: success 845 frames, hearts 7.0
+  attempt 3: success 765 frames, hearts 7.0
+  attempt 8: success 756 frames, hearts 7.0
+  attempt 20: success 737 frames, hearts 7.0
+  attempt 35: success 734 frames, hearts 7.0
+  (early stop after 80 attempts)
+[l4_lad_st] 734 frames, hearts 7.0 -> f41505 mode=09/09 L4 room=60 pos=(48,65) dir=4 hp=7.0/7 rup=52 sword=2 lag=8334 (total 41504 frames, 3410s wall)
+  attempt 3: success 795 frames, hearts 7.0
+  attempt 10: success 786 frames, hearts 7.0
+  attempt 11: success 785 frames, hearts 7.0
+  attempt 28: success 781 frames, hearts 7.0
+  (early stop after 75 attempts)
+[l4_ladder] 781 frames, hearts 7.0 -> f42286 mode=05/00 L4 room=32 pos=(192,189) dir=4 hp=7.0/7 rup=52 sword=2 lag=8337 (total 42285 frames, 3531s wall)
+  attempt 2: success 373 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_b31] 373 frames, hearts 7.0 -> f42659 mode=05/00 L4 room=31 pos=(208,141) dir=2 hp=7.0/7 rup=52 sword=2 lag=8473 (total 42658 frames, 3532s wall)
+  attempt 5: success 402 frames, hearts 7.0
+  attempt 7: success 401 frames, hearts 7.0
+  (early stop after 18 attempts)
+[l4_b30] 401 frames, hearts 7.0 -> f43060 mode=05/00 L4 room=30 pos=(224,141) dir=2 hp=7.0/7 rup=52 sword=2 lag=8610 (total 43059 frames, 3563s wall)
+  attempt 2: success 352 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_20] 352 frames, hearts 7.0 -> f43412 mode=05/00 L4 room=20 pos=(120,205) dir=8 hp=7.0/7 rup=52 sword=2 lag=8708 (total 43411 frames, 3575s wall)
+  attempt 6: success 403 frames, hearts 7.0
+  attempt 3: success 398 frames, hearts 7.0
+  attempt 8: success 381 frames, hearts 7.0
+  attempt 12: success 379 frames, hearts 7.0
+  (early stop after 23 attempts)
+[l4_21] 379 frames, hearts 7.0 -> f43791 mode=05/00 L4 room=21 pos=(16,141) dir=1 hp=7.0/7 rup=52 sword=2 lag=8845 (total 43790 frames, 3588s wall)
+  attempt 4: success 717 frames, hearts 7.0
+  attempt 2: success 713 frames, hearts 7.0
+  attempt 3: success 711 frames, hearts 7.0
+  attempt 5: success 710 frames, hearts 7.0
+  attempt 7: success 709 frames, hearts 7.0
+  attempt 10: success 705 frames, hearts 7.0
+  (early stop after 56 attempts)
+[l4_11] 705 frames, hearts 7.0 -> f44496 mode=05/00 L4 room=11 pos=(120,189) dir=8 hp=7.0/7 rup=52 sword=2 lag=8942 (total 44495 frames, 3664s wall)
+  attempt 2: success 423 frames, hearts 7.0
+  attempt 4: success 420 frames, hearts 7.0
+  attempt 5: success 410 frames, hearts 7.0
+  attempt 12: success 409 frames, hearts 7.0
+  (early stop after 26 attempts)
+[l4_12r] 409 frames, hearts 7.0 -> f44905 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44904 frames, 3685s wall)
+  attempt 1: success 2 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_10] 2 frames, hearts 7.0 -> f44907 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44906 frames, 3685s wall)
+  attempt 3: success 2 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_00] 2 frames, hearts 7.0 -> f44909 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44908 frames, 3685s wall)
+  attempt 1: success 2 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_01] 2 frames, hearts 7.0 -> f44911 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44910 frames, 3685s wall)
+  attempt 2: success 2 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_02] 2 frames, hearts 7.0 -> f44913 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44912 frames, 3686s wall)
+  attempt 2: success 2 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l4_12] 2 frames, hearts 7.0 -> f44915 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9078 (total 44914 frames, 3686s wall)
+  attempt 6: success 757 frames, hearts 7.0
+  attempt 15: success 920 frames, hearts 7.0
+  (early stop after 77 attempts)
+[l4_13] 920 frames, hearts 7.0 -> f45835 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=7.0/7 rup=55 sword=2 lag=9214 (total 45834 frames, 3854s wall)
+  attempt 4: success 1346 frames, hearts 7.0
+  attempt 15: success 913 frames, hearts 7.0
+  attempt 32: success 809 frames, hearts 4.5
+[gleeok] 809 frames, hearts 4.5 -> f46644 mode=05/00 L4 room=13 pos=(113,109) dir=1 hp=4.5/7 rup=55 sword=2 lag=9214 (total 46643 frames, 5004s wall)
+  attempt 6: success 149 frames, hearts 5.5
+  attempt 4: success 145 frames, hearts 5.5
+  attempt 5: success 126 frames, hearts 5.5
+  attempt 10: success 121 frames, hearts 5.5
+  (early stop after 49 attempts)
+[l4_heart] 121 frames, hearts 5.5 -> f46765 mode=05/00 L4 room=13 pos=(200,181) dir=1 hp=5.5/8 rup=55 sword=2 lag=9214 (total 46764 frames, 5006s wall)
+  attempt 3: success 975 frames, hearts 8.0
+  (early stop after 63 attempts)
+[L4_done] 975 frames, hearts 8.0 -> f47740 mode=02/00 L0 room=03 pos=(120,149) dir=8 hp=8.0/8 rup=55 sword=2 lag=9327 (total 47739 frames, 5018s wall)
+  attempt 3: success 160 frames, hearts 8.0
+  (early stop after 15 attempts)
+[warp_L4] 160 frames, hearts 8.0 -> f47900 mode=05/00 L0 room=45 pos=(128,125) dir=4 hp=8.0/8 rup=55 sword=2 lag=9330 (total 47899 frames, 5018s wall)
+  attempt 4: success 264 frames, hearts 8.0
+  attempt 6: success 260 frames, hearts 8.0
+  attempt 2: success 257 frames, hearts 8.0
+  attempt 5: success 255 frames, hearts 8.0
+  attempt 10: success 254 frames, hearts 8.0
+  (early stop after 25 attempts)
+[l2_sail] 254 frames, hearts 8.0 -> f48154 mode=05/00 L0 room=55 pos=(128,127) dir=4 hp=8.0/8 rup=55 sword=2 lag=9380 (total 48153 frames, 5020s wall)
+  attempt 5: success 257 frames, hearts 8.0
+  attempt 1: success 241 frames, hearts 8.0
+  attempt 2: success 224 frames, hearts 8.0
+  attempt 12: success 223 frames, hearts 8.0
+  (early stop after 26 attempts)
+[l2w00_56] 223 frames, hearts 8.0 -> f48377 mode=05/00 L0 room=56 pos=(0,141) dir=1 hp=8.0/8 rup=55 sword=2 lag=9451 (total 48376 frames, 5022s wall)
+  attempt 1: success 328 frames, hearts 8.0
+  attempt 2: success 322 frames, hearts 8.0
+  attempt 7: success 319 frames, hearts 8.0
+  (early stop after 21 attempts)
+  attempt 26: success 315 frames, hearts 8.0
+[l2w01_57] 315 frames, hearts 8.0 -> f48692 mode=05/00 L0 room=57 pos=(0,141) dir=1 hp=8.0/8 rup=55 sword=2 lag=9522 (total 48691 frames, 5026s wall)
+  attempt 4: success 313 frames, hearts 7.5
+  attempt 2: success 300 frames, hearts 7.5
+  (early stop after 30 attempts)
+[l2w02_58] 300 frames, hearts 7.5 -> f48992 mode=05/00 L0 room=58 pos=(0,125) dir=1 hp=7.5/8 rup=55 sword=2 lag=9593 (total 48991 frames, 5029s wall)
+  attempt 2: success 200 frames, hearts 7.5
+  attempt 5: success 194 frames, hearts 7.5
+  (early stop after 17 attempts)
+[r6b_68] 194 frames, hearts 7.5 -> f49186 mode=05/00 L0 room=68 pos=(48,61) dir=4 hp=7.5/8 rup=55 sword=2 lag=9643 (total 49185 frames, 5030s wall)
+  attempt 2: success 317 frames, hearts 7.5
+  attempt 5: success 313 frames, hearts 7.5
+  attempt 10: success 311 frames, hearts 7.5
+  (early stop after 23 attempts)
+[r6b_69] 311 frames, hearts 7.5 -> f49497 mode=05/00 L0 room=69 pos=(0,141) dir=1 hp=7.5/8 rup=55 sword=2 lag=9714 (total 49496 frames, 5034s wall)
+  attempt 1: success 317 frames, hearts 7.5
+  attempt 5: success 313 frames, hearts 7.5
+  attempt 10: success 311 frames, hearts 7.5
+  (early stop after 26 attempts)
+[r6b_6a] 311 frames, hearts 7.5 -> f49808 mode=05/00 L0 room=6a pos=(0,173) dir=1 hp=7.5/8 rup=55 sword=2 lag=9785 (total 49807 frames, 5038s wall)
+  attempt 5: success 321 frames, hearts 7.5
+  attempt 10: success 319 frames, hearts 7.5
+  (early stop after 22 attempts)
+[r6b_6b] 319 frames, hearts 7.5 -> f50127 mode=05/00 L0 room=6b pos=(0,173) dir=1 hp=7.5/8 rup=55 sword=2 lag=9856 (total 50126 frames, 5041s wall)
+  attempt 2: success 1002 frames, hearts 7.5
+  attempt 8: success 1001 frames, hearts 7.5
+  attempt 10: success 999 frames, hearts 7.5
+  (early stop after 72 attempts)
+[cave_6b] 999 frames, hearts 7.5 -> f51126 mode=05/00 L0 room=6b pos=(80,157) dir=4 hp=7.5/8 rup=155 sword=2 lag=9915 (total 51125 frames, 5056s wall)
+  attempt 4: success 298 frames, hearts 7.0
+  attempt 5: success 293 frames, hearts 7.0
+  attempt 10: success 290 frames, hearts 7.0
+  attempt 36: success 266 frames, hearts 7.5
+  attempt 40: success 261 frames, hearts 7.5
+  (early stop after 51 attempts)
+[l8a_5b] 261 frames, hearts 7.5 -> f51387 mode=05/00 L0 room=5b pos=(192,221) dir=8 hp=7.5/8 rup=155 sword=2 lag=9977 (total 51386 frames, 5059s wall)
+  attempt 2: success 243 frames, hearts 7.5
+  attempt 5: success 238 frames, hearts 7.5
+  attempt 10: success 237 frames, hearts 7.5
+  (early stop after 25 attempts)
+[l8a_5c] 237 frames, hearts 7.5 -> f51624 mode=05/00 L0 room=5c pos=(0,93) dir=1 hp=7.5/8 rup=155 sword=2 lag=10048 (total 51623 frames, 5061s wall)
+  attempt 2: success 367 frames, hearts 7.0
+  attempt 5: success 363 frames, hearts 7.0
+  attempt 10: success 361 frames, hearts 7.0
+  (early stop after 39 attempts)
+[l8a_5d] 361 frames, hearts 7.0 -> f51985 mode=05/00 L0 room=5d pos=(0,157) dir=1 hp=7.0/8 rup=155 sword=2 lag=10119 (total 51984 frames, 5064s wall)
+  attempt 3: success 284 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l8a_6d] 284 frames, hearts 7.0 -> f52269 mode=05/00 L0 room=6d pos=(192,61) dir=4 hp=7.0/8 rup=155 sword=2 lag=10169 (total 52268 frames, 5066s wall)
+  attempt 3: success 303 frames, hearts 7.0
+  attempt 2: success 299 frames, hearts 7.0
+  attempt 5: success 297 frames, hearts 7.0
+  attempt 10: success 296 frames, hearts 7.0
+  (early stop after 23 attempts)
+[enter_L8] 296 frames, hearts 7.0 -> f52565 mode=05/00 L8 room=7e pos=(120,205) dir=8 hp=7.0/8 rup=155 sword=2 lag=10188 (total 52564 frames, 5067s wall)
+  attempt 4: success 380 frames, hearts 7.0
+  attempt 2: success 372 frames, hearts 7.0
+  attempt 12: success 371 frames, hearts 7.0
+  (early stop after 26 attempts)
+[l8_7f] 371 frames, hearts 7.0 -> f52936 mode=05/00 L8 room=7f pos=(16,141) dir=1 hp=7.0/8 rup=155 sword=2 lag=10325 (total 52935 frames, 5070s wall)
+  attempt 2: success 448 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l8_7f_key] 448 frames, hearts 7.0 -> f53384 mode=05/00 L8 room=7e pos=(224,141) dir=2 hp=7.0/8 rup=155 sword=2 lag=10461 (total 53383 frames, 5071s wall)
+  attempt 1: success 298 frames, hearts 7.0
+  attempt 2: success 287 frames, hearts 7.0
+  attempt 12: success 286 frames, hearts 7.0
+  (early stop after 21 attempts)
+[l8_6e] 286 frames, hearts 7.0 -> f53670 mode=05/00 L8 room=6e pos=(120,205) dir=8 hp=7.0/8 rup=155 sword=2 lag=10558 (total 53669 frames, 5073s wall)
+  attempt 3: success 567 frames, hearts 7.0
+  attempt 11: success 566 frames, hearts 7.0
+  attempt 16: success 565 frames, hearts 7.0
+  (early stop after 63 attempts)
+[l8_5e] 565 frames, hearts 7.0 -> f54235 mode=05/00 L8 room=5e pos=(120,189) dir=8 hp=7.0/8 rup=155 sword=2 lag=10659 (total 54234 frames, 5082s wall)
+  attempt 2: success 1142 frames, hearts 6.0
+  attempt 4: success 1247 frames, hearts 8.0
+  attempt 7: success 1121 frames, hearts 7.0
+  attempt 12: success 1171 frames, hearts 6.5
+  attempt 15: success 1231 frames, hearts 8.0
+  attempt 16: success 850 frames, hearts 7.0
+  (early stop after 62 attempts)
+[l8_5e_key] 850 frames, hearts 7.0 -> f55085 mode=05/00 L8 room=5d pos=(224,141) dir=2 hp=7.0/8 rup=155 sword=2 lag=10837 (total 55084 frames, 5528s wall)
+  attempt 2: success 570 frames, hearts 5.0
+  attempt 5: success 556 frames, hearts 7.0
+  attempt 21: success 552 frames, hearts 7.0
+  attempt 31: success 536 frames, hearts 7.0
+  (early stop after 79 attempts)
+[l8_5d_key] 536 frames, hearts 7.0 -> f55621 mode=05/00 L8 room=5e pos=(32,141) dir=1 hp=7.0/8 rup=155 sword=2 lag=10973 (total 55620 frames, 5540s wall)
+  attempt 2: success 265 frames, hearts 7.0
+  (early stop after 15 attempts)
+[l8_4e] 265 frames, hearts 7.0 -> f55886 mode=05/00 L8 room=4e pos=(120,205) dir=8 hp=7.0/8 rup=155 sword=2 lag=11070 (total 55885 frames, 5541s wall)
+  attempt 5: success 422 frames, hearts 7.0
+  attempt 12: success 329 frames, hearts 7.0
+  (early stop after 23 attempts)
+[l8_3e] 329 frames, hearts 7.0 -> f56215 mode=05/00 L8 room=3e pos=(120,205) dir=8 hp=7.0/8 rup=155 sword=2 lag=11170 (total 56214 frames, 5558s wall)
+  attempt 2: success 1497 frames, hearts 7.0
+  attempt 1: success 1445 frames, hearts 8.0
+  attempt 16: success 1321 frames, hearts 8.0
+  attempt 30: success 1316 frames, hearts 8.0
+  attempt 41: success 1208 frames, hearts 8.0
+  attempt 69: success 966 frames, hearts 8.0
+[r8_3f] 966 frames, hearts 8.0 -> f57181 mode=05/00 L8 room=3f pos=(32,141) dir=1 hp=8.0/8 rup=155 sword=2 lag=11307 (total 57180 frames, 6326s wall)
+  attempt 5: success 841 frames, hearts 8.0
+  attempt 10: success 798 frames, hearts 8.0
+  attempt 25: success 765 frames, hearts 8.0
+  attempt 59: success 760 frames, hearts 8.0
+[r8_3f_bombs] 760 frames, hearts 8.0 -> f57941 mode=05/00 L8 room=3f pos=(120,149) dir=1 hp=8.0/8 rup=155 sword=2 lag=11316 (total 57940 frames, 6805s wall)
+  attempt 3: success 186 frames, hearts 8.0
+  (early stop after 15 attempts)
+[r8_3f_st] 186 frames, hearts 8.0 -> f58127 mode=09/09 L8 room=2f pos=(192,65) dir=4 hp=8.0/8 rup=155 sword=2 lag=11318 (total 58126 frames, 6806s wall)
+  attempt 4: success 391 frames, hearts 7.5
+  (early stop after 29 attempts)
+[r8_pass] 391 frames, hearts 7.5 -> f58518 mode=05/00 L8 room=4c pos=(112,125) dir=4 hp=7.5/8 rup=155 sword=2 lag=11321 (total 58517 frames, 6808s wall)
+  attempt 3: success 1176 frames, hearts 7.5
+  attempt 7: success 1169 frames, hearts 7.5
+  (early stop after 71 attempts)
+[l8_3c] 1169 frames, hearts 7.5 -> f59687 mode=05/00 L8 room=3c pos=(120,189) dir=8 hp=7.5/8 rup=155 sword=2 lag=11419 (total 59686 frames, 7049s wall)
+  attempt 5: success 2680 frames, hearts 2.0
+  attempt 9: success 832 frames, hearts 4.5
+  (early stop after 74 attempts)
+[l8_gleeok] 832 frames, hearts 4.5 -> f60519 mode=05/00 L8 room=3c pos=(135,101) dir=2 hp=4.5/8 rup=155 sword=2 lag=11423 (total 60518 frames, 7730s wall)
+  attempt 5: success 134 frames, hearts 5.5
+  attempt 10: success 129 frames, hearts 5.5
+  (early stop after 50 attempts)
+[l8_heart] 129 frames, hearts 5.5 -> f60648 mode=05/00 L8 room=3c pos=(40,181) dir=2 hp=5.5/9 rup=155 sword=2 lag=11423 (total 60647 frames, 7732s wall)
+  attempt 3: success 928 frames, hearts 9.0
+  (early stop after 63 attempts)
+[L8_done] 928 frames, hearts 9.0 -> f61576 mode=02/00 L0 room=2c pos=(120,149) dir=8 hp=9.0/9 rup=155 sword=2 lag=11533 (total 61575 frames, 7740s wall)
+  attempt 2: success 100 frames, hearts 9.0
+  (early stop after 15 attempts)
+[warp_L8] 100 frames, hearts 9.0 -> f61676 mode=05/00 L0 room=6d pos=(96,93) dir=4 hp=9.0/9 rup=155 sword=2 lag=11539 (total 61675 frames, 7741s wall)
+  attempt 1: success 152 frames, hearts 9.0
+  attempt 5: success 147 frames, hearts 9.0
+  (early stop after 16 attempts)
+[l2b_5d] 147 frames, hearts 9.0 -> f61823 mode=05/00 L0 room=5d pos=(48,221) dir=8 hp=9.0/9 rup=155 sword=2 lag=11591 (total 61822 frames, 7741s wall)
+  attempt 5: success 218 frames, hearts 9.0
+  attempt 7: success 210 frames, hearts 9.0
+  attempt 20: success 209 frames, hearts 9.0
+  (early stop after 33 attempts)
+[l2b_4d] 209 frames, hearts 9.0 -> f62032 mode=05/00 L0 room=4d pos=(48,221) dir=8 hp=9.0/9 rup=155 sword=2 lag=11643 (total 62031 frames, 7743s wall)
+  attempt 5: success 202 frames, hearts 9.0
+  (early stop after 15 attempts)
+[l2b_4c] 202 frames, hearts 9.0 -> f62234 mode=05/00 L0 room=4c pos=(240,141) dir=2 hp=9.0/9 rup=155 sword=2 lag=11714 (total 62233 frames, 7744s wall)
+  attempt 1: success 289 frames, hearts 9.0
+  attempt 5: success 285 frames, hearts 9.0
+  attempt 10: success 284 frames, hearts 9.0
+  (early stop after 24 attempts)
+[l2b_3c] 284 frames, hearts 9.0 -> f62518 mode=05/00 L0 room=3c pos=(112,221) dir=8 hp=9.0/9 rup=155 sword=2 lag=11766 (total 62517 frames, 7747s wall)
+  attempt 2: success 270 frames, hearts 9.0
+  (early stop after 15 attempts)
+[enter_L2] 270 frames, hearts 9.0 -> f62788 mode=05/00 L2 room=7d pos=(120,205) dir=8 hp=9.0/9 rup=155 sword=2 lag=11785 (total 62787 frames, 7748s wall)
+  attempt 2: success 253 frames, hearts 9.0
+  (early stop after 15 attempts)
+[l2_6d] 253 frames, hearts 9.0 -> f63041 mode=05/00 L2 room=6d pos=(120,205) dir=8 hp=9.0/9 rup=155 sword=2 lag=11882 (total 63040 frames, 7750s wall)
+  attempt 3: success 349 frames, hearts 9.0
+  attempt 2: success 340 frames, hearts 9.0
+  attempt 8: success 332 frames, hearts 9.0
+  attempt 16: success 331 frames, hearts 9.0
+  (early stop after 27 attempts)
+[l2_6e] 331 frames, hearts 9.0 -> f63372 mode=05/00 L2 room=6e pos=(16,141) dir=1 hp=9.0/9 rup=155 sword=2 lag=12018 (total 63371 frames, 7754s wall)
+  attempt 5: success 314 frames, hearts 9.0
+  attempt 3: success 302 frames, hearts 9.0
+  attempt 2: success 284 frames, hearts 9.0
+  attempt 12: success 283 frames, hearts 9.0
+  (early stop after 23 attempts)
+  attempt 26: success 280 frames, hearts 9.0
+[l2_5e] 280 frames, hearts 9.0 -> f63652 mode=05/00 L2 room=5e pos=(120,205) dir=8 hp=9.0/9 rup=155 sword=2 lag=12115 (total 63651 frames, 7758s wall)
+  attempt 2: success 324 frames, hearts 8.5
+  attempt 8: success 296 frames, hearts 9.0
+  (early stop after 20 attempts)
+[l2_4e] 296 frames, hearts 9.0 -> f63948 mode=05/00 L2 room=4e pos=(120,189) dir=8 hp=9.0/9 rup=155 sword=2 lag=12212 (total 63947 frames, 7763s wall)
+  attempt 2: success 241 frames, hearts 9.0
+  attempt 12: success 240 frames, hearts 9.0
+  (early stop after 23 attempts)
+  attempt 26: success 238 frames, hearts 9.0
+[l2_3e] 238 frames, hearts 9.0 -> f64186 mode=05/00 L2 room=3e pos=(120,205) dir=8 hp=9.0/9 rup=155 sword=2 lag=12309 (total 64185 frames, 7766s wall)
+  attempt 5: success 347 frames, hearts 9.0
+  attempt 1: success 328 frames, hearts 9.0
+  attempt 2: success 319 frames, hearts 9.0
+  (early stop after 19 attempts)
+[l2_3f] 319 frames, hearts 9.0 -> f64505 mode=05/00 L2 room=3f pos=(16,141) dir=1 hp=9.0/9 rup=155 sword=2 lag=12445 (total 64504 frames, 7769s wall)
+  attempt 5: success 435 frames, hearts 9.0
+  attempt 10: success 429 frames, hearts 9.0
+  (early stop after 22 attempts)
+[l2_bombs] 429 frames, hearts 9.0 -> f64934 mode=05/00 L2 room=3e pos=(224,141) dir=2 hp=9.0/9 rup=155 sword=2 lag=12581 (total 64933 frames, 7774s wall)
+  attempt 6: success 411 frames, hearts 8.0
+  attempt 2: success 413 frames, hearts 8.5
+  attempt 3: success 451 frames, hearts 9.0
+  attempt 10: success 347 frames, hearts 8.5
+  attempt 8: success 402 frames, hearts 9.0
+  attempt 13: success 395 frames, hearts 9.0
+  attempt 17: success 334 frames, hearts 9.0
+  (early stop after 26 attempts)
+[l2_2e] 334 frames, hearts 9.0 -> f65268 mode=05/00 L2 room=2e pos=(120,205) dir=8 hp=9.0/9 rup=155 sword=2 lag=12678 (total 65267 frames, 7782s wall)
+  attempt 3: success 883 frames, hearts 9.0
+  attempt 5: success 772 frames, hearts 9.0
+  attempt 6: success 666 frames, hearts 9.0
+  attempt 10: success 647 frames, hearts 9.0
+  attempt 37: success 635 frames, hearts 9.0
+  (early stop after 85 attempts)
+[l2_1e] 635 frames, hearts 9.0 -> f65903 mode=05/00 L2 room=1e pos=(120,189) dir=8 hp=9.0/9 rup=161 sword=2 lag=12779 (total 65902 frames, 8000s wall)
+  attempt 3: success 636 frames, hearts 9.0
+  attempt 1: success 506 frames, hearts 9.0
+  (early stop after 50 attempts)
+[l2_0e] 506 frames, hearts 9.0 -> f66409 mode=05/00 L2 room=0e pos=(120,205) dir=8 hp=9.0/9 rup=161 sword=2 lag=12876 (total 66408 frames, 8105s wall)
+  attempt 5: success 433 frames, hearts 9.0
+  attempt 1: success 432 frames, hearts 9.0
+  (early stop after 45 attempts)
+[dodongo] 432 frames, hearts 9.0 -> f66841 mode=05/00 L2 room=0e pos=(147,181) dir=1 hp=9.0/9 rup=161 sword=2 lag=12876 (total 66840 frames, 8110s wall)
+  attempt 4: success 887 frames, hearts 10.0
+  (early stop after 49 attempts)
+[L2_done] 887 frames, hearts 10.0 -> f67728 mode=02/00 L0 room=0d pos=(128,149) dir=8 hp=10.0/10 rup=161 sword=2 lag=13022 (total 67727 frames, 8118s wall)
+  attempt 3: success 160 frames, hearts 10.0
+  (early stop after 15 attempts)
+[warp_L2] 160 frames, hearts 10.0 -> f67888 mode=05/00 L0 room=3c pos=(112,125) dir=4 hp=10.0/10 rup=161 sword=2 lag=13031 (total 67887 frames, 8118s wall)
+  attempt 4: success 186 frames, hearts 10.0
+  attempt 2: success 178 frames, hearts 10.0
+  attempt 12: success 177 frames, hearts 10.0
+  (early stop after 26 attempts)
+[l5w00_4c] 177 frames, hearts 10.0 -> f68065 mode=05/00 L0 room=4c pos=(112,61) dir=4 hp=10.0/10 rup=161 sword=2 lag=13081 (total 68064 frames, 8120s wall)
+  attempt 4: success 376 frames, hearts 10.0
+  attempt 14: success 374 frames, hearts 10.0
+  attempt 25: success 373 frames, hearts 10.0
+  (early stop after 39 attempts)
+  attempt 43: success 370 frames, hearts 10.0
+[l5w01_4d] 370 frames, hearts 10.0 -> f68435 mode=05/00 L0 room=4d pos=(0,141) dir=1 hp=10.0/10 rup=161 sword=2 lag=13152 (total 68434 frames, 8125s wall)
+  attempt 4: success 166 frames, hearts 10.0
+  attempt 2: success 158 frames, hearts 10.0
+  attempt 12: success 157 frames, hearts 10.0
+  (early stop after 23 attempts)
+[l5w02_3d] 157 frames, hearts 10.0 -> f68592 mode=05/00 L0 room=3d pos=(16,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13204 (total 68591 frames, 8127s wall)
+  attempt 4: success 302 frames, hearts 10.0
+  attempt 2: success 278 frames, hearts 10.0
+  (early stop after 16 attempts)
+[l5w03_2d] 278 frames, hearts 10.0 -> f68870 mode=05/00 L0 room=2d pos=(112,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13256 (total 68869 frames, 8129s wall)
+  attempt 2: success 215 frames, hearts 10.0
+  attempt 12: success 214 frames, hearts 10.0
+  (early stop after 24 attempts)
+[l5w04_2c] 214 frames, hearts 10.0 -> f69084 mode=05/00 L0 room=2c pos=(240,189) dir=2 hp=10.0/10 rup=161 sword=2 lag=13327 (total 69083 frames, 8131s wall)
+  attempt 1: success 402 frames, hearts 9.0
+  attempt 4: success 419 frames, hearts 9.5
+  attempt 5: success 469 frames, hearts 10.0
+  attempt 7: success 427 frames, hearts 10.0
+  (early stop after 21 attempts)
+  attempt 22: success 426 frames, hearts 10.0
+[l5w05_1c] 426 frames, hearts 10.0 -> f69510 mode=05/00 L0 room=1c pos=(48,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13379 (total 69509 frames, 8135s wall)
+  attempt 2: success 217 frames, hearts 10.0
+  attempt 12: success 216 frames, hearts 10.0
+  (early stop after 25 attempts)
+[l5w06_1b] 216 frames, hearts 10.0 -> f69726 mode=05/00 L0 room=1b pos=(240,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=13450 (total 69725 frames, 8137s wall)
+  attempt 2: success 257 frames, hearts 10.0
+  (early stop after 15 attempts)
+[hills_1] 257 frames, hearts 10.0 -> f69983 mode=05/00 L0 room=1b pos=(112,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13502 (total 69982 frames, 8138s wall)
+  attempt 2: success 235 frames, hearts 10.0
+  attempt 12: success 234 frames, hearts 10.0
+  (early stop after 26 attempts)
+[hills_2] 234 frames, hearts 10.0 -> f70217 mode=05/00 L0 room=1b pos=(112,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13554 (total 70216 frames, 8139s wall)
+  attempt 1: success 246 frames, hearts 10.0
+  attempt 2: success 235 frames, hearts 10.0
+  attempt 12: success 234 frames, hearts 10.0
+  (early stop after 23 attempts)
+[hills_3] 234 frames, hearts 10.0 -> f70451 mode=05/00 L0 room=1b pos=(112,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13606 (total 70450 frames, 8141s wall)
+  attempt 2: success 235 frames, hearts 10.0
+  attempt 12: success 234 frames, hearts 10.0
+  (early stop after 26 attempts)
+[hills_4] 234 frames, hearts 10.0 -> f70685 mode=05/00 L0 room=0b pos=(112,221) dir=8 hp=10.0/10 rup=161 sword=2 lag=13658 (total 70684 frames, 8142s wall)
+  attempt 3: success 260 frames, hearts 9.5
+  (early stop after 29 attempts)
+[enter_L5] 260 frames, hearts 9.5 -> f70945 mode=05/00 L5 room=76 pos=(120,205) dir=8 hp=9.5/10 rup=161 sword=2 lag=13677 (total 70944 frames, 8144s wall)
+  attempt 2: success 306 frames, hearts 9.5
+  (early stop after 15 attempts)
+[l5_66] 306 frames, hearts 9.5 -> f71251 mode=05/00 L5 room=66 pos=(120,205) dir=8 hp=9.5/10 rup=161 sword=2 lag=13775 (total 71250 frames, 8145s wall)
+  attempt 5: success 214 frames, hearts 7.5
+  attempt 10: success 208 frames, hearts 7.5
+  attempt 9: success 409 frames, hearts 9.5
+  attempt 12: success 249 frames, hearts 9.5
+  (early stop after 25 attempts)
+[l5_66_key] 249 frames, hearts 9.5 -> f71500 mode=05/00 L5 room=66 pos=(168,105) dir=4 hp=9.5/10 rup=161 sword=2 lag=13775 (total 71499 frames, 8156s wall)
+  attempt 1: success 465 frames, hearts 9.5
+  attempt 9: success 463 frames, hearts 9.5
+  (early stop after 21 attempts)
+[l5_65] 463 frames, hearts 9.5 -> f71963 mode=05/00 L5 room=65 pos=(208,141) dir=2 hp=9.5/10 rup=161 sword=2 lag=13911 (total 71962 frames, 8179s wall)
+  attempt 4: success 728 frames, hearts 9.5
+  attempt 2: success 1117 frames, hearts 9.5
+  attempt 7: success 994 frames, hearts 9.5
+  (early stop after 70 attempts)
+  attempt 71: success 989 frames, hearts 9.5
+[l5_64] 989 frames, hearts 9.5 -> f72952 mode=05/00 L5 room=64 pos=(208,141) dir=2 hp=9.5/10 rup=161 sword=2 lag=14047 (total 72951 frames, 8323s wall)
+  attempt 2: success 983 frames, hearts 10.0
+  attempt 3: success 1063 frames, hearts 9.5
+  attempt 10: success 1095 frames, hearts 10.0
+  attempt 23: success 1077 frames, hearts 10.0
+  attempt 53: success 1060 frames, hearts 10.0
+[l5_rec_st] 1060 frames, hearts 10.0 -> f74012 mode=09/09 L5 room=07 pos=(48,65) dir=4 hp=10.0/10 rup=161 sword=2 lag=14049 (total 74011 frames, 8942s wall)
+  attempt 3: success 389 frames, hearts 10.0
+  (early stop after 15 attempts)
+[l5_passage] 389 frames, hearts 10.0 -> f74401 mode=05/00 L5 room=06 pos=(96,157) dir=4 hp=10.0/10 rup=161 sword=2 lag=14052 (total 74400 frames, 8944s wall)
+  attempt 4: success 284 frames, hearts 10.0
+  attempt 2: success 276 frames, hearts 10.0
+  (early stop after 16 attempts)
+[l5_05] 276 frames, hearts 10.0 -> f74677 mode=05/00 L5 room=05 pos=(224,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=14188 (total 74676 frames, 8945s wall)
+  attempt 2: success 1165 frames, hearts 10.0
+  attempt 14: success 1139 frames, hearts 10.0
+  attempt 28: success 1097 frames, hearts 10.0
+  (early stop after 90 attempts)
+[l5_rec_st2] 1097 frames, hearts 10.0 -> f75774 mode=09/09 L5 room=04 pos=(48,65) dir=4 hp=10.0/10 rup=161 sword=2 lag=14191 (total 75773 frames, 9643s wall)
+  attempt 2: success 829 frames, hearts 10.0
+  attempt 4: success 796 frames, hearts 10.0
+  attempt 9: success 786 frames, hearts 10.0
+  (early stop after 57 attempts)
+[l5_recorder] 786 frames, hearts 10.0 -> f76560 mode=05/00 L5 room=05 pos=(144,141) dir=4 hp=10.0/10 rup=161 sword=2 lag=14194 (total 76559 frames, 9744s wall)
+  attempt 2: success 256 frames, hearts 10.0
+  attempt 12: success 255 frames, hearts 10.0
+  (early stop after 26 attempts)
+[l5_b06] 255 frames, hearts 10.0 -> f76815 mode=05/00 L5 room=06 pos=(16,141) dir=1 hp=10.0/10 rup=161 sword=2 lag=14330 (total 76814 frames, 9746s wall)
+  attempt 4: success 268 frames, hearts 10.0
+  attempt 5: success 267 frames, hearts 10.0
+  attempt 2: success 261 frames, hearts 10.0
+  (early stop after 18 attempts)
+[l5_back_st] 261 frames, hearts 10.0 -> f77076 mode=09/09 L5 room=07 pos=(192,65) dir=4 hp=10.0/10 rup=161 sword=2 lag=14332 (total 77075 frames, 9747s wall)
+  attempt 1: success 421 frames, hearts 9.5
+  (early stop after 29 attempts)
+[l5_back] 421 frames, hearts 9.5 -> f77497 mode=05/00 L5 room=64 pos=(96,157) dir=4 hp=9.5/10 rup=161 sword=2 lag=14335 (total 77496 frames, 9749s wall)
+  attempt 1: success 352 frames, hearts 9.5
+  attempt 4: success 349 frames, hearts 9.5
+  attempt 2: success 341 frames, hearts 9.5
+  (early stop after 20 attempts)
+[l5_b65] 341 frames, hearts 9.5 -> f77838 mode=05/00 L5 room=65 pos=(32,141) dir=1 hp=9.5/10 rup=161 sword=2 lag=14471 (total 77837 frames, 9751s wall)
+  attempt 2: success 550 frames, hearts 9.5
+  attempt 7: success 498 frames, hearts 9.5
+  attempt 10: success 483 frames, hearts 9.5
+  (early stop after 21 attempts)
+[l5_b66] 483 frames, hearts 9.5 -> f78321 mode=05/00 L5 room=66 pos=(32,141) dir=1 hp=9.5/10 rup=161 sword=2 lag=14608 (total 78320 frames, 9763s wall)
+  attempt 2: success 667 frames, hearts 9.5
+  attempt 11: success 657 frames, hearts 9.5
+  (early stop after 57 attempts)
+  attempt 60: success 618 frames, hearts 9.5
+[l5_c56] 618 frames, hearts 9.5 -> f78939 mode=05/00 L5 room=56 pos=(120,205) dir=8 hp=9.5/10 rup=161 sword=2 lag=14705 (total 78938 frames, 9955s wall)
+  attempt 3: success 385 frames, hearts 9.5
+  attempt 8: success 369 frames, hearts 9.5
+  (early stop after 20 attempts)
+[l5_c57] 369 frames, hearts 9.5 -> f79308 mode=05/00 L5 room=57 pos=(16,141) dir=1 hp=9.5/10 rup=161 sword=2 lag=14842 (total 79307 frames, 9959s wall)
+  attempt 2: success 320 frames, hearts 9.5
+  attempt 12: success 319 frames, hearts 9.5
+  (early stop after 23 attempts)
+  attempt 20: success 316 frames, hearts 9.5
+  attempt 26: success 314 frames, hearts 9.5
+[l5_47b] 314 frames, hearts 9.5 -> f79622 mode=05/00 L5 room=47 pos=(120,205) dir=8 hp=9.5/10 rup=161 sword=2 lag=14939 (total 79621 frames, 9963s wall)
+  attempt 5: success 1037 frames, hearts 9.5
+  attempt 14: success 1028 frames, hearts 9.5
+  attempt 22: success 1010 frames, hearts 9.5
+  attempt 38: success 1043 frames, hearts 10.0
+[l5_47_key] 1043 frames, hearts 10.0 -> f80665 mode=05/00 L5 room=37 pos=(120,205) dir=8 hp=10.0/10 rup=161 sword=2 lag=15037 (total 80664 frames, 10391s wall)
+  attempt 5: success 303 frames, hearts 9.0
+  attempt 1: success 290 frames, hearts 9.0
+  attempt 2: success 334 frames, hearts 10.0
+  (early stop after 17 attempts)
+[l5_27] 334 frames, hearts 10.0 -> f80999 mode=05/00 L5 room=27 pos=(120,205) dir=8 hp=10.0/10 rup=161 sword=2 lag=15135 (total 80998 frames, 10397s wall)
+  attempt 4: success 420 frames, hearts 10.0
+  attempt 5: success 399 frames, hearts 10.0
+  attempt 10: success 393 frames, hearts 10.0
+  (early stop after 26 attempts)
+[l5_27_key] 393 frames, hearts 10.0 -> f81392 mode=05/00 L5 room=26 pos=(224,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=15271 (total 81391 frames, 10400s wall)
+  attempt 4: success 1222 frames, hearts 10.0
+  attempt 5: success 1071 frames, hearts 10.0
+  attempt 6: success 1018 frames, hearts 10.0
+  attempt 21: success 989 frames, hearts 10.0
+  (early stop after 83 attempts)
+[l5_26_key] 989 frames, hearts 10.0 -> f82381 mode=05/00 L5 room=25 pos=(224,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=15407 (total 82380 frames, 10866s wall)
+  attempt 3: success 480 frames, hearts 10.0
+  attempt 13: success 476 frames, hearts 10.0
+  attempt 17: success 475 frames, hearts 10.0
+  attempt 24: success 473 frames, hearts 10.0
+  (early stop after 34 attempts)
+[l5_24] 473 frames, hearts 10.0 -> f82854 mode=05/00 L5 room=24 pos=(224,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=15543 (total 82853 frames, 10886s wall)
+  attempt 2: success 493 frames, hearts 10.0
+  (early stop after 43 attempts)
+[digdogger] 493 frames, hearts 10.0 -> f83347 mode=05/00 L5 room=24 pos=(141,141) dir=2 hp=10.0/10 rup=161 sword=2 lag=15543 (total 83346 frames, 10948s wall)
+  attempt 5: success 25 frames, hearts 11.0
+  attempt 10: success 22 frames, hearts 11.0
+  (early stop after 53 attempts)
+[l5_heart] 22 frames, hearts 11.0 -> f83369 mode=05/00 L5 room=24 pos=(136,117) dir=8 hp=11.0/11 rup=161 sword=2 lag=15543 (total 83368 frames, 10948s wall)
+  attempt 4: success 800 frames, hearts 11.0
+  (early stop after 49 attempts)
+[L5_done] 800 frames, hearts 11.0 -> f84169 mode=02/00 L0 room=14 pos=(120,149) dir=8 hp=11.0/11 rup=161 sword=2 lag=15650 (total 84168 frames, 10955s wall)
+  attempt 5: success 160 frames, hearts 11.0
+  (early stop after 15 attempts)
+[warp_L5] 160 frames, hearts 11.0 -> f84329 mode=05/00 L0 room=0b pos=(112,125) dir=4 hp=11.0/11 rup=161 sword=2 lag=15659 (total 84328 frames, 10955s wall)
+  attempt 4: success 776 frames, hearts 11.0
+  attempt 7: success 775 frames, hearts 11.0
+  attempt 10: success 774 frames, hearts 11.0
+  attempt 16: success 773 frames, hearts 11.0
+  (early stop after 63 attempts)
+  trimmed 76 idle frames off sw_w45
+[sw_w45] 773 frames, hearts 11.0 -> f85026 mode=05/00 L0 room=45 pos=(0,141) dir=1 hp=11.0/11 rup=161 sword=2 lag=15730 (total 85025 frames, 10965s wall)
+  attempt 3: success 318 frames, hearts 11.0
+  (early stop after 15 attempts)
+[sw_sail] 318 frames, hearts 11.0 -> f85344 mode=05/00 L0 room=55 pos=(128,127) dir=4 hp=11.0/11 rup=161 sword=2 lag=15780 (total 85343 frames, 10966s wall)
+  attempt 1: success 0 frames, hearts 11.0
+  (early stop after 15 attempts)
+[sw_land] 0 frames, hearts 11.0 -> f85344 mode=05/00 L0 room=55 pos=(128,127) dir=4 hp=11.0/11 rup=161 sword=2 lag=15780 (total 85343 frames, 10966s wall)
+  attempt 2: success 48 frames, hearts 11.0
+  (early stop after 15 attempts)
+[sw_shore] 48 frames, hearts 11.0 -> f85392 mode=05/00 L0 room=55 pos=(155,165) dir=1 hp=11.0/11 rup=161 sword=2 lag=15780 (total 85391 frames, 10968s wall)
+  attempt 2: success 135 frames, hearts 11.0
+  attempt 12: success 134 frames, hearts 11.0
+  (early stop after 26 attempts)
+[sw_65] 134 frames, hearts 11.0 -> f85526 mode=05/00 L0 room=65 pos=(144,61) dir=4 hp=11.0/11 rup=161 sword=2 lag=15830 (total 85525 frames, 10969s wall)
+  attempt 3: success 277 frames, hearts 10.5
+  attempt 4: success 267 frames, hearts 10.5
+  attempt 1: success 286 frames, hearts 11.0
+  attempt 2: success 273 frames, hearts 11.0
+  (early stop after 20 attempts)
+[sw_64] 273 frames, hearts 11.0 -> f85799 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=11.0/11 rup=161 sword=2 lag=15901 (total 85798 frames, 10972s wall)
+  attempt 2: success 172 frames, hearts 11.0
+  attempt 12: success 171 frames, hearts 11.0
+  (early stop after 25 attempts)
+[sh7_54] 171 frames, hearts 11.0 -> f85970 mode=05/00 L0 room=54 pos=(208,221) dir=8 hp=11.0/11 rup=161 sword=2 lag=15953 (total 85969 frames, 10974s wall)
+  attempt 2: success 268 frames, hearts 11.0
+  (early stop after 15 attempts)
+[sh7_44] 268 frames, hearts 11.0 -> f86238 mode=05/00 L0 room=44 pos=(128,221) dir=8 hp=11.0/11 rup=161 sword=2 lag=16005 (total 86237 frames, 10976s wall)
+  attempt 4: success 534 frames, hearts 11.0
+  attempt 2: success 526 frames, hearts 11.0
+  (early stop after 50 attempts)
+[buy_arrows] 526 frames, hearts 11.0 -> f86764 mode=0b/00 L0 room=44 pos=(152,157) dir=8 hp=11.0/11 rup=161 sword=2 lag=16034 (total 86763 frames, 10982s wall)
+  attempt 2: success 310 frames, hearts 11.0
+  (early stop after 15 attempts)
+[shop_leave] 310 frames, hearts 11.0 -> f87074 mode=05/00 L0 room=44 pos=(64,91) dir=4 hp=11.0/11 rup=81 sword=2 lag=16064 (total 87073 frames, 10983s wall)
+  attempt 4: success 170 frames, hearts 11.0
+  attempt 2: success 162 frames, hearts 11.0
+  attempt 12: success 161 frames, hearts 11.0
+  (early stop after 26 attempts)
+[bait_34] 161 frames, hearts 11.0 -> f87235 mode=05/00 L0 room=34 pos=(128,221) dir=8 hp=11.0/11 rup=81 sword=2 lag=16116 (total 87234 frames, 10984s wall)
+  attempt 2: success 596 frames, hearts 9.0
+  attempt 5: success 596 frames, hearts 10.0
+  (early stop after 53 attempts)
+[buy_food] 596 frames, hearts 10.0 -> f87831 mode=0b/00 L0 room=34 pos=(152,157) dir=8 hp=10.0/11 rup=81 sword=2 lag=16145 (total 87830 frames, 10990s wall)
+  attempt 4: success 239 frames, hearts 10.0
+  (early stop after 15 attempts)
+[food_leave] 239 frames, hearts 10.0 -> f88070 mode=05/00 L0 room=34 pos=(64,109) dir=4 hp=10.0/11 rup=21 sword=2 lag=16175 (total 88069 frames, 10991s wall)
+  attempt 3: success 224 frames, hearts 10.0
+  attempt 5: success 220 frames, hearts 10.0
+  attempt 10: success 219 frames, hearts 10.0
+  (early stop after 21 attempts)
+[p7b_44] 219 frames, hearts 10.0 -> f88289 mode=05/00 L0 room=44 pos=(128,61) dir=4 hp=10.0/11 rup=21 sword=2 lag=16225 (total 88288 frames, 10993s wall)
+  attempt 5: success 215 frames, hearts 10.0
+  attempt 10: success 214 frames, hearts 10.0
+  (early stop after 26 attempts)
+[p7b_54] 214 frames, hearts 10.0 -> f88503 mode=05/00 L0 room=54 pos=(112,61) dir=4 hp=10.0/11 rup=21 sword=2 lag=16275 (total 88502 frames, 10995s wall)
+  attempt 3: success 278 frames, hearts 10.0
+  attempt 5: success 273 frames, hearts 10.0
+  attempt 10: success 272 frames, hearts 10.0
+  (early stop after 26 attempts)
+[p7b_53] 272 frames, hearts 10.0 -> f88775 mode=05/00 L0 room=53 pos=(240,125) dir=2 hp=10.0/11 rup=22 sword=2 lag=16346 (total 88774 frames, 10997s wall)
+  attempt 6: success 377 frames, hearts 10.0
+  (early stop after 15 attempts)
+[p7b_52] 377 frames, hearts 10.0 -> f89152 mode=05/00 L0 room=52 pos=(240,93) dir=2 hp=10.0/11 rup=22 sword=2 lag=16417 (total 89151 frames, 11001s wall)
+  attempt 1: success 225 frames, hearts 10.0
+  attempt 5: success 221 frames, hearts 10.0
+  attempt 10: success 220 frames, hearts 10.0
+  (early stop after 24 attempts)
+[p7b_42] 220 frames, hearts 10.0 -> f89372 mode=05/00 L0 room=42 pos=(112,221) dir=8 hp=10.0/11 rup=22 sword=2 lag=16469 (total 89371 frames, 11003s wall)
+  attempt 6: success 273 frames, hearts 10.0
+  attempt 5: success 272 frames, hearts 10.0
+  attempt 2: success 266 frames, hearts 10.0
+  (early stop after 19 attempts)
+[l7_drain] 266 frames, hearts 10.0 -> f89638 mode=05/00 L0 room=42 pos=(112,188) dir=8 hp=10.0/11 rup=22 sword=2 lag=16469 (total 89637 frames, 11004s wall)
+  attempt 2: success 178 frames, hearts 10.0
+  attempt 5: success 176 frames, hearts 10.0
+  attempt 7: success 175 frames, hearts 10.0
+  (early stop after 21 attempts)
+[enter_L7] 175 frames, hearts 10.0 -> f89813 mode=05/00 L7 room=79 pos=(120,205) dir=8 hp=10.0/11 rup=22 sword=2 lag=16488 (total 89812 frames, 11005s wall)
+  attempt 2: success 252 frames, hearts 10.0
+  (early stop after 15 attempts)
+[l7_69] 252 frames, hearts 10.0 -> f90065 mode=05/00 L7 room=69 pos=(120,205) dir=8 hp=10.0/11 rup=22 sword=2 lag=16585 (total 90064 frames, 11006s wall)
+  attempt 2: success 520 frames, hearts 9.0
+  attempt 5: success 530 frames, hearts 9.5
+  attempt 11: success 521 frames, hearts 9.5
+  (early stop after 59 attempts)
+[l7_59] 521 frames, hearts 9.5 -> f90586 mode=05/00 L7 room=59 pos=(120,189) dir=8 hp=9.5/11 rup=22 sword=2 lag=16683 (total 90585 frames, 11015s wall)
+  attempt 5: success 278 frames, hearts 9.5
+  attempt 2: success 261 frames, hearts 9.5
+  attempt 7: success 254 frames, hearts 9.5
+  (early stop after 20 attempts)
+[l7_49] 254 frames, hearts 9.5 -> f90840 mode=05/00 L7 room=49 pos=(120,205) dir=8 hp=9.5/11 rup=22 sword=2 lag=16780 (total 90839 frames, 11018s wall)
+  attempt 2: success 1044 frames, hearts 10.5
+  attempt 1: success 890 frames, hearts 9.5
+  attempt 7: success 866 frames, hearts 9.5
+  attempt 14: success 738 frames, hearts 11.0
+  attempt 39: success 757 frames, hearts 11.0
+  (early stop after 87 attempts)
+[l7_39] 757 frames, hearts 11.0 -> f91597 mode=05/00 L7 room=39 pos=(120,205) dir=8 hp=11.0/11 rup=22 sword=2 lag=16881 (total 91596 frames, 11538s wall)
+  attempt 3: success 372 frames, hearts 8.5
+  attempt 6: success 379 frames, hearts 10.5
+  attempt 17: success 373 frames, hearts 10.5
+  (early stop after 41 attempts)
+[l7_38] 373 frames, hearts 10.5 -> f91970 mode=05/00 L7 room=38 pos=(208,141) dir=2 hp=10.5/11 rup=22 sword=2 lag=17017 (total 91969 frames, 11554s wall)
+  attempt 3: success 300 frames, hearts 10.5
+  attempt 2: success 282 frames, hearts 10.5
+  attempt 12: success 281 frames, hearts 10.5
+  (early stop after 22 attempts)
+[l7_28] 281 frames, hearts 10.5 -> f92251 mode=05/00 L7 room=28 pos=(120,205) dir=8 hp=10.5/11 rup=22 sword=2 lag=17115 (total 92250 frames, 11566s wall)
+  attempt 2: success 690 frames, hearts 10.5
+  (early stop after 49 attempts)
+[l7_feed] 690 frames, hearts 10.5 -> f92941 mode=05/00 L7 room=18 pos=(120,189) dir=8 hp=10.5/11 rup=22 sword=2 lag=17213 (total 92940 frames, 11572s wall)
+  attempt 1: success 386 frames, hearts 9.5
+  attempt 2: success 436 frames, hearts 10.5
+  attempt 4: success 394 frames, hearts 10.5
+  attempt 27: success 386 frames, hearts 10.5
+  (early stop after 38 attempts)
+[l7_19] 386 frames, hearts 10.5 -> f93327 mode=05/00 L7 room=19 pos=(16,141) dir=1 hp=10.5/11 rup=22 sword=2 lag=17350 (total 93326 frames, 11588s wall)
+  attempt 6: success 664 frames, hearts 9.5
+  attempt 11: success 638 frames, hearts 10.5
+  attempt 47: success 631 frames, hearts 10.5
+[l7_1a] 631 frames, hearts 10.5 -> f93958 mode=05/00 L7 room=1a pos=(32,141) dir=1 hp=10.5/11 rup=22 sword=2 lag=17488 (total 93957 frames, 11609s wall)
+  attempt 2: success 699 frames, hearts 9.5
+  attempt 11: success 537 frames, hearts 9.0
+  attempt 45: success 536 frames, hearts 9.0
+[l7d_1b] 536 frames, hearts 9.0 -> f94494 mode=05/00 L7 room=1b pos=(32,141) dir=1 hp=9.0/11 rup=22 sword=2 lag=17625 (total 94493 frames, 11628s wall)
+  attempt 6: success 447 frames, hearts 9.0
+  attempt 2: success 435 frames, hearts 9.0
+  attempt 7: success 416 frames, hearts 9.0
+  attempt 14: success 405 frames, hearts 9.0
+  attempt 11: success 390 frames, hearts 9.0
+  (early stop after 34 attempts)
+[l7_1c] 390 frames, hearts 9.0 -> f94884 mode=05/00 L7 room=1c pos=(16,141) dir=1 hp=9.0/11 rup=22 sword=2 lag=17762 (total 94883 frames, 11643s wall)
+  attempt 4: success 1150 frames, hearts 8.5
+  attempt 1: success 920 frames, hearts 9.0
+  attempt 15: success 1008 frames, hearts 10.0
+  attempt 17: success 997 frames, hearts 10.0
+  attempt 20: success 1018 frames, hearts 11.0
+  attempt 24: success 873 frames, hearts 10.0
+  attempt 49: success 902 frames, hearts 11.0
+[l7_0c] 902 frames, hearts 11.0 -> f95786 mode=05/00 L7 room=0c pos=(120,205) dir=8 hp=11.0/11 rup=22 sword=2 lag=17859 (total 95785 frames, 11987s wall)
+  attempt 3: success 522 frames, hearts 10.5
+  attempt 2: success 518 frames, hearts 10.5
+  attempt 5: success 514 frames, hearts 10.5
+  attempt 10: success 513 frames, hearts 10.5
+  (early stop after 57 attempts)
+[l7_0d] 513 frames, hearts 10.5 -> f96299 mode=05/00 L7 room=0d pos=(32,141) dir=1 hp=10.5/11 rup=22 sword=2 lag=17996 (total 96298 frames, 11994s wall)
+  attempt 4: success 664 frames, hearts 10.5
+  (early stop after 49 attempts)
+[l7_0d_st] 664 frames, hearts 10.5 -> f96963 mode=09/09 L7 room=7b pos=(192,65) dir=4 hp=10.5/11 rup=22 sword=2 lag=17998 (total 96962 frames, 12378s wall)
+  attempt 4: success 375 frames, hearts 10.0
+  (early stop after 29 attempts)
+[l7_pass] 375 frames, hearts 10.0 -> f97338 mode=05/00 L7 room=29 pos=(96,157) dir=4 hp=10.0/11 rup=22 sword=2 lag=18001 (total 97337 frames, 12380s wall)
+  attempt 5: success 510 frames, hearts 9.0
+  attempt 7: success 448 frames, hearts 9.5
+  attempt 8: success 444 frames, hearts 9.5
+  attempt 14: success 436 frames, hearts 9.5
+  (early stop after 44 attempts)
+[l7_2a] 436 frames, hearts 9.5 -> f97774 mode=05/00 L7 room=2a pos=(32,141) dir=1 hp=9.5/11 rup=22 sword=2 lag=18140 (total 97773 frames, 12385s wall)
+  attempt 4: success 230 frames, hearts 11.0
+  attempt 3: success 210 frames, hearts 10.5
+  (early stop after 44 attempts)
+[l7_aqua] 210 frames, hearts 10.5 -> f97984 mode=05/00 L7 room=2a pos=(136,133) dir=2 hp=10.5/12 rup=22 sword=2 lag=18140 (total 97983 frames, 12432s wall)
+  attempt 5: success 99 frames, hearts 10.5
+  attempt 7: success 97 frames, hearts 10.5
+  attempt 10: success 96 frames, hearts 10.5
+  (early stop after 50 attempts)
+[l7_heart] 96 frames, hearts 10.5 -> f98080 mode=05/00 L7 room=2a pos=(136,133) dir=2 hp=10.5/12 rup=22 sword=2 lag=18140 (total 98079 frames, 12434s wall)
+  attempt 4: success 1010 frames, hearts 12.0
+  (early stop after 63 attempts)
+[L7_done] 1010 frames, hearts 12.0 -> f99090 mode=02/00 L0 room=2b pos=(112,149) dir=8 hp=12.0/12 rup=22 sword=2 lag=18282 (total 99089 frames, 12446s wall)
+  attempt 2: success 120 frames, hearts 12.0
+  (early stop after 15 attempts)
+[warp_L7] 120 frames, hearts 12.0 -> f99210 mode=05/00 L0 room=42 pos=(96,93) dir=4 hp=12.0/12 rup=22 sword=2 lag=18295 (total 99209 frames, 12446s wall)
+  attempt 2: success 275 frames, hearts 12.0
+  attempt 5: success 274 frames, hearts 12.0
+  (early stop after 16 attempts)
+[w8_52] 274 frames, hearts 12.0 -> f99484 mode=05/00 L0 room=52 pos=(112,61) dir=4 hp=12.0/12 rup=22 sword=2 lag=18345 (total 99483 frames, 12448s wall)
+  attempt 5: success 312 frames, hearts 12.0
+  attempt 11: success 311 frames, hearts 12.0
+  attempt 23: success 300 frames, hearts 12.0
+  (early stop after 34 attempts)
+[l7_62] 300 frames, hearts 12.0 -> f99784 mode=05/00 L0 room=62 pos=(80,61) dir=4 hp=12.0/12 rup=22 sword=2 lag=18395 (total 99783 frames, 12451s wall)
+  attempt 4: success 223 frames, hearts 12.0
+  attempt 2: success 215 frames, hearts 12.0
+  attempt 12: success 214 frames, hearts 12.0
+  (early stop after 23 attempts)
+[l7_61] 214 frames, hearts 12.0 -> f99998 mode=05/00 L0 room=61 pos=(240,125) dir=2 hp=12.0/12 rup=22 sword=2 lag=18466 (total 99997 frames, 12452s wall)
+  attempt 4: success 192 frames, hearts 12.0
+  attempt 2: success 184 frames, hearts 12.0
+  attempt 12: success 183 frames, hearts 12.0
+  (early stop after 26 attempts)
+[woods_0] 183 frames, hearts 12.0 -> f100181 mode=05/00 L0 room=61 pos=(176,221) dir=8 hp=12.0/12 rup=22 sword=2 lag=18518 (total 100180 frames, 12454s wall)
+  attempt 5: success 349 frames, hearts 12.0
+  attempt 7: success 317 frames, hearts 12.0
+  (early stop after 21 attempts)
+[woods_1] 317 frames, hearts 12.0 -> f100498 mode=05/00 L0 room=61 pos=(240,141) dir=2 hp=12.0/12 rup=22 sword=2 lag=18604 (total 100497 frames, 12456s wall)
+  attempt 2: success 193 frames, hearts 12.0
+  attempt 12: success 190 frames, hearts 12.0
+  (early stop after 25 attempts)
+[woods_2] 190 frames, hearts 12.0 -> f100688 mode=05/00 L0 room=61 pos=(176,61) dir=4 hp=12.0/12 rup=22 sword=2 lag=18654 (total 100687 frames, 12457s wall)
+  attempt 4: success 330 frames, hearts 11.5
+  attempt 2: success 321 frames, hearts 11.5
+  attempt 5: success 350 frames, hearts 12.0
+  attempt 17: success 333 frames, hearts 12.0
+  attempt 29: success 327 frames, hearts 12.0
+  attempt 35: success 308 frames, hearts 12.0
+  (early stop after 49 attempts)
+[woods_3] 308 frames, hearts 12.0 -> f100996 mode=05/00 L0 room=60 pos=(240,157) dir=2 hp=12.0/12 rup=22 sword=2 lag=18726 (total 100995 frames, 12460s wall)
+  attempt 4: success 187 frames, hearts 10.0
+  attempt 2: success 184 frames, hearts 12.0
+  attempt 12: success 183 frames, hearts 12.0
+  (early stop after 24 attempts)
+[l7w20_50] 183 frames, hearts 12.0 -> f101179 mode=05/00 L0 room=50 pos=(208,221) dir=8 hp=12.0/12 rup=22 sword=2 lag=18778 (total 101178 frames, 12462s wall)
+  attempt 6: success 280 frames, hearts 12.0
+  attempt 2: success 259 frames, hearts 12.0
+  (early stop after 18 attempts)
+[l7w21_40] 259 frames, hearts 12.0 -> f101438 mode=05/00 L0 room=40 pos=(224,221) dir=8 hp=12.0/12 rup=22 sword=2 lag=18830 (total 101437 frames, 12463s wall)
+  attempt 4: success 164 frames, hearts 12.0
+  attempt 2: success 156 frames, hearts 12.0
+  attempt 12: success 155 frames, hearts 12.0
+  (early stop after 26 attempts)
+[l7w22_41] 155 frames, hearts 12.0 -> f101593 mode=05/00 L0 room=41 pos=(0,189) dir=1 hp=12.0/12 rup=22 sword=2 lag=18901 (total 101592 frames, 12464s wall)
+  attempt 2: success 206 frames, hearts 12.0
+  attempt 12: success 205 frames, hearts 12.0
+  (early stop after 24 attempts)
+[l7w23_31] 205 frames, hearts 12.0 -> f101798 mode=05/00 L0 room=31 pos=(32,221) dir=8 hp=12.0/12 rup=22 sword=2 lag=18953 (total 101797 frames, 12466s wall)
+  attempt 2: success 208 frames, hearts 12.0
+  attempt 12: success 207 frames, hearts 12.0
+  (early stop after 26 attempts)
+[ms_21] 207 frames, hearts 12.0 -> f102005 mode=05/00 L0 room=21 pos=(32,221) dir=8 hp=12.0/12 rup=22 sword=2 lag=19005 (total 102004 frames, 12468s wall)
+  attempt 3: success 721 frames, hearts 11.0
+  attempt 5: success 719 frames, hearts 11.0
+  attempt 7: success 718 frames, hearts 11.0
+  (early stop after 55 attempts)
+[ms_sword] 718 frames, hearts 11.0 -> f102723 mode=05/00 L0 room=21 pos=(80,109) dir=4 hp=11.0/12 rup=22 sword=3 lag=19064 (total 102722 frames, 12492s wall)
+  attempt 3: success 272 frames, hearts 11.0
+  attempt 1: success 271 frames, hearts 11.0
+  attempt 5: success 269 frames, hearts 11.0
+  attempt 10: success 267 frames, hearts 11.0
+  (early stop after 23 attempts)
+[ms_b31] 267 frames, hearts 11.0 -> f102990 mode=05/00 L0 room=31 pos=(208,61) dir=4 hp=11.0/12 rup=22 sword=3 lag=19114 (total 102989 frames, 12495s wall)
+  attempt 3: success 192 frames, hearts 11.0
+  attempt 2: success 180 frames, hearts 11.0
+  attempt 12: success 179 frames, hearts 11.0
+  (early stop after 23 attempts)
+[l7w24_32] 179 frames, hearts 11.0 -> f103169 mode=05/00 L0 room=32 pos=(0,125) dir=1 hp=11.0/12 rup=22 sword=3 lag=19185 (total 103168 frames, 12496s wall)
+  attempt 2: success 285 frames, hearts 11.0
+  (early stop after 15 attempts)
+[l6_22] 285 frames, hearts 11.0 -> f103454 mode=05/00 L0 room=22 pos=(112,221) dir=8 hp=11.0/12 rup=22 sword=3 lag=19237 (total 103453 frames, 12498s wall)
+  attempt 2: success 270 frames, hearts 11.0
+  (early stop after 15 attempts)
+[enter_L6] 270 frames, hearts 11.0 -> f103724 mode=05/00 L6 room=79 pos=(120,205) dir=8 hp=11.0/12 rup=22 sword=3 lag=19256 (total 103723 frames, 12499s wall)
+  attempt 1: success 342 frames, hearts 11.0
+  attempt 4: success 339 frames, hearts 11.0
+  attempt 2: success 331 frames, hearts 11.0
+  (early stop after 18 attempts)
+[l6_78] 331 frames, hearts 11.0 -> f104055 mode=05/00 L6 room=78 pos=(224,141) dir=2 hp=11.0/12 rup=22 sword=3 lag=19392 (total 104054 frames, 12500s wall)
+  attempt 1: success 304 frames, hearts 10.0
+  attempt 6: success 316 frames, hearts 11.0
+  attempt 2: success 293 frames, hearts 11.0
+  attempt 12: success 282 frames, hearts 11.0
+  (early stop after 23 attempts)
+[l6_68] 282 frames, hearts 11.0 -> f104337 mode=05/00 L6 room=68 pos=(120,205) dir=8 hp=11.0/12 rup=22 sword=3 lag=19489 (total 104336 frames, 12504s wall)
+  attempt 2: success 263 frames, hearts 11.0
+  attempt 12: success 262 frames, hearts 11.0
+  (early stop after 23 attempts)
+[l6_58] 262 frames, hearts 11.0 -> f104599 mode=05/00 L6 room=58 pos=(120,205) dir=8 hp=11.0/12 rup=22 sword=3 lag=19586 (total 104598 frames, 12508s wall)
+  attempt 2: success 764 frames, hearts 10.0
+  attempt 3: success 581 frames, hearts 11.0
+  attempt 8: success 501 frames, hearts 10.5
+  (early stop after 57 attempts)
+[l6_48] 501 frames, hearts 10.5 -> f105100 mode=05/00 L6 room=48 pos=(120,205) dir=8 hp=10.5/12 rup=22 sword=3 lag=19683 (total 105099 frames, 12649s wall)
+  attempt 3: success 275 frames, hearts 10.5
+  attempt 2: success 263 frames, hearts 10.5
+  attempt 12: success 262 frames, hearts 10.5
+  (early stop after 23 attempts)
+  attempt 26: success 260 frames, hearts 10.5
+[l6_38] 260 frames, hearts 10.5 -> f105360 mode=05/00 L6 room=38 pos=(120,189) dir=8 hp=10.5/12 rup=22 sword=3 lag=19780 (total 105359 frames, 12652s wall)
+  attempt 5: success 813 frames, hearts 9.5
+  attempt 1: success 851 frames, hearts 10.5
+  attempt 3: success 938 frames, hearts 10.5
+  attempt 9: success 905 frames, hearts 10.5
+  (early stop after 70 attempts)
+[l6_28] 905 frames, hearts 10.5 -> f106265 mode=05/00 L6 room=28 pos=(120,189) dir=8 hp=10.5/12 rup=22 sword=3 lag=19879 (total 106264 frames, 12953s wall)
+  attempt 2: success 457 frames, hearts 10.5
+  (early stop after 15 attempts)
+[l6_29] 457 frames, hearts 10.5 -> f106722 mode=05/00 L6 room=29 pos=(32,141) dir=1 hp=10.5/12 rup=22 sword=3 lag=20016 (total 106721 frames, 12976s wall)
+  attempt 4: success 521 frames, hearts 8.5
+  attempt 5: success 557 frames, hearts 10.5
+  attempt 23: success 518 frames, hearts 10.5
+  (early stop after 70 attempts)
+[l6_39] 518 frames, hearts 10.5 -> f107240 mode=05/00 L6 room=39 pos=(120,93) dir=4 hp=10.5/12 rup=22 sword=3 lag=20110 (total 107239 frames, 12988s wall)
+  attempt 3: success 585 frames, hearts 11.5
+  attempt 2: success 969 frames, hearts 11.5
+  attempt 25: success 953 frames, hearts 11.5
+  attempt 27: success 874 frames, hearts 11.5
+  (early stop after 75 attempts)
+[l6_3a] 874 frames, hearts 11.5 -> f108114 mode=05/00 L6 room=3a pos=(16,141) dir=1 hp=11.5/12 rup=27 sword=3 lag=20246 (total 108113 frames, 13152s wall)
+  attempt 5: success 906 frames, hearts 11.5
+  attempt 3: success 1000 frames, hearts 12.0
+  attempt 8: success 825 frames, hearts 12.0
+  (early stop after 55 attempts)
+[l6_3a_st] 825 frames, hearts 12.0 -> f108939 mode=09/09 L6 room=08 pos=(48,65) dir=4 hp=12.0/12 rup=27 sword=3 lag=20248 (total 108938 frames, 13538s wall)
+  attempt 5: success 389 frames, hearts 12.0
+  (early stop after 15 attempts)
+[l6_pass] 389 frames, hearts 12.0 -> f109328 mode=05/00 L6 room=1d pos=(96,157) dir=4 hp=12.0/12 rup=27 sword=3 lag=20251 (total 109327 frames, 13540s wall)
+  attempt 2: success 260 frames, hearts 12.0
+  (early stop after 15 attempts)
+[l6_1d] 260 frames, hearts 12.0 -> f109588 mode=05/00 L6 room=2d pos=(120,77) dir=4 hp=12.0/12 rup=27 sword=3 lag=20345 (total 109587 frames, 13542s wall)
+  attempt 2: success 447 frames, hearts 12.0
+  attempt 5: success 436 frames, hearts 12.0
+  attempt 4: success 408 frames, hearts 12.0
+  attempt 3: success 407 frames, hearts 12.0
+  (early stop after 20 attempts)
+  attempt 20: success 406 frames, hearts 12.0
+[l6_2d] 406 frames, hearts 12.0 -> f109994 mode=05/00 L6 room=2c pos=(224,141) dir=2 hp=12.0/12 rup=27 sword=3 lag=20481 (total 109993 frames, 13559s wall)
+  attempt 4: success 439 frames, hearts 12.0
+  (early stop after 15 attempts)
+[l6_2c] 439 frames, hearts 12.0 -> f110433 mode=05/00 L6 room=1c pos=(120,205) dir=8 hp=12.0/12 rup=27 sword=3 lag=20578 (total 110432 frames, 13582s wall)
+  attempt 5: success 266 frames, hearts 11.0
+  attempt 2: success 237 frames, hearts 12.0
+  attempt 8: success 198 frames, hearts 12.0
+  (early stop after 49 attempts)
+[gohma] 198 frames, hearts 12.0 -> f110631 mode=05/00 L6 room=1c pos=(152,187) dir=8 hp=12.0/12 rup=25 sword=3 lag=20578 (total 110630 frames, 13584s wall)
+  attempt 5: success 92 frames, hearts 13.0
+  attempt 10: success 89 frames, hearts 13.0
+  (early stop after 54 attempts)
+[l6_heart] 89 frames, hearts 13.0 -> f110720 mode=05/00 L6 room=1c pos=(120,149) dir=1 hp=13.0/13 rup=25 sword=3 lag=20578 (total 110719 frames, 13585s wall)
+  attempt 5: success 811 frames, hearts 13.0
+  (early stop after 49 attempts)
+[L6_done] 811 frames, hearts 13.0 -> f111531 mode=02/00 L0 room=0c pos=(120,149) dir=8 hp=13.0/13 rup=25 sword=3 lag=20685 (total 111530 frames, 13593s wall)
+  attempt 3: success 180 frames, hearts 13.0
+  (early stop after 15 attempts)
+[warp_L6] 180 frames, hearts 13.0 -> f111711 mode=05/00 L0 room=22 pos=(112,125) dir=4 hp=13.0/13 rup=25 sword=3 lag=20694 (total 111710 frames, 13594s wall)
+  attempt 4: success 609 frames, hearts 13.0
+  attempt 7: success 608 frames, hearts 13.0
+  attempt 10: success 607 frames, hearts 13.0
+  attempt 16: success 606 frames, hearts 13.0
+  (early stop after 64 attempts)
+  trimmed 77 idle frames off dm9_w0b
+[dm9_w0b] 606 frames, hearts 13.0 -> f112240 mode=05/00 L0 room=0b pos=(0,173) dir=1 hp=13.0/13 rup=25 sword=3 lag=20765 (total 112239 frames, 13602s wall)
+  attempt 5: success 229 frames, hearts 13.0
+  (early stop after 15 attempts)
+[dm9_1b] 229 frames, hearts 13.0 -> f112469 mode=05/00 L0 room=1b pos=(112,61) dir=4 hp=13.0/13 rup=25 sword=3 lag=20815 (total 112468 frames, 13603s wall)
+  attempt 2: success 258 frames, hearts 13.0
+  (early stop after 15 attempts)
+[dm9_1a] 258 frames, hearts 13.0 -> f112727 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=13.0/13 rup=25 sword=3 lag=20886 (total 112726 frames, 13604s wall)
+  attempt 2: success 321 frames, hearts 13.0
+  (early stop after 15 attempts)
+[dm9_19] 321 frames, hearts 13.0 -> f113048 mode=05/00 L0 room=19 pos=(240,157) dir=2 hp=13.0/13 rup=25 sword=3 lag=20957 (total 113047 frames, 13606s wall)
+  attempt 1: success 337 frames, hearts 13.0
+  attempt 2: success 321 frames, hearts 13.0
+  (early stop after 19 attempts)
+[dm9_18] 321 frames, hearts 13.0 -> f113369 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=13.0/13 rup=25 sword=3 lag=21028 (total 113368 frames, 13608s wall)
+  attempt 6: success 342 frames, hearts 12.5
+  attempt 17: success 339 frames, hearts 12.5
+  (early stop after 41 attempts)
+[dm9_17] 339 frames, hearts 12.5 -> f113708 mode=05/00 L0 room=17 pos=(240,157) dir=2 hp=12.5/13 rup=25 sword=3 lag=21099 (total 113707 frames, 13614s wall)
+  attempt 1: success 369 frames, hearts 12.5
+  (early stop after 15 attempts)
+[dm9_07] 369 frames, hearts 12.5 -> f114077 mode=05/00 L0 room=07 pos=(64,221) dir=8 hp=12.5/13 rup=25 sword=3 lag=21152 (total 114076 frames, 13618s wall)
+  attempt 3: success 255 frames, hearts 10.5
+  attempt 2: success 253 frames, hearts 10.5
+  attempt 4: success 252 frames, hearts 10.5
+  attempt 9: success 251 frames, hearts 10.5
+  (early stop after 38 attempts)
+[dm9_06] 251 frames, hearts 10.5 -> f114328 mode=05/00 L0 room=06 pos=(240,141) dir=2 hp=10.5/13 rup=25 sword=3 lag=21223 (total 114327 frames, 13620s wall)
+  attempt 2: success 380 frames, hearts 10.0
+  attempt 7: success 409 frames, hearts 11.5
+  (early stop after 23 attempts)
+[dm9_05] 409 frames, hearts 11.5 -> f114737 mode=05/00 L0 room=05 pos=(240,133) dir=2 hp=11.5/13 rup=25 sword=3 lag=21294 (total 114736 frames, 13624s wall)
+  attempt 4: success 638 frames, hearts 11.5
+  attempt 6: success 627 frames, hearts 11.5
+  attempt 46: success 618 frames, hearts 11.5
+  (early stop after 90 attempts)
+[enter_L9] 618 frames, hearts 11.5 -> f115355 mode=05/00 L9 room=76 pos=(120,205) dir=8 hp=11.5/13 rup=25 sword=3 lag=21313 (total 115354 frames, 13676s wall)
+  attempt 4: success 261 frames, hearts 11.5
+  attempt 2: success 253 frames, hearts 11.5
+  attempt 12: success 252 frames, hearts 11.5
+  (early stop after 25 attempts)
+[l9_66] 252 frames, hearts 11.5 -> f115607 mode=05/00 L9 room=66 pos=(120,205) dir=8 hp=11.5/13 rup=25 sword=3 lag=21410 (total 115606 frames, 13677s wall)
+  attempt 4: success 259 frames, hearts 11.5
+  attempt 2: success 252 frames, hearts 11.5
+  (early stop after 16 attempts)
+[l9_56] 252 frames, hearts 11.5 -> f115859 mode=05/00 L9 room=56 pos=(120,205) dir=8 hp=11.5/13 rup=25 sword=3 lag=21507 (total 115858 frames, 13678s wall)
+  attempt 4: success 291 frames, hearts 11.5
+  (early stop after 15 attempts)
+[l9_56_key] 291 frames, hearts 11.5 -> f116150 mode=05/00 L9 room=56 pos=(120,141) dir=1 hp=11.5/13 rup=25 sword=3 lag=21507 (total 116149 frames, 13734s wall)
+  attempt 5: success 362 frames, hearts 11.5
+  attempt 10: success 361 frames, hearts 11.5
+  (early stop after 25 attempts)
+[l9_55] 361 frames, hearts 11.5 -> f116511 mode=05/00 L9 room=55 pos=(208,141) dir=2 hp=11.5/13 rup=26 sword=3 lag=21643 (total 116510 frames, 13736s wall)
+  attempt 4: success 481 frames, hearts 11.5
+  attempt 5: success 470 frames, hearts 11.5
+  (early stop after 16 attempts)
+[l9_55_st] 470 frames, hearts 11.5 -> f116981 mode=09/09 L9 room=60 pos=(192,65) dir=4 hp=11.5/13 rup=31 sword=3 lag=21645 (total 116980 frames, 13776s wall)
+  attempt 4: success 421 frames, hearts 10.5
+  (early stop after 29 attempts)
+[l9_pass] 421 frames, hearts 10.5 -> f117402 mode=05/00 L9 room=14 pos=(96,157) dir=4 hp=10.5/13 rup=31 sword=3 lag=21648 (total 117401 frames, 13778s wall)
+  attempt 4: success 1392 frames, hearts 9.5
+  attempt 9: success 1417 frames, hearts 10.5
+  attempt 10: success 1376 frames, hearts 10.5
+  attempt 38: success 1205 frames, hearts 9.5
+[m9_15] 1205 frames, hearts 9.5 -> f118607 mode=05/00 L9 room=15 pos=(16,141) dir=1 hp=9.5/13 rup=20 sword=3 lag=21785 (total 118606 frames, 14349s wall)
+  attempt 6: success 441 frames, hearts 9.5
+  attempt 2: success 427 frames, hearts 9.5
+  attempt 14: success 426 frames, hearts 9.5
+  attempt 4: success 387 frames, hearts 9.5
+  (early stop after 26 attempts)
+  attempt 20: success 384 frames, hearts 9.5
+  attempt 26: success 381 frames, hearts 9.5
+[m9_16] 381 frames, hearts 9.5 -> f118988 mode=05/00 L9 room=16 pos=(16,141) dir=1 hp=9.5/13 rup=20 sword=3 lag=21921 (total 118987 frames, 14354s wall)
+  attempt 4: success 794 frames, hearts 9.5
+  attempt 3: success 532 frames, hearts 7.5
+  attempt 2: success 643 frames, hearts 9.5
+  attempt 5: success 619 frames, hearts 9.5
+  attempt 1: success 559 frames, hearts 9.5
+  attempt 17: success 545 frames, hearts 9.5
+  attempt 27: success 525 frames, hearts 9.5
+  attempt 52: success 521 frames, hearts 9.5
+[m9_16_bombs] 521 frames, hearts 9.5 -> f119509 mode=05/00 L9 room=16 pos=(128,133) dir=4 hp=9.5/13 rup=20 sword=3 lag=21921 (total 119508 frames, 14761s wall)
+  attempt 2: success 215 frames, hearts 9.5
+  attempt 12: success 214 frames, hearts 9.5
+  (early stop after 26 attempts)
+[s9_06] 214 frames, hearts 9.5 -> f119723 mode=05/00 L9 room=06 pos=(120,205) dir=8 hp=9.5/13 rup=25 sword=3 lag=22018 (total 119722 frames, 14763s wall)
+  attempt 3: success 719 frames, hearts 9.5
+  attempt 2: success 715 frames, hearts 9.5
+  (early stop after 50 attempts)
+[s9_05] 715 frames, hearts 9.5 -> f120438 mode=05/00 L9 room=05 pos=(208,141) dir=2 hp=9.5/13 rup=25 sword=3 lag=22154 (total 120437 frames, 14771s wall)
+  attempt 4: success 638 frames, hearts 8.5
+  attempt 2: success 703 frames, hearts 7.5
+  attempt 3: success 872 frames, hearts 11.5
+  attempt 10: success 787 frames, hearts 12.5
+  (early stop after 58 attempts)
+[s9_05_st] 787 frames, hearts 12.5 -> f121225 mode=09/09 L9 room=70 pos=(192,65) dir=4 hp=12.5/13 rup=25 sword=3 lag=22156 (total 121224 frames, 14993s wall)
+  attempt 3: success 389 frames, hearts 12.5
+  (early stop after 15 attempts)
+[s9_pass] 389 frames, hearts 12.5 -> f121614 mode=05/00 L9 room=63 pos=(160,157) dir=4 hp=12.5/13 rup=25 sword=3 lag=22159 (total 121613 frames, 14995s wall)
+  attempt 5: success 380 frames, hearts 12.5
+  attempt 1: success 374 frames, hearts 12.5
+  attempt 15: success 369 frames, hearts 12.5
+  attempt 4: success 340 frames, hearts 12.5
+  (early stop after 30 attempts)
+[s9_62] 340 frames, hearts 12.5 -> f121954 mode=05/00 L9 room=62 pos=(224,141) dir=2 hp=12.5/13 rup=25 sword=3 lag=22295 (total 121953 frames, 15001s wall)
+  attempt 1: success 402 frames, hearts 12.5
+  attempt 2: success 397 frames, hearts 12.5
+  attempt 10: success 390 frames, hearts 12.5
+  (early stop after 22 attempts)
+[s9_61] 390 frames, hearts 12.5 -> f122344 mode=05/00 L9 room=61 pos=(224,141) dir=2 hp=12.5/13 rup=25 sword=3 lag=22431 (total 122343 frames, 15009s wall)
+  attempt 5: success 597 frames, hearts 12.5
+  attempt 4: success 582 frames, hearts 12.5
+  attempt 7: success 432 frames, hearts 12.5
+  attempt 11: success 412 frames, hearts 12.5
+  (early stop after 22 attempts)
+  trimmed 3 idle frames off s9_patra
+[s9_patra] 412 frames, hearts 12.5 -> f122753 mode=05/00 L9 room=61 pos=(112,96) dir=4 hp=12.5/13 rup=25 sword=3 lag=22431 (total 122752 frames, 15111s wall)
+  attempt 5: success 263 frames, hearts 12.5
+  attempt 2: success 257 frames, hearts 12.5
+  (early stop after 19 attempts)
+[s9_61_st] 257 frames, hearts 12.5 -> f123010 mode=09/09 L9 room=75 pos=(192,65) dir=4 hp=12.5/13 rup=25 sword=3 lag=22433 (total 123009 frames, 15113s wall)
+  attempt 4: success 421 frames, hearts 12.0
+  (early stop after 29 attempts)
+[s9_pass3] 421 frames, hearts 12.0 -> f123431 mode=05/00 L9 room=20 pos=(96,157) dir=4 hp=12.0/13 rup=25 sword=3 lag=22436 (total 123430 frames, 15115s wall)
+  attempt 2: success 653 frames, hearts 12.0
+  attempt 20: success 639 frames, hearts 12.0
+  attempt 30: success 742 frames, hearts 13.0
+  (early stop after 79 attempts)
+[s9_10] 742 frames, hearts 13.0 -> f124173 mode=05/00 L9 room=10 pos=(120,189) dir=8 hp=13.0/13 rup=25 sword=3 lag=22533 (total 124172 frames, 15337s wall)
+  attempt 2: success 676 frames, hearts 9.0
+  attempt 5: success 849 frames, hearts 11.0
+  attempt 17: success 620 frames, hearts 11.0
+  attempt 41: success 657 frames, hearts 12.0
+  (early stop after 85 attempts)
+[s9_10_st] 657 frames, hearts 12.0 -> f124830 mode=09/09 L9 room=4f pos=(48,65) dir=4 hp=12.0/13 rup=25 sword=3 lag=22535 (total 124829 frames, 15788s wall)
+  attempt 4: success 794 frames, hearts 12.0
+  (early stop after 49 attempts)
+[s9_silver] 794 frames, hearts 12.0 -> f125624 mode=05/00 L9 room=10 pos=(96,157) dir=4 hp=12.0/13 rup=25 sword=3 lag=22538 (total 125623 frames, 15873s wall)
+  attempt 2: success 310 frames, hearts 12.0
+  (early stop after 15 attempts)
+[g9_20] 310 frames, hearts 12.0 -> f125934 mode=05/00 L9 room=20 pos=(120,93) dir=4 hp=12.0/13 rup=25 sword=3 lag=22631 (total 125933 frames, 15874s wall)
+  attempt 4: success 271 frames, hearts 12.0
+  attempt 2: success 264 frames, hearts 12.0
+  (early stop after 17 attempts)
+[g9_20_st] 264 frames, hearts 12.0 -> f126198 mode=09/09 L9 room=75 pos=(48,65) dir=4 hp=12.0/13 rup=25 sword=3 lag=22633 (total 126197 frames, 15875s wall)
+  attempt 5: success 421 frames, hearts 11.5
+  (early stop after 29 attempts)
+[g9_pass_61] 421 frames, hearts 11.5 -> f126619 mode=05/00 L9 room=61 pos=(96,157) dir=4 hp=11.5/13 rup=25 sword=3 lag=22636 (total 126618 frames, 15878s wall)
+  attempt 2: success 256 frames, hearts 11.5
+  (early stop after 15 attempts)
+[g9_51] 256 frames, hearts 11.5 -> f126875 mode=05/00 L9 room=51 pos=(120,205) dir=8 hp=11.5/13 rup=25 sword=3 lag=22733 (total 126874 frames, 15879s wall)
+  attempt 5: success 780 frames, hearts 11.5
+  attempt 7: success 571 frames, hearts 11.5
+  (early stop after 55 attempts)
+[g9_41] 571 frames, hearts 11.5 -> f127446 mode=05/00 L9 room=41 pos=(120,189) dir=8 hp=11.5/13 rup=25 sword=3 lag=22831 (total 127445 frames, 16005s wall)
+  attempt 3: success 359 frames, hearts 11.5
+  (early stop after 16 attempts)
+[g9_31] 359 frames, hearts 11.5 -> f127805 mode=05/00 L9 room=31 pos=(120,189) dir=8 hp=11.5/13 rup=25 sword=3 lag=22928 (total 127804 frames, 16015s wall)
+  attempt 2: success 829 frames, hearts 11.5
+  attempt 3: success 895 frames, hearts 12.5
+  attempt 10: success 1079 frames, hearts 12.5
+  attempt 53: success 826 frames, hearts 13.0
+[g9_30] 826 frames, hearts 13.0 -> f128631 mode=05/00 L9 room=30 pos=(208,141) dir=2 hp=13.0/13 rup=25 sword=3 lag=23064 (total 128630 frames, 16491s wall)
+  attempt 2: success 605 frames, hearts 12.0
+  (early stop after 49 attempts)
+[g9_30_st] 605 frames, hearts 12.0 -> f129236 mode=09/09 L9 room=67 pos=(48,65) dir=4 hp=12.0/13 rup=25 sword=3 lag=23066 (total 129235 frames, 16668s wall)
+  attempt 1: success 412 frames, hearts 11.0
+  (early stop after 29 attempts)
+[g9_pass_30] 412 frames, hearts 11.0 -> f129648 mode=05/00 L9 room=04 pos=(192,109) dir=4 hp=11.0/13 rup=25 sword=3 lag=23069 (total 129647 frames, 16670s wall)
+  attempt 2: success 3 frames, hearts 11.0
+  attempt 8: success 2 frames, hearts 11.0
+  (early stop after 22 attempts)
+  attempt 27: success 1 frames, hearts 11.0
+[g9_04_bomb] 1 frames, hearts 11.0 -> f129649 mode=05/00 L9 room=04 pos=(192,109) dir=4 hp=11.0/13 rup=25 sword=3 lag=23069 (total 129648 frames, 16670s wall)
+  attempt 5: success 924 frames, hearts 9.0
+  attempt 4: success 881 frames, hearts 10.0
+  attempt 3: success 847 frames, hearts 10.0
+  attempt 18: success 843 frames, hearts 10.0
+  attempt 27: success 908 frames, hearts 11.0
+  (early stop after 90 attempts)
+[g9_03] 908 frames, hearts 11.0 -> f130557 mode=05/00 L9 room=03 pos=(208,141) dir=2 hp=11.0/13 rup=25 sword=3 lag=23205 (total 130556 frames, 16857s wall)
+  attempt 3: success 685 frames, hearts 11.0
+  attempt 2: success 626 frames, hearts 11.0
+  attempt 25: success 596 frames, hearts 11.0
+  (early stop after 70 attempts)
+[g9_03_st] 596 frames, hearts 11.0 -> f131153 mode=09/09 L9 room=77 pos=(192,65) dir=4 hp=11.0/13 rup=30 sword=3 lag=23207 (total 131152 frames, 17177s wall)
+  attempt 4: success 389 frames, hearts 11.0
+  (early stop after 15 attempts)
+[g9_pass_03] 389 frames, hearts 11.0 -> f131542 mode=05/00 L9 room=52 pos=(96,157) dir=4 hp=11.0/13 rup=30 sword=3 lag=23210 (total 131541 frames, 17179s wall)
+  attempt 6: success 408 frames, hearts 9.0
+  attempt 3: success 453 frames, hearts 9.0
+  attempt 5: success 400 frames, hearts 7.0
+  attempt 7: success 351 frames, hearts 9.0
+  attempt 12: success 349 frames, hearts 9.0
+  attempt 34: success 337 frames, hearts 9.0
+  (early stop after 73 attempts)
+[g9_52_patra] 337 frames, hearts 9.0 -> f131879 mode=05/00 L9 room=52 pos=(129,93) dir=1 hp=9.0/13 rup=30 sword=3 lag=23210 (total 131878 frames, 18007s wall)
+  attempt 4: success 243 frames, hearts 9.0
+  attempt 7: success 240 frames, hearts 9.0
+  (early stop after 49 attempts)
+[g9_42] 240 frames, hearts 9.0 -> f132119 mode=05/00 L9 room=42 pos=(120,189) dir=8 hp=9.0/13 rup=30 sword=3 lag=23308 (total 132118 frames, 18015s wall)
+  attempt 4: success 933 frames, hearts 7.0
+  attempt 8: success 879 frames, hearts 9.0
+  attempt 14: success 877 frames, hearts 9.0
+  attempt 30: success 871 frames, hearts 9.0
+  attempt 33: success 868 frames, hearts 8.0
+  attempt 50: success 866 frames, hearts 9.0
+[g9_ganon] 866 frames, hearts 9.0 -> f132985 mode=05/00 L9 room=42 pos=(56,139) dir=4 hp=9.0/13 rup=29 sword=3 lag=23308 (total 132984 frames, 18733s wall)
+  attempt 4: success 220 frames, hearts 9.0
+  attempt 5: success 219 frames, hearts 9.0
+  attempt 2: success 213 frames, hearts 9.0
+  (early stop after 47 attempts)
+[g9_power] 213 frames, hearts 9.0 -> f133198 mode=05/00 L9 room=42 pos=(56,157) dir=4 hp=9.0/13 rup=29 sword=3 lag=23308 (total 133197 frames, 18738s wall)
+  attempt 1: success 277 frames, hearts 9.0
+  attempt 2: success 271 frames, hearts 9.0
+  (early stop after 48 attempts)
+[g9_32] 271 frames, hearts 9.0 -> f133469 mode=05/00 L9 room=32 pos=(120,189) dir=8 hp=9.0/13 rup=29 sword=3 lag=23405 (total 133468 frames, 18747s wall)
+  attempt 2: success 58 frames, hearts 8.5
+  (early stop after 43 attempts)
+[g9_zelda] 58 frames, hearts 8.5 -> f133527 mode=13/00 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23405 (total 133526 frames, 18978s wall)
+  attempt 4: success 3000 frames, hearts 8.5
+  (early stop after 68 attempts)
+[g9_credits] 3000 frames, hearts 8.5 -> f136527 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23406 (total 136526 frames, 19092s wall)
+final: f136527 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23406
+frames: 136526  (2271.7s of game time)
+closing the emulators so their battery saves cannot leak into the replay...
+verifying by replay from power-on in a fresh emulator...
+replayed 136526 frames -> f136527 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23406
+  ram sha1 3115e31ff1a9b16e732160f81fe478a5052668ff
+  MATCH
+bk2 movie: G:\AI World Record\harness\logs\fullgame.bk2

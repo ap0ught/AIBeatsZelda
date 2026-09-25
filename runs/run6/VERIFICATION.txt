@@ -1,0 +1,3 @@
+replayed 136526 frames -> f136527 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23406
+  ram sha1 3115e31ff1a9b16e732160f81fe478a5052668ff
+  MATCH

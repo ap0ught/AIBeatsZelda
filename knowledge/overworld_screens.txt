@@ -1,0 +1,129 @@
+OW shortcut/item pos array 57 49 99 69
+00 B=27 cave=09 level 9                          F=83 q=2 pos=(80, 112) exitX=A0 exitRow=3 | BOMBWALL@(160,128)
+01 B=5F cave=17 door repair charge               F=00 q=0 pos=(80, 112) exitX=90 exitRow=0 | BOMBWALL@(144,80) wares: 
+02 B=6B cave=1A potion shop                      F=83 q=2 pos=(80, 112) exitX=60 exitRow=3 | BOMBWALL@(96,128) wares: blue potion 40, red potion 68
+03 B=5F cave=17 door repair charge               F=03 q=0 pos=(80, 112) exitX=70 exitRow=3 | BOMBWALL@(112,128) wares: 
+04 B=6B cave=1A potion shop                      F=00 q=0 pos=(80, 112) exitX=C0 exitRow=0 | openF3@(192,80) wares: blue potion 40, red potion 68
+05 B=27 cave=09 level 9                          F=45 q=1 pos=(80, 112) exitX=50 exitRow=5 | BOMBWALL@(80,160)
+06 B=47 cave=11 take any one (potion/heart ctr)  F=84 q=2 pos=(80, 112) exitX=B0 exitRow=4 | 
+07 B=5F cave=17 door repair charge               F=03 q=0 pos=(80, 112) exitX=A0 exitRow=3 | BOMBWALL@(160,128) wares: 
+08 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+09 B=4F cave=13 magic sword                      F=A4 q=2 pos=(144, 144) exitX=90 exitRow=4 | PUSHROCK@(64,144)
+0A B=4B cave=12 white sword                      F=00 q=0 pos=(80, 112) exitX=20 exitRow=0 | openF3@(32,80)
+0B B=17 cave=05 level 5                          F=03 q=0 pos=(80, 112) exitX=70 exitRow=3 | openF3@(112,128) ARMOS_SECRET x=B0
+0C B=7B cave=1E shop                             F=00 q=0 pos=(80, 112) exitX=80 exitRow=0 | openF3@(128,80) wares: magic shield 160, key 100, blue candle 60
+0D B=6B cave=1A potion shop                      F=00 q=0 pos=(80, 112) exitX=90 exitRow=0 | BOMBWALL@(144,80) wares: blue potion 40, red potion 68
+0E B=63 cave=18 letter                           F=0B q=0 pos=(80, 112) exitX=50 exitRow=3 | openF3@(80,128) wares: letter 0
+0F B=8B cave=22 SECRET +100                      F=03 q=0 pos=(80, 112) exitX=80 exitRow=3 | openF3@(128,128)
+10 B=5B cave=16 money making game                F=00 q=0 pos=(80, 112) exitX=90 exitRow=0 | BOMBWALL@(144,80) wares: rupee 10, rupee 10, rupee 10
+11 B=63 cave=18 letter                           F=A4 q=2 pos=(144, 144) exitX=50 exitRow=4 | PUSHROCK@(128,144) wares: letter 0
+12 B=7F cave=1F shop                             F=00 q=0 pos=(80, 112) exitX=80 exitRow=0 | BOMBWALL@(128,80) wares: magic shield 90, bait 100, heart 10
+13 B=87 cave=21 SECRET +30                       F=00 q=0 pos=(80, 112) exitX=20 exitRow=0 | BOMBWALL@(32,80)
+14 B=5F cave=17 door repair charge               F=00 q=0 pos=(80, 112) exitX=C0 exitRow=0 | BOMBWALL@(192,80) wares: 
+15 B=7B cave=1E shop                             F=80 q=2 pos=(80, 112) exitX=C0 exitRow=0 | BOMBWALL@(192,80) wares: magic shield 160, key 100, blue candle 60
+16 B=5B cave=16 money making game                F=00 q=0 pos=(80, 112) exitX=60 exitRow=0 | BOMBWALL@(96,80) wares: rupee 10, rupee 10, rupee 10
+17 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+18 B=6B cave=1A potion shop                      F=82 q=2 pos=(80, 112) exitX=C0 exitRow=2 | BOMBWALL@(192,112) wares: blue potion 40, red potion 68
+19 B=1F cave=07 level 7                          F=82 q=2 pos=(80, 112) exitX=40 exitRow=2 | BOMBWALL@(64,112)
+1A B=6F cave=1B pay-me hint 5/10/20              F=03 q=0 pos=(80, 112) exitX=60 exitRow=3 | door88@(96,128) wares: rupee 5, rupee 10, rupee 20
+1B B=17 cave=05 level 5                          F=A4 q=2 pos=(144, 144) exitX=90 exitRow=4 | PUSHROCK@(192,144)
+1C B=57 cave=15 hint: tree at dead-end           F=02 q=0 pos=(80, 112) exitX=30 exitRow=2 |  ARMOS_SECRET x=B0
+1D B=53 cave=14 take any road (warp)             F=02 q=0 pos=(80, 112) exitX=20 exitRow=2 | PUSHROCK@(48,144)
+1E B=5F cave=17 door repair charge               F=00 q=0 pos=(80, 112) exitX=C0 exitRow=0 | BOMBWALL@(192,80) wares: 
+1F B=5A cave=16 money making game                F=03 q=0 pos=(80, 112) exitX=60 exitRow=3 | openF3@(96,128) wares: rupee 10, rupee 10, rupee 10
+20 B=44 cave=11 take any one (potion/heart ctr)  F=B3 q=2 pos=(96, 144) exitX=50 exitRow=3 | PUSHGRAVE@(96,144)
+21 B=4C cave=13 magic sword                      F=62 q=1 pos=(144, 144) exitX=50 exitRow=2 | PUSHGRAVE@(144,144)
+22 B=18 cave=06 level 6                          F=03 q=0 pos=(80, 112) exitX=70 exitRow=3 | openF3@(112,128) openF3@(128,128) ARMOS_SECRET x=30
+23 B=53 cave=14 take any road (warp)             F=11 q=0 pos=(64, 144) exitX=40 exitRow=1 | PUSHROCK@(48,144)
+24 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 |  ARMOS_SECRET x=E0
+25 B=77 cave=1D shop                             F=00 q=0 pos=(80, 112) exitX=A0 exitRow=0 | openF3@(160,80) wares: magic shield 130, bombs 20, arrows 80
+26 B=7F cave=1F shop                             F=00 q=0 pos=(80, 112) exitX=30 exitRow=0 | BOMBWALL@(48,80) wares: magic shield 90, bait 100, heart 10
+27 B=6B cave=1A potion shop                      F=40 q=1 pos=(80, 112) exitX=E0 exitRow=0 | BOMBWALL@(224,80) wares: blue potion 40, red potion 68
+28 B=86 cave=21 SECRET +30                       F=05 q=0 pos=(80, 112) exitX=E0 exitRow=5 | BURNTREE@(208,160)
+29 B=6B cave=1A potion shop                      F=84 q=2 pos=(80, 112) exitX=B0 exitRow=4 |  wares: blue potion 40, red potion 68
+2A B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+2B B=8F cave=23 SECRET +10                       F=84 q=2 pos=(80, 112) exitX=B0 exitRow=4 | 
+2C B=47 cave=11 take any one (potion/heart ctr)  F=45 q=1 pos=(80, 112) exitX=90 exitRow=5 | BOMBWALL@(144,160)
+2D B=87 cave=21 SECRET +30                       F=00 q=0 pos=(80, 112) exitX=50 exitRow=0 | BOMBWALL@(80,80)
+2E B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+2F B=44 cave=11 take any one (potion/heart ctr)  F=03 q=0 pos=(80, 112) exitX=60 exitRow=3 | openF3@(96,128)
+30 B=18 cave=06 level 6                          F=84 q=2 pos=(80, 112) exitX=70 exitRow=4 | 
+31 B=00 cave=00                                  F=04 q=0 pos=(80, 112) exitX=70 exitRow=4 | 
+32 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+33 B=68 cave=1A potion shop                      F=00 q=0 pos=(80, 112) exitX=A0 exitRow=0 | BOMBWALL@(160,80) wares: blue potion 40, red potion 68
+34 B=83 cave=20 shop                             F=02 q=0 pos=(80, 112) exitX=40 exitRow=2 |  ARMOS_SECRET x=40 wares: key 80, blue ring 250, bait 60
+35 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+36 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+37 B=07 cave=01 level 1                          F=03 q=0 pos=(80, 112) exitX=70 exitRow=3 | openF3@(112,128)
+38 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+39 B=02 cave=00                                  F=80 q=2 pos=(80, 112) exitX=00 exitRow=0 | 
+3A B=47 cave=11 take any one (potion/heart ctr)  F=84 q=2 pos=(80, 112) exitX=C0 exitRow=4 | 
+3B B=03 cave=00                                  F=02 q=0 pos=(80, 112) exitX=60 exitRow=2 | 
+3C B=0A cave=02 level 2                          F=03 q=0 pos=(80, 112) exitX=70 exitRow=3 | openF3@(112,128)
+3D B=86 cave=21 SECRET +30                       F=02 q=0 pos=(80, 112) exitX=90 exitRow=2 |  ARMOS_SECRET x=90
+3E B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+3F B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+40 B=00 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+41 B=00 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+42 B=1F cave=07 level 7                          F=01 q=0 pos=(80, 112) exitX=60 exitRow=1 | 
+43 B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+44 B=76 cave=1D shop                             F=00 q=0 pos=(80, 112) exitX=40 exitRow=0 | openF3@(64,80) wares: magic shield 130, bombs 20, arrows 80
+45 B=12 cave=04 level 4                          F=03 q=0 pos=(80, 112) exitX=80 exitRow=3 | openF3@(128,128)
+46 B=7E cave=1F shop                             F=06 q=0 pos=(80, 112) exitX=80 exitRow=6 | BURNTREE@(144,176) wares: magic shield 90, bait 100, heart 10
+47 B=46 cave=11 take any one (potion/heart ctr)  F=45 q=1 pos=(80, 112) exitX=B0 exitRow=5 | BURNTREE@(176,176)
+48 B=86 cave=21 SECRET +30                       F=02 q=0 pos=(80, 112) exitX=B0 exitRow=2 | BURNTREE@(208,96)
+49 B=52 cave=14 take any road (warp)             F=02 q=0 pos=(80, 112) exitX=30 exitRow=2 | PUSHROCK@(48,144)
+4A B=76 cave=1D shop                             F=00 q=0 pos=(80, 112) exitX=B0 exitRow=0 | openF3@(176,80) wares: magic shield 130, bombs 20, arrows 80
+4B B=6A cave=1A potion shop                      F=09 q=0 pos=(80, 112) exitX=C0 exitRow=1 | BURNTREE@(176,96) wares: blue potion 40, red potion 68
+4C B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+4D B=7E cave=1F shop                             F=0C q=0 pos=(80, 112) exitX=C0 exitRow=4 | BURNTREE@(208,160) wares: magic shield 90, bait 100, heart 10
+4E B=8E cave=23 SECRET +10                       F=0A q=0 pos=(80, 112) exitX=70 exitRow=2 |  ARMOS_SECRET x=A0
+4F B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+50 B=00 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+51 B=8F cave=23 SECRET +10                       F=05 q=0 pos=(80, 112) exitX=A0 exitRow=5 | BURNTREE@(144,160)
+52 B=03 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+53 B=8A cave=22 SECRET +100                      F=85 q=2 pos=(80, 112) exitX=80 exitRow=5 | BURNTREE@(96,160)
+54 B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+55 B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+56 B=8E cave=23 SECRET +10                       F=06 q=0 pos=(80, 112) exitX=B0 exitRow=6 | BURNTREE@(160,160)
+57 B=02 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+58 B=86 cave=21 SECRET +30                       F=8C q=2 pos=(80, 112) exitX=C0 exitRow=4 | 
+59 B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+5A B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+5B B=8E cave=23 SECRET +10                       F=0D q=0 pos=(80, 112) exitX=30 exitRow=5 | BURNTREE@(32,160)
+5C B=02 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+5D B=02 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+5E B=7A cave=1E shop                             F=00 q=0 pos=(80, 112) exitX=70 exitRow=0 | openF3@(112,80) wares: magic shield 160, key 100, blue candle 60
+5F B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+60 B=5B cave=16 money making game                F=84 q=2 pos=(80, 112) exitX=C0 exitRow=4 |  wares: rupee 10, rupee 10, rupee 10
+61 B=03 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+62 B=8B cave=22 SECRET +100                      F=4B q=1 pos=(80, 112) exitX=60 exitRow=3 | BURNTREE@(128,96)
+63 B=5F cave=17 door repair charge               F=05 q=0 pos=(80, 112) exitX=70 exitRow=5 | BURNTREE@(96,160) wares: 
+64 B=6A cave=1A potion shop                      F=00 q=0 pos=(80, 112) exitX=70 exitRow=0 | openF3@(112,80) wares: blue potion 40, red potion 68
+65 B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+66 B=7B cave=1E shop                             F=00 q=0 pos=(80, 112) exitX=70 exitRow=0 | openF3@(112,80) wares: magic shield 160, key 100, blue candle 60
+67 B=86 cave=21 SECRET +30                       F=40 q=1 pos=(80, 112) exitX=70 exitRow=0 | BOMBWALL@(112,80)
+68 B=5E cave=17 door repair charge               F=0C q=0 pos=(80, 112) exitX=30 exitRow=4 | BURNTREE@(32,160) wares: 
+69 B=02 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+6A B=5E cave=17 door repair charge               F=05 q=0 pos=(80, 112) exitX=D0 exitRow=5 | BURNTREE@(192,160) wares: 
+6B B=8A cave=22 SECRET +100                      F=4D q=1 pos=(80, 112) exitX=50 exitRow=5 | BURNTREE@(128,160)
+6C B=22 cave=08 level 8                          F=89 q=2 pos=(80, 112) exitX=40 exitRow=1 | BURNTREE@(80,96)
+6D B=22 cave=08 level 8                          F=49 q=1 pos=(80, 112) exitX=60 exitRow=1 | BURNTREE@(160,96)
+6E B=8E cave=23 SECRET +10                       F=84 q=2 pos=(80, 112) exitX=C0 exitRow=4 | 
+6F B=77 cave=1D shop                             F=00 q=0 pos=(80, 112) exitX=30 exitRow=0 | openF3@(48,80) wares: magic shield 130, bombs 20, arrows 80
+70 B=73 cave=1C pay-me hint 10/30/50             F=00 q=0 pos=(80, 112) exitX=B0 exitRow=0 | openF3@(176,80) wares: rupee 10, rupee 30, rupee 50
+71 B=87 cave=21 SECRET +30                       F=48 q=1 pos=(80, 112) exitX=50 exitRow=0 | BOMBWALL@(80,80)
+72 B=5F cave=17 door repair charge               F=8C q=2 pos=(80, 112) exitX=40 exitRow=4 |  wares: 
+73 B=03 cave=00                                  F=08 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+74 B=0F cave=03 level 3                          F=03 q=0 pos=(80, 112) exitX=80 exitRow=3 | openF3@(128,128)
+75 B=66 cave=19 hint: old man at grave           F=00 q=0 pos=(80, 112) exitX=20 exitRow=0 | openF3@(32,80) wares: 
+76 B=5A cave=16 money making game                F=00 q=0 pos=(80, 112) exitX=60 exitRow=0 | BOMBWALL@(96,80) wares: rupee 10, rupee 10, rupee 10
+77 B=42 cave=10 wood sword                       F=00 q=0 pos=(80, 112) exitX=40 exitRow=0 | openF3@(64,80)
+78 B=6A cave=1A potion shop                      F=0C q=0 pos=(80, 112) exitX=50 exitRow=4 | BURNTREE@(64,160) wares: blue potion 40, red potion 68
+79 B=53 cave=14 take any road (warp)             F=22 q=0 pos=(144, 144) exitX=60 exitRow=2 | PUSHROCK@(128,144)
+7A B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+7B B=47 cave=11 take any one (potion/heart ctr)  F=40 q=1 pos=(80, 112) exitX=90 exitRow=0 | BOMBWALL@(144,80)
+7C B=5B cave=16 money making game                F=00 q=0 pos=(80, 112) exitX=60 exitRow=0 | BOMBWALL@(96,80) wares: rupee 10, rupee 10, rupee 10
+7D B=5F cave=17 door repair charge               F=00 q=0 pos=(80, 112) exitX=60 exitRow=0 | BOMBWALL@(96,80) wares: 
+7E B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 
+7F B=03 cave=00                                  F=00 q=0 pos=(80, 112) exitX=00 exitRow=0 | 

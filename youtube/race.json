@@ -1,0 +1,35 @@
+{
+ "title": "THE SAME ROOM, FIVE RUNS: LEVEL 3'S FIVE DARKNUTS (run 3's take is identical to run 4's)",
+ "runs": [
+  {
+   "label": "RUN 1   1:42:21",
+   "video": "video/first_run_2026-09-15/fullgame_run_overlay.mp4",
+   "start": 166.47586973450385,
+   "end": 186.95880782977366
+  },
+  {
+   "label": "RUN 2   57:40",
+   "video": "video/second_run_2026-09-16/fullgame_run_overlay.mp4",
+   "start": 154.5787935865608,
+   "end": 167.92348599306476
+  },
+  {
+   "label": "RUN 4   39:15",
+   "video": "video/fourth_run_2026-09-19/zelda_ai_run4_39m15s_overlay.mp4",
+   "start": 104.36148475510326,
+   "end": 118.98740074677032
+  },
+  {
+   "label": "RUN 5   37:19",
+   "video": "video/fifth_run_2026-09-21/zelda_ai_run5_37m19s_overlay.mp4",
+   "start": 100.78404227705046,
+   "end": 113.72939226739969
+  },
+  {
+   "label": "RUN 6   37:02",
+   "video": "video/sixth_run_2026-09-22/zelda_ai_run6_37m02s_overlay.mp4",
+   "start": 103.24665384333798,
+   "end": 115.12709072394125
+  }
+ ]
+}
