@@ -119,6 +119,48 @@ Audio goes out through SDL2 (`SoundOutputMethod: 2`) to PipeWire, and lands on
 whatever sink is default — check with `pactl list sink-inputs`, where the
 BizHawk stream should show up uncorked while the run is playing.
 
+## Video recording does not work here — use ZELDA_RECORD=0
+
+Anything that passes `record=<name>` to `BizHawk()` dies on startup under Mono.
+`--dump-type=ffmpeg` takes BizHawk's display/GL path earlier than the Lua bridge
+does, and it never gets as far as the bridge: the launcher log simply stops after
+the GTK theme warning, with no exception and no EGL error. A minimal
+`BizHawk(record="x")` reproduces it in about 60 s; the same launch without
+`record` connects in under 2 s. With a real crash you at least get a stack trace
+(this one is worse — an earlier attempt surfaced as an `EGL_BAD_ACCESS` during
+`DisplayManagerBase.Dispose`, i.e. the real fault was happening at teardown).
+
+`zelda/emulator.py` now honours `ZELDA_RECORD=0` to force recording off whatever
+the caller asked for:
+
+```
+ZELDA_RECORD=0 ZELDA_SCOUTS=4 python3 milestone3.py
+```
+
+A search does not need the video — it is only for rendering the documentary — so
+this keeps every run usable. The ffmpeg binary itself is present and fine; it is
+BizHawk's writer path, not ffmpeg.
+
+## Launching long runs
+
+Do not launch a multi-hour run as a background job of a shell that also sleeps or
+waits on it. When that shell is torn down, the process group goes with it and the
+run dies silently — no traceback, no `FAILED:`, and the scout logs just stop
+mid-segment looking perfectly healthy. It looks exactly like the emulator
+crashing, which is what `run_until.sh` exists to handle, and sends you hunting
+the wrong bug. Detach properly instead:
+
+```
+setsid nohup env ZELDA_SCOUTS=4 ZELDA_RECORD=0 python3 -u fullgame.py \
+    > /tmp/run.log 2>&1 < /dev/null & disown
+```
+
+`python3 -u` matters too: with output piped, a killed process loses everything
+buffered.
+
+Related: `pkill -f "EmuHawk.exe"` kills the shell running it, because that
+shell's own command line contains the pattern. It looks like BizHawk hanging.
+
 
 ## Verification performed
 

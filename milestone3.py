@@ -1,11 +1,17 @@
 """Milestone 3: from power-on, get the sword, walk to Level 3, clear it, take the Triforce.
 
-Two emulators. MAIN plays from power-on and never loads a savestate, so its input log is the run.
-SCOUT loads copies of MAIN's state and searches each room for the best inputs (no damage first,
-speed second); MAIN then plays the winner. Finally the whole log is replayed in a fresh emulator
-and exported as a .bk2.
+Several emulators. MAIN plays from power-on and never loads a savestate, so its input log is the
+run. The SCOUTS load copies of MAIN's state and search each room for the best inputs (no damage
+first, speed second); MAIN then plays the winner. Finally the whole log is replayed in a fresh
+emulator and exported as a .bk2.
+
+SCOUT COUNT: ZELDA_SCOUTS, default 4 - the same knob the full route uses (zelda/runner.py). One
+thread per scout, attempts handed out by seed. Emulation is socket I/O, so it releases the GIL and
+K scouts really do run K attempts in nearly the time of one.
 """
+import contextlib
 import json
+import os
 import time
 
 from zelda import BizHawk, ram, bot, replay, bk2
@@ -14,9 +20,11 @@ from zelda.combat import Fighter
 from zelda.segments import make_cross_policy, make_grab_policy, make_clear_policy, make_lafight_policy, make_lareach_policy
 from zelda.lookahead import Goal
 from zelda.cellar import take_raft_cellar_la
-from zelda.search import random_search
+from zelda.search import parallel_search
 from zelda.boss import Manhandla, parts
 from zelda.emulator import LOGS_DIR
+
+SCOUTS = max(1, int(os.environ.get("ZELDA_SCOUTS", "4")))
 
 t0 = time.time()
 LOG = open(LOGS_DIR / "milestone3.txt", "w", buffering=1)
@@ -155,15 +163,18 @@ with BizHawk(log_name="m3_main.log", record="milestone3") as main:
         return policy
     ow_segments.append(("enter_L3", enter_policy, lambda emu, s: s.level == 3 and s.mode == 5 and s.hearts > 0, 20))
 
-    with BizHawk(log_name="m3_scout.log", clean_sram=False) as scout:
-        snav = Navigator(scout)
+    with contextlib.ExitStack() as stack:
+        scouts = [stack.enter_context(BizHawk(log_name=f"m3_scout{i or ''}.log", clean_sram=False))
+                  for i in range(SCOUTS)]
+        snavs = [Navigator(s) for s in scouts]
+        P(f"{SCOUTS} scout emulator(s) searching alongside MAIN")
         for name, factory, success, tries in ow_segments + SEGMENTS:
             start = f"m3_{name}_start"
             main.save(start)
             s0 = main.state()
-            main.note(f"SEGMENT {name}: room {s0.room:02X}, {s0.hearts} hearts. Scout is searching up to {tries} attempts...")
-            best = random_search(scout, start, factory(snav), success, tries=tries, max_frames=2500,
-                                 label=name, log=P, prefer_hearts=True)
+            main.note(f"SEGMENT {name}: room {s0.room:02X}, {s0.hearts} hearts. {SCOUTS} scout(s) searching up to {tries} attempts...")
+            best = parallel_search(scouts, snavs, start, factory, success, tries=tries, max_frames=2500,
+                                   label=name, log=P)
             if best is None:
                 P(f"FAILED: {name}")
                 raise SystemExit(1)

@@ -121,6 +121,13 @@ class BizHawk:
         input, state and notes to logs/<session>.* so the session can be rendered with the panel."""
         for d in (STATES_DIR, SHOTS_DIR, LOGS_DIR, VIDEO_DIR):
             d.mkdir(parents=True, exist_ok=True)
+        # ZELDA_RECORD=0 forces recording off whatever the caller asked for. BizHawk's
+        # --dump-type=ffmpeg writer takes the display/GL path earlier than the Lua bridge
+        # does, and under Mono on Linux it never gets the bridge up at all - the launcher
+        # log just stops after the GTK theme warning, with no exception. A search does not
+        # need the video, so this is the switch that keeps the run usable.
+        if os.environ.get("ZELDA_RECORD") == "0":
+            record = None
         self.record = record
         self.trace_lines: list[str] = []
         if clean_sram:
