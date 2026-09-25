@@ -1,0 +1,29 @@
+# never: the game
+*.nes
+*.zip
+# emulator state, captures, renders, logs
+states/
+video/
+logs/
+shots/
+# the bridge's port file, rewritten on every launch
+.bridge_port
+*.State
+*.mkv
+*.mp4
+*.wav
+*.m4a
+*.png
+youtube/capture/
+youtube/clips/
+youtube/clips_v3/
+youtube/out/
+youtube/out_v3/
+youtube/voice/
+youtube/final/
+youtube/check/
+youtube/sheets/
+# third-party disassembly: linked from the README, not redistributed
+tools/disasm/
+__pycache__/
+*.pyc
