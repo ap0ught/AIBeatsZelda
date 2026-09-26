@@ -122,6 +122,11 @@ The cheap place to try is *not* a pond — it is the pre-sword bomb stretch rout
 already runs (`L3 → h_2C → r100_0F → candle → WS`, with bombs from L3). Blocker:
 `route_planner.py` has no fairy errand, so it cannot price one. ~20 lines to add.
 
+Update (2026-09-26): the planner now has costed fairy errands. Against `CURRENT`,
+adding `fairy_2C` in the pre-sword stretch costs **+4,994 frames** (~83 s), and adding
+`fairy_42` before `L9` costs **+1,081 frames** (~18 s). Both are net losses in the model,
+so route 4 still does not take a planned fairy stop.
+
 **Rupees.** Sources are 7 per dungeon, 30-rupee secrets (`r30_*`, seven of them)
 and 100-rupee secrets (`r100_*`, three). Prices: candle 60, arrows 80, bait
 60-100. Route 4 peaks at **182** after `r100_6B`. So there is no 25-rupee pickup
