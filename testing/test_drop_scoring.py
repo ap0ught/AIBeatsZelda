@@ -43,6 +43,7 @@ class DropScoringTests(unittest.TestCase):
         self.assertEqual(predicted_monster_drop(0x24, 5, 0, 0), 0x00)
         self.assertEqual(predicted_monster_drop(0x24, 7, 0, 0), 0x00)
         self.assertEqual(predicted_monster_drop(0x24, 0, 0, 15), 0x23)
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 25), 0x23)
         self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, False), 0x0F)
         self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, True), 0x00)
 

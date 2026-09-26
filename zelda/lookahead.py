@@ -291,7 +291,7 @@ def predicted_monster_drop(monster_type: int, cycle: int, help_count: int, world
                            bomb_kill: bool = False) -> int | None:
     if monster_type in NO_DROP:
         return None
-    if world_count + 1 == 0x10:
+    if world_count + 1 >= 0x10 and (world_count + 1 - 0x10) % 10 == 0:
         return 0x23
     if help_count + 1 >= 10:
         return 0x00 if bomb_kill else 0x0F
