@@ -1,4 +1,24 @@
-"""RAM addresses for The Legend of Zelda (NES). Sources: Data Crystal, ROM Detectives."""
+"""RAM addresses for The Legend of Zelda (NES). Sources: Data Crystal, ROM Detectives.
+
+The encoding notes matter more than the addresses. Several of these bytes are not
+what their name suggests:
+  $0656 selected item SLOT (a cursor, not an acquisition - do not treat it as one)
+  $0657 sword level       0/1/2/3
+  $0658 bombs             a real count
+  $0659 arrow STATUS      0 none / 1 arrow / 2 silver arrow
+  $065B candle STATUS     0 none / 1 blue / 2 red
+  $065D bait              Data Crystal: "Food in Inventory"; a count
+  $0662 ring STATUS       0 none / 1 blue / 2 red
+  $0667 compass           one bit PER LEVEL, not a 0/1 flag
+  $0668 map               one bit PER LEVEL, not a 0/1 flag
+  $066F hearts            low nybble = hearts filled, high nybble = containers - 1
+  $0670 partial heart     $00 empty / $01-$7F half / $80-$FF full
+  $0671 Triforce          one bit per piece
+
+https://datacrystal.tcrf.net/wiki/The_Legend_of_Zelda/RAM_map is Cloudflare-gated
+for scripted access; a readable snapshot:
+http://web.archive.org/web/20251116061046/https://datacrystal.tcrf.net/wiki/The_Legend_of_Zelda/RAM_map
+"""
 
 GAME_MODE      = 0x12   # see MODE_* below
 SUBMODE        = 0x13
@@ -23,11 +43,11 @@ RETURN_ROOM    = 0x526
 B_ITEM         = 0x656
 SWORD          = 0x657  # 0 none, 1 wood, 2 white, 3 magical
 BOMBS          = 0x658
-ARROWS         = 0x659
+ARROWS         = 0x659   # 0 none / 1 arrow / 2 silver arrow - a status, not a count
 BOW            = 0x65A
-CANDLE         = 0x65B
+CANDLE         = 0x65B   # 0 none / 1 blue / 2 red
 WHISTLE        = 0x65C
-BAIT           = 0x65D
+BAIT           = 0x65D   # Data Crystal calls this "Food in Inventory"
 POTION         = 0x65E
 ROD            = 0x65F
 RAFT           = 0x660
@@ -37,8 +57,11 @@ LADDER         = 0x663
 MAGIC_KEY      = 0x664
 BRACELET       = 0x665
 LETTER         = 0x666
-COMPASS        = 0x667
-MAP            = 0x668
+COMPASS        = 0x667   # one bit per level, not a 0/1 flag
+MAP            = 0x668   # one bit per level, not a 0/1 flag
+COMPASS_L9     = 0x669   # level-9 compass and map are separate bytes
+MAP_L9         = 0x66A
+CLOCK          = 0x66C
 RUPEES         = 0x66D
 KEYS           = 0x66E
 HEARTS         = 0x66F  # high nybble = containers - 1, low nybble = full hearts

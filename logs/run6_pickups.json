@@ -3,7 +3,19 @@
   "frame": 746,
   "kind": "item",
   "name": "wooden sword",
-  "detail": "sword 0 -> 1"
+  "detail": "$0x657 0 -> 1"
+ },
+ {
+  "frame": 6678,
+  "kind": "item",
+  "name": "clock",
+  "detail": "$0x66C 0 -> 1"
+ },
+ {
+  "frame": 6917,
+  "kind": "item",
+  "name": "clock",
+  "detail": "$0x66C 1 -> 0"
  },
  {
   "frame": 7575,
@@ -14,8 +26,8 @@
  {
   "frame": 9853,
   "kind": "item",
-  "name": "map",
-  "detail": "$0x668 0 -> 4  (UNVERIFIED: not a clean flag transition)"
+  "name": "map for level 3",
+  "detail": "$0x668 00 -> 04"
  },
  {
   "frame": 10499,
@@ -38,14 +50,14 @@
  {
   "frame": 20290,
   "kind": "item",
-  "name": "candle",
+  "name": "blue candle",
   "detail": "$0x65B 0 -> 1"
  },
  {
   "frame": 22435,
   "kind": "item",
   "name": "white sword",
-  "detail": "sword 1 -> 2"
+  "detail": "$0x657 1 -> 2"
  },
  {
   "frame": 29520,
@@ -132,22 +144,16 @@
   "detail": "triforce 8F -> 9F"
  },
  {
-  "frame": 87830,
+  "frame": 86763,
   "kind": "item",
-  "name": "bait",
-  "detail": "$0x65D 0 -> 1"
- },
- {
-  "frame": 92640,
-  "kind": "consumed",
-  "name": "bait",
-  "detail": "1 -> 0"
+  "name": "arrow",
+  "detail": "$0x659 0 -> 1"
  },
  {
   "frame": 92997,
   "kind": "item",
-  "name": "map",
-  "detail": "$0x668 4 -> 68  (UNVERIFIED: not a clean flag transition)"
+  "name": "map for level 7",
+  "detail": "$0x668 04 -> 44"
  },
  {
   "frame": 97983,
@@ -165,7 +171,7 @@
   "frame": 102507,
   "kind": "item",
   "name": "magical sword",
-  "detail": "sword 2 -> 3"
+  "detail": "$0x657 2 -> 3"
  },
  {
   "frame": 110719,
@@ -178,5 +184,11 @@
   "kind": "triforce",
   "name": "Triforce piece 6 of 8",
   "detail": "triforce DF -> FF"
+ },
+ {
+  "frame": 125127,
+  "kind": "item",
+  "name": "silver arrow",
+  "detail": "$0x659 1 -> 2"
  }
 ]
