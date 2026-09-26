@@ -4,6 +4,8 @@ from __future__ import annotations
 import os
 import socket
 import subprocess
+import sys
+import textwrap
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -29,6 +31,38 @@ ROM_NAME = "Legend of Zelda, The (USA) (Rev 1).nes"
 _ROM_CANDIDATES = (HARNESS_DIR / "roms" / ROM_NAME, BIZHAWK_DIR / ROM_NAME)
 ROM = Path(os.environ.get("ZELDA_ROM")
            or next((p for p in _ROM_CANDIDATES if p.exists()), _ROM_CANDIDATES[0]))
+# The one cartridge every number in this repo was measured against. The run6
+# fingerprint (3115e31f...) is a sha1 over work RAM produced by *these* bytes, so a
+# different cartridge is a different game: same title, same controls, different
+# result, and nothing in a replay or a search report says so.
+VERIFIED_ROM_MD5 = "614fb3085826e62f3be3a3fe0b931689"
+
+
+def rom_md5(rom: Path) -> str:
+    import hashlib
+    return hashlib.md5(Path(rom).read_bytes()).hexdigest()
+
+
+def unverified_rom_reason(rom: Path) -> str | None:
+    """Why this cartridge is not the verified one, or None if it is.
+
+    A patched ROM is a legitimate thing to run here - testing/compare_roms.py exists
+    to prove one is cosmetic - so this reports rather than refuses. What it must not
+    do is stay quiet: on 2026-09-26 the Automap Plus patch was left sitting in roms/
+    under the stock filename, and 136,526 frames of "the verified run" were replayed
+    against it before anyone noticed. It booted, it played, and it died at frame
+    98,204 with "EmuHawk exit code 0", which reads like an emulator fault rather than
+    a wrong cartridge. Never write a patched ROM over roms/ - use ZELDA_ROM.
+    """
+    try:
+        got = rom_md5(rom)
+    except OSError:
+        return f"{rom} cannot be read"
+    if got == VERIFIED_ROM_MD5:
+        return None
+    return (f"{rom}\n  md5 {got}\n  expected {VERIFIED_ROM_MD5} (No-Intro USA Rev 1)"
+            f"\n  this is not the cartridge the run6 fingerprint was computed on;"
+            f" anything measured with it is a different game")
 BRIDGE_LUA = HARNESS_DIR / "bridge.lua"
 STATES_DIR = HARNESS_DIR / "states"
 SHOTS_DIR = HARNESS_DIR / "shots"
@@ -157,6 +191,17 @@ class BizHawk:
         except OSError:
             pass
         self._logfile = open(log_path, "w")
+        # Say out loud, in the terminal and in this run's own log, when the cartridge
+        # is not the verified one. The log line matters more than the warning: a log
+        # read weeks later is the only place that still says what the run was played on.
+        self.unverified_rom = unverified_rom_reason(rom)
+        if self.unverified_rom:
+            banner = ("\n*** UNVERIFIED CARTRIDGE ***\n"
+                      + textwrap.indent(self.unverified_rom, "  ") + "\n")
+            print(banner + "*** replay fingerprints and search results from this "
+                           "emulator mean nothing ***\n", file=sys.stderr, flush=True)
+            self._logfile.write(banner + "\n")
+            self._logfile.flush()
         args = [f"--lua={BRIDGE_LUA}", f"--userdata=port:{port}"]
         if record:
             self.video_path = VIDEO_DIR / f"{record}.mkv"

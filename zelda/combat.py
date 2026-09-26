@@ -622,7 +622,20 @@ class Fighter:
             return s.bombs < max(8, self.emu.byte(0x67C))
         if t == 0x21:                          # clock: not worth a detour
             return False
-        return True                            # rupees, five rupees, keys
+        if t == 0x19:                          # key: only when there is a door to open
+            # This used to fall through to an unconditional True, which is where the
+            # disagreement with plan_fight came from: the collector would spend up to
+            # max_detour pixels and max_frames of the run on a key the planner had
+            # deliberately valued below a bomb, because a key is not a consumable and the
+            # heart-deficit `want` had nothing to say about it. The planner now prices a
+            # key by scarcity (KEY_WANT_SCARCE / KEY_WANT_HELD in lookahead.py), and this
+            # answers the same question the same way: a key is worth the walk when Link has
+            # none, and is not when he has some. A key cannot come from a monster drop - the
+            # full set a monster produces is bomb / 5 rupees / rupee / clock / heart / fairy
+            # - so a key lying here is a room item, and a spare one is just a door that is
+            # already open.
+            return s.keys <= 0
+        return True                            # rupees, five rupees
 
     def collect_drop(self, max_frames: int = 240, max_detour: int = 120) -> bool:
         """Pick up what the fight left behind, nearest first, as long as it is worth the walk.

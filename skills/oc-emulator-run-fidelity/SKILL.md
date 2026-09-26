@@ -41,6 +41,47 @@ Then `ZELDA_ROM=/tmp/scratch/automap.nes ./zelda.sh watch` and the canonical
 `roms/` copy is never in play. Note that `*.nes` and `*.zip` belong in
 `.gitignore`; a ROM cannot be un-shipped from git history cleanly.
 
+### The rule above was written after it was broken
+
+Worth recording, because the indirection was available, documented, and still not
+used: a patched ROM was left at `roms/Legend of Zelda, The (USA) (Rev 1).nes` and the
+136,526-frame verified run was replayed against it. Nobody chose that. A helper script
+wrote a patch to the conventional-looking path, the filename stayed the stock one,
+and every check in the repo was reading the filename.
+
+What it looked like from the outside:
+
+```
+DIED after 98204 frames (83s, 1180 f/s)
+  RuntimeError: bridge connection lost: EmuHawk exit code 0 (0x00000000)
+  reached 71.9% of the log
+```
+
+That is an emulator diagnosis, so that is where the next hour went. The tell was
+`exit code 0` — an *orderly* shutdown, which a diverging patch produces exactly as
+readily as a clean close. A crash is not the only way to lose a bridge mid-replay,
+and "died at frame 98,204 with code 0" should make you ask what the ROM was before
+you ask what the emulator did.
+
+Three defences, in order of how much they are worth:
+
+- **Hash the artifact at launch, in code, on every launch.** An install-time check in
+  a setup script cannot see a file replaced three sessions later. Warn to stderr *and*
+  write the hash into the per-run log, because the log is what survives.
+- **Make the verification path refuse.** A fingerprint means nothing without the bytes
+  it came from; comparing against a known-good fingerprint on an unverified cartridge
+  yields a confident, meaningless number. Override it explicitly
+  (`ZELDA_ALLOW_UNVERIFIED_ROM=1`) for the case where finding the divergence is the
+  whole task.
+- **Keep a verified copy outside the working tree.** `rom-backup/Rev1.stock.nes`
+  turned this from a re-download hunt into `cp -p` and a re-verify. And a restore you
+  have not re-proven is only a guess — replay to the same fingerprint afterwards
+  before believing it.
+
+The general shape: **a guard placed only at the entry point protects the entry point.**
+The environment is mutated in the middle, by a tool nobody was thinking about, and the
+check has to live where the mutation happens.
+
 ## 2. The cosmetic-or-not gate
 
 When you swap a ROM, the question is not "does it look right" but **does it change

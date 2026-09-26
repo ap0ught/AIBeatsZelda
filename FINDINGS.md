@@ -173,7 +173,7 @@ that things are fine.
 
 ---
 
-## 3. Two things that are broken in a way that wastes time
+## 3. Three things that are broken in a way that wastes time
 
 ### 3.1 Video recording never connects
 
@@ -237,7 +237,105 @@ buffer is lost and you get nothing at all.
 
 Same family of self-inflicted wound, cheaper: `pkill -f "EmuHawk.exe"` kills the
 shell running it, because that shell's own command line contains the pattern. It
-presents as BizHawk hanging.
+presents as BizHawk hanging. A third member of the family: counting processes with
+`pgrep -f EmuHawk` inside a command that itself contains the string. Match the
+executable column instead (`ps -eo pid,comm | grep -i mono`) — a shell's argv cannot
+fake that.
+
+### 3.3 The cartridge in `roms/` was a patched ROM, under the stock filename
+
+This is the one that nearly cost the run's central claim, and it is here because
+**nothing in the repo was checking.**
+
+Decoding `Automap Plus.IPS` (issue #5) means applying a patch, and the patch went to
+`roms/Legend of Zelda, The (USA) (Rev 1).nes` — the conventional path, under the
+correct name — and stayed there. Nobody chose to swap the cartridge; a helper wrote
+to the path whose whole purpose is "the one true cartridge", and the filename, which
+is what every check in the project reads, never changed. The patched file is 2 bytes
+*longer* (131,090 vs 131,088: the IPS writes 2 bytes past the end of Rev 1 and
+every patcher pads with zeros), so it is not even the shape a size check expects.
+
+The next day's replay of run6 died at frame 98,204 of 136,526:
+
+```
+RuntimeError: bridge connection lost: EmuHawk exit code 0 (0x00000000)
+```
+
+`exit code 0` is BizHawk's **orderly** shutdown — the harness's own comment at
+`zelda/emulator.py:198` lists `0xC0000005` and `0xE0434352` as what a crash looks
+like. So this reads as an emulator fault, and Mono, EGL and OOM are all somewhere
+you would reasonably go looking. The cause was one `md5sum`:
+
+```
+a6d95f620d67c52b16686e382a219a27  roms/Legend of Zelda, The (USA) (Rev 1).nes
+a6d95f620d67c52b16686e382a219a27  /tmp/opencode/hacked/automap.nes
+```
+
+Two things are worth more than the incident.
+
+**A guard at the entry point protects only the entry point.** `setup_linux.sh` hashes
+the ROM at install and refuses a mismatch, which is right and was three sessions too
+early: the file was replaced long after the install, by a tool nobody was thinking
+about. So the check now also lives where the mutation happens — `zelda/emulator.py`
+carries the hash, and `BizHawk.__init__` writes the verdict into every run, as a
+stderr banner and as the second line of that run's own log. The log line is the
+durable one: a warning scrolls past, the log is what a reader meets weeks later.
+
+**The verification path says no, not just something.** `replay.verify()` refuses a
+cartridge that is not the verified one. A RAM fingerprint is only meaningful next to
+the bytes it was computed from, so replaying against an unverified cartridge and
+reporting `MISMATCH` is strictly worse than no check — it looks like a result.
+`ZELDA_ALLOW_UNVERIFIED_ROM=1` is the override, and it exists because
+`testing/compare_roms.py` proves a patch cosmetic *by* replaying both ROMs and
+diffing work RAM; that comparison is meaningless unless it is allowed to run.
+
+Worth knowing how invisible this was: after 30 frames the patched and stock ROMs
+produce a **byte-identical** state line, `f30 ... lag=27`. The patch announces itself
+at frame 98,204. No boot-and-play smoke test could ever have caught it, which is the
+argument for hashing the file rather than judging the game.
+
+Recovery was one line, because `rom-backup/Rev1.stock.nes` existed — a copy of a
+131 KB file outside the working tree, made the day before for reasons I cannot now
+reconstruct except that I was about to do something to `roms/`. Then the environment
+was re-proven rather than assumed:
+
+```
+replayed 136526 frames -> f136526 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13 rup=29 sword=3 lag=23405
+  ram sha1 3115e31ff1a9b16e732160f81fe478a5052668ff
+  MATCH
+```
+
+`cp -p` is a guess until the fingerprint agrees. Journal 47 has the full account.
+
+### 3.4 Long emulator work does not belong in the main session
+
+The arithmetic makes this unavoidable. A full-game replay is 136,526 frames at
+~1,180 f/s — **two minutes** of wall clock. A route search is **~4.5 hours**. Any
+session that owns the emulator owns the clock, and the two available responses are
+both bad: block on it, or detach it and poll by hand.
+
+Blocking is what killed the run in §3.2 — the tool call times out and takes the
+process group with it. So the answer is a subagent: it launches the work detached,
+polls the log, and hands back the result. The main session goes on with the next
+issue while a two-minute replay happens in the background, and a four-hour search
+costs one tool call instead of the session.
+
+The part that is easy to get wrong is the reporting. A subagent that reports
+"verification passed" has told you nothing you can cite. One that pastes
+
+```
+replayed 136526 frames -> f136526 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13
+  ram sha1 3115e31ff1a9b16e732160f81fe478a5052668ff
+  MATCH
+```
+
+has handed back evidence, and the numbers are the entire deliverable — a rounded
+"looks good" is worth exactly nothing. Give the agent the command, the expected
+fingerprint and the log path, and make it read the log rather than infer the outcome
+from the exit status, which for this harness lies (§3.3).
+
+One emulator per agent. Concurrent instances contend for the same bridge port file
+(`.bridge_port`), and the loser hangs silently rather than failing.
 
 ---
 

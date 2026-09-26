@@ -24,6 +24,66 @@ WALK_INTERP = [False]         # True: interpolate walking distance between latti
 SPOT_FACING = [True]          # the strike-spot field leaves out a Darknut's shield side (A/B: r8_3f 1,751 -> 1,479)
 ROW2 = {0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30}   # the only monsters with bombs in their drop row
 BOMB_TARGET = [6]             # plan_fight works the ten-kill forced drop for bombs while Link holds fewer than this
+
+# What a key and a rupee are worth, per pixel of travel. These replace a heart-deficit
+# `want` that valued a key at 1.2 - less than a third of a bomb - while the same file
+# carries `sc -= 6000` for spending the wrong one. That asymmetry was not a judgement about
+# keys: `want` was written for consumables, and everything that was not a bomb or a heart
+# was left at the base rate.
+#
+# A key is priced by scarcity, because that is the whole of what a key is. It is not a
+# consumable, and its value depends on how many doors are left, not on how hurt Link is.
+# KEY_WANT_SCARCE clears a bomb's 2.7 deliberately: a key you need is worth more than a bomb
+# you probably do not. And a key is unobtainable from a monster drop - the complete set a
+# monster can produce is $00 bomb, $0F five rupees, $18 rupee, $21 clock, $22 heart, $23
+# fairy (verified 43/43 over the full run6) - so this only ever fires for a room item, which
+# makes it one special case rather than a rule about drops.
+KEY_WANT_SCARCE = 6.0        # keys == 0: a door that is currently a wall
+KEY_WANT_HELD = 0.8           # already holding keys: a door that is already open
+#
+# Rupees are priced against how much the route still needs. PROVISIONAL, and deliberately:
+# the drop table is confirmed exact but the *rate* is not - observed 9.3% / 20.3% / 14.8%
+# per row against the 31.2% / 59.4% / 40.6% DropItemRates implies, because `Random` is
+# per-slot and re-randomised and cannot be read after the fact. So this is a rupee counted
+# against a threshold, not a measured one, and its ratio to a bomb's 2.7 will move when the
+# cancel rate is measured. RUPEE_NEEDED stands in for a real purchase plan: the route still
+# has to buy arrows (80), bait (60) and food (60), and nothing in plan_fight's inputs knows
+# that. When a plan exists it should replace this rather than sit beside it.
+RUPEE_WANT_NEEDED = 3.0       # below RUPEE_NEEDED rupees: money is probably still owed
+RUPEE_WANT_ENOUGH = 0.6      # comfortably funded: the marginal rupee is worth little
+FIVE_RUPREE_EXTRA = 1.5       # $0F is five rupees, so it is worth more than a single $18
+RUPEE_NEEDED = 120
+
+
+def drop_want(kind, s, max_bombs=8):
+    """What a dropped item is worth per pixel of travel, or None if not worth a detour.
+
+    Split out of the fight scorer because the interesting part is a table, and a table
+    buried twelve levels deep in a scoring branch cannot be tested - which is how the key
+    and rupee rates went unexamined for as long as they did. Every rate the planner uses for
+    a floor item is decided here, in one place, and `testing/test_drop_want.py` checks them
+    all against each other rather than against a hand-copied total.
+
+    `s` is anything with .hearts .containers .bombs .keys .rupees - the State snapshot works.
+    `max_bombs` is passed in rather than read from the emulator so the function stays pure
+    and the test does not need a running NES.
+    """
+    if kind in (0x22, 0x23) and s.hearts >= s.containers:
+        return None                           # a heart or fairy is worthless at full health
+    if kind == 0x00 and s.bombs >= max_bombs:
+        return None                           # at MaxBombs a bomb cannot be picked up
+    if kind == 0x21:
+        return None                           # the clock is not worth a detour
+    if kind == 0x19:
+        return KEY_WANT_SCARCE if s.keys <= 0 else KEY_WANT_HELD
+    if kind in (0x18, 0x0F):
+        want = RUPEE_WANT_NEEDED if s.rupees < RUPEE_NEEDED else RUPEE_WANT_ENOUGH
+        return want + FIVE_RUPREE_EXTRA if kind == 0x0F else want
+    # Bombs, and the heart-deficit rate everything else shares.
+    want = 1.2 + 1.6 * max(0.0, (s.containers - s.hearts)) / max(1.0, s.containers)
+    if kind == 0x00:
+        want += 1.5 + (2.5 if s.bombs < 4 else 0.0)
+    return want
 BEAMS = [True]                # full hearts: roll swings out far enough to see the sword beam land
 OLD_PLANNER = [False]          # True restores Manhattan shaping and flat damage prices (A/B probes)
 DMG_SCALE = [1.0]             # multiplies what a lost half heart costs the planners (boldness; set per attempt)
@@ -509,17 +569,9 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
                     drops.append((blk[0xAC - 0x70 + i], blk[i], blk[0x84 - 0x70 + i]))
             best = None
             for kind, ix, iy in drops:
-                if kind in (0x22, 0x23) and s0.hearts >= s0.containers:
-                    continue                                   # a heart is worthless at full health
-                if kind == 0x00 and s0.bombs >= max(8, emu.byte(0x67C)):
-                    continue                                   # at MaxBombs it cannot be picked up
-                if kind == 0x21:
-                    continue                                   # the clock is not worth a detour
-                want = 1.2 + 1.6 * max(0.0, (s0.containers - s0.hearts)) / max(1.0, s0.containers)
-                # Bombs are always worth the walk, and far more so when Link is short: Level 9
-                # stranded this run with zero bombs (the owner's rule: prioritise dropped bombs).
-                if kind == 0x00:
-                    want += 1.5 + (2.5 if s0.bombs < 4 else 0.0)
+                want = drop_want(kind, s0, max(8, emu.byte(0x67C)))
+                if want is None:
+                    continue
                 cost = want * (abs(s2.x - ix) + abs(s2.y - iy))
                 best = cost if best is None else min(best, cost)
             if best is not None:

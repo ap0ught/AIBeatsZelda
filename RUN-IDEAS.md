@@ -119,8 +119,31 @@ route**. Dead code. The harness otherwise treats fairies reactively:
 a third time, ~38,000 frames, and the replacement uses "no fairy detour".
 
 The cheap place to try is *not* a pond — it is the pre-sword bomb stretch route 4
-already runs (`L3 → h_2C → r100_0F → candle → WS`, with bombs from L3). Blocker:
-`route_planner.py` has no fairy errand, so it cannot price one. ~20 lines to add.
+already runs (`L3 → h_2C → r100_0F → candle → WS`, with bombs from L3).
+
+**Status (2026-09-26): the errand vocabulary exists; the price still does not, and
+the question is now unanswerable by this model on purpose.** `route_planner.py` has
+`fairy_2C` and `fairy_42` as real places with real legs, and `HEAL` classifies them —
+so the route planner can *state* a fairy stop. It cannot cost one, because in
+`evaluate()` `hearts` is a gate (the WS/MS threshold) rather than a commodity:
+nothing converts a heart into frames, and nothing models damage taken on a leg for a
+refill to offset. A healing errand can therefore only ever ADD cost, and the search
+rejects it for any value of its cost constant.
+
+An earlier attempt measured `fairy_2C` at **+4,994 frames** and `fairy_42` at
+**+1,081** and concluded both were net losses. **Those numbers are retracted.** They
+are the cost of a detour with the benefit omitted by construction, and they are
+indistinguishable in the output from a real measurement — which is the problem. So
+`evaluate()` now raises `Unpriceable` for a healing stop unless *both* halves are
+measured numbers, `FAIRY_STOP` (frames to walk in, take the fairy and out) and
+`HEART_VALUE` (frames one heart is worth, issue #11). `Unpriceable` is deliberately
+not a subclass of `Infeasible`, which `search()` swallows by design: a missing
+measurement must not hide behind a hundred silent candidate rejections.
+
+`FAIRY_STOP` needs one run to measure. `HEART_VALUE` is issue #11 and is the larger
+piece — it needs a route-level exchange rate, and the fight planner's
+`600 * min(h, 4) + ...` cannot be borrowed because those are fight-local frames.
+
 
 **Rupees.** Sources are 7 per dungeon, 30-rupee secrets (`r30_*`, seven of them)
 and 100-rupee secrets (`r100_*`, three). Prices: candle 60, arrows 80, bait

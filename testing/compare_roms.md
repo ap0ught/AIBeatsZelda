@@ -15,8 +15,15 @@ actually navigates by. A hack that draws an automap should show differences only
 in cartridge WRAM ($6000-$7FFF, where the map buffer lives) and in CHR RAM; a
 difference anywhere in $0000-$07FF is a red flag.
 
-Emulators are launched sequentially and closed, so this is safe to run while
-nothing else is using BizHawk.
+Emulators are launched sequentially and closed. If a previous run was killed
+mid-flight, an orphaned EmuHawk can still hold the bridge port and this will hang
+silently after printing its header - check `pgrep -af EmuHawk` first.
+
+Note on cart WRAM: this harness runs BizHawk's NullHawk core, which logs
+"NullHawk does not implement memory domains", so `bus()` / `ram_domain()` cannot
+read $6000-$7FFF at all. An earlier version of this script tried to and simply
+hung. It is not a gap worth filling: the run's fingerprint is a sha1 over work
+RAM only, so work RAM is the entire question.
 
 ---
 
@@ -26,6 +33,13 @@ nothing else is using BizHawk.
 
 - **drives BizHawk** - replays, searches or steps frames
 - writes `logs/`, `runs/`, `shots/`
+
+## Why this still matters
+
+Cited by production code. These comments are where the numbers came from,
+so if this script's method is wrong, the constant is wrong too:
+
+- ``zelda/emulator.py`:49` - A patched ROM is a legitimate thing to run here - testing/compare_roms.py exists
 
 ## See also
 
