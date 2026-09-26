@@ -311,6 +311,23 @@ def room_clear_drop(level: int, room: int) -> int | None:
     return item if info["item_after_clear"] and item != 0x03 else None
 
 
+def add_predicted_drops(drops: list[tuple[int, int, int]], tlist, ens, *, item0=None, item_carriers=(),
+                        clear_item: int | None = None, clear_ready: bool = False, cycle: int = 0,
+                        help_count: int = 0, world_count: int = 0, bomb_kill: bool = False):
+    alive = {e[0] for e in ens}
+    dead = [t_ for t_ in tlist if t_[0] not in alive]
+    if len(dead) != 1:
+        return dead
+    t_ = dead[0]
+    if clear_item is not None and clear_ready:
+        drops.append((clear_item, t_[2], t_[3]))
+    kind = item0[0] if item0 is not None and t_[0] in item_carriers else predicted_monster_drop(
+        t_[1], cycle, help_count, world_count, bomb_kill)
+    if kind is not None:
+        drops.append((kind, t_[2], t_[3]))
+    return dead
+
+
 def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, rng: random.Random | None = None,
                types=None, log=None, targets=None, done=None, damage_weight: float = 400.0,
                hp_weight: float = 60.0, approach_range: int = 0, use_bombs: str = "sparing",
@@ -561,19 +578,9 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             for i in range(1, 12):
                 if blk[0x34F - 0x70 + i] == 0x60:
                     drops.append((blk[0xAC - 0x70 + i], blk[i], blk[0x84 - 0x70 + i]))
-            alive = {e[0] for e in ens}
-            dead = [t_ for t_ in tlist if t_[0] not in alive]
-            if dead:
-                if clear_item is not None and n1 == 0:
-                    drops.extend((clear_item, t_[2], t_[3]) for t_ in dead)
-                for t_ in dead:
-                    kind = None
-                    if t_[0] in item_carriers:
-                        kind = item0[0]
-                    else:
-                        kind = predicted_monster_drop(t_[1], cycle_n, help_n, world_n, m[0] == "bomb")
-                    if kind is not None:
-                        drops.append((kind, t_[2], t_[3]))
+            dead = add_predicted_drops(drops, tlist, ens, item0=item0, item_carriers=item_carriers,
+                                       clear_item=clear_item, clear_ready=(targets is None and types is None and n1 == 0),
+                                       cycle=cycle_n, help_count=help_n, world_count=world_n, bomb_kill=m[0] == "bomb")
             best = None
             for kind, ix, iy in drops:
                 want = drop_want(kind, s0, emu, rupee_target=rupee_target)
