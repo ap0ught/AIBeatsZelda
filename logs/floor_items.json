@@ -1,0 +1,1501 @@
+{
+ "drops": [
+  {
+   "frame": 4213,
+   "level": 3,
+   "room": 91,
+   "x": 208,
+   "y": 154,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 0
+  },
+  {
+   "frame": 6459,
+   "level": 3,
+   "room": 89,
+   "x": 128,
+   "y": 111,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 7
+  },
+  {
+   "frame": 6459,
+   "level": 3,
+   "room": 89,
+   "x": 128,
+   "y": 127,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 7
+  },
+  {
+   "frame": 6473,
+   "level": 3,
+   "room": 89,
+   "x": 112,
+   "y": 156,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 7
+  },
+  {
+   "frame": 6569,
+   "level": 3,
+   "room": 89,
+   "x": 96,
+   "y": 163,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 8
+  },
+  {
+   "frame": 6638,
+   "level": 3,
+   "room": 89,
+   "x": 112,
+   "y": 147,
+   "item": 33,
+   "keys_held": 1,
+   "rupees": 0,
+   "bombs": 8
+  },
+  {
+   "frame": 10378,
+   "level": 3,
+   "room": 77,
+   "x": 150,
+   "y": 102,
+   "item": 0,
+   "keys_held": 0,
+   "rupees": 6,
+   "bombs": 6
+  },
+  {
+   "frame": 13054,
+   "level": 0,
+   "room": 103,
+   "x": 112,
+   "y": 114,
+   "item": 34,
+   "keys_held": 0,
+   "rupees": 6,
+   "bombs": 6
+  },
+  {
+   "frame": 19049,
+   "level": 0,
+   "room": 30,
+   "x": 107,
+   "y": 151,
+   "item": 35,
+   "keys_held": 0,
+   "rupees": 106,
+   "bombs": 5
+  },
+  {
+   "frame": 23209,
+   "level": 0,
+   "room": 26,
+   "x": 204,
+   "y": 133,
+   "item": 34,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 23234,
+   "level": 0,
+   "room": 26,
+   "x": 198,
+   "y": 137,
+   "item": 34,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 26807,
+   "level": 1,
+   "room": 99,
+   "x": 90,
+   "y": 141,
+   "item": 34,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 27174,
+   "level": 1,
+   "room": 83,
+   "x": 123,
+   "y": 125,
+   "item": 34,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 27222,
+   "level": 1,
+   "room": 83,
+   "x": 112,
+   "y": 136,
+   "item": 33,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 27252,
+   "level": 1,
+   "room": 83,
+   "x": 160,
+   "y": 110,
+   "item": 24,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 5
+  },
+  {
+   "frame": 28224,
+   "level": 1,
+   "room": 35,
+   "x": 96,
+   "y": 171,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 46,
+   "bombs": 4
+  },
+  {
+   "frame": 28429,
+   "level": 1,
+   "room": 35,
+   "x": 150,
+   "y": 125,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 46,
+   "bombs": 4
+  },
+  {
+   "frame": 28431,
+   "level": 1,
+   "room": 35,
+   "x": 165,
+   "y": 125,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 46,
+   "bombs": 4
+  },
+  {
+   "frame": 31683,
+   "level": 1,
+   "room": 69,
+   "x": 19,
+   "y": 191,
+   "item": 24,
+   "keys_held": 0,
+   "rupees": 46,
+   "bombs": 4
+  },
+  {
+   "frame": 31855,
+   "level": 1,
+   "room": 69,
+   "x": 10,
+   "y": 189,
+   "item": 24,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 31947,
+   "level": 1,
+   "room": 69,
+   "x": 8,
+   "y": 189,
+   "item": 24,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 32023,
+   "level": 1,
+   "room": 69,
+   "x": 88,
+   "y": 189,
+   "item": 15,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 32069,
+   "level": 1,
+   "room": 69,
+   "x": 112,
+   "y": 205,
+   "item": 24,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 32165,
+   "level": 1,
+   "room": 69,
+   "x": 163,
+   "y": 205,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 32943,
+   "level": 1,
+   "room": 53,
+   "x": 167,
+   "y": 128,
+   "item": 35,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 34314,
+   "level": 0,
+   "room": 56,
+   "x": 112,
+   "y": 162,
+   "item": 15,
+   "keys_held": 0,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 39344,
+   "level": 4,
+   "room": 64,
+   "x": 91,
+   "y": 157,
+   "item": 15,
+   "keys_held": 2,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 40868,
+   "level": 4,
+   "room": 50,
+   "x": 80,
+   "y": 109,
+   "item": 15,
+   "keys_held": 2,
+   "rupees": 47,
+   "bombs": 4
+  },
+  {
+   "frame": 45233,
+   "level": 4,
+   "room": 18,
+   "x": 128,
+   "y": 129,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 55,
+   "bombs": 1
+  },
+  {
+   "frame": 46639,
+   "level": 4,
+   "room": 19,
+   "x": 124,
+   "y": 111,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 55,
+   "bombs": 5
+  },
+  {
+   "frame": 48538,
+   "level": 0,
+   "room": 86,
+   "x": 206,
+   "y": 141,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 55,
+   "bombs": 5
+  },
+  {
+   "frame": 54740,
+   "level": 8,
+   "room": 94,
+   "x": 115,
+   "y": 141,
+   "item": 24,
+   "keys_held": 2,
+   "rupees": 155,
+   "bombs": 3
+  },
+  {
+   "frame": 56550,
+   "level": 8,
+   "room": 62,
+   "x": 124,
+   "y": 125,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 2
+  },
+  {
+   "frame": 56812,
+   "level": 8,
+   "room": 62,
+   "x": 112,
+   "y": 137,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 2
+  },
+  {
+   "frame": 56850,
+   "level": 8,
+   "room": 62,
+   "x": 96,
+   "y": 106,
+   "item": 35,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 2
+  },
+  {
+   "frame": 57358,
+   "level": 8,
+   "room": 63,
+   "x": 32,
+   "y": 112,
+   "item": 0,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 2
+  },
+  {
+   "frame": 57715,
+   "level": 8,
+   "room": 63,
+   "x": 130,
+   "y": 125,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 6
+  },
+  {
+   "frame": 60514,
+   "level": 8,
+   "room": 60,
+   "x": 124,
+   "y": 111,
+   "item": 35,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 7
+  },
+  {
+   "frame": 65377,
+   "level": 2,
+   "room": 46,
+   "x": 135,
+   "y": 157,
+   "item": 33,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 8
+  },
+  {
+   "frame": 65530,
+   "level": 2,
+   "room": 46,
+   "x": 193,
+   "y": 93,
+   "item": 24,
+   "keys_held": 3,
+   "rupees": 155,
+   "bombs": 8
+  },
+  {
+   "frame": 65668,
+   "level": 2,
+   "room": 46,
+   "x": 102,
+   "y": 109,
+   "item": 15,
+   "keys_held": 3,
+   "rupees": 156,
+   "bombs": 8
+  },
+  {
+   "frame": 65995,
+   "level": 2,
+   "room": 30,
+   "x": 110,
+   "y": 157,
+   "item": 0,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 8
+  },
+  {
+   "frame": 66143,
+   "level": 2,
+   "room": 30,
+   "x": 152,
+   "y": 93,
+   "item": 33,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 8
+  },
+  {
+   "frame": 66205,
+   "level": 2,
+   "room": 30,
+   "x": 60,
+   "y": 93,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 8
+  },
+  {
+   "frame": 66839,
+   "level": 2,
+   "room": 14,
+   "x": 120,
+   "y": 157,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 6
+  },
+  {
+   "frame": 69188,
+   "level": 0,
+   "room": 44,
+   "x": 181,
+   "y": 152,
+   "item": 15,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 6
+  },
+  {
+   "frame": 73500,
+   "level": 5,
+   "room": 100,
+   "x": 200,
+   "y": 173,
+   "item": 34,
+   "keys_held": 4,
+   "rupees": 161,
+   "bombs": 7
+  },
+  {
+   "frame": 73642,
+   "level": 5,
+   "room": 100,
+   "x": 195,
+   "y": 189,
+   "item": 34,
+   "keys_held": 4,
+   "rupees": 161,
+   "bombs": 7
+  },
+  {
+   "frame": 73760,
+   "level": 5,
+   "room": 100,
+   "x": 197,
+   "y": 189,
+   "item": 34,
+   "keys_held": 4,
+   "rupees": 161,
+   "bombs": 7
+  },
+  {
+   "frame": 75177,
+   "level": 5,
+   "room": 5,
+   "x": 105,
+   "y": 109,
+   "item": 0,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 5
+  },
+  {
+   "frame": 80022,
+   "level": 5,
+   "room": 71,
+   "x": 144,
+   "y": 171,
+   "item": 33,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 8
+  },
+  {
+   "frame": 80356,
+   "level": 5,
+   "room": 71,
+   "x": 112,
+   "y": 110,
+   "item": 34,
+   "keys_held": 3,
+   "rupees": 161,
+   "bombs": 8
+  },
+  {
+   "frame": 81818,
+   "level": 5,
+   "room": 38,
+   "x": 86,
+   "y": 125,
+   "item": 0,
+   "keys_held": 4,
+   "rupees": 161,
+   "bombs": 7
+  },
+  {
+   "frame": 81818,
+   "level": 5,
+   "room": 38,
+   "x": 88,
+   "y": 125,
+   "item": 0,
+   "keys_held": 4,
+   "rupees": 161,
+   "bombs": 7
+  },
+  {
+   "frame": 88590,
+   "level": 0,
+   "room": 84,
+   "x": 62,
+   "y": 125,
+   "item": 24,
+   "keys_held": 4,
+   "rupees": 21,
+   "bombs": 8
+  },
+  {
+   "frame": 91308,
+   "level": 7,
+   "room": 73,
+   "x": 101,
+   "y": 109,
+   "item": 34,
+   "keys_held": 4,
+   "rupees": 22,
+   "bombs": 7
+  },
+  {
+   "frame": 91338,
+   "level": 7,
+   "room": 73,
+   "x": 92,
+   "y": 141,
+   "item": 34,
+   "keys_held": 4,
+   "rupees": 22,
+   "bombs": 7
+  },
+  {
+   "frame": 94263,
+   "level": 7,
+   "room": 26,
+   "x": 198,
+   "y": 125,
+   "item": 33,
+   "keys_held": 2,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 95509,
+   "level": 7,
+   "room": 28,
+   "x": 174,
+   "y": 104,
+   "item": 35,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 95588,
+   "level": 7,
+   "room": 28,
+   "x": 104,
+   "y": 109,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 96551,
+   "level": 7,
+   "room": 13,
+   "x": 154,
+   "y": 205,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 4
+  },
+  {
+   "frame": 96675,
+   "level": 7,
+   "room": 13,
+   "x": 205,
+   "y": 201,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 4
+  },
+  {
+   "frame": 96776,
+   "level": 7,
+   "room": 13,
+   "x": 224,
+   "y": 130,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 4
+  },
+  {
+   "frame": 105485,
+   "level": 6,
+   "room": 56,
+   "x": 112,
+   "y": 109,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 22,
+   "bombs": 2
+  },
+  {
+   "frame": 107295,
+   "level": 6,
+   "room": 57,
+   "x": 80,
+   "y": 114,
+   "item": 15,
+   "keys_held": 2,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 107336,
+   "level": 6,
+   "room": 57,
+   "x": 128,
+   "y": 140,
+   "item": 34,
+   "keys_held": 2,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 107388,
+   "level": 6,
+   "room": 57,
+   "x": 80,
+   "y": 146,
+   "item": 0,
+   "keys_held": 2,
+   "rupees": 22,
+   "bombs": 5
+  },
+  {
+   "frame": 108365,
+   "level": 6,
+   "room": 58,
+   "x": 82,
+   "y": 173,
+   "item": 35,
+   "keys_held": 2,
+   "rupees": 27,
+   "bombs": 8
+  },
+  {
+   "frame": 109654,
+   "level": 6,
+   "room": 45,
+   "x": 97,
+   "y": 138,
+   "item": 34,
+   "keys_held": 2,
+   "rupees": 27,
+   "bombs": 8
+  },
+  {
+   "frame": 110221,
+   "level": 6,
+   "room": 44,
+   "x": 112,
+   "y": 125,
+   "item": 15,
+   "keys_held": 3,
+   "rupees": 27,
+   "bombs": 8
+  },
+  {
+   "frame": 110627,
+   "level": 6,
+   "room": 28,
+   "x": 153,
+   "y": 112,
+   "item": 34,
+   "keys_held": 2,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 114426,
+   "level": 0,
+   "room": 6,
+   "x": 128,
+   "y": 141,
+   "item": 35,
+   "keys_held": 2,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 115933,
+   "level": 9,
+   "room": 86,
+   "x": 111,
+   "y": 125,
+   "item": 33,
+   "keys_held": 2,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 116094,
+   "level": 9,
+   "room": 86,
+   "x": 80,
+   "y": 141,
+   "item": 24,
+   "keys_held": 2,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 116704,
+   "level": 9,
+   "room": 85,
+   "x": 64,
+   "y": 189,
+   "item": 15,
+   "keys_held": 3,
+   "rupees": 26,
+   "bombs": 6
+  },
+  {
+   "frame": 119485,
+   "level": 9,
+   "room": 22,
+   "x": 133,
+   "y": 118,
+   "item": 15,
+   "keys_held": 2,
+   "rupees": 20,
+   "bombs": 6
+  },
+  {
+   "frame": 120480,
+   "level": 9,
+   "room": 5,
+   "x": 208,
+   "y": 173,
+   "item": 0,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 120675,
+   "level": 9,
+   "room": 5,
+   "x": 144,
+   "y": 173,
+   "item": 35,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 121683,
+   "level": 9,
+   "room": 99,
+   "x": 96,
+   "y": 145,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 121683,
+   "level": 9,
+   "room": 99,
+   "x": 99,
+   "y": 141,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 122740,
+   "level": 9,
+   "room": 97,
+   "x": 121,
+   "y": 116,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 123723,
+   "level": 9,
+   "room": 32,
+   "x": 96,
+   "y": 143,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 8
+  },
+  {
+   "frame": 124478,
+   "level": 9,
+   "room": 16,
+   "x": 112,
+   "y": 189,
+   "item": 35,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 128050,
+   "level": 9,
+   "room": 49,
+   "x": 128,
+   "y": 160,
+   "item": 35,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 128051,
+   "level": 9,
+   "room": 49,
+   "x": 112,
+   "y": 157,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 7
+  },
+  {
+   "frame": 128663,
+   "level": 9,
+   "room": 48,
+   "x": 224,
+   "y": 141,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 6
+  },
+  {
+   "frame": 128838,
+   "level": 9,
+   "room": 48,
+   "x": 127,
+   "y": 157,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 6
+  },
+  {
+   "frame": 128898,
+   "level": 9,
+   "room": 48,
+   "x": 101,
+   "y": 125,
+   "item": 24,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 6
+  },
+  {
+   "frame": 129842,
+   "level": 9,
+   "room": 4,
+   "x": 183,
+   "y": 109,
+   "item": 34,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 6
+  },
+  {
+   "frame": 130893,
+   "level": 9,
+   "room": 3,
+   "x": 64,
+   "y": 128,
+   "item": 15,
+   "keys_held": 1,
+   "rupees": 25,
+   "bombs": 5
+  }
+ ],
+ "room_items": [
+  {
+   "frame": 8,
+   "level": 0,
+   "room": 0,
+   "item": 0,
+   "x": 0,
+   "y": 0,
+   "keys_held": 0
+  },
+  {
+   "frame": 3265,
+   "level": 3,
+   "room": 123,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 4501,
+   "level": 3,
+   "room": 91,
+   "item": 0,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 5904,
+   "level": 3,
+   "room": 73,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 7259,
+   "level": 3,
+   "room": 15,
+   "item": 12,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 9654,
+   "level": 3,
+   "room": 76,
+   "item": 23,
+   "x": 128,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 10694,
+   "level": 3,
+   "room": 61,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 26094,
+   "level": 1,
+   "room": 114,
+   "item": 25,
+   "x": 160,
+   "y": 192,
+   "keys_held": 0
+  },
+  {
+   "frame": 27252,
+   "level": 1,
+   "room": 83,
+   "item": 25,
+   "x": 128,
+   "y": 112,
+   "keys_held": 0
+  },
+  {
+   "frame": 27535,
+   "level": 1,
+   "room": 67,
+   "item": 23,
+   "x": 192,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 27819,
+   "level": 1,
+   "room": 51,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 28431,
+   "level": 1,
+   "room": 35,
+   "item": 25,
+   "x": 128,
+   "y": 112,
+   "keys_held": 1
+  },
+  {
+   "frame": 29193,
+   "level": 1,
+   "room": 127,
+   "item": 10,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 30901,
+   "level": 1,
+   "room": 67,
+   "item": 23,
+   "x": 192,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 31586,
+   "level": 1,
+   "room": 69,
+   "item": 25,
+   "x": 160,
+   "y": 192,
+   "keys_held": 0
+  },
+  {
+   "frame": 32943,
+   "level": 1,
+   "room": 53,
+   "item": 26,
+   "x": 192,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 33192,
+   "level": 1,
+   "room": 54,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 37364,
+   "level": 4,
+   "room": 112,
+   "item": 25,
+   "x": 144,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 38176,
+   "level": 4,
+   "room": 81,
+   "item": 25,
+   "x": 144,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 39263,
+   "level": 4,
+   "room": 64,
+   "item": 25,
+   "x": 128,
+   "y": 128,
+   "keys_held": 2
+  },
+  {
+   "frame": 41503,
+   "level": 4,
+   "room": 96,
+   "item": 13,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 43775,
+   "level": 4,
+   "room": 33,
+   "item": 23,
+   "x": 208,
+   "y": 192,
+   "keys_held": 1
+  },
+  {
+   "frame": 46639,
+   "level": 4,
+   "room": 19,
+   "item": 26,
+   "x": 208,
+   "y": 192,
+   "keys_held": 1
+  },
+  {
+   "frame": 47162,
+   "level": 4,
+   "room": 3,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 52920,
+   "level": 8,
+   "room": 127,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 54740,
+   "level": 8,
+   "room": 94,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 55069,
+   "level": 8,
+   "room": 93,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 57882,
+   "level": 8,
+   "room": 63,
+   "item": 0,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 58515,
+   "level": 8,
+   "room": 76,
+   "item": 25,
+   "x": 208,
+   "y": 96,
+   "keys_held": 3
+  },
+  {
+   "frame": 60514,
+   "level": 8,
+   "room": 60,
+   "item": 26,
+   "x": 32,
+   "y": 192,
+   "keys_held": 3
+  },
+  {
+   "frame": 61038,
+   "level": 8,
+   "room": 44,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 64489,
+   "level": 2,
+   "room": 63,
+   "item": 0,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 66205,
+   "level": 2,
+   "room": 30,
+   "item": 0,
+   "x": 208,
+   "y": 96,
+   "keys_held": 3
+  },
+  {
+   "frame": 66839,
+   "level": 2,
+   "room": 14,
+   "item": 26,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 67148,
+   "level": 2,
+   "room": 13,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 71235,
+   "level": 5,
+   "room": 102,
+   "item": 25,
+   "x": 192,
+   "y": 128,
+   "keys_held": 3
+  },
+  {
+   "frame": 71937,
+   "level": 5,
+   "room": 101,
+   "item": 0,
+   "x": 192,
+   "y": 128,
+   "keys_held": 4
+  },
+  {
+   "frame": 75772,
+   "level": 5,
+   "room": 4,
+   "item": 5,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 80356,
+   "level": 5,
+   "room": 71,
+   "item": 25,
+   "x": 128,
+   "y": 160,
+   "keys_held": 3
+  },
+  {
+   "frame": 80983,
+   "level": 5,
+   "room": 39,
+   "item": 25,
+   "x": 128,
+   "y": 160,
+   "keys_held": 4
+  },
+  {
+   "frame": 82049,
+   "level": 5,
+   "room": 38,
+   "item": 25,
+   "x": 128,
+   "y": 160,
+   "keys_held": 4
+  },
+  {
+   "frame": 83342,
+   "level": 5,
+   "room": 36,
+   "item": 26,
+   "x": 128,
+   "y": 112,
+   "keys_held": 4
+  },
+  {
+   "frame": 83671,
+   "level": 5,
+   "room": 20,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 4
+  },
+  {
+   "frame": 92915,
+   "level": 7,
+   "room": 24,
+   "item": 23,
+   "x": 128,
+   "y": 144,
+   "keys_held": 3
+  },
+  {
+   "frame": 97977,
+   "level": 7,
+   "room": 42,
+   "item": 26,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 98450,
+   "level": 7,
+   "room": 43,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 104872,
+   "level": 6,
+   "room": 88,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 0
+  },
+  {
+   "frame": 106695,
+   "level": 6,
+   "room": 41,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 109667,
+   "level": 6,
+   "room": 45,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 110627,
+   "level": 6,
+   "room": 28,
+   "item": 26,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 111033,
+   "level": 6,
+   "room": 12,
+   "item": 27,
+   "x": 120,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 116094,
+   "level": 9,
+   "room": 86,
+   "item": 25,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 119485,
+   "level": 9,
+   "room": 22,
+   "item": 0,
+   "x": 128,
+   "y": 144,
+   "keys_held": 2
+  },
+  {
+   "frame": 122328,
+   "level": 9,
+   "room": 97,
+   "item": 25,
+   "x": 208,
+   "y": 96,
+   "keys_held": 0
+  },
+  {
+   "frame": 124828,
+   "level": 9,
+   "room": 79,
+   "item": 9,
+   "x": 128,
+   "y": 144,
+   "keys_held": 1
+  },
+  {
+   "frame": 132983,
+   "level": 9,
+   "room": 66,
+   "item": 14,
+   "x": 56,
+   "y": 168,
+   "keys_held": 1
+  }
+ ],
+ "frames": 136526
+}
