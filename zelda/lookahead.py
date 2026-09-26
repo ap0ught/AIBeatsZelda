@@ -16,13 +16,20 @@ from .overworld import read_enemies, read_room_item
 
 DIRS4 = ("Up", "Down", "Left", "Right")
 OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
+NO_DROP = {0x5D, 0x14, 0x15, 0x1B, 0x1C, 0x1D, 0x17}
+ROW0 = {0x07, 0x08, 0x0E, 0x04, 0x0F, 0x23}
+ROW1 = {0x21, 0x22, 0x0D, 0x10, 0x13, 0x28, 0x2A, 0x27, 0x16}
+ROW2 = {0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30}   # the only monsters with bombs in their drop row
+DROP_TABLE = ((0x22, 0x18, 0x22, 0x18, 0x23, 0x18, 0x22, 0x22, 0x18, 0x18),
+              (0x0F, 0x18, 0x22, 0x18, 0x0F, 0x22, 0x21, 0x18, 0x18, 0x18),
+              (0x22, 0x00, 0x18, 0x21, 0x18, 0x22, 0x00, 0x18, 0x00, 0x22),
+              (0x22, 0x22, 0x23, 0x18, 0x22, 0x23, 0x22, 0x22, 0x22, 0x18))
 
 # Set by the runner for segments whose damage is about to be refilled (a boss: the Triforce piece
 # behind it restores every heart), or None to price damage from Link's own health.
 CAUTION_OVERRIDE = [None]
 WALK_INTERP = [False]         # True: interpolate walking distance between lattice points (see Lattice.walk)
 SPOT_FACING = [True]          # the strike-spot field leaves out a Darknut's shield side (A/B: r8_3f 1,751 -> 1,479)
-ROW2 = {0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30}   # the only monsters with bombs in their drop row
 BOMB_TARGET = [6]             # plan_fight works the ten-kill forced drop for bombs while Link holds fewer than this
 BEAMS = [True]                # full hearts: roll swings out far enough to see the sword beam land
 OLD_PLANNER = [False]          # True restores Manhattan shaping and flat damage prices (A/B probes)
@@ -263,10 +270,69 @@ def static_slots(emu: BizHawk) -> set:
     return {s for s, v in before.items() if s in after and after[s] == v and v[2] == 0}
 
 
+def drop_want(kind: int, s: State, emu: BizHawk, *, rupee_target: int | None = None) -> float | None:
+    want = 1.2 + 1.6 * max(0.0, (s.containers - s.hearts)) / max(1.0, s.containers)
+    if kind in (0x22, 0x23):
+        return None if s.hearts >= s.containers else want
+    if kind == 0x00:
+        return None if s.bombs >= max(8, emu.byte(0x67C)) else want + 1.5 + (2.5 if s.bombs < 4 else 0.0)
+    if kind == 0x21:
+        return None
+    if kind == 0x19:
+        return max(1.8, 6.5 / (1.0 + 0.6 * max(0, s.keys)))
+    if kind in (0x18, 0x0F):
+        shortage = max(0, (rupee_target if rupee_target is not None else s.rupees) - s.rupees)
+        base = 1.6 if kind == 0x18 else 2.4
+        return base + min(2.0, shortage / (5.0 if kind == 0x18 else 10.0))
+    return want
+
+
+def predicted_monster_drop(monster_type: int, cycle: int, help_count: int, world_count: int,
+                           bomb_kill: bool = False) -> int | None:
+    if monster_type in NO_DROP:
+        return None
+    if world_count + 1 >= 0x10 and (world_count + 1 - 0x10) % 10 == 0:
+        return 0x23
+    if help_count + 1 >= 10:
+        return 0x00 if bomb_kill else 0x0F
+    row = 0 if monster_type in ROW0 else 1 if monster_type in ROW1 else 2 if monster_type in ROW2 else 3
+    return DROP_TABLE[row][(cycle + 1) % 10]
+
+
+def room_clear_drop(level: int, room: int) -> int | None:
+    if level <= 0:
+        return None
+    from .romdata import room_info
+    try:
+        info = room_info(level, room)
+    except FileNotFoundError:
+        return None
+    item = info["item"]
+    return item if info["item_after_clear"] and item != 0x03 else None
+
+
+def add_predicted_drops(drops: list[tuple[int, int, int]], tlist, ens, *, item0=None, item_carriers=(),
+                        clear_item: int | None = None, clear_ready: bool = False, cycle: int = 0,
+                        help_count: int = 0, world_count: int = 0, bomb_kill: bool = False):
+    alive = {e[0] for e in ens}
+    dead = [t_ for t_ in tlist if t_[0] not in alive]
+    if len(dead) != 1:
+        return dead
+    t_ = dead[0]
+    if clear_item is not None and clear_ready:
+        drops.append((clear_item, t_[2], t_[3]))
+        return dead
+    kind = item0[0] if item0 is not None and t_[0] in item_carriers else predicted_monster_drop(
+        t_[1], cycle, help_count, world_count, bomb_kill)
+    if kind is not None:
+        drops.append((kind, t_[2], t_[3]))
+    return dead
+
+
 def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, rng: random.Random | None = None,
                types=None, log=None, targets=None, done=None, damage_weight: float = 400.0,
                hp_weight: float = 60.0, approach_range: int = 0, use_bombs: str = "sparing",
-               use_bow: bool = False, miss_penalty: float = 1.0) -> str:
+               use_bow: bool = False, miss_penalty: float = 1.0, rupee_target: int | None = None) -> str:
     """Clear the room's killable enemies with lookahead. Returns 'clear', 'died' or 'timeout'.
     `rec` is a Recorder whose step() advances the real (kept) trajectory."""
     frames = 0
@@ -323,9 +389,15 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             e for e in read_enemies(emu) if killable(e) and e[0] not in ignore]
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
+        cycle_n = emu.byte(0x52A)
+        world_n = emu.byte(0x627)
+        item0 = read_room_item(emu)
+        item_carriers = ({t_[0] for t_ in tlist if max(abs(t_[2] - item0[1]), abs(t_[3] - item0[2])) <= 12}
+                         if item0 is not None else set())
+        clear_item = room_clear_drop(s0.level, s0.room)
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
         streak_bomb = want_bombs and help_n == 9 and streak_patience > 0
-        row2_next = (want_bombs and emu.byte(0x52A) in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
+        row2_next = (want_bombs and cycle_n in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
                      and not all(t_[1] in ROW2 for t_ in tlist))
         if streak_bomb and len(rec.inputs) >= streak_fuse_until:
             streak_patience -= 1                  # not for ever: after a while the sword may have the tenth kill
@@ -507,19 +579,14 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             for i in range(1, 12):
                 if blk[0x34F - 0x70 + i] == 0x60:
                     drops.append((blk[0xAC - 0x70 + i], blk[i], blk[0x84 - 0x70 + i]))
+            dead = add_predicted_drops(drops, tlist, ens, item0=item0, item_carriers=item_carriers,
+                                       clear_item=clear_item, clear_ready=(targets is None and types is None and n1 == 0),
+                                       cycle=cycle_n, help_count=help_n, world_count=world_n, bomb_kill=m[0] == "bomb")
             best = None
             for kind, ix, iy in drops:
-                if kind in (0x22, 0x23) and s0.hearts >= s0.containers:
-                    continue                                   # a heart is worthless at full health
-                if kind == 0x00 and s0.bombs >= max(8, emu.byte(0x67C)):
-                    continue                                   # at MaxBombs it cannot be picked up
-                if kind == 0x21:
-                    continue                                   # the clock is not worth a detour
-                want = 1.2 + 1.6 * max(0.0, (s0.containers - s0.hearts)) / max(1.0, s0.containers)
-                # Bombs are always worth the walk, and far more so when Link is short: Level 9
-                # stranded this run with zero bombs (the owner's rule: prioritise dropped bombs).
-                if kind == 0x00:
-                    want += 1.5 + (2.5 if s0.bombs < 4 else 0.0)
+                want = drop_want(kind, s0, emu, rupee_target=rupee_target)
+                if want is None:
+                    continue
                 cost = want * (abs(s2.x - ix) + abs(s2.y - iy))
                 best = cost if best is None else min(best, cost)
             if best is not None:
@@ -538,8 +605,6 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             if m[0] == "bomb" and use_bombs != "free":
                 sc -= 320
             if row2_next and n1 < n0:
-                alive = {e[0] for e in ens}
-                dead = [t_ for t_ in tlist if t_[0] not in alive]
                 if dead:
                     sc += 120 if any(t_[1] in ROW2 for t_ in dead) else -80
             if streak_bomb and n1 < n0:
