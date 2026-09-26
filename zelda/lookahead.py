@@ -24,6 +24,7 @@ DROP_TABLE = ((0x22, 0x18, 0x22, 0x18, 0x23, 0x18, 0x22, 0x22, 0x18, 0x18),
               (0x0F, 0x18, 0x22, 0x18, 0x0F, 0x22, 0x21, 0x18, 0x18, 0x18),
               (0x22, 0x00, 0x18, 0x21, 0x18, 0x22, 0x00, 0x18, 0x00, 0x22),
               (0x22, 0x22, 0x23, 0x18, 0x22, 0x23, 0x22, 0x22, 0x22, 0x18))
+DROP_RATES = (0x50 / 256.0, 0x98 / 256.0, 0x68 / 256.0, 0x68 / 256.0)
 
 # Set by the runner for segments whose damage is about to be refilled (a boss: the Triforce piece
 # behind it restores every heart), or None to price damage from Link's own health.
@@ -287,16 +288,20 @@ def drop_want(kind: int, s: State, emu: BizHawk, *, rupee_target: int | None = N
     return want
 
 
+def drop_row(monster_type: int) -> int:
+    return 0 if monster_type in ROW0 else 1 if monster_type in ROW1 else 2 if monster_type in ROW2 else 3
+
+
 def predicted_monster_drop(monster_type: int, cycle: int, help_count: int, world_count: int,
-                           bomb_kill: bool = False) -> int | None:
+                           help_value: int = 0) -> tuple[int | None, float]:
     if monster_type in NO_DROP:
-        return None
-    if world_count + 1 >= 0x10 and (world_count + 1 - 0x10) % 10 == 0:
-        return 0x23
-    if help_count + 1 >= 10:
-        return 0x00 if bomb_kill else 0x0F
-    row = 0 if monster_type in ROW0 else 1 if monster_type in ROW1 else 2 if monster_type in ROW2 else 3
-    return DROP_TABLE[row][(cycle + 1) % 10]
+        return None, 0.0
+    if world_count + 1 == 0x10:
+        return 0x23, 1.0
+    if help_count >= 10:
+        return (0x00 if help_value else 0x0F), 1.0
+    row = drop_row(monster_type)
+    return DROP_TABLE[row][(cycle + 1) % 10], DROP_RATES[row]
 
 
 def room_clear_drop(level: int, room: int) -> int | None:
@@ -313,7 +318,7 @@ def room_clear_drop(level: int, room: int) -> int | None:
 
 def add_predicted_drops(drops: list[tuple[int, int, int]], tlist, ens, *, item0=None, item_carriers=(),
                         clear_item: int | None = None, clear_ready: bool = False, cycle: int = 0,
-                        help_count: int = 0, world_count: int = 0, bomb_kill: bool = False):
+                        help_count: int = 0, world_count: int = 0, help_value: int = 0, drop_weights=None):
     alive = {e[0] for e in ens}
     dead = [t_ for t_ in tlist if t_[0] not in alive]
     if len(dead) != 1:
@@ -321,11 +326,17 @@ def add_predicted_drops(drops: list[tuple[int, int, int]], tlist, ens, *, item0=
     t_ = dead[0]
     if clear_item is not None and clear_ready:
         drops.append((clear_item, t_[2], t_[3]))
+        if drop_weights is not None:
+            drop_weights.append(1.0)
         return dead
-    kind = item0[0] if item0 is not None and t_[0] in item_carriers else predicted_monster_drop(
-        t_[1], cycle, help_count, world_count, bomb_kill)
+    if item0 is not None and t_[0] in item_carriers:
+        kind, weight = item0[0], 1.0
+    else:
+        kind, weight = predicted_monster_drop(t_[1], cycle, help_count, world_count, help_value)
     if kind is not None:
         drops.append((kind, t_[2], t_[3]))
+        if drop_weights is not None:
+            drop_weights.append(weight)
     return dead
 
 
@@ -396,7 +407,7 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
                          if item0 is not None else set())
         clear_item = room_clear_drop(s0.level, s0.room)
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
-        streak_bomb = want_bombs and help_n == 9 and streak_patience > 0
+        streak_bomb = want_bombs and help_n >= 10 and streak_patience > 0
         row2_next = (want_bombs and cycle_n in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
                      and not all(t_[1] in ROW2 for t_ in tlist))
         if streak_bomb and len(rec.inputs) >= streak_fuse_until:
@@ -573,21 +584,25 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             # ($34F): this runs on every scored branch, and four separate reads would slow every search.
             blk = emu.ram(0x70, 0x2EB)
             drops = []
+            drop_weights = []
             item = read_room_item(emu)
             if item is not None:
                 drops.append((item[0], item[1], item[2]))
+                drop_weights.append(1.0)
             for i in range(1, 12):
                 if blk[0x34F - 0x70 + i] == 0x60:
                     drops.append((blk[0xAC - 0x70 + i], blk[i], blk[0x84 - 0x70 + i]))
+                    drop_weights.append(1.0)
             dead = add_predicted_drops(drops, tlist, ens, item0=item0, item_carriers=item_carriers,
                                        clear_item=clear_item, clear_ready=(targets is None and types is None and n1 == 0),
-                                       cycle=cycle_n, help_count=help_n, world_count=world_n, bomb_kill=m[0] == "bomb")
+                                       cycle=cycle_n, help_count=help_n, world_count=world_n,
+                                       help_value=emu.byte(0x51), drop_weights=drop_weights)
             best = None
-            for kind, ix, iy in drops:
+            for (kind, ix, iy), weight in zip(drops, drop_weights):
                 want = drop_want(kind, s0, emu, rupee_target=rupee_target)
                 if want is None:
                     continue
-                cost = want * (abs(s2.x - ix) + abs(s2.y - iy))
+                cost = weight * want * (abs(s2.x - ix) + abs(s2.y - iy))
                 best = cost if best is None else min(best, cost)
             if best is not None:
                 shaping -= best
