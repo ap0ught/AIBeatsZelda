@@ -21,7 +21,14 @@ EMUHAWK = BIZHAWK_DIR / "EmuHawk.exe"
 # Linux ships EmuHawk.exe as well, but it only runs under Mono: the wrapper sets
 # LD_LIBRARY_PATH for dll/ and the WinForms workarounds BizHawk needs on X11.
 EMUHAWK_MONO = BIZHAWK_DIR / "EmuHawkMono.sh"
-ROM = Path(os.environ.get("ZELDA_ROM") or (BIZHAWK_DIR / "Legend of Zelda, The (USA) (Rev 1).nes"))
+# The cartridge belongs in roms/ beside the harness - see roms/README.md for why
+# the path is part of the interface but the file is never committed. Fall back to
+# the BizHawk folder for setups that keep it there, and to roms/ when it is missing
+# everywhere, so the "no such file" error points somewhere sensible.
+ROM_NAME = "Legend of Zelda, The (USA) (Rev 1).nes"
+_ROM_CANDIDATES = (HARNESS_DIR / "roms" / ROM_NAME, BIZHAWK_DIR / ROM_NAME)
+ROM = Path(os.environ.get("ZELDA_ROM")
+           or next((p for p in _ROM_CANDIDATES if p.exists()), _ROM_CANDIDATES[0]))
 BRIDGE_LUA = HARNESS_DIR / "bridge.lua"
 STATES_DIR = HARNESS_DIR / "states"
 SHOTS_DIR = HARNESS_DIR / "shots"

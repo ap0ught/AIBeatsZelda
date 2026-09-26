@@ -1,0 +1,52 @@
+1	MILESTONE 2: from power-on, get the sword, then walk the discovered route to Level 3
+1	POWER ON. Waiting for the title screen to accept input; tapping START
+55	File select reached (mode 01). Letting the screen settle
+75	No save file exists, so the cursor is on REGISTER YOUR NAME. Pressing START
+97	Register screen (mode 0E). Blank names are rejected, typing one letter: A
+109	Moving the heart cursor down 3 slots to REGISTER END
+145	Confirming registration with START
+173	Back at file select with file 1 created. Pressing START to begin
+175	Screen wipe in progress, waiting for normal play (mode 05)
+283	In the overworld, room 77, Link at (120,141)
+283	Cave entrance is in column x=64. Walking sideways until Link.x == 64
+325	Aligned. Holding UP until the game mode says we're inside a cave (mode 0B)
+474	Inside the cave
+474	Link is frozen while the old man's text writes out. Holding UP until he really walks
+719	Walking up to y=173, clear of the entrance corridor but below the item
+739	Lining up under the item: walking to x=120
+744	Walking UP into the item. Watching RAM $0657 for the pickup
+755	GOT IT. RAM $0657 changed 0 -> 1
+755	Item-get animation. Holding DOWN until Link can move again
+885	Walking to x=112, the exit corridor
+892	Holding DOWN to leave the cave; waiting for overworld mode 05
+1044	Back on the overworld in room 77
+1044	Route from exploration: Left -> Up -> Left -> Left -> Left -> Down -> Right. No bookmarks from here on
+1044	Planned 15 steps to the Left edge
+1129	At the Left edge, holding Left to scroll
+1236	Now in room 76 at (240,141)
+1236	Planned 14 steps to the Up edge, steering around 4 enemies
+1319	At the Up edge, holding Up to scroll
+1407	Now in room 66 at (208,221)
+1407	Planned 30 steps to the Left edge, steering around 4 enemies
+1526	Planned 10 steps to the Left edge, steering around 4 enemies (re-plan)
+1586	At the Left edge, holding Left to scroll
+1693	Now in room 65 at (240,189)
+1693	Planned 40 steps to the Left edge, steering around 4 enemies
+1812	Planned 20 steps to the Left edge, steering around 5 enemies (re-plan)
+1930	At the Left edge, holding Left to scroll
+2037	Now in room 64 at (240,141)
+2037	Planned 30 steps to the Left edge, steering around 5 enemies
+2156	Planned 11 steps to the Left edge, steering around 5 enemies (re-plan)
+2236	At the Left edge, holding Left to scroll
+2343	Now in room 63 at (240,157)
+2343	Planned 10 steps to the Down edge, steering around 6 enemies
+2399	At the Down edge, holding Down to scroll
+2497	Now in room 73 at (208,61)
+2497	3 objects here never move and have no health: pickups, not enemies
+2497	Planned 12 steps to the Right edge, steering around 1 enemies
+2569	At the Right edge, holding Right to scroll
+2676	Now in room 74 at (0,125)
+2676	On the Level 3 screen. The entrance is the cave tile in the middle: walking under it
+2676	Planned 18 steps to the spot below the Level 3 entrance, steering around 1 enemies
+2784	Holding UP into the entrance
+2979	INSIDE LEVEL 3. Room 7C, 3.0 hearts, frame 2978

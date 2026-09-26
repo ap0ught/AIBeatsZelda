@@ -20,6 +20,8 @@ ROM_NAME="Legend of Zelda, The (USA) (Rev 1).nes"
 HARNESS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$HARNESS_DIR")"
 BIZHAWK_DIR="$ROOT/$BIZHAWK_DIR_NAME"
+# The cartridge lives beside the harness, not inside the emulator folder. See roms/README.md.
+ROM_DIR="$HARNESS_DIR/roms"
 
 need() { command -v "$1" >/dev/null || { echo "missing: $1" >&2; exit 1; }; }
 need curl; need tar; need gcc; need mono; need unzip
@@ -82,11 +84,12 @@ if [[ $# -ge 1 && -f "$1" ]]; then
     echo "The harness and the shipped run only work on that exact dump." >&2
     exit 1
   fi
-  cp "$1" "$BIZHAWK_DIR/$ROM_NAME"
+  mkdir -p "$ROM_DIR"
+  cp "$1" "$ROM_DIR/$ROM_NAME"
   echo "==> ROM installed (md5 $got)"
 else
   echo "!! No ROM given. Place your own legal dump of the (USA) (Rev 1) cartridge as:"
-  echo "     $BIZHAWK_DIR/$ROM_NAME"
+  echo "     $ROM_DIR/$ROM_NAME"
   echo "   expected md5: $EXPECTED_ROM_MD5"
   exit 0
 fi

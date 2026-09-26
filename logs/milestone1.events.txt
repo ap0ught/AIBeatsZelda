@@ -1,0 +1,21 @@
+1	POWER ON. Waiting for the title screen to accept input; tapping START
+55	File select reached (mode 01). Letting the screen settle
+75	No save file exists, so the cursor is on REGISTER YOUR NAME. Pressing START
+97	Register screen (mode 0E). Blank names are rejected, typing one letter: A
+109	Moving the heart cursor down 3 slots to REGISTER END
+145	Confirming registration with START
+173	Back at file select with file 1 created. Pressing START to begin
+175	Screen wipe in progress, waiting for normal play (mode 05)
+283	In the overworld, room 77, Link at (120,141)
+283	Cave entrance is in column x=64. Walking sideways until Link.x == 64
+325	Aligned. Holding UP until the game mode says we're inside a cave (mode 0B)
+474	Inside the cave
+474	Link is frozen while the old man's text writes out. Holding UP until he really walks
+719	Walking up to y=173, clear of the entrance corridor but below the item
+739	Lining up under the item: walking to x=120
+744	Walking UP into the item. Watching RAM $0657 for the pickup
+755	GOT IT. RAM $0657 changed 0 -> 1
+785	Item-get animation. Holding DOWN until Link can move again
+885	Walking to x=112, the exit corridor
+892	Holding DOWN to leave the cave; waiting for overworld mode 05
+1044	Back on the overworld in room 77

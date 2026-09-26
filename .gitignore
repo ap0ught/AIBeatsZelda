@@ -1,19 +1,31 @@
-# never: the game
+# never: the game. The cartridge belongs in roms/ - the path is part of the
+# interface, the bytes are not, and git history cannot cleanly un-ship a ROM.
 *.nes
 *.zip
-# emulator state, captures, renders, logs
-states/
+
+# Run artefacts ARE tracked, because they are the evidence:
+#   logs/*.inputs.txt   the input log of a run - the run itself
+#   logs/*.bk2          the exported movie
+#   logs/segments/*.json  what the search found for each segment
+#   states/*.State      the bookmarks the search searched from
+# Caveat: a BizHawk .State only loads in the exact BizHawk build that wrote it,
+# so these are pinned to 2.11.1 like everything else here.
+
+# What stays out is the raw emulator stdout: ~100 KB of "Read a zipstate" and
+# absolute paths, which says nothing a reader does not already have.
+logs/*.log
+logs/**/*.log
+logs/*.prev.log
+# video dumps and screenshots: large, and regenerable from the .bk2
 video/
-logs/
 shots/
-# the bridge's port file, rewritten on every launch
-.bridge_port
-*.State
 *.mkv
 *.mp4
 *.wav
 *.m4a
 *.png
+# the bridge's port file, rewritten on every launch
+.bridge_port
 youtube/capture/
 youtube/clips/
 youtube/clips_v3/
