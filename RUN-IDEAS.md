@@ -128,12 +128,13 @@ and 100-rupee secrets (`r100_*`, three). Prices: candle 60, arrows 80, bait
 (smallest secret is 30) and 225 is above the peak — reachable only by sweeping
 secrets it does not already take.
 
-**Unverified:** these are the harness's own units, read from RAM `0x66D`. Whether
-that is the *displayed* rupee number or an internal encoded value is **not
-established** — the real game's rupee counter is a lookup, which is probably why
-the model prices the candle at 60 against a 200-rupee sticker. Settling it needs
-the disassembly the repo deliberately does not redistribute, or an experiment:
-drop Link somewhere, force a known pickup, diff `0x66D` against the HUD.
+**Those are displayed rupees, and the prices are confirmed.** RAM `0x66D` is the
+count the HUD shows, not an internal encoding: at byte 2 the HUD reads `x2`, at
+155 it reads `x155`. And every price in the planner's `PRICE` table was measured
+off run6's own log — candle 106→46, arrows 161→81, bait 81→21. The Blue Candle
+really does cost 60 here. An earlier note in this file doubted the units because
+the candle was believed to have a 200-rupee sticker; that was wrong, and the
+harness was right. See `FINDINGS.md`.
 
 **Heart caves are not a fee.** The two overworld heart containers are
 take-any-one caves: old man's red potion on the left (x=120) or heart container on

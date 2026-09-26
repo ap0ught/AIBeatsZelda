@@ -317,19 +317,33 @@ appears *twice* — L4 and L8. Worth settling before spending a search, not afte
 
 ## 6. Still open
 
-- **The rupee counter is not understood.** The harness reads `0x66D` and its
-  rupee trajectory peaks at 182 in that unit. Whether that is the *displayed*
-  number or an internal encoded value is **not established** — the real game's
-  rupee counter is a lookup, which is probably why the model prices the candle at
-  60 against a 200-rupee sticker. Settling it needs either the disassembly the
-  repo deliberately does not redistribute, or a two-minute experiment: force a
-  known pickup, diff `0x66D` against the HUD.
+- **The rupee counter: settled, and the route planner is right.** `$66D` is the
+  **displayed** rupee count, not an internal encoding. Verified by screenshotting
+  the HUD at frames where the byte changes: at byte 2 the HUD reads `x2`, at byte
+  106 `x106`, at byte 155 `x155`. Exact agreement at both small and large values.
+
+  This closes a question that had been open here on the strength of a bad
+  recollection — that the Blue Candle's 200-rupee sticker meant the model was
+  using different units from the game. It does not. Measured off run6's own log,
+  the real spends are:
+
+  | purchase | before | after | spent | planner charges |
+  |---|---|---|---|---|
+  | Blue Candle | 106 | 46 | **60** | 60 |
+  | arrows | 161 | 81 | **80** | 80 |
+  | bait | 81 | 21 | **60** | 60 |
+
+  Every price in `route_planner.py`'s `PRICE` table is confirmed against the
+  emulator. The candle costs 60 in this game; the 200 figure was my error, not a
+  discrepancy in the harness. The correct lesson is narrower than the one I first
+  wrote: the counter is plain, and the planner is calibrated — so route costs
+  quoted from it can be trusted at the scale of tens of rupees.
 - **`fairy_policy` is dead code.** `fullgame.py:860` is a complete, carefully
   written policy — it reads the fairy's live position from RAM and works around
-  the pond trap where the path planner cannot route Link out of water. No route
+  the pond trap where the path planner cannot route Link out. No route
   references it. The harness otherwise takes fairies reactively
   (`combat.py:618`, "only while hurt"), and `patch_single_l8_l9.py:10` records
-  that a fairy detour was tried and cut as a net loss.
+  that a fairy detour was tried and cut as a net loss. Tracked as issue #1.
 - **Upstream's credits contain a literal `[add]` placeholder** where the
   disassembly link belongs. Left alone, since it is upstream's file.
-- **`route5.py` is specced but not built** — see `RUN-IDEAS.md`.
+- **`route5.py` is specced but not built** — issue #2, and see `RUN-IDEAS.md`.

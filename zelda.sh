@@ -61,17 +61,45 @@ EOF
         case "$kind" in
             quick|searched) key="$n" ;;
             tool)           key="p" ;;
-            long)           key="w" ;;
+            long)           key="$name" ;;
             *) echo "  !! unknown kind '$kind' for $name" >&2; return 1 ;;
         esac
         printf '   %-4s %-11s %-54s %8s  %6s  %7s\n' "[$key]" "$name" "$desc" \
             "$frames" "$game" "$wall"
     done <<<"$CATALOGUE"
+    usage
+}
+
+usage() {
     cat <<'EOF'
 
-  [n]   run it in this terminal
-  [w]   run it detached (setsid), for the long ones
-  ZELDA_SCOUTS=<k>   scout emulators for the searched runs (default 4)
+  HOW TO RUN
+   ./zelda.sh <key>          run it. 1 2 3 4 = the milestones and verify.
+                             p = plan, watch = watch, fullgame = the long search.
+   ./zelda.sh <name>         same thing by name, e.g. ./zelda.sh milestone3
+   ./zelda.sh plan [secs]    let the route planner search longer (default 90)
+
+  FLAGS - pass these after the run, or set the variable
+   --seconds S     watch   stop after S seconds of realtime playback
+   --from N        watch   emulate the first N frames unthrottled, then watch
+   --no-sound      watch   play it silent
+   ZELDA_SCOUTS=k  m3      scout emulators for the searched runs (default 4).
+                             K scouts run ~K attempts in the time of one.
+   ZELDA_RECORD=0  all     already forced on by this script. BizHawk's ffmpeg
+                             writer never reaches the bridge under Mono.
+   ZELDA_ROM=path  all      use a cartridge somewhere else (see roms/README.md)
+   ZELDA_BIZHAWK_DIR=dir    point at a different emulator install
+
+  EXAMPLES
+   ./zelda.sh 3                       milestone 3, 4 scouts, ~9 min
+   ZELDA_SCOUTS=6 ./zelda.sh 3         same with 6
+   ./zelda.sh watch --seconds 300     first five minutes, realtime, with sound
+   ./zelda.sh watch --from 40000      skip ahead quietly, then watch from there
+   ./zelda.sh plan 300                hunt for a dungeon order for 5 minutes
+   ./zelda.sh fullgame                the real search; detached, logs to /tmp/zelda
+
+  Long runs (watch, fullgame) are detached with setsid and log to
+  /tmp/zelda/<name>.log - tail -f it. They are NOT stopped by closing this shell.
 
   Specced in RUN-IDEAS.md but NOT built yet:
     route5      Gleeok (Level 4) then Level 1 - the reverse of run6's order.
@@ -97,11 +125,12 @@ confirm() { # confirm <minutes>
     [[ "$a" == [yY] ]]
 }
 
-run_one() { # run_one <name> [extra]
-    case "$1" in
-        milestone1) python3 -u milestone1.py ;;
-        milestone2) python3 -u milestone2.py ;;
-        milestone3) ZELDA_SCOUTS="$SCOUTS" python3 -u milestone3.py ;;
+run_one() { # run_one <name> [extra args...]
+    local name="$1"; shift
+    case "$name" in
+        milestone1) python3 -u milestone1.py "$@" ;;
+        milestone2) python3 -u milestone2.py "$@" ;;
+        milestone3) ZELDA_SCOUTS="$SCOUTS" python3 -u milestone3.py "$@" ;;
         verify)
             python3 -u -c '
 from pathlib import Path
@@ -110,27 +139,41 @@ WANT = "3115e31ff1a9b16e732160f81fe478a5052668ff"
 print("replaying runs/run6/inputs.txt from power-on in a fresh emulator...")
 _, fp = replay.verify(Path("runs/run6/inputs.txt"), WANT)
 raise SystemExit(0 if fp == WANT else 1)
-' ;;
-        watch) python3 -u watch_run.py ;;
-        plan)   python3 -u route_planner.py "${2:-90}" ;;
-        fullgame) bash run_until.sh "logs/run_until.log" 40 ;;
-        *) echo "unknown run: $1" >&2; return 2 ;;
+' "$@" ;;
+        watch) python3 -u watch_run.py "$@" ;;
+        plan)   python3 -u route_planner.py "${1:-90}" ;;
+        fullgame) bash run_until.sh "logs/run_until.log" "${1:-40}" "$@" ;;
+        *) echo "unknown run: $name" >&2; return 2 ;;
     esac
 }
 
 case "${1:-}" in
-    ""|help|-h|--help) menu ;;
+    ""|list) menu ;;
+    help|-h|--help) usage ;;
     1) run_one milestone1 ;;
     2) run_one milestone2 ;;
     3) run_one milestone3 ;;
     4) run_one verify ;;
+    p) shift || true; run_one plan "${1:-90}" ;;
     w|watch)
-        confirm "38 minutes"
-        detach "$LOGS/watch.log" python3 -u watch_run.py ;;
-    p|plan) run_one plan "${2:-90}" ;;
+        shift || true
+        # Honour the answer. Without the check, a non-interactive stdin reads EOF,
+        # `[[ y == [yY] ]]` is false, and the run starts anyway - which is how a
+        # 38-minute watch launches itself because nobody was there to answer.
+        if confirm "38 minutes"; then
+            detach "$LOGS/watch.log" python3 -u watch_run.py "$@"
+        else
+            echo "  cancelled."
+        fi ;;
     f|fullgame)
-        confirm "4.5 hours"
-        detach "$LOGS/fullgame.log" bash run_until.sh "logs/run_until.log" 40 ;;
-    milestone1|milestone2|milestone3|verify|watch|fullgame) run_one "$1" ;;
-    *) echo "unknown selection: $1   (try ./zelda.sh for the list)" >&2; exit 2 ;;
+        shift || true
+        if confirm "4.5 hours"; then
+            detach "$LOGS/fullgame.log" bash run_until.sh "logs/run_until.log" "${1:-40}" "$@"
+        else
+            echo "  cancelled."
+        fi ;;
+    milestone1|milestone2|milestone3|verify|watch|plan|fullgame)
+        shift
+        run_one "$1" "$@" ;;
+    *) echo "unknown selection: ${1:-}   (try ./zelda.sh for the list)" >&2; exit 2 ;;
 esac
