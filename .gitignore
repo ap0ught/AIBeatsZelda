@@ -37,6 +37,14 @@ youtube/voice/
 youtube/final/
 youtube/check/
 youtube/sheets/
+# Screenshots taken with a *patched* cartridge. They are of somebody else's
+# mod, not of this project's runs, and none of them are evidence for anything the
+# stock run does not already show. Keep them out; the patched ROMs themselves
+# belong in /tmp.
+shots/automap_*.png
+shots/mapwin_*.png
+shots/hacked_*.png
+
 # third-party disassembly: linked from the README, not redistributed
 tools/disasm/
 __pycache__/
