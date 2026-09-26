@@ -5,6 +5,8 @@ _sys.path.insert(0, str(_ROOT))
 _os.chdir(_ROOT)
 del _os, _sys, _pathlib
 
+import unittest
+
 from zelda.emulator import State
 from zelda.lookahead import add_predicted_drops, drop_want, predicted_monster_drop
 
@@ -18,34 +20,56 @@ class _Emu:
         return self.max_bombs
 
 
-emu = _Emu()
-full = State(hp=0x78, hpfrac=0, bombs=0, keys=0, rupees=10)
-assert drop_want(0x19, full, emu) > drop_want(0x00, full, emu)
-assert drop_want(0x19, State(hp=0x78, hpfrac=0, keys=3), emu) < drop_want(0x19, full, emu)
-assert drop_want(0x18, full, emu, rupee_target=20) > drop_want(0x18, full, emu, rupee_target=10)
-assert drop_want(0x0F, full, emu, rupee_target=20) > drop_want(0x0F, full, emu, rupee_target=10)
+class DropScoringTests(unittest.TestCase):
+    def setUp(self):
+        self.emu = _Emu()
+        self.full = State(hp=0x78, hpfrac=0, bombs=0, keys=0, rupees=10)
 
-assert predicted_monster_drop(0x24, 0, 0, 0) == 0x00
-assert predicted_monster_drop(0x24, 5, 0, 0) == 0x00
-assert predicted_monster_drop(0x24, 7, 0, 0) == 0x00
-assert predicted_monster_drop(0x24, 0, 0, 15) == 0x23
-assert predicted_monster_drop(0x24, 0, 9, 0, False) == 0x0F
-assert predicted_monster_drop(0x24, 0, 9, 0, True) == 0x00
+    def test_keys_beat_bombs_when_empty(self):
+        self.assertGreater(drop_want(0x19, self.full, self.emu), drop_want(0x00, self.full, self.emu))
 
-drops = []
-dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1)], [], cycle=0)
-assert dead and drops == [(0x00, 88, 120)]
+    def test_key_value_falls_with_spares(self):
+        many = State(hp=0x78, hpfrac=0, keys=3)
+        self.assertLess(drop_want(0x19, many, self.emu), drop_want(0x19, self.full, self.emu))
 
-drops = []
-dead = add_predicted_drops(drops, [(1, 0x2A, 96, 120, 1)], [], item0=(0x19, 96, 120), item_carriers={1})
-assert dead and drops == [(0x19, 96, 120)]
+    def test_rupees_get_more_weight_when_short(self):
+        self.assertGreater(drop_want(0x18, self.full, self.emu, rupee_target=20),
+                           drop_want(0x18, self.full, self.emu, rupee_target=10))
+        self.assertGreater(drop_want(0x0F, self.full, self.emu, rupee_target=20),
+                           drop_want(0x0F, self.full, self.emu, rupee_target=10))
 
-drops = []
-dead = add_predicted_drops(drops, [(4, 0x30, 104, 136, 1)], [], clear_item=0x19, clear_ready=True, cycle=3)
-assert dead and (0x19, 104, 136) in drops
+    def test_predicted_monster_drop_uses_cycle_and_forced_rules(self):
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 0), 0x00)
+        self.assertEqual(predicted_monster_drop(0x24, 5, 0, 0), 0x00)
+        self.assertEqual(predicted_monster_drop(0x24, 7, 0, 0), 0x00)
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 15), 0x23)
+        self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, False), 0x0F)
+        self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, True), 0x00)
 
-drops = []
-dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1), (4, 0x24, 104, 120, 1)], [], cycle=0)
-assert len(dead) == 2 and not drops
+    def test_predicted_drop_path_adds_future_monster_drop(self):
+        drops = []
+        dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1)], [], cycle=0)
+        self.assertEqual(len(dead), 1)
+        self.assertEqual(drops, [(0x00, 88, 120)])
 
-print("drop scoring helpers: ok")
+    def test_predicted_drop_path_preserves_carried_item(self):
+        drops = []
+        dead = add_predicted_drops(drops, [(1, 0x2A, 96, 120, 1)], [], item0=(0x19, 96, 120), item_carriers={1})
+        self.assertEqual(len(dead), 1)
+        self.assertEqual(drops, [(0x19, 96, 120)])
+
+    def test_predicted_drop_path_adds_room_clear_item(self):
+        drops = []
+        dead = add_predicted_drops(drops, [(4, 0x30, 104, 136, 1)], [], clear_item=0x19, clear_ready=True, cycle=3)
+        self.assertEqual(len(dead), 1)
+        self.assertIn((0x19, 104, 136), drops)
+
+    def test_predicted_drop_path_skips_multi_kill_guessing(self):
+        drops = []
+        dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1), (4, 0x24, 104, 120, 1)], [], cycle=0)
+        self.assertEqual(len(dead), 2)
+        self.assertEqual(drops, [])
+
+
+if __name__ == "__main__":
+    unittest.main()
