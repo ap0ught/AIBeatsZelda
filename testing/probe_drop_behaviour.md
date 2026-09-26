@@ -72,6 +72,13 @@ Progress goes to stdout unbuffered, so run it detached and tail the file:
 - writes `logs/`, `runs/`
 - writes a file
 
+## Why this still matters
+
+Cited by production code. These comments are where the numbers came from,
+so if this script's method is wrong, the constant is wrong too:
+
+- ``zelda/drops.py`:13` - So `testing/probe_drop_behaviour.py` imports this, and its 43/43 over the full run6 is a
+
 ## See also
 
 - [`vs_run4.py`](vs_run4.py.md)

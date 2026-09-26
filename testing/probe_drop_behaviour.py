@@ -76,21 +76,14 @@ from pathlib import Path
 from zelda import BizHawk, replay
 from zelda.emulator import ROM
 
-# ---- the cartridge's drop rules, cited to the disassembly -------------------------
-NO_DROP = [0x5D, 0x14, 0x15, 0x1B, 0x1C, 0x1D, 0x17]
-ROW0 = [0x07, 0x08, 0x0E, 0x04, 0x0F, 0x23]
-ROW1 = [0x21, 0x22, 0x0D, 0x10, 0x13, 0x28, 0x2A, 0x27, 0x16]
-ROW2 = [0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30]
-RATES = [0x50, 0x98, 0x68, 0x68]     # a drop is cancelled when Random >= this
-# 4 rows x 10 columns: DropItemSetBaseOffsets ($00,$0A,$14,$1E) + WorldKillCycle.
-DROP_TABLE = [
-    [0x22, 0x18, 0x22, 0x18, 0x23, 0x18, 0x22, 0x22, 0x18, 0x18],
-    [0x0F, 0x18, 0x22, 0x18, 0x0F, 0x22, 0x21, 0x18, 0x18, 0x18],
-    [0x22, 0x00, 0x18, 0x21, 0x18, 0x22, 0x00, 0x18, 0x00, 0x22],
-    [0x22, 0x22, 0x22, 0x23, 0x18, 0x22, 0x23, 0x22, 0x22, 0x18],
-]
-SLOT1_NO_DROP = (0x2A, 0x30)      # `CPX #$01` - keyed on the SLOT, not the type
-MOBLIN = set(ROW0) | set(ROW1) | set(ROW2)   # the 24 types the game actually lists
+# The rules themselves live in zelda/drops.py, not here. That is the point of this import:
+# the 43/43 below has to be a statement about the code the fight planner actually runs. A
+# probe that validates one transcription while the planner uses another measures nothing,
+# and the way that fails is quietly - both look right and they disagree at the edges.
+from zelda.drops import (  # noqa: E402
+    DROP_TABLE, LISTED, MEASURED_RATE, NO_DROP, RATES, SLOT1_NO_DROP,
+    expected_drop, implied_rate, row_of,
+)
 
 OBJ_TYPE = 0x34F     # ObjType; $60 is UpdateItem, i.e. a dropped item
 ITEM_ID = 0xAC       # Item_ObjItemId
@@ -122,27 +115,16 @@ def row_of(mtype: int) -> int:
 
 
 def predict(kind, slot, mtype, cycle, help_count, help_value, kill_count):
-    """`SetUpDroppedItem` for one kill.  Returns (item or None, why).
+    """Delegates to zelda.drops.expected_drop, so there is one decision, not two.
 
-    `kind` is 'fairy', 'guarantee' or 'table', decided by the two counter compares in the
-    order the assembly tests them.  Deliberately does NOT model the random cancel - see
-    the docstring on why a stale `Random` read would make that prediction a lie.
+    `kind` is accepted and ignored: it was this probe's own classification of which of the
+    two counter tests fired, and keeping it as a parameter would invite a future caller to
+    believe the probe decides that independently. It does not.
     """
-    if kind == "fairy":
-        return 0x23, f"fairy: WorldKillCount ${kill_count:02X} == $10 exactly"
-    if kind == "guarantee":
-        return (0x0F if help_value == 0 else 0x00), (
-            f"guarantee: HelpDropCount ${help_count:02X} >= $0A, "
-            f"HelpDropValue ${help_value:02X}")
-    if mtype in NO_DROP:
-        return None, f"no-drop type ${mtype:02X}"
-    if slot == 1 and mtype in SLOT1_NO_DROP:
-        return None, f"slot-1 ${mtype:02X} may already carry a room item"
-    return DROP_TABLE[row_of(mtype)][cycle], (
-        f"table row {row_of(mtype)} column {cycle}")
+    return expected_drop(mtype, slot, cycle, help_count, help_value, kill_count)
 
 
-def kind_of(help_count, kill_count):
+def kind_of(help_count, kill_count):  # noqa: D401  (reporting only)
     """The two counter tests, in assembly order.  `CPY #$10` is an exact compare and
     $627 is a plain INC, so the fairy fires once per run and never at $0F or $11."""
     if kill_count == 0x10:
@@ -204,108 +186,116 @@ def main() -> int:
     return report(kills, drops, nframes, time.time() - t0, inputs)
 
 
+def _pre_kill_counters(d, k):
+    """The newest counter sample from BEFORE the drop, as (frame, $50, $51, $52A, $627).
+
+    Sampling backwards is not a fudge. `@SetHelpItem` does `STA HelpDropCount` with A = #$00
+    as it fires, and the routine runs a frame or two before the object's type clears, so by
+    the time this probe observes the kill the counter that proves a help drop happened has
+    been zeroed by the help drop. Reading the frame before fixes all six of those.
+
+    It also settles where a planner has to read. The planner shapes a fight toward a kill
+    that has NOT happened yet, so it is on the right side of this automatically - which is
+    an argument for doing the shaping prospectively rather than after the fact.
+    """
+    for fr, c50, c51, c52a, c627 in sorted(d.get("hist") or [], reverse=True):
+        if fr < d["frame"]:
+            return (fr, c50, c51, c52a, c627)
+    return (k["frame"], k["help_count"], k["help_value"], k["cycle"], k["kill_count"])
+
+
 def report(kills, drops, nframes, elapsed, inputs) -> int:
     print(f"\n{nframes} frames in {elapsed:.0f}s")
     print(f"  {len(kills)} kills, {len(drops)} drop objects "
           f"({len(drops) / max(1, len(kills)) * 100:.1f}% of kills)\n")
 
-    # Pair each drop with the nearest preceding kill - but only when that is unambiguous.
-    # With 697 kills and 90 drops in a run where several monsters often die within a few
-    # frames of each other, a "nearest kill" rule silently attributes a drop to whichever
-    # kill happened to be closest, which manufactures both false mismatches and wrong
-    # per-row denominators. A window containing exactly one kill is evidence; a window
-    # containing three is not, and is counted as such rather than guessed at.
-    used = set()
-    paired, ambiguous, unpaired = [], 0, []
+    # Pair each drop with a kill only when exactly one candidate is in the window. With 697
+    # kills and 90 drops, and several monsters often dying within a few frames, a
+    # "nearest kill" rule silently attributes a drop to whichever kill was closest - not a
+    # weak measurement but a wrong one, and it inflated mismatches from 18 to 29 when tried.
+    used: set[int] = set()
+    paired: list[dict] = []
+    ambiguous = unpaired = outside_pool = 0
     for d in drops:
         window = [i for i, k in enumerate(kills)
                   if i not in used and 0 <= d["frame"] - k["frame"] <= PAIR_WINDOW]
         if not window:
-            unpaired.append(d)
+            unpaired += 1
             continue
         if len(window) > 1:
             ambiguous += 1
             continue
-        idx = window[0]
-        used.add(idx)
-        k = kills[idx]
-        pred, why = predict(k["kind"], k["slot"], k["monster"], k["cycle"],
-                            k["help_count"], k["help_value"], k["kill_count"])
-        paired.append(dict(drop=d, kill=k, predicted=pred, why=why))
+        used.add(window[0])
+        k = kills[window[0]]
+        if k["monster"] not in LISTED:
+            # Bosses and scenery - types the game does not list, for which SetUpDroppedItem
+            # may not run at all. expected_drop declines to guess about these, so counting
+            # them would report the model's honesty as its error.
+            outside_pool += 1
+            continue
+        h = _pre_kill_counters(d, k)
+        pred, prob, why = predict(k["kind"], k["slot"], k["monster"], k["cycle"],
+                                  h[1], h[2], h[4])
+        paired.append(dict(drop=d, kill=k, predicted=pred, prob=prob, why=why,
+                           sampled=h[0]))
 
-    tally = collections.Counter()
-    mism = []
-    for p in paired:
-        if p["predicted"] == p["drop"]["observed"]:
-            tally["agree"] += 1
-        else:
-            tally["MISMATCH"] += 1
-            mism.append(p)
-    tally["nothing predicted"] = sum(1 for p in paired if p["predicted"] is None)
-
-    # Write the per-event log BEFORE any of the reporting below. The first full run lost
-    # 26 of 29 mismatches and the entire event log to a formatting error in this function,
+    # Write the per-event log BEFORE the reporting below. The first full run lost 26 of 29
+    # mismatches and the whole event log to a formatting error further down this function,
     # because the write was last. The measurement is the expensive part; the prose is not.
     out = Path("logs/drop_behaviour.json")
     out.write_text(json.dumps(dict(kills=kills, drops=drops, frames=nframes,
                                    inputs=str(inputs)), indent=1))
 
-    print("per-drop, table prediction vs what landed (unambiguous pairings only):")
+    tally = collections.Counter()
+    mism = []
+    for pr in paired:
+        if pr["predicted"] == pr["drop"]["observed"]:
+            tally["agree"] += 1
+        else:
+            tally["MISMATCH"] += 1
+            mism.append(pr)
+    tally["nothing predicted"] = sum(1 for pr in paired if pr["predicted"] is None)
+
+    print("per-drop, model prediction vs what landed:")
     for k, v in sorted(tally.items()):
         print(f"  {k:<22} {v}")
-    if ambiguous:
-        print(f"  {'(ambiguous: >1 kill)':<22} {ambiguous}   not counted either way")
-    if unpaired:
-        print(f"  {'(no kill in window)':<22} {len(unpaired)}")
+    for label, n in (("(ambiguous: >1 kill)", ambiguous), ("(no kill in window)", unpaired),
+                     ("(unlisted type)", outside_pool)):
+        if n:
+            print(f"  {label:<22} {n}   not counted either way")
 
-    # The rate check: the cancel, and a separate question from the table.
-    #
-    # Row 3 is "everything else", so its denominator is not a set of monster types - it is
-    # every type the game did not list, including things that are not monsters at all. A
-    # shortfall there is much weaker evidence than in rows 0-2, where the denominator is a
-    # known set of nine or six types, so it is reported and not judged.
+    # The rate check: the random cancel, and a different question from the table.
     print("\ndrop frequency per row, against what DropItemRates implies:")
-    print(f"  {'row':>4} {'kills':>7} {'drops':>6} {'observed':>9} {'implied':>8}  verdict")
-    rows = collections.defaultdict(lambda: [0, 0])
+    print(f"  {'row':>4} {'kills':>7} {'drops':>6} {'observed':>9} {'implied':>8} "
+          f"{'MEASURED_RATE':>13}")
+    rows: dict[int, list[int]] = collections.defaultdict(lambda: [0, 0])
     for k in kills:
         if k["kind"] == "table" and k["row"] >= 0:
             rows[k["row"]][0] += 1
-    for p in paired:
-        if p["kill"]["kind"] == "table" and p["kill"]["row"] >= 0 and p["predicted"] is not None:
-            rows[p["kill"]["row"]][1] += 1
-    shortfalls = 0
+    for pr in paired:
+        if pr["kill"]["kind"] == "table" and pr["kill"]["row"] >= 0 \
+                and pr["predicted"] is not None:
+            rows[pr["kill"]["row"]][1] += 1
     for r in sorted(rows):
         n, d = rows[r]
         if not n:
             continue
-        obs, imp = d / n, RATES[r] / 256
-        if r == 3:
-            verdict = "row 3 denominator is 'everything else' - not judged"
-        elif obs < imp * 0.6:
-            verdict = "shortfall - cancel fires more often than the table says"
-            shortfalls += 1
-        else:
-            verdict = "consistent"
-        print(f"  {r:>4} {n:>7} {d:>6} {obs * 100:>8.1f}% {imp * 100:>7.1f}%  {verdict}")
+        meas = f"{MEASURED_RATE[r]:.1%}" if r in MEASURED_RATE else "not measured"
+        print(f"  {r:>4} {n:>7} {d:>6} {d / n * 100:>8.1f}% {implied_rate(r) * 100:>7.1f}% "
+              f"{meas:>13}")
+    print("  MEASURED_RATE is what zelda.drops uses to scale future-drop shaping. Rows 0-2 "
+          "cover every\n  listed monster type, so a planner never needs a row 3 rate.")
 
     if mism:
-        print(f"\n{len(mism)} MISMATCH(es) among unambiguous pairings - the table itself:")
-        for p in mism:
-            k, d = p["kill"], p["drop"]
-            want = ("nothing" if p["predicted"] is None
-                    else f"${p['predicted']:02X}")
+        print(f"\n{len(mism)} MISMATCH(es) among unambiguous, listed pairings:")
+        for pr in mism:
+            k, d = pr["kill"], pr["drop"]
+            want = "nothing" if pr["predicted"] is None else f"${pr['predicted']:02X}"
             print(f"  f{d['frame']:>7} killed ${k['monster']:02X} (row {k['row']}, col "
-                  f"{k['cycle']}, {k['kind']}) -> predicted {want}, "
-                  f"landed ${d['observed']:02X}")
-            print(f"          {p['why']}  kill at f{k['frame']} slot {k['slot']}, "
-                  f"drop in slot {d['slot']}")
+                  f"{k['cycle']}) -> predicted {want}, landed ${d['observed']:02X}")
+            print(f"          {pr['why']}   counters sampled at f{pr['sampled']}")
     else:
-        print("\nno MISMATCH among unambiguous pairings: every drop that landed is the "
-              "item the table names.")
-
-    if shortfalls:
-        print(f"\n{shortfalls} row(s) show a drop-rate shortfall. That is the random cancel, "
-              f"not the table -\nsee the docstring; do not read it as a wrong table.")
+        print("\nno MISMATCH: every drop that landed is the item the model names.")
 
     rule_search(paired)
     print(f"\nper-event log: {out}")
@@ -370,7 +360,7 @@ def rule_search(paired) -> None:
 
     pool = [p for p in paired
             if p["kill"]["kind"] == "table"
-            and p["kill"]["monster"] in MOBLIN
+            and p["kill"]["monster"] in LISTED
             and not (p["kill"]["slot"] == 1 and p["kill"]["monster"] in SLOT1_NO_DROP)]
     print(f"  {len(pool)} drops from the 24 listed moblin types, scored as complete "
           f"predictions\n")

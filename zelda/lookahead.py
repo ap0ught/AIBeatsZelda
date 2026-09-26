@@ -12,6 +12,7 @@ import os
 import random
 
 from .emulator import BizHawk, State
+from .drops import expected_drop
 from .overworld import read_enemies, read_room_item
 
 DIRS4 = ("Up", "Down", "Left", "Right")
@@ -24,6 +25,19 @@ WALK_INTERP = [False]         # True: interpolate walking distance between latti
 SPOT_FACING = [True]          # the strike-spot field leaves out a Darknut's shield side (A/B: r8_3f 1,751 -> 1,479)
 ROW2 = {0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30}   # the only monsters with bombs in their drop row
 BOMB_TARGET = [6]             # plan_fight works the ten-kill forced drop for bombs while Link holds fewer than this
+# Shape a fight toward where the next kill's drop will land (issue #6, Change 1). OFF by
+# default, and not because the model is wrong - it predicts 45 of 45 drops exactly - but
+# because the one behavioural measurement of the term is a regression. In L3R91
+# (states/m3_5b_bombs_start, 3 Goriyas) it changed 37 of 74 decisions and made the fight
+# 683 -> 1020 frames, 49% longer. See testing/probe_future_drop_ab.py to reproduce.
+#
+# The likely reason is that it shapes toward where the DEAD monster was, which is a corpse,
+# and a fight that loiters near a corpse is not a fight that ends. The issue's own wording
+# is "leaves the drop on the near side of the room instead of the middle" - which is about
+# the exit, not the corpse, and the two are only the same thing when the last enemy dies near
+# the way out. So the term as written rewards a position the planner has no reason to want.
+# Calibrating it needs a target; one room says the sign is wrong, not what the right size is.
+FUTURE_DROP = [False]
 
 # What a key and a rupee are worth, per pixel of travel. These replace a heart-deficit
 # `want` that valued a key at 1.2 - less than a third of a bomb - while the same file
@@ -383,9 +397,18 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             e for e in read_enemies(emu) if killable(e) and e[0] not in ignore]
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
+        # The three counters SetUpDroppedItem reads, hoisted out of the branch loop. They
+        # describe the fight as it stands, not the branch being scored, and a bridge read per
+        # branch would be a round trip per candidate move on the hottest path in the planner.
+        # They are also deliberately read BEFORE any kill this call might simulate - see the
+        # @SetHelpItem note below, which is the reason a prospective read is the right one.
+        drop_cycle = emu.byte(0x52A)              # WorldKillCycle, the drop table's column
+        drop_value = emu.byte(0x51)              # HelpDropValue: 0 = five rupees, else bombs
+        drop_kills = emu.byte(0x627)             # WorldKillCount; == $10 exactly is a fairy
+        max_bombs = max(8, emu.byte(0x67C))      # MaxBombs, for drop_want
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
         streak_bomb = want_bombs and help_n == 9 and streak_patience > 0
-        row2_next = (want_bombs and emu.byte(0x52A) in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
+        row2_next = (want_bombs and drop_cycle in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
                      and not all(t_[1] in ROW2 for t_ in tlist))
         if streak_bomb and len(rec.inputs) >= streak_fuse_until:
             streak_patience -= 1                  # not for ever: after a while the sword may have the tenth kill
@@ -576,6 +599,43 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
                 best = cost if best is None else min(best, cost)
             if best is not None:
                 shaping -= best
+
+            # ---- the drop a kill is ABOUT to make (issue #6, Change 1) --------------------
+            # The list above only holds drops that already exist on the floor. A living
+            # monster's does not exist yet, so nothing pulled the fight toward ending beside
+            # it - which is why the last enemy in the middle of a room attracted no travel
+            # shaping and the fight simply ended wherever the last kill happened.
+            #
+            # Two measurements make this nearly free. The landing spot is the dead monster's
+            # OWN position: 61 of 61 drops in the full run6 appeared in the dead monster's
+            # object slot, on the same frame its type cleared. So `tlist` already holds the
+            # coordinates and this needs no new RAM read. And the item is known before the
+            # kill, because the decision is a pure function of the monster type, $52A and two
+            # counters - all read above.
+            #
+            # The multiplier is the part that matters. expected_drop returns the probability
+            # that the drop actually lands, which is 9.3% / 20.3% / 14.8% by row and not the
+            # 31.2% / 59.4% / 40.6% DropItemRates implies. Shaping as though a drop were
+            # certain would be wrong roughly two times in three, and would pay real frames for
+            # a bomb that never appeared - so this scales by what was measured.
+            #
+            # `n1 < n0` gates on the branch actually killing something. A slot in tlist that is
+            # not in the post-move ens has died, which is the same inference the bomb-streak
+            # branch below already draws; the count check keeps a filtered-out enemy (types=,
+            # ignore=) from reading as a phantom kill.
+            if FUTURE_DROP[0] and n1 < n0:
+                still_alive = {e[0] for e in ens}
+                for t_ in tlist:
+                    if t_[0] in still_alive:
+                        continue
+                    landed, chance, _why = expected_drop(t_[1], t_[0], drop_cycle,
+                                                        help_n, drop_value, drop_kills)
+                    if landed is None or chance <= 0.0:
+                        continue
+                    worth = drop_want(landed, s0, max_bombs)
+                    if worth is None:
+                        continue
+                    shaping -= chance * worth * (abs(s2.x - t_[2]) + abs(s2.y - t_[3]))
 
             sc = fight_score(s0, s2, hp0, n0, hp1, n1, used,
                              damage_weight=dmg_w, hp_weight=hp_weight,
