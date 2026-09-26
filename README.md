@@ -3,8 +3,13 @@
 This is everything behind the video: the player the AI wrote for itself, the notes it kept while writing it,
 and the input file of the final run (37:02 from power-on to Zelda, no glitches, no memory editing, no human input).
 
-**Not included, on purpose:** the game ROM (bring your own), emulator save states, and the third-party disassembly
-of the game that the AI read (linked below). Nothing here can play without your own copy of the cartridge.
+**The video:** [I Gave an AI Zelda and One Rule: Don't Cheat.](https://www.youtube.com/watch?v=mBalZml520o)
+(Bears Gaming Den, 2026-09-23, 48:17). Its narration is in [`TRANSCRIPT.md`](TRANSCRIPT.md), rendered from
+`youtube/SCRIPT_v3.md`; the on-screen reasoning panel is `zelda/captions.py`.
+
+**Not included, on purpose:** the game ROM (bring your own — see [`roms/README.md`](roms/README.md) for the
+exact dump and its md5), and the third-party disassembly of the game that the AI read (linked below). Nothing
+here can play without your own copy of the cartridge.
 
 ## Watch your own computer play the run (two minutes)
 
