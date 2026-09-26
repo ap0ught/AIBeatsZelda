@@ -33,6 +33,12 @@ P = {
     "r30_48": (0x48, 208, 109), "r30_67": (0x67, 112, 93), "r30_71": (0x71, 80, 93),
     "h_2C": (0x2C, 144, 173), "h_2F": (0x2F, 96, 141), "h_47": (0x47, 176, 189), "h_7B": (0x7B, 144, 93),
     "h_5F": (0x5F, 192, 141),
+    # Fairy stops. Real nodes, so build_legs() gives them real legs and there is no alias
+    # to go stale. PR #7 aliased fairy_42's lookup to L7 "to keep the cached legs usable
+    # until rebuilt", which was numerically exact - the two are the same place, both
+    # (0x42, 112, 157) - but it only stayed right while they remained coincident, and it
+    # hid a stale cache. Rebuilt instead: 18s, and one less source of truth.
+    "fairy_2C": (0x2C, 144, 173), "fairy_42": (0x42, 112, 157),
     "bracelet": (0x24, 224, 125),
     "warp_1D": (0x1D, 48, 157), "warp_23": (0x23, 48, 157), "warp_49": (0x49, 48, 157), "warp_79": (0x79, 128, 157),
 }
@@ -138,9 +144,38 @@ NEEDS_CANDLE = {"r100_62", "r100_6B", "r30_28", "r30_48", "h_47", "bait_46", "ba
 NEEDS_BOMB = {"r30_13", "r30_2D", "r30_67", "r30_71", "h_2C", "h_7B", "bait_26"}
 PRICE = {"candle": 60, "arrows": 80, "bait_34": 60, "bait_26": 100, "bait_46": 100, "bait_4D": 100}
 
+# ---- healing stops: real nodes, but not yet priceable -----------------------------------
+# A healing errand's COST is knowable - a walk plus the in-pond maneuver. Its BENEFIT is
+# not, and that is the entire problem. In evaluate() `hearts` is a gate, not a commodity:
+# its one use is the WS/MS threshold check, nothing converts a heart into frames, and
+# nothing models damage taken on a leg for a refill to offset. So a heal can only ever
+# ADD cost, and the search rejects it for any value of FAIRY_STOP - not because the
+# detour is wrong, but because the benefit is unrepresentable.
+#
+# PR #7 charged the walk anyway and reported +4,994 and +1,081 frames as verdicts, which
+# is indistinguishable in the output from a real measurement. So both numbers are required
+# before a healing stop can be evaluated at all, and until they exist evaluate() refuses
+# rather than guessing. Set them and the comparison works:
+#
+#   FAIRY_STOP[0]  frames to walk in, take the fairy and walk out   (measure it)
+#   HEART_VALUE[0] frames one heart is worth over the rest of a run (issue #11)
+HEART_VALUE: list[float | None] = [None]
+FAIRY_STOP: list[float | None] = [None]
+HEAL = {"fairy_2C", "fairy_42"}
+
 
 class Infeasible(Exception):
     pass
+
+
+class Unpriceable(Exception):
+    """A route contains something whose benefit this model does not represent.
+
+    Deliberately NOT a subclass of Infeasible. "Impossible" is a property of the route;
+    "unpriceable" is a property of the model, and plan() swallows Infeasible on purpose -
+    a candidate order that cannot be done is simply not worth trying. Swallowing this too
+    would hide a missing measurement behind a hundred silent rejections.
+    """
 
 
 def evaluate(seq, L, explain: bool = False):
@@ -155,6 +190,7 @@ def evaluate(seq, L, explain: bool = False):
     if len(set(seq)) != len(seq):
         raise Infeasible("an errand twice")
     for e in seq:
+        heal = False          # this errand is a healing stop; see HEAL above
         variant = "ladder" if ladder else "raft" if raft else "base"
         tab = L[variant]
         walk = tab.get(at, {}).get(e)
@@ -232,6 +268,21 @@ def evaluate(seq, L, explain: bool = False):
         elif e.startswith("h_"):
             hearts += 1
             cost = HEART_CAVE if e != "h_5F" else 60
+        elif e in HEAL:
+            # Both halves of a heal have to be real numbers before the errand means
+            # anything. Refusing here is the fix for #1: the alternative is a number that
+            # looks like a verdict and is not one.
+            if FAIRY_STOP[0] is None:
+                raise Unpriceable(
+                    f"{e}: the in-pond maneuver is not measured. Set route_planner.FAIRY_STOP "
+                    f"to frames-to-take-a-fairy, measured - not estimated.")
+            if HEART_VALUE[0] is None:
+                raise Unpriceable(
+                    f"{e}: this model has no exchange rate between a heart and frames, so a "
+                    f"refill cannot be credited against anything. See issue #11 and set "
+                    f"route_planner.HEART_VALUE.")
+            cost = FAIRY_STOP[0]
+            heal = True
         if e in NEEDS_CANDLE and not candle:
             raise Infeasible(f"{e} needs a candle")
         if e in NEEDS_BOMB and not bombs:
@@ -241,9 +292,14 @@ def evaluate(seq, L, explain: bool = False):
         if e == "h_2F" and not raft:
             raise Infeasible("h_2F needs the raft")
         t += best + cost
+        if heal:
+            # The credit that PR #7 omitted. Both numbers are checked non-None above, so
+            # this cannot silently become "a heal is pure cost" again.
+            t -= HEART_VALUE[0]
         if explain:
             lines.append(f"   {e:10s} {how:12s} leg {best:6.0f}  errand {cost:6.0f}   t={t / 3606:5.2f} min  "
-                         f"hearts {hearts} rupees {rupees} sword {sword}")
+                         f"hearts {hearts} rupees {rupees} sword {sword}"
+                         + (f"   [+{HEART_VALUE[0]:.0f} credited for the refill]" if heal else ""))
         at = e
     if 9 not in levels:
         raise Infeasible("no Level 9")
@@ -252,7 +308,16 @@ def evaluate(seq, L, explain: bool = False):
 
 CURRENT = ["L3", "r30_67", "L1", "WS", "L4", "L2", "r30_3D", "r100_0F", "L5", "arrows_44", "bait_34", "L6", "L7", "L8",
            "h_47", "MS", "L9"]
-OPTIONAL = [e for e in P if e != "start" and not e.startswith("L") and not e.startswith("warp_")]
+# Every non-dungeon place is an errand the search may insert, except the ones it cannot
+# price. OPTIONAL is derived from P, so adding fairy_2C and fairy_42 to the places put
+# them in this pool automatically - and then search() proposed orders containing them and
+# raised, which kills the whole search rather than rejecting one candidate. They come
+# back on their own once both numbers are measured. Computed at import: setting the two
+# values at runtime does not re-derive this, which is why the tests set them explicitly
+# and evaluate() rather than relying on the pool.
+OPTIONAL = [e for e in P
+            if e != "start" and not e.startswith("L") and not e.startswith("warp_")
+            and not (e in HEAL and (FAIRY_STOP[0] is None or HEART_VALUE[0] is None))]
 
 
 def search(L, seconds: float = 120.0, seed: int = 1):
@@ -261,6 +326,7 @@ def search(L, seconds: float = 120.0, seed: int = 1):
     cur, cur_t = list(best_seq), best_t
     t0 = time.time()
     n = 0
+    unpriceable = 0
     while time.time() - t0 < seconds:
         n += 1
         temp = 1500.0 * (1.0 - (time.time() - t0) / seconds) + 20.0
@@ -285,10 +351,21 @@ def search(L, seconds: float = 120.0, seed: int = 1):
             ct = evaluate(cand, L)
         except Infeasible:
             continue
+        except Unpriceable:
+            # Defence in depth behind the OPTIONAL filter: a candidate the model cannot
+            # price is rejected, not fatal - but it is COUNTED, because "the search ran and
+            # rejected some candidates it could not evaluate" is a different statement from
+            # "the search ran", and silently dropping them is how the +4,994-frame
+            # measurement happened in the first place.
+            unpriceable += 1
+            continue
         if ct < cur_t or rng.random() < math.exp((cur_t - ct) / temp):
             cur, cur_t = cand, ct
             if ct < best_t:
                 best_seq, best_t = list(cand), ct
+    if unpriceable:
+        print(f"  ({unpriceable} candidate order(s) rejected as unpriceable - a heal "
+              f"stop with no measured cost or value; see issue #11)", flush=True)
     return best_seq, best_t, n
 
 
@@ -308,3 +385,7 @@ if __name__ == "__main__":
     print(f"\nBEST FOUND: {t:.0f} frames = {t / 3606:.2f} min   (model's saving against the current order: "
           f"{(evaluate(CURRENT, L) - t) / 60.1:.0f} s)")
     print("\n".join(lines))
+    if any(e in HEAL for e in seq):
+        print("\nThis order contains a healing stop and was priced, so both FAIRY_STOP and "
+              "HEART_VALUE\nare set. They are measurements, not constants of convenience - see "
+              "issue #11.")
