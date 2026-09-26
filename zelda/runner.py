@@ -22,6 +22,7 @@ from pathlib import Path
 from .emulator import BizHawk, State, LOGS_DIR, STATES_DIR
 from .overworld import Navigator
 from .search import random_search, parallel_search
+from .ram import MODE_NORMAL
 from . import replay, bk2
 
 CKPT_DIR = LOGS_DIR / "checkpoints"
@@ -58,6 +59,9 @@ class Run:
         self.snav: Navigator | None = None
         self.done: list[str] = []
         self.t0 = time.time()
+        self.event_index: list[dict] = []     # filled by watch_events(); see _watch
+        self._tracker = None
+        self._spans = 0                        # step() calls that advanced more than one frame
         CKPT_DIR.mkdir(parents=True, exist_ok=True)
 
     # -- lifecycle -------------------------------------------------------
@@ -91,16 +95,125 @@ class Run:
         self.close()
 
     # -- checkpoints -----------------------------------------------------
+    # -- event checkpoints -----------------------------------------------
+    # A savestate on its own is NOT a resume point. resume() below shows why, and it is
+    # the whole ballgame: it loads the state AND restores the input prefix that produced it.
+    # Resume from a savestate alone and the continued run's log is a suffix, so
+    # replay.verify() from power-on produces a different fingerprint and the run stops being
+    # a run. Every checkpoint here is therefore the same record save_checkpoint already
+    # writes, with a finer key and a reason - which also inherits the list_hash guard, so an
+    # event checkpoint cannot leak across a route change either.
+    def watch_events(self) -> None:
+        """Checkpoint at every major acquisition, so a later attempt can start from one.
+
+        Detection is zelda.pickups.Tracker - the same pass pickup_scan.py uses, one
+        contiguous RAM read per step - so the two can never disagree about what a run picked
+        up. Off unless called; a run that never calls it behaves exactly as before.
+
+        Consumables are excluded on purpose. A rupee, a small key or a bomb refill is a
+        budget problem, not a change in what is possible, and checkpointing them would mean
+        hundreds of 17.9 KB states nobody would resume from.
+        """
+        from .pickups import Tracker
+        if self._tracker is not None:
+            return
+        self._tracker = Tracker()
+        self.main.on_step = self._watch
+        self.log(f"watching for major acquisitions; checkpoints named ckpt_{self.name}_ev*")
+
+    def _watch(self, emu: BizHawk, buttons, frames: int, s: State) -> None:
+        """Per-step observer. Only acquisitions are checkpointed, never losses."""
+        tr = self._tracker
+        if frames > 1:
+            self._spans += 1
+        # Arm on the first frame the game is genuinely in play. At power-on the item bytes
+        # are 0xFF and the game clearing them to 0 reads as everything being lost at once;
+        # and a run resumed from a checkpoint must not report everything the run already had
+        # as newly acquired.
+        if not tr.armed and s.mode == MODE_NORMAL:
+            tr.arm()
+        if not tr.armed:
+            return
+        for p in tr.acquired(emu.ram, len(emu.inputs)):
+            if p.kind in ("consumed", "lost") or "LOST" in p.name:
+                continue
+            self._checkpoint_event(p, frames, s)
+
+    def _checkpoint_event(self, p, span: int, s: State) -> None:
+        n = len(self.event_index) + 1
+        slug = "".join(c if c.isalnum() else "_" for c in p.name.lower()).strip("_")[:40]
+        key = f"ev{n:02d}_{slug}"
+        self.save_checkpoint(key, reason=p.name)
+        frame = len(self.main.inputs)
+        self.event_index.append({
+            "key": key, "name": p.name, "kind": p.kind, "detail": p.detail,
+            "frame": frame, "span": span,
+            # A multi-frame step() means the change happened somewhere inside the batch, so
+            # the frame above is the END of the batch, not the pickup frame. Recorded rather
+            # than hidden, because the checkpoint stays valid either way - the savestate and
+            # the input prefix agree - but the label is only exact when span == 1.
+            "approximate": span > 1,
+            "summary": str(s), "hearts": s.hearts, "keys": s.keys, "bombs": s.bombs,
+            "rupees": s.rupees, "level": s.level, "room": s.room,
+            "list_hash": self.list_hash,
+        })
+        self._write_event_index()
+        self.main.note(f"EVENT {p.name}")
+        self.log(f"  [event] {p.name} at frame {frame} -> {key}"
+                 + ("  (approximate: the step spanned a batch)" if span > 1 else ""))
+
+    def _write_event_index(self) -> None:
+        """Rewritten on every event, so a crashed run still leaves its index behind.
+
+        The index exists to outlive the run, so it is written eagerly rather than in
+        finish(). Small: one line per major acquisition.
+        """
+        from .emulator import ROM, rom_md5
+        (LOGS_DIR / f"{self.name}.checkpoints.json").write_text(json.dumps({
+            "run": self.name, "list_hash": self.list_hash,
+            # Which cartridge these checkpoints belong to. A savestate means nothing without
+            # the bytes it was made from - the same reasoning that put the hash check in
+            # emulator.py applies here, and it costs one line.
+            "cartridge_md5": rom_md5(ROM),
+            "events": self.event_index,
+        }, indent=1))
+
+    def load_event_index(self) -> list[dict]:
+        """A previous run's index, so --from-event can name a key without re-running."""
+        p = LOGS_DIR / f"{self.name}.checkpoints.json"
+        return json.loads(p.read_text()).get("events", []) if p.exists() else []
+
+    def resume_event(self, key: str) -> State | None:
+        """Resume from an event checkpoint by its index key, e.g. ev07_map_for_level_3.
+
+        Identical guarantees to resume(), because it is the same record: the list_hash guard
+        and the input-prefix restore both apply unchanged.
+        """
+        entry = next((e for e in self.event_index if e["key"] == key), None)
+        if entry is None:
+            self.log(f"no event checkpoint named '{key}' in the index")
+            return None
+        s = self.resume(key)
+        if s is not None:
+            self.log(f"  ({entry['name']} was acquired at frame {entry['frame']}"
+                     + (", approximate frame" if entry.get("approximate") else "") + ")")
+        return s
+
     def _ckpt_paths(self, name: str):
         return CKPT_DIR / f"{self.name}_{name}.json", f"ckpt_{self.name}_{name}"
 
-    def save_checkpoint(self, name: str) -> None:
+    def save_checkpoint(self, name: str, reason: str = "") -> None:
+        """Write a resume point: the savestate PLUS the input prefix that produced it.
+
+        `reason` is for the reader - a segment name for a segment checkpoint, the item
+        name for an event one. It carries no weight in resume(); the list_hash does.
+        """
         meta, state = self._ckpt_paths(name)
         self.main.save(state)
         s = self.main.state()
         meta.write_text(json.dumps({
             "segments": self.done, "frames": len(self.main.inputs), "state": state,
-            "list_hash": self.list_hash,
+            "list_hash": self.list_hash, "reason": reason,
             "summary": str(s), "hearts": s.hearts, "keys": s.keys, "bombs": s.bombs,
             "inputs": [",".join(b) for b in self.main.inputs]}))
 

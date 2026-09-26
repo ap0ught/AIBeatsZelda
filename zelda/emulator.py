@@ -9,7 +9,7 @@ import textwrap
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Callable, Iterable, Sequence
 
 IS_WINDOWS = os.name == "nt"
 
@@ -227,6 +227,13 @@ class BizHawk:
         self._rf = self.conn.makefile("rb")
         self.inputs: list[tuple[str, ...]] = []   # one entry per emulated frame since power-on
         self.events: list[tuple[int, str]] = []   # (frame, text) notes from the bot, for overlays
+        # Optional per-step observer, set by whoever wants to watch MAIN frame by frame.
+        # Called as on_step(emu, buttons, frames, state) after every step(), so it sees every
+        # frame MAIN advances no matter which policy advanced it - including from inside a
+        # search's Recorder, which binds emu.step once at construction and would bypass
+        # anything that patched the attribute afterwards. That trap is why this is a
+        # first-class field rather than a monkey-patch.
+        self.on_step: Callable | None = None
         self.input_log_valid = True                 # False once a savestate load breaks the frame chain
         assert self.cmd("ping") == "pong"
         if record:
@@ -269,8 +276,18 @@ class BizHawk:
         if self.record:
             lines = resp.split(";")
             self.trace_lines.extend(lines)
-            return State.parse(lines[-1])
-        return State.parse(resp)
+            s = State.parse(lines[-1])
+        else:
+            s = State.parse(resp)
+        if self.on_step is not None:
+            # Fires once per *call*, not once per frame. A caller that batches a
+            # wait into `step((), 90)` gets one callback 90 frames later, so a
+            # per-frame observer sees the end state rather than every intermediate
+            # one. Detection still catches a state change that happened inside the
+            # batch; only the attributed frame is late, by up to frames-1. Anything
+            # reading this must record the span rather than assume 1.
+            self.on_step(self, btn, frames, s)
+        return s
 
     def press(self, *buttons: str, hold: int = 1, release: int = 1) -> State:
         """Tap buttons: hold for `hold` frames, then release for `release` frames."""

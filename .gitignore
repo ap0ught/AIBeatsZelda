@@ -14,6 +14,27 @@
 # What stays out is the raw emulator stdout: ~100 KB of "Read a zipstate" and
 # absolute paths, which says nothing a reader does not already have.
 logs/*.log
+
+# Event checkpoints (issue #4): the INDEX is tracked, the BLOBS are not.
+#
+#   logs/*.checkpoints.json      tracked - what was acquired, at what frame, under
+#                                 which route, on which cartridge. ~10 KB for a whole
+#                                 run, and it is the provenance record.
+#   logs/checkpoints/*_ev*.json  not tracked
+#   states/*_ev*.State           not tracked
+#
+# Why the split: each checkpoint is a 17.9 KB savestate PLUS a JSON carrying the whole
+# input prefix that produced it, and the prefix grows with the frame number - so a
+# late checkpoint is a few hundred KB of mostly-empty lines. Thirty of those per
+# route, times several routes, is megabytes in git history that cannot be cleanly
+# undone, for a file that is regenerable by re-running. Disk is cheap; history is
+# not. Resuming still works, because "start again from there" only ever needed the
+# file on disk.
+#
+# Note the savestates in states/*.State ARE tracked, because those are the bookmarks
+# the searches ran from and the search log refers to them by name.
+logs/checkpoints/*_ev*.json
+states/*_ev*.State
 logs/**/*.log
 logs/*.prev.log
 # Video dumps are large and regenerable from the .bk2. Screenshots under shots/
