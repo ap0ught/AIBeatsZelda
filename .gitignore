@@ -16,14 +16,16 @@
 logs/*.log
 logs/**/*.log
 logs/*.prev.log
-# video dumps and screenshots: large, and regenerable from the .bk2
+# Video dumps are large and regenerable from the .bk2. Screenshots under shots/
+# ARE tracked - they are the visual record of what each run actually reached -
+# but the global *.png below still keeps every other PNG out of the repository.
 video/
-shots/
 *.mkv
 *.mp4
 *.wav
 *.m4a
 *.png
+!shots/*.png
 # the bridge's port file, rewritten on every launch
 .bridge_port
 youtube/capture/
