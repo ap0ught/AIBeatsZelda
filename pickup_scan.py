@@ -49,7 +49,11 @@ with BizHawk(log_name="pickups.log") as emu:
         i = j
 
 # "unverified" rows are bytes that changed with no explanation attached - reported,
-# but never counted as something the route acquired.
+# but never counted as something the route acquired. Currently empty: the two $0668
+# map bits were the only occupants and issue #5 settled them (a treasure chest in the
+# dungeon, testing/probe_map_chest.py), taking the count from 30 to 32. The path stays
+# because a byte changing for reasons nobody has identified yet is exactly the case it
+# exists for - the discipline is to label it honestly, not to guess a name.
 acq = [p for p in tr.events if p.kind not in ("consumed", "unverified")]
 unver = [p for p in tr.events if p.kind == "unverified"]
 print(f"\n{len(acq)} major acquisitions over {len(frames)} frames"

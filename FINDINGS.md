@@ -436,6 +436,46 @@ appears *twice* — L4 and L8. Worth settling before spending a search, not afte
   discrepancy in the harness. The correct lesson is narrower than the one I first
   wrote: the counter is plain, and the planner is calibrated — so route costs
   quoted from it can be trusted at the scale of tens of rupees.
+
+  One caveat worth carrying, learned the hard way in issue #10's measurements: this
+  is a fact about *this cartridge*, not about the harness. Redux raises the cap to
+  999, which does not fit in a byte, so there `$066D` becomes a derived hex
+  approximation of purchasing power rather than a displayed count. A proof this
+  carefully established still needed its scope written down.
+- **`$0668`: settled, and it is not a purchase.** It is a treasure chest inside the
+  dungeon. On run6 Link takes a map out of the chest in Level 3 room `$4C` at
+  f9804 and Level 7 room `$18` at f92997; the bits latch because the bit *is* the
+  level, and no rupees move because a chest has no price.
+
+  The reason this was so hard to settle is the interesting part. Exactly one
+  routine writes `$0668`, and it does so through a **single indexed store shared
+  with three other variables** — `STA Items, Y` with `Items = $0657` serves the
+  compass at `$0667`, the map at `$0668`, the level-9 pair at `$669`/`$66A` and
+  the Triforce at `$0671`. So **no instruction in the cartridge names `$0668` as
+  an operand**: a byte-pattern search for the operand pair `68 06` across all of
+  PRG-ROM returns zero hits, and that is the correct answer rather than a failed
+  search. A reader looking for a named operand never finds it.
+
+  Three observables agree on the same frame, which is what separates this from a
+  plausible story. `$00AB` is already `$17`, the room's item, from the frame the
+  room was created. `$00BF` and `$0097` — the room-item object's state and Y — go
+  to `$FF`, the signature at `Z_01.asm:4432-4434` with `X = $13`. And `$04E5`
+  `StatusBarMapTrigger` pulses `00 → 01 → 00`; that byte has exactly two
+  references in the whole disassembly, the map-slot write and a read-and-clear.
+  The geometry then lands on the frame from the other side, off by one pixel:
+  `TryTakeRoomItem` wants `|LinkX - $83| < 9`, and at f9803 that is 9 (rejected)
+  and at f9804 it is 8 (accepted).
+
+  `zelda/pickups.py` now reports these as real acquisitions rather than
+  `unverified`, which raises the run's count from 30 to 32.
+  `testing/probe_map_chest.py` measures it per frame. Journal 48 has the full
+  account, including the retraction of a wrong address label printed in the same
+  session.
+- **Every "See also" link in `testing/*.md` was dead until this commit.**
+  `make_doc.py` emitted `<script>.py.md` while writing `<stem>.md`, so all 182
+  docs pointed at files that were never created — zero `*.py.md` files have ever
+  existed in this tree. Small thing, but in a repo whose whole argument is that
+  provenance cross-references resolve, it is not nothing.
 - **`fairy_policy` is dead code.** `fullgame.py:860` is a complete, carefully
   written policy — it reads the fairy's live position from RAM and works around
   the pond trap where the path planner cannot route Link out. No route

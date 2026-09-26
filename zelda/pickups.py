@@ -59,10 +59,50 @@ REPORT_DROPS = False
 
 # $0667 compass and $0668 map are NOT 0/non-zero flags. Data Crystal's RAM map
 # documents both as "One bit per level" - a per-dungeon bitmask, not an inventory
-# bit. The verified run's $668 going 0 -> 4 and then 4 -> 0x44 is that: bit 2 is
-# level 3's map, and 0x44 adds bit 6, level 7's. They were flagged UNVERIFIED
-# until the RAM map explained them; the address was right and the reading was wrong.
+# bit. The verified run's $668 going 00 -> 04 and then 04 -> 44 is that: bit 2 is
+# level 3's map, and 0x44 adds bit 6, level 7's.
 # https://datacrystal.tcrf.net/wiki/The_Legend_of_Zelda/RAM_map
+#
+# WHY no rupees move (issue #5, settled by reading the code rather than by
+# inference). Exactly one routine in the cartridge can write $0668, and it is not
+# the shop. "TakeClass0Complex" in the disassembly - Z_01.asm:4604 - reaches it
+# through ONE indexed store that serves four variables at once, which is why no
+# instruction in the ROM names $0668 as an operand and why a byte-pattern search
+# for the operand pair 68 06 finds nothing anywhere in PRG:
+#
+#     TakeClass0Complex:
+#         LDA CurLevel          ; $10
+#         BEQ @Exit             ; in the overworld, do nothing
+#         CPY #$11              ; the MAP item slot
+#         BNE :-
+#         LDX #$01
+#         STX StatusBarMapTrigger
+#         SEC / SBC #$01        ; level - 1
+#         CMP #$08 / BCC / INY / INY      ; level 9 uses $669/$66A instead
+#         AND #$07 / TAX
+#         LDA Items, Y          ; Items = $0657, so Y = $11 lands on $0668
+#         ORA LevelMasks, X     ; 01 02 04 08 10 20 40 80
+#         STA Items, Y
+#
+# Y is an item slot from ItemIdToSlot (Z_01.asm:4318): item id $16 -> slot $10
+# (compass, $0667), id $17 -> slot $11 (map, $0668). And the bit is
+# LevelMasks[level-1], so bit 2 of $0668 IS level 3's map, exactly as the RAM map
+# says. The address and the encoding were both right; what was wrong was calling
+# it a purchase.
+#
+# It is not a purchase because the caller is a dungeon, not a shop. The single
+# JSR TakeItem at Z_01.asm:833 is the cave/shop handler, but TakeItem is also
+# reached from TryTakeItem (Z_01.asm:4432), which is what TryTakeRoomItem calls
+# with X = $13 - the room item. On run6 that is a treasure chest: $00AB was $17
+# from the frame the room was created, and on the frame the bit set, $00BF
+# (ObjState+19) and $0097 (ObjY+19) both went to $FF - the signature at
+# Z_01.asm:4432-4434. $04E5 StatusBarMapTrigger pulsed 00 -> 01 -> 00 on that same
+# frame, and that byte has exactly two references in the whole disassembly: the
+# write above, reachable only via the map slot, and a read-and-clear. So the
+# chain is airtight, and a chest has no price - which is why the rupee count does
+# not move.
+#
+# Measured, per-frame, not inferred: testing/probe_map_chest.py.
 PER_LEVEL = {"compass": ram.COMPASS, "map": ram.MAP}
 
 # $0669/$066A are the level-9 compass and map, separate bytes. Tracked, because
@@ -101,7 +141,12 @@ _LO, _HI = min(_WINDOW), max(_WINDOW) + 1
 
 @dataclass(frozen=True)
 class Pickup:
-    """One acquisition. `kind` is item | triforce | heart_container."""
+    """One observation. `kind` is item | triforce | heart_container | consumed | lost.
+
+    `lost` and `consumed` are not acquisitions - they are the negative cases, kept
+    because a key item going backwards is a real thing worth seeing. `summary()`
+    counts by kind, so the distinction has to stay honest.
+    """
     frame: int
     kind: str
     name: str
@@ -172,15 +217,18 @@ class Tracker:
             out.append(Pickup(frame, "heart_container", f"heart container LOST",
                               f"containers {oh + 1} -> {nh + 1}"))
 
-        # Per-level bitmasks: each new bit is one dungeon's compass/map.
+        # Per-level bitmasks: each new bit is one dungeon's compass/map, taken from
+        # a treasure chest in that dungeon rather than bought. The bit index IS the
+        # level, so no extra RAM read is needed to name it - see PER_LEVEL for why
+        # the chest reading is right and what it cost to establish.
         for name, addr in {**PER_LEVEL, **PER_LEVEL_L9}.items():
             a, b = self.prev[name], cur[name]
             for i in range(8):
                 if (b >> i) & 1 and not (a >> i) & 1:
                     out.append(Pickup(
-                        frame, "unverified", f"{name} bit {i + 1} set",
-                        f"$0x{addr:02X} {a:02X} -> {b:02X} - not a purchase, "
-                        f"no rupees moved; see testing/probe_map_window.py"))
+                        frame, "item", f"{name} for level {i + 1}",
+                        f"$0x{addr:02X} {a:02X} -> {b:02X} - dungeon treasure, "
+                        f"not a purchase; see testing/probe_map_chest.py"))
 
         for name, addr in ITEM_FLAGS.items():
             if name in PER_LEVEL or name in PER_LEVEL_L9:
