@@ -25,9 +25,9 @@
  },
  {
   "frame": 9853,
-  "kind": "item",
-  "name": "map for level 3",
-  "detail": "$0x668 00 -> 04"
+  "kind": "unverified",
+  "name": "map bit 3 set",
+  "detail": "$0x668 00 -> 04 - not a purchase, no rupees moved; see testing/probe_map_window.py"
  },
  {
   "frame": 10499,
@@ -151,9 +151,9 @@
  },
  {
   "frame": 92997,
-  "kind": "item",
-  "name": "map for level 7",
-  "detail": "$0x668 04 -> 44"
+  "kind": "unverified",
+  "name": "map bit 7 set",
+  "detail": "$0x668 04 -> 44 - not a purchase, no rupees moved; see testing/probe_map_window.py"
  },
  {
   "frame": 97983,

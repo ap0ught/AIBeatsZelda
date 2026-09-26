@@ -177,8 +177,10 @@ class Tracker:
             a, b = self.prev[name], cur[name]
             for i in range(8):
                 if (b >> i) & 1 and not (a >> i) & 1:
-                    out.append(Pickup(frame, "item", f"{name} for level {i + 1}",
-                                      f"$0x{addr:02X} {a:02X} -> {b:02X}"))
+                    out.append(Pickup(
+                        frame, "unverified", f"{name} bit {i + 1} set",
+                        f"$0x{addr:02X} {a:02X} -> {b:02X} - not a purchase, "
+                        f"no rupees moved; see testing/probe_map_window.py"))
 
         for name, addr in ITEM_FLAGS.items():
             if name in PER_LEVEL or name in PER_LEVEL_L9:

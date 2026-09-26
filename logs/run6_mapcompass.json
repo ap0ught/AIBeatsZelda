@@ -1,0 +1,143 @@
+{
+  "run": "run6",
+  "frames": 136526,
+  "map_price": 15,
+  "events": [
+    {
+      "frame": 12,
+      "byte": "compass",
+      "addr": "$667",
+      "before": 255,
+      "after": 0,
+      "gained_bits": [],
+      "lost_bits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rupees_before": 255,
+      "rupees_after": 0,
+      "rupee_delta": -255,
+      "level": 0,
+      "where": "overworld",
+      "room": 0,
+      "shot": "mapcompass_f000012_compass_00.png"
+    },
+    {
+      "frame": 12,
+      "byte": "map",
+      "addr": "$668",
+      "before": 255,
+      "after": 0,
+      "gained_bits": [],
+      "lost_bits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rupees_before": 255,
+      "rupees_after": 0,
+      "rupee_delta": -255,
+      "level": 0,
+      "where": "overworld",
+      "room": 0,
+      "shot": "mapcompass_f000012_map_00.png"
+    },
+    {
+      "frame": 12,
+      "byte": "compass L9",
+      "addr": "$669",
+      "before": 255,
+      "after": 0,
+      "gained_bits": [],
+      "lost_bits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rupees_before": 255,
+      "rupees_after": 0,
+      "rupee_delta": -255,
+      "level": 0,
+      "where": "overworld",
+      "room": 0,
+      "shot": "mapcompass_f000012_compassL9_00.png"
+    },
+    {
+      "frame": 12,
+      "byte": "map L9",
+      "addr": "$66A",
+      "before": 255,
+      "after": 0,
+      "gained_bits": [],
+      "lost_bits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rupees_before": 255,
+      "rupees_after": 0,
+      "rupee_delta": -255,
+      "level": 0,
+      "where": "overworld",
+      "room": 0,
+      "shot": "mapcompass_f000012_mapL9_00.png"
+    },
+    {
+      "frame": 9853,
+      "byte": "map",
+      "addr": "$668",
+      "before": 0,
+      "after": 4,
+      "gained_bits": [
+        3
+      ],
+      "lost_bits": [],
+      "rupees_before": 6,
+      "rupees_after": 6,
+      "rupee_delta": 0,
+      "level": 3,
+      "where": "L3 Tree",
+      "room": 76,
+      "shot": "mapcompass_f009853_map_04.png"
+    },
+    {
+      "frame": 92997,
+      "byte": "map",
+      "addr": "$668",
+      "before": 4,
+      "after": 68,
+      "gained_bits": [
+        7
+      ],
+      "lost_bits": [],
+      "rupees_before": 22,
+      "rupees_after": 22,
+      "rupee_delta": 0,
+      "level": 7,
+      "where": "L7 Hammer",
+      "room": 24,
+      "shot": "mapcompass_f092997_map_44.png"
+    }
+  ]
+}

@@ -48,8 +48,12 @@ with BizHawk(log_name="pickups.log") as emu:
                 shots.append(str(emu.screenshot(f"pickup_f{j:06d}_{p.name.replace(' ', '_')}")))
         i = j
 
-acq = [p for p in tr.events if p.kind != "consumed"]
-print(f"\n{len(acq)} major acquisitions over {len(frames)} frames")
+# "unverified" rows are bytes that changed with no explanation attached - reported,
+# but never counted as something the route acquired.
+acq = [p for p in tr.events if p.kind not in ("consumed", "unverified")]
+unver = [p for p in tr.events if p.kind == "unverified"]
+print(f"\n{len(acq)} major acquisitions over {len(frames)} frames"
+      + (f"  (+{len(unver)} unverified byte change(s))" if unver else ""))
 print("summary:", tr.summary())
 print()
 for p in tr.events:

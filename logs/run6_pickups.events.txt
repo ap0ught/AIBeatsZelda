@@ -2,7 +2,7 @@
 6678	PICKUP||clock||item: $0x66C 0 -> 1
 6917	PICKUP||clock||item: $0x66C 1 -> 0
 7575	PICKUP||raft||item: $0x660 0 -> 1
-9853	PICKUP||map for level 3||item: $0x668 00 -> 04
+9853	PICKUP||map bit 3 set||unverified: $0x668 00 -> 04 - not a purchase, no rupees moved; see testing/probe_map_window.py
 10499	PICKUP||heart container 4||heart_container: containers 3 -> 4
 10751	PICKUP||Triforce piece 3 of 8||triforce: triforce 00 -> 04
 15900	PICKUP||heart container 5||heart_container: containers 4 -> 5
@@ -23,7 +23,7 @@
 83368	PICKUP||heart container 11||heart_container: containers 10 -> 11
 83728	PICKUP||Triforce piece 5 of 8||triforce: triforce 8F -> 9F
 86763	PICKUP||arrow||item: $0x659 0 -> 1
-92997	PICKUP||map for level 7||item: $0x668 04 -> 44
+92997	PICKUP||map bit 7 set||unverified: $0x668 04 -> 44 - not a purchase, no rupees moved; see testing/probe_map_window.py
 97983	PICKUP||heart container 12||heart_container: containers 11 -> 12
 98589	PICKUP||Triforce piece 7 of 8||triforce: triforce 9F -> DF
 102507	PICKUP||magical sword||item: $0x657 2 -> 3

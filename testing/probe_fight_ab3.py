@@ -1,0 +1,52 @@
+"""Old planner vs new planner on open-room fights, from run 2's states (states/run2)."""
+import os as _os, sys as _sys, pathlib as _pathlib
+_ROOT = _pathlib.Path(__file__).resolve().parent.parent
+_sys.path.insert(0, str(_ROOT))
+_os.chdir(_ROOT)          # logs/, shots/, runs/ are repo-relative
+del _os, _sys, _pathlib
+import random, sys, time
+from zelda import overworld, lookahead, runner
+from zelda.emulator import BizHawk
+from zelda.overworld import Navigator, LinkDied
+from zelda.search import Recorder
+from zelda.segments import make_lafight_policy, make_clear_grab_policy
+import fullgame as fg
+CASES = {
+    "l8_5e": ("run2/ckpt_fullgame_l8_5e", lambda nav: make_lafight_policy(nav, "Up"), lambda s: s.room == 0x4E),
+    "l6_3a_st": ("run2/ckpt_fullgame_l6_3a", fg.clear_push_stairs_policy, lambda s: s.mode == 9),
+    "l5_47_key": ("run2/ckpt_fullgame_l5_47b", lambda nav: make_clear_grab_policy(nav, "Up"), lambda s: s.room == 0x37),
+    "l5_26_key": ("run2/ckpt_fullgame_l5_27_key", lambda nav: make_clear_grab_policy(nav, "Left"), lambda s: s.room == 0x25),
+    "l6_28": ("run2/ckpt_fullgame_l6_38", lambda nav: make_lafight_policy(nav, "Up"), lambda s: s.room == 0x28),
+    "l5_rec_st": ("run2/ckpt_fullgame_l5_64", fg.clear_push_stairs_policy, lambda s: s.mode == 9),
+    "l4_00": ("run2/ckpt_fullgame_l4_10", lambda nav: make_lafight_policy(nav, "Up"), lambda s: s.room == 0x00),
+    "l1_72_key": ("run2/ckpt_fullgame_l1_72", lambda nav: make_clear_grab_policy(nav, "Right"), lambda s: s.room == 0x73),
+    "r8_3f": ("run2/ckpt_fullgame_l8_3e", lambda nav: make_lafight_policy(nav, "Right"), lambda s: s.room == 0x3F),
+    "l7_39": ("run2/ckpt_fullgame_l7_49", lambda nav: make_lafight_policy(nav, "Up"), lambda s: s.room == 0x39),
+}
+seeds = int(sys.argv[1]) if len(sys.argv) > 1 else 4
+MODES = sys.argv[2].split(",") if len(sys.argv) > 2 else ["old", "new"]
+ONLY = sys.argv[3].split(",") if len(sys.argv) > 3 else None
+emu = BizHawk(log_name="probe_fight_ab3.log", clean_sram=False); nav = Navigator(emu)
+for name, (state, make, good) in CASES.items():
+    if ONLY and name not in ONLY:
+        continue
+    for mode in MODES:
+        lookahead.OLD_PLANNER[0] = (mode == "old")
+        lookahead.WALK_INTERP[0] = (mode == "interp")
+        res = []
+        t0 = time.time()
+        for seed in range(seeds):
+            s0 = emu.load(state); runner.SEG_START = s0
+            rec = Recorder(emu); rec.step((), 2); nav.blocked = {}
+            try:
+                out = make(nav)(emu, rec, random.Random(1000 + seed), 3000)
+            except LinkDied:
+                out = "died"
+            except Exception as e:
+                out = type(e).__name__
+            s = emu.state()
+            res.append((out != "died" and s.hearts > 0 and good(s), len(rec.inputs), s.hearts - s0.hearts))
+        ok = [r for r in res if r[0]]
+        print(f"{name:10s} {mode}: " + " ".join(f"{'ok' if r[0] else 'XX'}:{r[1]}/{r[2]:+.1f}" for r in res)
+              + f"   mean ok {sum(r[1] for r in ok) / max(1, len(ok)):.0f}  ({time.time() - t0:.0f}s)", flush=True)
+emu.close()
