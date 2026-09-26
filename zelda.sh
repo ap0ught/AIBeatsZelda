@@ -28,7 +28,7 @@ LOGS="${TMPDIR:-/tmp}/zelda"
 
 # name|description|frames|game time|wall|kind
 #   kind: quick = seconds, searched = foreground minutes, long = detached,
-#         tool = no emulator
+#         tool = no emulator, named = keyed by its own name
 CATALOGUE=$(cat <<'EOF'
 milestone1|Sword out of the start cave, and back out again|1,043|0:17|~5 s|quick
 milestone2|Add the overworld walk: sword, then into Level 3|2,978|0:50|~7 s|quick
@@ -37,6 +37,7 @@ verify|Replay the shipped 37:02 run and check its RAM fingerprint|136,526|37:52|
 watch|Watch the shipped run in realtime, with sound|136,526|37:52|~38 m|long
 plan|Model dungeon orders and their cost - no emulator needed|-|-|90-150 s|tool
 fullgame|Search the whole game from power-on (341 segments)|136,526|37:52|~4.5 h|long
+panel|The video's reasoning panel, on a real frame - no video|varies|varies|~2 m|named
 EOF
 )
 
@@ -61,6 +62,7 @@ EOF
         case "$kind" in
             quick|searched) key="$n" ;;
             tool)           key="p" ;;
+            named)          key="$name" ;;
             long)           key="$name" ;;
             *) echo "  !! unknown kind '$kind' for $name" >&2; return 1 ;;
         esac
@@ -78,6 +80,10 @@ usage() {
                              p = plan, watch = watch, fullgame = the long search.
    ./zelda.sh <name>         same thing by name, e.g. ./zelda.sh milestone3
    ./zelda.sh plan [secs]    let the route planner search longer (default 90)
+   ./zelda.sh panel [name] [frame ...]
+                            the reasoning panel on a real frame, rendered
+                            without video. name = a run with logs
+                            (milestone3, fullgame). default 4 frames
 
   FLAGS - pass these after the run, or set the variable
    --seconds S     watch   stop after S seconds of realtime playback
@@ -142,6 +148,7 @@ raise SystemExit(0 if fp == WANT else 1)
 ' "$@" ;;
         watch) python3 -u watch_run.py "$@" ;;
         plan)   python3 -u route_planner.py "${1:-90}" ;;
+        panel)  shift; python3 -u panel_preview.py "${1:-milestone3}" "${@:2}" ;;
         fullgame) bash run_until.sh "logs/run_until.log" "${1:-40}" "$@" ;;
         *) echo "unknown run: $name" >&2; return 2 ;;
     esac
@@ -172,7 +179,7 @@ case "${1:-}" in
         else
             echo "  cancelled."
         fi ;;
-    milestone1|milestone2|milestone3|verify|watch|plan|fullgame)
+    milestone1|milestone2|milestone3|verify|watch|plan|fullgame|panel)
         shift
         run_one "$1" "$@" ;;
     *) echo "unknown selection: ${1:-}   (try ./zelda.sh for the list)" >&2; exit 2 ;;

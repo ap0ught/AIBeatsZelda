@@ -1,0 +1,30 @@
+746	PICKUP||wooden sword||item: sword 0 -> 1
+7575	PICKUP||raft||item: $0x660 0 -> 1
+9853	PICKUP||map||item: $0x668 0 -> 4  (UNVERIFIED: not a clean flag transition)
+10499	PICKUP||heart container 4||heart_container: containers 3 -> 4
+10751	PICKUP||Triforce piece 3 of 8||triforce: triforce 00 -> 04
+15900	PICKUP||heart container 5||heart_container: containers 4 -> 5
+20290	PICKUP||candle||item: $0x65B 0 -> 1
+22435	PICKUP||white sword||item: sword 1 -> 2
+29520	PICKUP||bow||item: $0x65A 0 -> 1
+32976	PICKUP||heart container 6||heart_container: containers 5 -> 6
+33331	PICKUP||Triforce piece 1 of 8||triforce: triforce 04 -> 05
+35280	PICKUP||heart container 7||heart_container: containers 6 -> 7
+41804	PICKUP||ladder||item: $0x663 0 -> 1
+46764	PICKUP||heart container 8||heart_container: containers 7 -> 8
+47219	PICKUP||Triforce piece 4 of 8||triforce: triforce 05 -> 0D
+60647	PICKUP||heart container 9||heart_container: containers 8 -> 9
+61095	PICKUP||Triforce piece 8 of 8||triforce: triforce 0D -> 8D
+66872	PICKUP||heart container 10||heart_container: containers 9 -> 10
+67287	PICKUP||Triforce piece 2 of 8||triforce: triforce 8D -> 8F
+76045	PICKUP||whistle||item: $0x65C 0 -> 1
+83368	PICKUP||heart container 11||heart_container: containers 10 -> 11
+83728	PICKUP||Triforce piece 5 of 8||triforce: triforce 8F -> 9F
+87830	PICKUP||bait||item: $0x65D 0 -> 1
+92640	PICKUP||bait||consumed: 1 -> 0
+92997	PICKUP||map||item: $0x668 4 -> 68  (UNVERIFIED: not a clean flag transition)
+97983	PICKUP||heart container 12||heart_container: containers 11 -> 12
+98589	PICKUP||Triforce piece 7 of 8||triforce: triforce 9F -> DF
+102507	PICKUP||magical sword||item: sword 2 -> 3
+110719	PICKUP||heart container 13||heart_container: containers 12 -> 13
+111090	PICKUP||Triforce piece 6 of 8||triforce: triforce DF -> FF

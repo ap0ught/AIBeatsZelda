@@ -1,0 +1,182 @@
+[
+ {
+  "frame": 746,
+  "kind": "item",
+  "name": "wooden sword",
+  "detail": "sword 0 -> 1"
+ },
+ {
+  "frame": 7575,
+  "kind": "item",
+  "name": "raft",
+  "detail": "$0x660 0 -> 1"
+ },
+ {
+  "frame": 9853,
+  "kind": "item",
+  "name": "map",
+  "detail": "$0x668 0 -> 4  (UNVERIFIED: not a clean flag transition)"
+ },
+ {
+  "frame": 10499,
+  "kind": "heart_container",
+  "name": "heart container 4",
+  "detail": "containers 3 -> 4"
+ },
+ {
+  "frame": 10751,
+  "kind": "triforce",
+  "name": "Triforce piece 3 of 8",
+  "detail": "triforce 00 -> 04"
+ },
+ {
+  "frame": 15900,
+  "kind": "heart_container",
+  "name": "heart container 5",
+  "detail": "containers 4 -> 5"
+ },
+ {
+  "frame": 20290,
+  "kind": "item",
+  "name": "candle",
+  "detail": "$0x65B 0 -> 1"
+ },
+ {
+  "frame": 22435,
+  "kind": "item",
+  "name": "white sword",
+  "detail": "sword 1 -> 2"
+ },
+ {
+  "frame": 29520,
+  "kind": "item",
+  "name": "bow",
+  "detail": "$0x65A 0 -> 1"
+ },
+ {
+  "frame": 32976,
+  "kind": "heart_container",
+  "name": "heart container 6",
+  "detail": "containers 5 -> 6"
+ },
+ {
+  "frame": 33331,
+  "kind": "triforce",
+  "name": "Triforce piece 1 of 8",
+  "detail": "triforce 04 -> 05"
+ },
+ {
+  "frame": 35280,
+  "kind": "heart_container",
+  "name": "heart container 7",
+  "detail": "containers 6 -> 7"
+ },
+ {
+  "frame": 41804,
+  "kind": "item",
+  "name": "ladder",
+  "detail": "$0x663 0 -> 1"
+ },
+ {
+  "frame": 46764,
+  "kind": "heart_container",
+  "name": "heart container 8",
+  "detail": "containers 7 -> 8"
+ },
+ {
+  "frame": 47219,
+  "kind": "triforce",
+  "name": "Triforce piece 4 of 8",
+  "detail": "triforce 05 -> 0D"
+ },
+ {
+  "frame": 60647,
+  "kind": "heart_container",
+  "name": "heart container 9",
+  "detail": "containers 8 -> 9"
+ },
+ {
+  "frame": 61095,
+  "kind": "triforce",
+  "name": "Triforce piece 8 of 8",
+  "detail": "triforce 0D -> 8D"
+ },
+ {
+  "frame": 66872,
+  "kind": "heart_container",
+  "name": "heart container 10",
+  "detail": "containers 9 -> 10"
+ },
+ {
+  "frame": 67287,
+  "kind": "triforce",
+  "name": "Triforce piece 2 of 8",
+  "detail": "triforce 8D -> 8F"
+ },
+ {
+  "frame": 76045,
+  "kind": "item",
+  "name": "whistle",
+  "detail": "$0x65C 0 -> 1"
+ },
+ {
+  "frame": 83368,
+  "kind": "heart_container",
+  "name": "heart container 11",
+  "detail": "containers 10 -> 11"
+ },
+ {
+  "frame": 83728,
+  "kind": "triforce",
+  "name": "Triforce piece 5 of 8",
+  "detail": "triforce 8F -> 9F"
+ },
+ {
+  "frame": 87830,
+  "kind": "item",
+  "name": "bait",
+  "detail": "$0x65D 0 -> 1"
+ },
+ {
+  "frame": 92640,
+  "kind": "consumed",
+  "name": "bait",
+  "detail": "1 -> 0"
+ },
+ {
+  "frame": 92997,
+  "kind": "item",
+  "name": "map",
+  "detail": "$0x668 4 -> 68  (UNVERIFIED: not a clean flag transition)"
+ },
+ {
+  "frame": 97983,
+  "kind": "heart_container",
+  "name": "heart container 12",
+  "detail": "containers 11 -> 12"
+ },
+ {
+  "frame": 98589,
+  "kind": "triforce",
+  "name": "Triforce piece 7 of 8",
+  "detail": "triforce 9F -> DF"
+ },
+ {
+  "frame": 102507,
+  "kind": "item",
+  "name": "magical sword",
+  "detail": "sword 2 -> 3"
+ },
+ {
+  "frame": 110719,
+  "kind": "heart_container",
+  "name": "heart container 13",
+  "detail": "containers 12 -> 13"
+ },
+ {
+  "frame": 111090,
+  "kind": "triforce",
+  "name": "Triforce piece 6 of 8",
+  "detail": "triforce DF -> FF"
+ }
+]
