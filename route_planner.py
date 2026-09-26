@@ -153,17 +153,18 @@ def evaluate(seq, L, explain: bool = False):
     at = "start"
     done = set()
     rupees, hearts, sword = 0, 3, 1
-    healed = False
     candle = arrows = bait = recorder = raft = ladder = bow = bombs = bracelet = False
     levels = set()
     lines = []
     if len(set(seq)) != len(seq):
         raise Infeasible("an errand twice")
     for e in seq:
+        heal_now = e in HEAL
         variant = "ladder" if ladder else "raft" if raft else "base"
         tab = L[variant]
+        frm = WALK_ALIAS.get(at, at)
         to = WALK_ALIAS.get(e, e)
-        walk = tab.get(at, {}).get(to)
+        walk = tab.get(frm, {}).get(to)
         best, how = (walk, "walk") if walk is not None else (None, None)
         if recorder:
             for lvl in levels - {9}:
@@ -175,7 +176,7 @@ def evaluate(seq, L, explain: bool = False):
                 for wb in WARPS:
                     if wa == wb:
                         continue
-                    a1, b1 = tab.get(at, {}).get(wa), tab.get(wb, {}).get(to)
+                    a1, b1 = tab.get(frm, {}).get(wa), tab.get(wb, {}).get(to)
                     if a1 is not None and b1 is not None and (best is None or a1 + WARP + b1 < best):
                         best, how = a1 + WARP + b1, f"{wa[5:]}>{wb[5:]}"
         if best is None:
@@ -239,7 +240,6 @@ def evaluate(seq, L, explain: bool = False):
             hearts += 1
             cost = HEART_CAVE if e != "h_5F" else 60
         elif e in HEAL:
-            healed = True
             cost = FAIRY_STOP
         if e in NEEDS_CANDLE and not candle:
             raise Infeasible(f"{e} needs a candle")
@@ -252,8 +252,8 @@ def evaluate(seq, L, explain: bool = False):
         t += best + cost
         if explain:
             lines.append(f"   {e:10s} {how:12s} leg {best:6.0f}  errand {cost:6.0f}   t={t / 3606:5.2f} min  "
-                         f"hearts {hearts} rupees {rupees} sword {sword} heal {'yes' if healed else 'no'}")
-        at = to
+                         f"hearts {hearts} rupees {rupees} sword {sword} heal_now {'yes' if heal_now else 'no'}")
+        at = e
     if 9 not in levels:
         raise Infeasible("no Level 9")
     return (t, lines) if explain else t
