@@ -47,6 +47,7 @@ class DropScoringTests(unittest.TestCase):
         self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, 1), (0x00, 0x68 / 256.0))
         self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 0), (0x0F, 1.0))
         self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 1), (0x00, 1.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 2), (0x00, 1.0))
 
     def test_predicted_drop_path_adds_future_monster_drop(self):
         drops = []
