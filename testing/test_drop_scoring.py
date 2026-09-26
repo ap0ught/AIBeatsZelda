@@ -39,32 +39,42 @@ class DropScoringTests(unittest.TestCase):
                            drop_want(0x0F, self.full, self.emu, rupee_target=10))
 
     def test_predicted_monster_drop_uses_cycle_and_forced_rules(self):
-        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 0), 0x00)
-        self.assertEqual(predicted_monster_drop(0x24, 5, 0, 0), 0x00)
-        self.assertEqual(predicted_monster_drop(0x24, 7, 0, 0), 0x00)
-        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 15), 0x23)
-        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 25), 0x23)
-        self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, False), 0x0F)
-        self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, True), 0x00)
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 0), (0x00, 0x68 / 256.0))
+        self.assertEqual(predicted_monster_drop(0x24, 5, 0, 0), (0x00, 0x68 / 256.0))
+        self.assertEqual(predicted_monster_drop(0x24, 7, 0, 0), (0x00, 0x68 / 256.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 15), (0x23, 1.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 0, 25), (0x00, 0x68 / 256.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 9, 0, 1), (0x00, 0x68 / 256.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 0), (0x0F, 1.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 1), (0x00, 1.0))
+        self.assertEqual(predicted_monster_drop(0x24, 0, 10, 0, 2), (0x00, 1.0))
 
     def test_predicted_drop_path_adds_future_monster_drop(self):
         drops = []
-        dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1)], [], cycle=0)
+        weights = []
+        dead = add_predicted_drops(drops, [(3, 0x24, 88, 120, 1)], [], cycle=0, drop_weights=weights)
         self.assertEqual(len(dead), 1)
         self.assertEqual(drops, [(0x00, 88, 120)])
+        self.assertEqual(weights, [0x68 / 256.0])
 
     def test_predicted_drop_path_preserves_carried_item(self):
         drops = []
-        dead = add_predicted_drops(drops, [(1, 0x2A, 96, 120, 1)], [], item0=(0x19, 96, 120), item_carriers={1})
+        weights = []
+        dead = add_predicted_drops(drops, [(1, 0x2A, 96, 120, 1)], [], item0=(0x19, 96, 120), item_carriers={1},
+                                   drop_weights=weights)
         self.assertEqual(len(dead), 1)
         self.assertEqual(drops, [(0x19, 96, 120)])
+        self.assertEqual(weights, [1.0])
 
     def test_predicted_drop_path_adds_room_clear_item(self):
         drops = []
-        dead = add_predicted_drops(drops, [(4, 0x30, 104, 136, 1)], [], clear_item=0x19, clear_ready=True, cycle=3)
+        weights = []
+        dead = add_predicted_drops(drops, [(4, 0x30, 104, 136, 1)], [], clear_item=0x19, clear_ready=True, cycle=3,
+                                   drop_weights=weights)
         self.assertEqual(len(dead), 1)
         self.assertIn((0x19, 104, 136), drops)
         self.assertEqual(len(drops), 1)
+        self.assertEqual(weights, [1.0])
 
     def test_predicted_drop_path_skips_multi_kill_guessing(self):
         drops = []
