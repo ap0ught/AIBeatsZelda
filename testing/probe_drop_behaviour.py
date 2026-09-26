@@ -198,24 +198,29 @@ def report(kills, drops, nframes, elapsed, inputs) -> int:
     print(f"  {len(kills)} kills, {len(drops)} drop objects "
           f"({len(drops) / max(1, len(kills)) * 100:.1f}% of kills)\n")
 
-    # pair each drop with the nearest preceding kill
+    # Pair each drop with the nearest preceding kill - but only when that is unambiguous.
+    # With 697 kills and 90 drops in a run where several monsters often die within a few
+    # frames of each other, a "nearest kill" rule silently attributes a drop to whichever
+    # kill happened to be closest, which manufactures both false mismatches and wrong
+    # per-row denominators. A window containing exactly one kill is evidence; a window
+    # containing three is not, and is counted as such rather than guessed at.
     used = set()
-    paired, unpaired = [], []
+    paired, ambiguous, unpaired = [], 0, []
     for d in drops:
-        best = None
-        for idx, k in enumerate(kills):
-            if idx in used or k["frame"] > d["frame"] or d["frame"] - k["frame"] > PAIR_WINDOW:
-                continue
-            if best is None or k["frame"] > kills[best]["frame"]:
-                best = idx
-        if best is None:
+        window = [i for i, k in enumerate(kills)
+                  if i not in used and 0 <= d["frame"] - k["frame"] <= PAIR_WINDOW]
+        if not window:
             unpaired.append(d)
-        else:
-            used.add(best)
-            k = kills[best]
-            pred, why = predict(k["kind"], k["slot"], k["monster"], k["cycle"],
-                                k["help_count"], k["help_value"], k["kill_count"])
-            paired.append(dict(drop=d, kill=k, predicted=pred, why=why))
+            continue
+        if len(window) > 1:
+            ambiguous += 1
+            continue
+        idx = window[0]
+        used.add(idx)
+        k = kills[idx]
+        pred, why = predict(k["kind"], k["slot"], k["monster"], k["cycle"],
+                            k["help_count"], k["help_value"], k["kill_count"])
+        paired.append(dict(drop=d, kill=k, predicted=pred, why=why))
 
     tally = collections.Counter()
     mism = []
@@ -225,23 +230,37 @@ def report(kills, drops, nframes, elapsed, inputs) -> int:
         else:
             tally["MISMATCH"] += 1
             mism.append(p)
-    tally["no drop predicted"] = sum(1 for p in paired if p["predicted"] is None)
+    tally["nothing predicted"] = sum(1 for p in paired if p["predicted"] is None)
 
-    print("per-drop, table prediction vs what landed:")
+    # Write the per-event log BEFORE any of the reporting below. The first full run lost
+    # 26 of 29 mismatches and the entire event log to a formatting error in this function,
+    # because the write was last. The measurement is the expensive part; the prose is not.
+    out = Path("logs/drop_behaviour.json")
+    out.write_text(json.dumps(dict(kills=kills, drops=drops, frames=nframes,
+                                   inputs=str(inputs)), indent=1))
+
+    print("per-drop, table prediction vs what landed (unambiguous pairings only):")
     for k, v in sorted(tally.items()):
         print(f"  {k:<22} {v}")
+    if ambiguous:
+        print(f"  {'(ambiguous: >1 kill)':<22} {ambiguous}   not counted either way")
     if unpaired:
-        print(f"  {'(no kill within window)':<22} {len(unpaired)}")
+        print(f"  {'(no kill in window)':<22} {len(unpaired)}")
 
-    # The rate check: this is the cancel, and it is a separate question from the table.
+    # The rate check: the cancel, and a separate question from the table.
+    #
+    # Row 3 is "everything else", so its denominator is not a set of monster types - it is
+    # every type the game did not list, including things that are not monsters at all. A
+    # shortfall there is much weaker evidence than in rows 0-2, where the denominator is a
+    # known set of nine or six types, so it is reported and not judged.
     print("\ndrop frequency per row, against what DropItemRates implies:")
     print(f"  {'row':>4} {'kills':>7} {'drops':>6} {'observed':>9} {'implied':>8}  verdict")
     rows = collections.defaultdict(lambda: [0, 0])
     for k in kills:
-        if k["row"] >= 0 and k["kind"] == "table":
+        if k["kind"] == "table" and k["row"] >= 0:
             rows[k["row"]][0] += 1
     for p in paired:
-        if p["kill"]["row"] >= 0 and p["kill"]["kind"] == "table" and p["predicted"] is not None:
+        if p["kill"]["kind"] == "table" and p["kill"]["row"] >= 0 and p["predicted"] is not None:
             rows[p["kill"]["row"]][1] += 1
     shortfalls = 0
     for r in sorted(rows):
@@ -249,31 +268,34 @@ def report(kills, drops, nframes, elapsed, inputs) -> int:
         if not n:
             continue
         obs, imp = d / n, RATES[r] / 256
-        short = obs < imp * 0.6
-        shortfalls += short
-        print(f"  {r:>4} {n:>7} {d:>6} {obs * 100:>8.1f}% {imp * 100:>7.1f}%"
-              + ("   shortfall - cancel fires more often than the table says"
-                 if short else "   consistent"))
+        if r == 3:
+            verdict = "row 3 denominator is 'everything else' - not judged"
+        elif obs < imp * 0.6:
+            verdict = "shortfall - cancel fires more often than the table says"
+            shortfalls += 1
+        else:
+            verdict = "consistent"
+        print(f"  {r:>4} {n:>7} {d:>6} {obs * 100:>8.1f}% {imp * 100:>7.1f}%  {verdict}")
 
     if mism:
-        print(f"\n{len(mism)} MISMATCH(es) - the table itself, not the cancel:")
+        print(f"\n{len(mism)} MISMATCH(es) among unambiguous pairings - the table itself:")
         for p in mism:
             k, d = p["kill"], p["drop"]
+            want = ("nothing" if p["predicted"] is None
+                    else f"${p['predicted']:02X}")
             print(f"  f{d['frame']:>7} killed ${k['monster']:02X} (row {k['row']}, col "
-                  f"{k['cycle']}, {k['kind']}) -> predicted ${p['predicted']:02X}, "
+                  f"{k['cycle']}, {k['kind']}) -> predicted {want}, "
                   f"landed ${d['observed']:02X}")
             print(f"          {p['why']}  kill at f{k['frame']} slot {k['slot']}, "
                   f"drop in slot {d['slot']}")
     else:
-        print("\nno MISMATCH: every drop that landed is the item the table names.")
+        print("\nno MISMATCH among unambiguous pairings: every drop that landed is the "
+              "item the table names.")
 
     if shortfalls:
         print(f"\n{shortfalls} row(s) show a drop-rate shortfall. That is the random cancel, "
               f"not the table -\nsee the docstring; do not read it as a wrong table.")
 
-    out = Path("logs/drop_behaviour.json")
-    out.write_text(json.dumps(dict(kills=kills, drops=drops, frames=nframes,
-                                   inputs=str(inputs)), indent=1))
     print(f"\nper-event log: {out}")
     return 1 if mism else 0
 
