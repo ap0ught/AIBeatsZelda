@@ -321,6 +321,7 @@ def add_predicted_drops(drops: list[tuple[int, int, int]], tlist, ens, *, item0=
     t_ = dead[0]
     if clear_item is not None and clear_ready:
         drops.append((clear_item, t_[2], t_[3]))
+        return dead
     kind = item0[0] if item0 is not None and t_[0] in item_carriers else predicted_monster_drop(
         t_[1], cycle, help_count, world_count, bomb_kill)
     if kind is not None:

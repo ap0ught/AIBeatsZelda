@@ -63,6 +63,7 @@ class DropScoringTests(unittest.TestCase):
         dead = add_predicted_drops(drops, [(4, 0x30, 104, 136, 1)], [], clear_item=0x19, clear_ready=True, cycle=3)
         self.assertEqual(len(dead), 1)
         self.assertIn((0x19, 104, 136), drops)
+        self.assertEqual(len(drops), 1)
 
     def test_predicted_drop_path_skips_multi_kill_guessing(self):
         drops = []
