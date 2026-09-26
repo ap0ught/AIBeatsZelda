@@ -11,13 +11,27 @@ the result produces a number indistinguishable, in the output, from a measuremen
 These tests pin the two properties that make that impossible to repeat:
 
 1. **The fairy nodes have real legs.** PR #7 pointed `fairy_42`'s lookup at L7's
-   door to avoid rebuilding the leg table, so it charged the walk to a screen the
-   errand is not at. The nodes are in `P` now, so `build_legs()` gives them real
-   distances, and the test asserts `fairy_42` is not priced like L7.
+   door to avoid rebuilding the leg table. I reviewed that as charging the walk to
+   the wrong screen and **was wrong** - `fairy_42` and L7 are the same place, both
+   `(0x42, 112, 157)`, so the alias was numerically exact. The test records that
+   coincidence, so it is not mistaken for a bug if anyone ever separates the two.
+
+   The alias is gone anyway, for a reason that is not about the number: it held only
+   while two entries in `P` stayed coincident, and it concealed a stale cache. So the
+   test here is about the general hazard rather than these two nodes - every place in
+   `P` must have a row in the cached leg table, or the cache is stale and the cost is
+   whatever the table happens to say.
 
 2. **A healing stop raises `Unpriceable` until both halves are measured.** Not
    `Infeasible` - that is swallowed a hundred times a search and would hide a missing
    measurement behind silent rejections - and not a number.
+
+The break-even is worth stating, because it is computable without the model and is
+what issue #11 has to beat: 4,994 frames per heart for `fairy_2C` (3.6 hearts at the
+1,403 average) and **396 for `fairy_42`, which costs no walk at all** (0.28 hearts).
+`fairy_42` is very likely worth taking opportunistically and `fairy_2C` very likely
+is not - so "both stops are a net loss" is not a finding, it is one conclusion
+mechanically applied to two stops that are not comparable.
 
 Deliberately absent: a test that zeroes the legs and asserts the delta equals a cost
 constant. That shape is what PR #7 had, and it certifies the omission as correct
