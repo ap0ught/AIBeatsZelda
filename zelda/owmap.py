@@ -11,8 +11,10 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
+from .emulator import ROM
+
 HARNESS = Path(__file__).resolve().parent.parent
-ROM_PATH = HARNESS.parent / "BizHawk-2.11.1-win-x64" / "Legend of Zelda, The (USA) (Rev 1).nes"
+ROM_PATH = ROM          # resolved by zelda/emulator.py: roms/, then the BizHawk folder
 
 ITEM = {0: 'bombs', 1: 'wood sword', 2: 'white sword', 3: 'magic sword', 4: 'bait', 5: 'recorder', 6: 'blue candle',
         7: 'red candle', 8: 'arrows', 9: 'silver arrows', 0xA: 'bow', 0xB: 'magic key', 0xC: 'raft', 0xD: 'ladder',
