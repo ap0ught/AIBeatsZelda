@@ -66,5 +66,10 @@ glitches these rules forbid, and this run does not claim to beat one.
 ## Credits
 
 The AI is Claude (Anthropic), working as a coding agent. BizHawk by the TASVideos community. The memory map and the
-drop rules came from the community's disassembly of the game (link: [add]). Human record and category rules:
-speedrun.com.
+drop rules came from the community's disassembly of the game,
+[aldonunez/zelda1-disassembly](https://github.com/aldonunez/zelda1-disassembly) — `RoomLayoutsOW` and the
+overworld/dungeon table addresses in `zelda/owmap.py` and `zelda/romdata.py` are its symbols. RAM addresses come from
+[Data Crystal's ROM map](https://datacrystal.tcrf.net/wiki/The_Legend_of_Zelda/ROM_map), which is Cloudflare-gated
+for scripted access; a readable snapshot is at
+[web.archive.org](http://web.archive.org/web/20260430090853/https://datacrystal.tcrf.net/wiki/The_Legend_of_Zelda/ROM_map).
+Neither is redistributed here. Human record and category rules: speedrun.com.
