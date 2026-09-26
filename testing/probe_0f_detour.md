@@ -16,10 +16,10 @@ the same live state (no reloads between steps): 0x2D -> 0x1D -> 0x1E -> 0x1F -> 
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`vs_run3.py`](vs_run3.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
 
 ---
 

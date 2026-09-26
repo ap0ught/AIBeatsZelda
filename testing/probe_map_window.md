@@ -36,19 +36,12 @@ recorded in zelda/ram.py.
 - **drives BizHawk** - replays, searches or steps frames
 - writes `logs/`, `runs/`, `shots/`
 
-## Why this still matters
-
-Cited by production code. These comments are where the numbers came from,
-so if this script's method is wrong, the constant is wrong too:
-
-- ``zelda/pickups.py`:183` - f"no rupees moved; see testing/probe_map_window.py"))
-
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`vs_run3.py`](vs_run3.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
 
 ---
 

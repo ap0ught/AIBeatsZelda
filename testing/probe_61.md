@@ -17,10 +17,10 @@ and report where the passage really comes out.
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.py.md)
-- [`probe_cave_1a.py`](probe_cave_1a.py.md)
-- [`probe_cave_0f.py`](probe_cave_0f.py.md)
-- [`patch_water_kb.py`](patch_water_kb.py.md)
+- [`probe_cave_pay3.py`](probe_cave_pay3.md)
+- [`probe_cave_1a.py`](probe_cave_1a.md)
+- [`probe_cave_0f.py`](probe_cave_0f.md)
+- [`patch_water_kb.py`](patch_water_kb.md)
 
 ---
 

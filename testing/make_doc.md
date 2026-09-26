@@ -36,10 +36,10 @@ not regenerated, --check says so.
 
 ## See also
 
-- [`probe_seg2.py`](probe_seg2.py.md)
-- [`probe_new_seg.py`](probe_new_seg.py.md)
-- [`probe_fight_ab4.py`](probe_fight_ab4.py.md)
-- [`probe_fight_ab3.py`](probe_fight_ab3.py.md)
+- [`probe_seg2.py`](probe_seg2.md)
+- [`probe_new_seg.py`](probe_new_seg.md)
+- [`probe_map_chest.py`](probe_map_chest.md)
+- [`probe_fight_ab4.py`](probe_fight_ab4.md)
 
 ---
 

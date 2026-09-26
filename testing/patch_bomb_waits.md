@@ -18,10 +18,10 @@ among Lynels for nothing. Poll the tiles instead (the fixed count stays as the u
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`vs_run3.py`](vs_run3.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
 
 ---
 

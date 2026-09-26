@@ -17,10 +17,10 @@ room: 0 of 6 crossings). Water is passable only where water_bridges() says the l
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.py.md)
-- [`probe_cave_1a.py`](probe_cave_1a.py.md)
-- [`probe_cave_0f.py`](probe_cave_0f.py.md)
-- [`probe_61.py`](probe_61.py.md)
+- [`probe_cave_pay3.py`](probe_cave_pay3.md)
+- [`probe_cave_1a.py`](probe_cave_1a.md)
+- [`probe_cave_0f.py`](probe_cave_0f.md)
+- [`probe_61.py`](probe_61.md)
 
 ---
 

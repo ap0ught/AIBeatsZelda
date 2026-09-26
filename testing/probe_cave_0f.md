@@ -18,10 +18,10 @@ Route: from 0x1C (where the Level 2 -> hills chain lands) Up to 0x0C, then east 
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.py.md)
-- [`probe_cave_1a.py`](probe_cave_1a.py.md)
-- [`probe_61.py`](probe_61.py.md)
-- [`patch_water_kb.py`](patch_water_kb.py.md)
+- [`probe_cave_pay3.py`](probe_cave_pay3.md)
+- [`probe_cave_1a.py`](probe_cave_1a.md)
+- [`probe_61.py`](probe_61.md)
+- [`patch_water_kb.py`](patch_water_kb.md)
 
 ---
 

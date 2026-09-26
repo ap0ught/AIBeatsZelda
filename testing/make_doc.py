@@ -173,7 +173,11 @@ def render(name: str, info: dict, cites: list[tuple[str, str]],
         L.append("## See also")
         L.append("")
         for n in nbrs:
-            L.append(f"- [`{n}`]({n}.md)")
+            # The doc file is <stem>.md, so the link has to be the stem too. Linking
+            # <script>.py.md pointed at a file that was never written - every "See also"
+            # in all 180-odd docs was dead, and the repo's whole argument is that these
+            # cross-references resolve.
+            L.append(f"- [`{n}`]({n[:-3]}.md)")
         L.append("")
 
     L.append("---")

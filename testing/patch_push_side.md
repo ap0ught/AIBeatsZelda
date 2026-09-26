@@ -17,10 +17,10 @@ corridor leaves him 48 px below the stairs (the owner's suggestion, and the prob
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.py.md)
-- [`probe_cave_1a.py`](probe_cave_1a.py.md)
-- [`probe_cave_0f.py`](probe_cave_0f.py.md)
-- [`probe_61.py`](probe_61.py.md)
+- [`probe_cave_pay3.py`](probe_cave_pay3.md)
+- [`probe_cave_1a.py`](probe_cave_1a.md)
+- [`probe_cave_0f.py`](probe_cave_0f.md)
+- [`probe_61.py`](probe_61.md)
 
 ---
 

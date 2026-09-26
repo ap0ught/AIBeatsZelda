@@ -15,10 +15,10 @@ Reached the way that works: leave 0x2D upward at column 120, then right twice.
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`vs_run3.py`](vs_run3.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
 
 ---
 

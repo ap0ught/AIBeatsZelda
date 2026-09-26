@@ -25,10 +25,10 @@ usage: python probe_cave_1a.py [checkpoint]
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.py.md)
-- [`probe_cave_0f.py`](probe_cave_0f.py.md)
-- [`probe_61.py`](probe_61.py.md)
-- [`patch_water_kb.py`](patch_water_kb.py.md)
+- [`probe_cave_pay3.py`](probe_cave_pay3.md)
+- [`probe_cave_0f.py`](probe_cave_0f.md)
+- [`probe_61.py`](probe_61.md)
+- [`patch_water_kb.py`](patch_water_kb.md)
 
 ---
 

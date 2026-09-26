@@ -16,10 +16,10 @@ where he moved (net displacement), and mode changes. Frames are absolute run fra
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`vs_run3.py`](vs_run3.py.md)
-- [`still_report.py`](still_report.py.md)
-- [`smoke_test.py`](smoke_test.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`still_report.py`](still_report.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

@@ -12,10 +12,10 @@ Live run against the archived fourth run (39:15), segment by segment. usage: pyt
 
 ## See also
 
-- [`vs_run3.py`](vs_run3.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
-- [`smoke_test.py`](smoke_test.py.md)
+- [`vs_run3.py`](vs_run3.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

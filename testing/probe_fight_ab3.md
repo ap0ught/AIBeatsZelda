@@ -13,10 +13,10 @@ Old planner vs new planner on open-room fights, from run 2's states (states/run2
 
 ## See also
 
-- [`probe_seg2.py`](probe_seg2.py.md)
-- [`probe_new_seg.py`](probe_new_seg.py.md)
-- [`probe_fight_ab4.py`](probe_fight_ab4.py.md)
-- [`probe_fight_ab2.py`](probe_fight_ab2.py.md)
+- [`probe_seg2.py`](probe_seg2.md)
+- [`probe_new_seg.py`](probe_new_seg.md)
+- [`probe_map_chest.py`](probe_map_chest.md)
+- [`probe_fight_ab4.py`](probe_fight_ab4.md)
 
 ---
 

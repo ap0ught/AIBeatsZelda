@@ -13,10 +13,10 @@ Run a segment's policy from the CURRENT run's checkpoint state (states/ckpt_full
 
 ## See also
 
-- [`probe_seg2.py`](probe_seg2.py.md)
-- [`probe_fight_ab4.py`](probe_fight_ab4.py.md)
-- [`probe_fight_ab3.py`](probe_fight_ab3.py.md)
-- [`probe_fight_ab2.py`](probe_fight_ab2.py.md)
+- [`probe_seg2.py`](probe_seg2.md)
+- [`probe_map_chest.py`](probe_map_chest.md)
+- [`probe_fight_ab4.py`](probe_fight_ab4.md)
+- [`probe_fight_ab3.py`](probe_fight_ab3.md)
 
 ---
 

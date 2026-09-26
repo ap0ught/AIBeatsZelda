@@ -13,10 +13,10 @@ that differ most so far. usage: python vs_run3.py [top]
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.py.md)
-- [`trace_phases.py`](trace_phases.py.md)
-- [`still_report.py`](still_report.py.md)
-- [`smoke_test.py`](smoke_test.py.md)
+- [`vs_run4.py`](vs_run4.md)
+- [`trace_phases.py`](trace_phases.md)
+- [`still_report.py`](still_report.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

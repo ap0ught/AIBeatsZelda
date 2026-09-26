@@ -29,10 +29,10 @@ so if this script's method is wrong, the constant is wrong too:
 
 ## See also
 
-- [`probe_single_entries.py`](probe_single_entries.py.md)
-- [`probe_s9_10.py`](probe_s9_10.py.md)
-- [`probe_g9_41.py`](probe_g9_41.py.md)
-- [`probe_ending.py`](probe_ending.py.md)
+- [`probe_single_entries.py`](probe_single_entries.md)
+- [`probe_s9_10.py`](probe_s9_10.md)
+- [`probe_g9_41.py`](probe_g9_41.md)
+- [`probe_ending.py`](probe_ending.md)
 
 ---
 

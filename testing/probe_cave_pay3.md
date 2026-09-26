@@ -27,10 +27,10 @@ on the floor and walk onto it, watching $066D.
 
 ## See also
 
-- [`probe_cave_1a.py`](probe_cave_1a.py.md)
-- [`probe_cave_0f.py`](probe_cave_0f.py.md)
-- [`probe_61.py`](probe_61.py.md)
-- [`patch_water_kb.py`](patch_water_kb.py.md)
+- [`probe_cave_1a.py`](probe_cave_1a.md)
+- [`probe_cave_0f.py`](probe_cave_0f.md)
+- [`probe_61.py`](probe_61.md)
+- [`patch_water_kb.py`](patch_water_kb.md)
 
 ---
 
