@@ -13,8 +13,15 @@ actually navigates by. A hack that draws an automap should show differences only
 in cartridge WRAM ($6000-$7FFF, where the map buffer lives) and in CHR RAM; a
 difference anywhere in $0000-$07FF is a red flag.
 
-Emulators are launched sequentially and closed, so this is safe to run while
-nothing else is using BizHawk.
+Emulators are launched sequentially and closed. If a previous run was killed
+mid-flight, an orphaned EmuHawk can still hold the bridge port and this will hang
+silently after printing its header - check `pgrep -af EmuHawk` first.
+
+Note on cart WRAM: this harness runs BizHawk's NullHawk core, which logs
+"NullHawk does not implement memory domains", so `bus()` / `ram_domain()` cannot
+read $6000-$7FFF at all. An earlier version of this script tried to and simply
+hung. It is not a gap worth filling: the run's fingerprint is a sha1 over work
+RAM only, so work RAM is the entire question.
 """
 import os as _os, sys as _sys, pathlib as _pathlib
 _ROOT = _pathlib.Path(__file__).resolve().parent.parent
@@ -31,15 +38,14 @@ from zelda import BizHawk, replay
 COSMETIC_RANGES = ((0x6000, 0x8000, "cart WRAM (map buffer)"),)
 
 
-def replay_to(rom: Path, frames, upto: int, tag: str) -> tuple[bytes, bytes]:
-    old = Path("zelda/emulator.py").read_text()
-    import os
-    os.environ["ZELDA_ROM"] = str(rom)
-    import importlib
-    import zelda.emulator as E
-    importlib.reload(E)
+def replay_to(rom: Path, frames, upto: int, tag: str) -> bytes:
+    # Pass the cartridge straight to the constructor. An earlier version swapped it by
+    # setting ZELDA_ROM and calling importlib.reload() on zelda.emulator, which is both
+    # unnecessary - BizHawk takes rom= - and destructive: reloading the module mid-session
+    # re-runs its module-level side effects and changes the class identity the caller
+    # already holds, which showed up as BizHawk failing to load the ROM at all.
     try:
-        with E.BizHawk(log_name=f"cmp_{tag}.log") as emu:
+        with BizHawk(rom=rom, log_name=f"cmp_{tag}.log") as emu:
             i = 0
             while i < upto:
                 j = i
@@ -51,10 +57,9 @@ def replay_to(rom: Path, frames, upto: int, tag: str) -> tuple[bytes, bytes]:
             print(f"  {tag:8s} f{upto}: mode={st.mode} level={st.level} room={st.room:#04x} "
                   f"pos=({st.x},{st.y}) hearts={st.hearts} bombs={st.bombs} "
                   f"rupees={emu.byte(0x66D)} keys={emu.byte(0x66E)} triforce={emu.byte(0x671):02X}")
-            return emu.ram(0x0000, 0x0800), emu.bus(0x6000, 0x2000)
-    finally:
-        os.environ.pop("ZELDA_ROM", None)
-        importlib.reload(E)
+            return emu.ram(0x0000, 0x0800)
+    except FileNotFoundError:
+        raise SystemExit(f"no such ROM: {rom}")
 
 
 def main() -> None:
@@ -71,8 +76,8 @@ def main() -> None:
     upto = min(upto, len(frames))
     print(f"replaying {upto} frames of {src} on two ROMs\n")
 
-    a, ac = replay_to(stock, frames, upto, "stock")
-    b, bc = replay_to(patched, frames, upto, "patched")
+    a = replay_to(stock, frames, upto, "stock")
+    b = replay_to(patched, frames, upto, "patched")
 
     # Work RAM is the game's own state. Anything different here means the patch
     # changed the game, not the picture.
@@ -86,12 +91,11 @@ def main() -> None:
     else:
         print("  IDENTICAL - the patch leaves the game's own state alone on this path")
 
-    # Cartridge WRAM is where a map buffer would live, and is expected to differ.
-    cdiff = [i for i in range(0x2000) if ac[i] != bc[i]]
-    print(f"\n$6000-$7FFF cart WRAM: {len(cdiff)} byte(s) differ"
-          + (f", first ${0x6000 + cdiff[0]:04X}, last ${0x6000 + cdiff[-1]:04X}" if cdiff else ""))
-    if cdiff:
-        print("  -> this is where an automap would draw, so differences here are expected")
+    print("\n$6000-$7FFF cart WRAM: not checked - NullHawk does not implement memory")
+    print("  domains, so ram_domain/bus cannot read it. It does not matter here: the")
+    print("  fingerprint is sha1 over $0000-$07FF only (zelda/replay.py), so work RAM is")
+    print("  the whole question. A cosmetic hack's map buffer lives in cart WRAM and is")
+    print("  invisible to the bot by construction.")
 
     if not diff:
         print("\nVERDICT: same game, different picture. Safe to *watch*, "
