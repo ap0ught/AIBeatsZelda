@@ -6,6 +6,7 @@ Writes video/<name>_overlay.mp4
 """
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 import textwrap
@@ -16,7 +17,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 HARNESS = Path(__file__).resolve().parent
 LOGS, VIDEO = HARNESS / "logs", HARNESS / "video"
-FONTS = Path(r"C:\Windows\Fonts")
+# Consolas ships with Windows. On anything else, fall back to a monospace face
+# that is actually installed, and finally to PIL's built-in bitmap font - the
+# panel is legible either way, and a missing font should not stop the render.
+FONTS = Path(os.environ.get("ZELDA_FONTS", r"C:\Windows\Fonts"))
+FONT_FALLBACKS = ("consola.ttf", "consolab.ttf",
+                  "/usr/share/fonts/TTF/DejaVuSansMono.ttf",
+                  "/usr/share/fonts/TTF/LiberationMono-Regular.ttf",
+                  "/usr/share/fonts/dejavu/DejaVuSansMono.ttf")
 
 W, H = 1280, 720
 SCALE = 3
@@ -41,8 +49,22 @@ MODES = {0x00: "TITLE", 0x01: "FILE SELECT", 0x02: "TRANSITION", 0x03: "SCREEN W
          0x0E: "REGISTER", 0x0F: "ELIMINATION", 0x10: "STAIRS IN"}
 
 
-def font(name: str, size: int) -> ImageFont.FreeTypeFont:
-    return ImageFont.truetype(str(FONTS / name), size)
+def font(name: str, size: int) -> ImageFont.ImageFont:
+    """Load `name` from the font dir, or the first installed monospace face.
+
+    Consolas is a Windows font; a hard truetype() on it made this module fail at
+    import on Linux, before any of the drawing code ran.
+    """
+    try:
+        return ImageFont.truetype(str(FONTS / name), size)
+    except OSError:
+        pass
+    for cand in FONT_FALLBACKS:
+        try:
+            return ImageFont.truetype(cand, size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
 
 
 F_TITLE = font("consolab.ttf", 22)
@@ -60,10 +82,15 @@ def load_logs(name: str):
         fr, _, txt = l.partition("\t")
         events.append((int(fr), txt))
     trace = {}
-    for l in (LOGS / f"{name}.trace.txt").read_text().splitlines():
-        fr, btn, state = l.split("\t")
-        kv = {k: int(v) for k, _, v in (t.partition("=") for t in state.split())}
-        trace[int(fr)] = kv
+    # A run that was not recorded has no trace: save_inputs() writes inputs and
+    # events, only save_session() writes the trace. Treat that as empty rather
+    # than dying, so a preview can still render from inputs + events + live RAM.
+    trace_path = LOGS / f"{name}.trace.txt"
+    if trace_path.exists():
+        for l in trace_path.read_text().splitlines():
+            fr, btn, state = l.split("\t")
+            kv = {k: int(v) for k, _, v in (t.partition("=") for t in state.split())}
+            trace[int(fr)] = kv
     return inputs, events, trace
 
 

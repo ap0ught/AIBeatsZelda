@@ -928,4 +928,14 @@ CAPTIONS: dict[str, tuple[str, str]] = {'start': ('POWER ON',
  'p7b_54': ('TO LEVEL 7', 'South one more screen.'),
  'p7b_53': ('TO LEVEL 7', 'West along the row south of the pond.'),
  'p7b_52': ('TO LEVEL 7', 'Into the split canyon on its TOP row - the only part of it that leads north to the pond.'),
- 'p7b_42': ('THE POND', 'North onto the pond screen. The recorder drains it.')}
+ 'p7b_42': ('THE POND', 'North onto the pond screen. The recorder drains it.'),
+ # milestone3 uses its own names for the boss room and the ending, so they needed
+ # captions of their own; without these they fell through intent.py's last resort
+ # and the run's finale was captioned "CROSSING - getting to the next room that
+ # matters", which is a poor thing to say about the last frame of a playthrough.
+ '4d_boss': ('BOSS: MANHANDLA, FIVE FACES',
+             'Each face has to be hit once, and it only hurts after the face is down - so the fight is five '
+             'separate problems, not one. This is the first boss in the game.'),
+ 'finish': ('THE TRIFORCE PIECE',
+            'The first of eight. The old man takes his ladder payment and the piece is Link\'s - {tri1} of eight '
+            'held, {containers} heart containers, {rupees} rupees.') }

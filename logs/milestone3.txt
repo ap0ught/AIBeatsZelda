@@ -1,16 +1,17 @@
-4 scout emulator(s) searching alongside MAIN
+2 scout emulator(s) searching alongside MAIN
+  attempt 1: success 204 frames, hearts 3.0
   attempt 2: success 193 frames, hearts 3.0
   attempt 12: success 192 frames, hearts 3.0
-  (early stop after 24 attempts)
-[ow_76] 192 frames, hearts 3.0 -> main: f1235 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=198 ok=True (14s)
-  attempt 4: success 180 frames, hearts 3.0
+  (early stop after 25 attempts)
+[ow_76] 192 frames, hearts 3.0 -> main: f1235 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=198 ok=True (11s)
   attempt 2: success 172 frames, hearts 3.0
   attempt 12: success 171 frames, hearts 3.0
-  (early stop after 23 attempts)
-[ow_66] 171 frames, hearts 3.0 -> main: f1406 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=250 ok=True (17s)
+  (early stop after 25 attempts)
+[ow_66] 171 frames, hearts 3.0 -> main: f1406 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=250 ok=True (14s)
+  attempt 1: success 299 frames, hearts 3.0
   attempt 2: success 287 frames, hearts 3.0
-  (early stop after 15 attempts)
-[ow_65] 287 frames, hearts 3.0 -> main: f1693 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=321 ok=True (20s)
+  (early stop after 16 attempts)
+[ow_65] 287 frames, hearts 3.0 -> main: f1693 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=321 ok=True (19s)
   attempt 1: success 371 frames, hearts 3.0
   attempt 4: success 367 frames, hearts 3.0
   attempt 7: success 362 frames, hearts 3.0
@@ -18,95 +19,92 @@
 [ow_64] 362 frames, hearts 3.0 -> main: f2055 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=392 ok=True (27s)
   attempt 2: success 302 frames, hearts 3.0
   (early stop after 15 attempts)
-[ow_63] 302 frames, hearts 3.0 -> main: f2357 mode=05/00 L0 room=63 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=463 ok=True (33s)
+[ow_63] 302 frames, hearts 3.0 -> main: f2357 mode=05/00 L0 room=63 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=463 ok=True (34s)
   attempt 2: success 167 frames, hearts 3.0
   attempt 12: success 166 frames, hearts 3.0
-  (early stop after 24 attempts)
-[ow_73] 166 frames, hearts 3.0 -> main: f2523 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=0 sword=1 lag=513 ok=True (36s)
-  attempt 1: success 188 frames, hearts 3.0
+  (early stop after 26 attempts)
+[ow_73] 166 frames, hearts 3.0 -> main: f2523 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=0 sword=1 lag=513 ok=True (37s)
   attempt 2: success 180 frames, hearts 3.0
   attempt 12: success 179 frames, hearts 3.0
   (early stop after 25 attempts)
-[ow_74] 179 frames, hearts 3.0 -> main: f2702 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=0 sword=1 lag=584 ok=True (39s)
+[ow_74] 179 frames, hearts 3.0 -> main: f2702 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=0 sword=1 lag=584 ok=True (40s)
   attempt 2: success 304 frames, hearts 3.0
   (early stop after 15 attempts)
-inside Level 3 at frame 3006, hearts 3.0 (42s)
-[enter_L3] 304 frames, hearts 3.0 -> main: f3006 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=603 ok=True (42s)
-  attempt 4: success 330 frames, hearts 3.0
+inside Level 3 at frame 3006, hearts 3.0 (44s)
+[enter_L3] 304 frames, hearts 3.0 -> main: f3006 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=603 ok=True (44s)
   attempt 2: success 322 frames, hearts 3.0
-  (early stop after 16 attempts)
-[7c_left] 322 frames, hearts 3.0 -> main: f3328 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=739 ok=True (46s)
+  (early stop after 15 attempts)
+[7c_left] 322 frames, hearts 3.0 -> main: f3328 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=739 ok=True (47s)
   attempt 2: success 377 frames, hearts 3.0
   attempt 5: success 297 frames, hearts 3.0
   attempt 10: success 292 frames, hearts 3.0
-  (early stop after 23 attempts)
-[7b_key] 292 frames, hearts 3.0 -> main: f3620 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=836 ok=True (51s)
+  (early stop after 24 attempts)
+[7b_key] 292 frames, hearts 3.0 -> main: f3620 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=836 ok=True (53s)
   attempt 2: success 305 frames, hearts 3.0
   attempt 12: success 304 frames, hearts 3.0
-  (early stop after 23 attempts)
-[6b_up] 304 frames, hearts 3.0 -> main: f3924 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=933 ok=True (71s)
+  (early stop after 25 attempts)
+[6b_up] 304 frames, hearts 3.0 -> main: f3924 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=933 ok=True (78s)
   attempt 2: success 2382 frames, hearts 3.0
   attempt 16: success 2338 frames, hearts 3.0
   attempt 29: success 1789 frames, hearts 3.0
-  (early stop after 71 attempts)
-[5b_bombs] 1789 frames, hearts 3.0 -> main: f5713 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1030 ok=True (156s)
+  (early stop after 73 attempts)
+[5b_bombs] 1789 frames, hearts 3.0 -> main: f5713 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1030 ok=True (205s)
   attempt 2: success 331 frames, hearts 3.0
   attempt 12: success 330 frames, hearts 3.0
-  (early stop after 24 attempts)
-[4b_left] 330 frames, hearts 3.0 -> main: f6043 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1166 ok=True (162s)
-  attempt 4: success 1043 frames, hearts 2.5
-  attempt 3: success 1036 frames, hearts 2.5
-  attempt 2: success 1034 frames, hearts 2.5
+  (early stop after 25 attempts)
+[4b_left] 330 frames, hearts 3.0 -> main: f6043 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1166 ok=True (215s)
   attempt 1: success 1033 frames, hearts 2.5
-  attempt 8: success 1031 frames, hearts 2.5
   attempt 13: success 989 frames, hearts 3.0
   attempt 40: success 988 frames, hearts 3.0
-[4a_bombs] 988 frames, hearts 3.0 -> main: f7031 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1302 ok=True (187s)
+[4a_bombs] 988 frames, hearts 3.0 -> main: f7031 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1302 ok=True (262s)
+  attempt 2: success 299 frames, hearts 3.0
   attempt 4: success 297 frames, hearts 3.0
   attempt 5: success 278 frames, hearts 3.0
   attempt 10: success 275 frames, hearts 3.0
-  (early stop after 25 attempts)
-[49_key] 275 frames, hearts 3.0 -> main: f7306 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395 ok=True (191s)
+  (early stop after 24 attempts)
+[49_key] 275 frames, hearts 3.0 -> main: f7306 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395 ok=True (267s)
   attempt 1: success 870 frames, hearts 3.0
   attempt 5: success 864 frames, hearts 3.0
   attempt 12: success 860 frames, hearts 3.0
   attempt 13: success 845 frames, hearts 3.0
-[59_fight] 845 frames, hearts 3.0 -> main: f8151 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=3.0/3 rup=6 sword=1 lag=1488 ok=True (368s)
+[59_fight] 845 frames, hearts 3.0 -> main: f8151 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=3.0/3 rup=6 sword=1 lag=1488 ok=True (554s)
   attempt 2: success 161 frames, hearts 3.0
   (early stop after 15 attempts)
-[69_stairs] 161 frames, hearts 3.0 -> main: f8312 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=1510 ok=True (391s)
+[69_stairs] 161 frames, hearts 3.0 -> main: f8312 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=3.0/3 rup=6 sword=1 lag=1510 ok=True (589s)
   attempt 2: success 916 frames, hearts 2.5
   attempt 20: success 915 frames, hearts 2.5
-[cellar] 915 frames, hearts 2.5 -> main: f9227 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=2.5/3 rup=6 sword=1 lag=1515 ok=True (477s)
-  attempt 3: success 248 frames, hearts 2.5
+[cellar] 915 frames, hearts 2.5 -> main: f9227 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=2.5/3 rup=6 sword=1 lag=1515 ok=True (721s)
+  attempt 1: success 248 frames, hearts 2.5
   attempt 2: success 241 frames, hearts 2.5
   (early stop after 16 attempts)
-[69_up] 241 frames, hearts 2.5 -> main: f9468 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=2.5/3 rup=6 sword=1 lag=1618 ok=True (487s)
+[69_up] 241 frames, hearts 2.5 -> main: f9468 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=2.5/3 rup=6 sword=1 lag=1618 ok=True (736s)
   attempt 2: success 241 frames, hearts 2.5
   attempt 12: success 240 frames, hearts 2.5
   (early stop after 25 attempts)
-[59_up] 240 frames, hearts 2.5 -> main: f9708 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=2.5/3 rup=6 sword=1 lag=1715 ok=True (490s)
+[59_up] 240 frames, hearts 2.5 -> main: f9708 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=2.5/3 rup=6 sword=1 lag=1715 ok=True (740s)
+  attempt 1: success 328 frames, hearts 2.5
   attempt 2: success 325 frames, hearts 2.5
   attempt 7: success 320 frames, hearts 2.5
-  (early stop after 19 attempts)
-[49_right] 320 frames, hearts 2.5 -> main: f10028 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=1851 ok=True (497s)
+  (early stop after 20 attempts)
+[49_right] 320 frames, hearts 2.5 -> main: f10028 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=1851 ok=True (752s)
   attempt 2: success 361 frames, hearts 2.5
   (early stop after 15 attempts)
-[4a_right] 361 frames, hearts 2.5 -> main: f10389 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=1987 ok=True (500s)
+[4a_right] 361 frames, hearts 2.5 -> main: f10389 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=1987 ok=True (756s)
+  attempt 1: success 452 frames, hearts 2.5
   attempt 2: success 440 frames, hearts 2.5
-  (early stop after 15 attempts)
-[4b_right] 440 frames, hearts 2.5 -> main: f10829 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=2123 ok=True (509s)
+  (early stop after 16 attempts)
+[4b_right] 440 frames, hearts 2.5 -> main: f10829 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=2123 ok=True (768s)
   attempt 2: success 495 frames, hearts 2.5
   attempt 10: success 460 frames, hearts 2.5
   (early stop after 23 attempts)
-[4c_bomb] 460 frames, hearts 2.5 -> main: f11289 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=2259 ok=True (517s)
+[4c_bomb] 460 frames, hearts 2.5 -> main: f11289 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=2.5/3 rup=6 sword=1 lag=2259 ok=True (778s)
   attempt 3: success 206 frames, hearts 2.5
   attempt 5: success 162 frames, hearts 2.5
-  (early stop after 17 attempts)
-[4d_boss] 162 frames, hearts 2.5 -> main: f11451 mode=05/00 L3 room=4d pos=(96,101) dir=8 hp=2.5/3 rup=6 sword=1 lag=2265 ok=True (525s)
-  attempt 2: success 740 frames, hearts 4.0
-[finish] 740 frames, hearts 4.0 -> main: f12191 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=6 sword=1 lag=2371 ok=True (529s)
-run finished in 531s wall
+  (early stop after 19 attempts)
+[4d_boss] 162 frames, hearts 2.5 -> main: f11451 mode=05/00 L3 room=4d pos=(96,101) dir=8 hp=2.5/3 rup=6 sword=1 lag=2265 ok=True (791s)
+  attempt 1: success 740 frames, hearts 4.0
+[finish] 740 frames, hearts 4.0 -> main: f12191 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=6 sword=1 lag=2371 ok=True (796s)
+run finished in 797s wall
 final state : f12191 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=6 sword=1 lag=2371  triforce flags 04  raft 1
 frames      : 12191  (202.85s of game time)
 verifying by replay from power-on in a fresh emulator...

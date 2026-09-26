@@ -23,6 +23,7 @@ from zelda.cellar import take_raft_cellar_la
 from zelda.search import parallel_search
 from zelda.boss import Manhandla, parts
 from zelda.emulator import LOGS_DIR
+from zelda import intent
 
 SCOUTS = max(1, int(os.environ.get("ZELDA_SCOUTS", "4")))
 
@@ -189,6 +190,14 @@ with BizHawk(log_name="m3_main.log", record="milestone3") as main:
             if not ok:
                 P("desync between scout and main!")
                 raise SystemExit(2)
+            # The panel line. Same shape record_run.py emits, so this run's
+            # .events.txt is directly renderable: intent.for_segment consults the
+            # fact-checked zelda/captions.py first and falls back through the
+            # structural rules, and the counts are filled from the live state
+            # rather than remembered. The overlay splits on ||.
+            head, why = intent.for_segment(name, {})
+            facts = intent.facts_from(s0)
+            main.note(f"{intent.fill(head, facts)}||{intent.fill(why, facts)}")
             (LOGS_DIR / "segments").mkdir(exist_ok=True)
             (LOGS_DIR / "segments" / f"m3_{name}.json").write_text(json.dumps(
                 {"frames": best.frames, "hearts": best.hearts, "seed": best.seed, "inputs": [",".join(b) for b in best.inputs]}))
