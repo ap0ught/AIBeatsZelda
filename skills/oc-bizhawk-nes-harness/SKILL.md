@@ -1,6 +1,6 @@
 ---
 name: oc-bizhawk-nes-harness
-description: Drive BizHawk from Linux for TAS-style automated play, replay verification, and parallel search. Covers the Mono-based linux-x64 build, building LuaSocket core.so for NLua's embedded Lua 5.4, the mandatory gtk2 dependency and its silent X11 failure, why video recording never connects, the no-yield bridge discipline that makes replays deterministic, and detaching long runs. Use when automating BizHawk, scripting a Lua bridge over TCP, verifying an input log by RAM fingerprint, or searching NES gameplay with multiple emulator instances.
+description: Drive BizHawk from Linux for TAS-style automated play, replay verification, and parallel search. Covers the Mono-based linux-x64 build, building LuaSocket core.so for NLua's embedded Lua 5.4, the mandatory gtk2 dependency and its silent X11 failure, why video recording never connects, the no-yield bridge discipline that makes replays deterministic, detaching long runs and delegating them to a subagent, and the launch-time ROM hash check that a patched cartridge in roms/ defeats. Use when automating BizHawk, scripting a Lua bridge over TCP, verifying an input log by RAM fingerprint, or searching NES gameplay with multiple emulator instances.
 license: MIT
 metadata:
   tags: bizhawk, tas, emulator, nes, mono, nl, lua, luasocket, nlua, gtk2, x11, automation, replay, determinism, search, parallel, rom, md5
@@ -204,6 +204,42 @@ Practical notes:
 - There is usually no per-instance lock on the battery-save file, so two runs at
   once will trample each other. `mkdir` as a lock is atomic and worth adding.
 
+## Long runs belong in a subagent, not in the main conversation
+
+> **Anything that drives an emulator for more than a few seconds is delegated. The main
+> session starts it detached and goes on with other work.**
+
+The costs are concrete, not stylistic. A full-game replay here is 136,526 frames at
+~1,180 f/s — about two minutes of wall clock. A search is ~4.5 hours. If the main
+conversation owns that, then every minute of it is a minute of not working: the
+alternatives are both bad. Block on it with `sleep`/`tail` and the tool call hits its
+timeout — which is precisely how the run in the next section died. Detach it and poll
+from the main session and you are re-implementing a job queue by hand, in a shell,
+while the thing you actually wanted to work on sits untouched.
+
+So: **subagent in, detached process out.** The agent's only job is to launch, poll,
+and report the result *verbatim* — the frame count, the state line, the fingerprint,
+and the MATCH/MISMATCH. It must not summarise those into a paraphrase, because the
+number is the entire deliverable and a rounded "looks good" is worth nothing.
+
+The reporting rule is the part that gets skipped and the part that matters. A
+subagent that reports "verification passed" has told you nothing you can cite; one
+that pastes
+
+```
+replayed 136526 frames -> f136526 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8.5/13
+  ram sha1 3115e31ff1a9b16e732160f81fe478a5052668ff
+  MATCH
+```
+
+has handed back evidence. Give the agent the exact command, the exact expected
+fingerprint, and the log path, and make it read the log rather than infer the
+outcome from the exit status — for this harness the exit status lies (see below).
+
+One emulator per agent unless the work is genuinely parallel. Concurrent BizHawk
+instances contend for the same bridge port file, and the second launch to find a
+held port is the one that hangs silently.
+
 ## Do not launch a long run as a background job of a waiting shell
 
 ```sh
@@ -226,8 +262,11 @@ Two adjacent self-inflicted wounds worth memorising:
 - `pkill -f "EmuHawk.exe"` **kills the shell running it**, because that shell's
   own command line contains the pattern. It presents as the emulator hanging.
 - Counting matching processes with `pgrep -f '<pattern>'` inside a command that
-  itself contains `<pattern>` returns a false positive. Use
-  `ps -eo args | grep -c '[E]muHawk.exe'`.
+  itself contains `<pattern>` returns a false positive. The bracket trick
+  (`ps -eo args | grep -c '[E]muHawk.exe'`) fixes the common case but not all of
+  it: it still matches if your own command line spells the name out somewhere else,
+  as in `echo "NO EmuHawk RUNNING"`. Match on the executable column
+  (`ps -eo pid,comm | grep -i mono`) instead, which your shell's argv cannot fake.
 
 ## Pin the ROM by hash, not by filename
 
@@ -244,13 +283,54 @@ Keep the cartridge in a gitignored `roms/` inside the project with a README that
 states the hash and why it is not optional. The path is part of the interface; the
 bytes are not, and a ROM in git history cannot be cleanly un-shipped.
 
+**Checking the hash at install time is not enough, and this is where it failed.**
+A patched ROM left sitting in `roms/` under the stock filename is a different game
+that boots, connects, plays plausibly, and then dies mid-run. On 2026-09-26 the
+Automap Plus patch was left at `roms/Legend of Zelda, The (USA) (Rev 1).nes`
+(131,090 bytes, md5 `a6d95f62…`, +2 bytes of IPS padding) over the real 131,088-byte
+`614fb308…`. The 136,526-frame "verified run" was replayed against it and reported:
+
+```
+DIED after 98204 frames (83s, 1180 f/s)
+  RuntimeError: bridge connection lost: EmuHawk exit code 0 (0x00000000)
+  reached 71.9% of the log
+```
+
+Every part of that reads as an emulator fault. `exit code 0` is BizHawk's *orderly*
+shutdown, not a crash; a patched ROM that breaks mid-run produces it, and so does a
+harness that closed the bridge itself. Meanwhile the cause was a **filename** — the
+one thing every check was reading.
+
+Two rules that would have caught it:
+
+- **Never write a patched ROM over `roms/`.** Use the `ZELDA_ROM` indirection; that
+  is what it is for. Keep patches in a scratch dir. Verify the hash again *after* the
+  risky operation, not only before it.
+- **Check the hash at launch, in the code, every time.** An install-time check in the
+  setup script cannot see a file replaced three sessions later. Warn loudly to stderr
+  *and* write the md5 into the per-run log, because the log is what a reader meets
+  weeks later. And make the verification path **refuse**: a RAM fingerprint is only
+  meaningful next to the bytes it was computed from, so comparing a replay against a
+  known-good fingerprint on an unverified cartridge produces a number that is
+  confidently meaningless. Keep an explicit override (`ZELDA_ALLOW_UNVERIFIED_ROM=1`)
+  for when finding the divergence *is* the task.
+
+The recovery is worth having written down too: a correct copy elsewhere
+(`rom-backup/`) turned a possible re-download into a one-line restore, and the
+restored environment was then re-proven by replaying to the same fingerprint. A
+restore you have not re-verified is a guess.
+
 ## Checklist for a new BizHawk harness
 
 1. `mono`, `gtk2`, `lua5.4` headers present.
 2. Download the `linux-x64` tarball; launch `EmuHawkMono.sh`, not `EmuHawk.exe`.
 3. Build `Lua/socket/core.so` **without** `-llua54`; place it in `Lua/socket/`.
-4. Put the ROM in `roms/`, verify the hash, keep it gitignored.
+4. Put the ROM in `roms/`, verify the hash, keep it gitignored. Re-check it at
+   launch in code, and refuse to *verify* against a cartridge that is not the
+   verified one.
 5. Bridge: block for commands, never yield. Disable sound only on the fast path.
 6. Add a recording kill switch; do not debug the ffmpeg writer.
 7. Prove determinism early: short fixed-input run, replay, compare RAM SHA-1.
 8. `setsid` for anything long. Suppress the emulator stdout, keep the input logs.
+9. Delegate anything over a few seconds to a subagent that reports the numbers
+   verbatim; the main session starts it and moves on.
