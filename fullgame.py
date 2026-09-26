@@ -567,7 +567,7 @@ def farm_dungeon_policy(nav, target, level=6):
                     except (NavError, LinkDied):
                         continue
                     emu.step = orig
-                    plan_fight(emu, rec, max_frames=1500, rng=rng)
+                    plan_fight(emu, rec, max_frames=1500, rng=rng, rupee_target=target)
                     emu.step = rec.step
                     Fighter(nav).collect_drop()
                     if emu.byte(0x66D) >= target:
