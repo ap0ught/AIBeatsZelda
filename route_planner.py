@@ -33,6 +33,7 @@ P = {
     "r30_48": (0x48, 208, 109), "r30_67": (0x67, 112, 93), "r30_71": (0x71, 80, 93),
     "h_2C": (0x2C, 144, 173), "h_2F": (0x2F, 96, 141), "h_47": (0x47, 176, 189), "h_7B": (0x7B, 144, 93),
     "h_5F": (0x5F, 192, 141),
+    "fairy_2C": (0x2C, 144, 173), "fairy_42": (0x42, 112, 157),
     "bracelet": (0x24, 224, 125),
     "warp_1D": (0x1D, 48, 157), "warp_23": (0x23, 48, 157), "warp_49": (0x49, 48, 157), "warp_79": (0x79, 128, 157),
 }
@@ -54,6 +55,7 @@ RED_CANDLE_DETOUR = 2400               # Level 7's candle cellar, only walked if
 CAVE = 750                             # a secret: open it, in, take, out
 SHOP = 820
 HEART_CAVE = 800
+FAIRY_STOP = 396
 SWORD_CAVE = {"WS": 973, "MS": 900}
 DROPS_PER_DUNGEON = 7                  # rupees picked up along the way (195 at Level 5 with 160 from caves)
 
@@ -135,7 +137,9 @@ def legs() -> dict:
 MONEY = {"r100_0F": 100, "r100_62": 100, "r100_6B": 100, "r30_13": 30, "r30_28": 30, "r30_2D": 30, "r30_3D": 30,
          "r30_48": 30, "r30_67": 30, "r30_71": 30}
 NEEDS_CANDLE = {"r100_62", "r100_6B", "r30_28", "r30_48", "h_47", "bait_46", "bait_4D"}
-NEEDS_BOMB = {"r30_13", "r30_2D", "r30_67", "r30_71", "h_2C", "h_7B", "bait_26"}
+NEEDS_BOMB = {"r30_13", "r30_2D", "r30_67", "r30_71", "h_2C", "h_7B", "bait_26", "fairy_2C"}
+HEAL = {"fairy_2C", "fairy_42"}
+WALK_ALIAS = {"fairy_2C": "h_2C", "fairy_42": "L7"}      # keeps cached legs usable until rebuilt
 PRICE = {"candle": 60, "arrows": 80, "bait_34": 60, "bait_26": 100, "bait_46": 100, "bait_4D": 100}
 
 
@@ -149,6 +153,7 @@ def evaluate(seq, L, explain: bool = False):
     at = "start"
     done = set()
     rupees, hearts, sword = 0, 3, 1
+    healed = False
     candle = arrows = bait = recorder = raft = ladder = bow = bombs = bracelet = False
     levels = set()
     lines = []
@@ -157,11 +162,12 @@ def evaluate(seq, L, explain: bool = False):
     for e in seq:
         variant = "ladder" if ladder else "raft" if raft else "base"
         tab = L[variant]
-        walk = tab.get(at, {}).get(e)
+        to = WALK_ALIAS.get(e, e)
+        walk = tab.get(at, {}).get(to)
         best, how = (walk, "walk") if walk is not None else (None, None)
         if recorder:
             for lvl in levels - {9}:
-                w = tab.get(f"wind{lvl}", {}).get(e)
+                w = tab.get(f"wind{lvl}", {}).get(to)
                 if w is not None and (best is None or WHIRL + w < best):
                     best, how = WHIRL + w, f"wind to L{lvl}"
         if bracelet:
@@ -169,7 +175,7 @@ def evaluate(seq, L, explain: bool = False):
                 for wb in WARPS:
                     if wa == wb:
                         continue
-                    a1, b1 = tab.get(at, {}).get(wa), tab.get(wb, {}).get(e)
+                    a1, b1 = tab.get(at, {}).get(wa), tab.get(wb, {}).get(to)
                     if a1 is not None and b1 is not None and (best is None or a1 + WARP + b1 < best):
                         best, how = a1 + WARP + b1, f"{wa[5:]}>{wb[5:]}"
         if best is None:
@@ -232,6 +238,9 @@ def evaluate(seq, L, explain: bool = False):
         elif e.startswith("h_"):
             hearts += 1
             cost = HEART_CAVE if e != "h_5F" else 60
+        elif e in HEAL:
+            healed = True
+            cost = FAIRY_STOP
         if e in NEEDS_CANDLE and not candle:
             raise Infeasible(f"{e} needs a candle")
         if e in NEEDS_BOMB and not bombs:
@@ -243,8 +252,8 @@ def evaluate(seq, L, explain: bool = False):
         t += best + cost
         if explain:
             lines.append(f"   {e:10s} {how:12s} leg {best:6.0f}  errand {cost:6.0f}   t={t / 3606:5.2f} min  "
-                         f"hearts {hearts} rupees {rupees} sword {sword}")
-        at = e
+                         f"hearts {hearts} rupees {rupees} sword {sword} heal {'yes' if healed else 'no'}")
+        at = to
     if 9 not in levels:
         raise Infeasible("no Level 9")
     return (t, lines) if explain else t
