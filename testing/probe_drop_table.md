@@ -62,6 +62,14 @@ table - see FORCED below and issue #6, which carries each one with its address.
 
 - writes `logs/`, `shots/`
 
+## Why this still matters
+
+Cited by production code. These comments are where the numbers came from,
+so if this script's method is wrong, the constant is wrong too:
+
+- ``zelda/drops.py`:40` - listing) is `probe_drop_table.py`, which decodes the base offsets out of the cartridge.
+- ``zelda/drops.py`:82` - # disambiguate them - only the $0A-multiple base offsets do. probe_drop_table.py checks that
+
 ## See also
 
 - [`vs_run4.py`](vs_run4.py.md)

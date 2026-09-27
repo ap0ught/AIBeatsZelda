@@ -38,6 +38,12 @@ BOMB_TARGET = [6]             # plan_fight works the ten-kill forced drop for bo
 # the way out. So the term as written rewards a position the planner has no reason to want.
 # Calibrating it needs a target; one room says the sign is wrong, not what the right size is.
 FUTURE_DROP = [False]
+# A second variant, for the sweep to compare against. The regression is most likely the
+# corpse problem: a mid-fight body is worth nothing, and only the LAST kill's position
+# persists into the decision about where the fight ends. Gating on `n1 == 0` keeps the term
+# only for the kill that finishes the room, which is the one the issue is actually about.
+# Three arms in testing/probe_future_drop_sweep.py: stub (before), all kills, last kill only.
+FUTURE_DROP_LASTKILL_ONLY = [False]
 
 # What a key and a rupee are worth, per pixel of travel. These replace a heart-deficit
 # `want` that valued a key at 1.2 - less than a third of a bomb - while the same file
@@ -623,7 +629,9 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             # not in the post-move ens has died, which is the same inference the bomb-streak
             # branch below already draws; the count check keeps a filtered-out enemy (types=,
             # ignore=) from reading as a phantom kill.
-            if FUTURE_DROP[0] and n1 < n0:
+            want_future_drop = (FUTURE_DROP[0] and n1 < n0
+                                 and not (FUTURE_DROP_LASTKILL_ONLY[0] and n1 > 0))
+            if want_future_drop:
                 still_alive = {e[0] for e in ens}
                 for t_ in tlist:
                     if t_[0] in still_alive:

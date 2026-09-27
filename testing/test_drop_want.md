@@ -32,7 +32,11 @@ test that pins a number pins a decision; a test that pins a relationship pins a 
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``zelda/lookahead.py`:64` - a floor item is decided here, in one place, and `testing/test_drop_want.py` checks them
+- ``zelda/lookahead.py`:78` - a floor item is decided here, in one place, and `testing/test_drop_want.py` checks them
+
+## See also
+
+- [`probe_future_drop_ab.py`](probe_future_drop_ab.py.md)
 
 ---
 
