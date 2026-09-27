@@ -8,13 +8,23 @@ primary/secondary square tables at $1697C) and is validated against every screen
 from __future__ import annotations
 
 import json
-from functools import lru_cache
 from pathlib import Path
 
-from .emulator import ROM
+from . import profile as _profile
 
 HARNESS = Path(__file__).resolve().parent.parent
-ROM_PATH = ROM          # resolved by zelda/emulator.py: roms/, then the BizHawk folder
+
+
+def ROM_PATH() -> Path:
+    """Which cartridge, resolved per call.
+
+    This used to be a module-level `ROM_PATH = ROM`, captured at import time, which meant a
+    `ZELDA_ROM` set after `import zelda.owmap` was silently ignored - the module had
+    already read the environment and stored the answer. It is a function now so that a
+    two-cartridge workflow in one process cannot serve the wrong geometry; see
+    zelda/profile.py and issue #9.
+    """
+    return _profile.selected_path()
 
 ITEM = {0: 'bombs', 1: 'wood sword', 2: 'white sword', 3: 'magic sword', 4: 'bait', 5: 'recorder', 6: 'blue candle',
         7: 'red candle', 8: 'arrows', 9: 'silver arrows', 0xA: 'bow', 0xB: 'magic key', 0xC: 'raft', 0xD: 'ladder',
@@ -31,20 +41,28 @@ CLOSED = {0x26: (0xC8, 0xC9, 0xCA, 0xCB), 0x27: (0xD8, 0xD9, 0xDA, 0xDB), 0x28: 
           0x29: (0xBC, 0xBD, 0xBE, 0xBF)}
 
 
-@lru_cache(maxsize=1)
 def _prg() -> bytes:
-    return ROM_PATH.read_bytes()[16:]
+    """PRG bytes for the currently selected cartridge.
+
+    This was `@lru_cache(maxsize=1)`, and `maxsize=1` is a cache *size*, not a cache key:
+    it cannot express "a different cartridge", so swapping the ROM left the first
+    cartridge's bytes in place and a second cartridge in the same process decoded against
+    the first one's geometry. The profile keys the bytes on md5 instead, which is the
+    property that was actually being relied on.
+    """
+    return _profile.prg()
 
 
 def _tables():
     prg = _prg()
-    lb = 0x18400
+    lb = _profile.active().geometry.ow_effects
     return [prg[lb + k * 0x80: lb + (k + 1) * 0x80] for k in range(6)]
 
 
 def _column(desc: int) -> list[int]:
     prg = _prg()
-    col_dir = [0x14000 + ((prg[0x19D0F + 2 * k] | prg[0x19D10 + 2 * k] << 8) - 0x8000) for k in range(16)]
+    cd = _profile.active().geometry.ow_col_dir
+    col_dir = [0x14000 + ((prg[cd + 2 * k] | prg[cd + 1 + 2 * k] << 8) - 0x8000) for k in range(16)]
     base, idx = col_dir[desc >> 4], desc & 0x0F
     p = base - 1
     while True:
@@ -65,26 +83,29 @@ def _column(desc: int) -> list[int]:
     return sq
 
 
-@lru_cache(maxsize=None)
+@_profile.keyed_cache
 def squares(room: int) -> tuple:
     """16 columns x 11 square codes (16 px squares) for an overworld screen."""
     prg = _prg()
     uid = _tables()[3][room] & 0x7F
-    cols = prg[0x15418 + uid * 16: 0x15418 + uid * 16 + 16]
+    base = _profile.active().geometry.ow_layouts
+    cols = prg[base + uid * 16: base + uid * 16 + 16]
     return tuple(tuple(_column(c)) for c in cols)
 
 
 def _square_tiles(s: int) -> list[int]:
     prg = _prg()
-    prim = prg[0x16970 + 12: 0x16970 + 12 + 0x38]
-    sec = prg[0x16970 + 12 + 0x38: 0x16970 + 12 + 0x38 + 64]
+    g = _profile.active().geometry
+    at = g.ow_squares + g.ow_squares_skip
+    prim = prg[at: at + 0x38]
+    sec = prg[at + 0x38: at + 0x38 + 64]
     if s >= 0x10:
         p = prim[s]
         return [p, p + 1, p + 2, p + 3]          # TL, BL, TR, BR
     return list(sec[s * 4: s * 4 + 4])
 
 
-@lru_cache(maxsize=None)
+@_profile.keyed_cache
 def cells(room: int) -> tuple:
     """cells[row][col] of 8 px tile ids, as read_cells() would return on that screen (secrets still closed)."""
     g = [[0] * 32 for _ in range(22)]
@@ -106,7 +127,8 @@ def info(room: int, quest: int = 1) -> dict:
     q = f[room] >> 6                                  # 0 both quests, 1 first only, 2 second only
     cave = b[room] >> 2
     out = {"room": room, "cave": None, "kind": None, "wares": [], "secret": None, "armos_item_x": None}
-    armos = dict(zip(prg[0x10CB2:0x10CB9], prg[0x10CB9:0x10CC0]))
+    a = _profile.active().geometry.armos
+    armos = dict(zip(prg[a:a + 7], prg[a + 7:a + 14]))
     if room in armos:
         out["armos_item_x"] = armos[room]
     if q not in (0, quest):

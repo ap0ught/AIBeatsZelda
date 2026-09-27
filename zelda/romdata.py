@@ -8,26 +8,27 @@ Floor item id 0x00 is bombs; special 0x07 means the item appears only once the r
 """
 from __future__ import annotations
 
-from .emulator import ROM
+from . import profile as _profile
 
 DOOR = {0: "open", 1: "wall", 2: "door2", 3: "door3", 4: "bombable", 5: "locked", 6: "door6", 7: "shutter"}
 ITEMS = {0x00: "bombs", 0x16: "compass", 0x17: "map", 0x19: "key", 0x1A: "heart container", 0x1B: "triforce",
          0x03: "none", 0x0C: "raft", 0x0D: "ladder", 0x21: "clock", 0x22: "heart"}
 
-_rom = None
-
-
 def rom() -> bytes:
-    global _rom
-    if _rom is None:
-        _rom = ROM.read_bytes()
-    return _rom
+    """Cartridge bytes for the currently selected cartridge.
+
+    This was a bare module global `_rom`, assigned once and never invalidated, keyed on
+    nothing. It is now the profile's md5-keyed cache, so a second cartridge in the same
+    process gets its own bytes and neither can serve the other's. See issue #9.
+    """
+    return _profile.rom_bytes()
 
 
 def room_info(level: int, room: int) -> dict:
-    base = 0x18700 if level <= 6 else 0x18700 + 0x300   # levels 7-9 tables follow (offset from the ROM map)
+    g = _profile.active().geometry
+    base = g.room_tables if level <= 6 else g.room_tables_l7_9   # levels 7-9 tables follow
     r = rom()
-    h = 16
+    h = _profile.HEADER
     ns = r[h + base + room]
     ew = r[h + base + 0x80 + room]
     mon = r[h + base + 0x100 + room]
