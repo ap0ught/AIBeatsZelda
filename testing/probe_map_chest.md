@@ -93,6 +93,7 @@ so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/pickups.py`:105` - # Measured, per-frame, not inferred: testing/probe_map_chest.py.
 - ``zelda/pickups.py`:231` - f"not a purchase; see testing/probe_map_chest.py"))
+- ``pickup_scan.py`:54` - # dungeon, testing/probe_map_chest.py), taking the count from 30 to 32. The path stays
 
 ## See also
 
