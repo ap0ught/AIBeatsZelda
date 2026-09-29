@@ -314,6 +314,24 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 outcome = "timeout: " + str(e)[:40]
             except (OSError, ValueError, KeyError, IndexError) as e:
                 outcome = f"error: {type(e).__name__}: {str(e)[:40]}"     # one bad attempt, not a dead scout
+            except RuntimeError as e:
+                # The bridge died mid-attempt - "bridge connection lost ... EmuHawk exit code 0" is
+                # the common one on Linux, where a scout emulator occasionally just goes. This is the
+                # emulator, not the policy, so the attempt is a loss and the thread must live on:
+                # letting it out of here killed the whole worker, and a dead worker does not just lose
+                # its own share, it takes its slice of the phase window with it (search.ENTER_SPREAD
+                # divides 0-90 by the CONFIGURED scout count, so a thread that dies leaves its quarter
+                # permanently unsampled and the coverage - the entire point of the split - silently
+                # degrades). Three scouts died this way in one afternoon before this was caught by
+                # watching the process list rather than the log.
+                #
+                # The emulator underneath is gone, so this worker stops rather than looping on a dead
+                # socket. st["dead"] lets the caller see that the search is running short-handed
+                # instead of quietly searching with fewer quarters than it thinks it has.
+                with lock:
+                    st["dead"] = st.get("dead", 0) + 1
+                log(f"  scout {k} lost its emulator ({str(e)[:60]}); that worker is done")
+                return
             s = emu.state()
             try:
                 ok = outcome != "died" and not str(outcome).startswith("error:") and success(emu, s)
@@ -381,6 +399,13 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
     for th in threads:
         th.join()
     best = st["best"]
+    dead = st.get("dead", 0)
+    if dead:
+        # Say so on the same line as the result, because this is the failure that does not announce
+        # itself: a search that lost two of four workers still reports a time and a result, and the
+        # coverage it actually had is smaller than the one it planned for.
+        log(f"  {dead} of {len(scouts)} scouts lost their emulator mid-search; "
+            f"the remaining {len(scouts) - dead} covered the phase window between them")
     if best is None and fails:
         top = sorted(fails.items(), key=lambda kv: -kv[1])[:4]
         log("  no success; most common: " + " | ".join(f"{n}x {k}" for k, n in top))
