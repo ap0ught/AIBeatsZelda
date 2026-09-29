@@ -12,7 +12,7 @@ import os
 import random
 
 from .emulator import BizHawk, State
-from .overworld import read_enemies, read_room_item, immune_to, DMG_SWORD
+from .overworld import (read_enemies, read_room_item, immune_to, DMG_SWORD, read_ghost_objects)
 
 DIRS4 = ("Up", "Down", "Left", "Right")
 OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
