@@ -194,6 +194,24 @@ HEARTS_FREE = [False]
 # rest of the room in a bad place.
 EXTRA_VALUE = [None]
 
+# Bosses whose pattern runs off the frame counter, so WHICH PHASE an attempt starts in decides the
+# fight. Set per-segment by the runner; 0 means "every scout rolls its own entry", which is right for
+# an ordinary room and wrong here.
+#
+# The owner's observation, watching four scouts grind on Gleeok: "I would rather the scouts be more
+# experimental. Instead of all 4 of them doing the same thing." They were not doing the same thing
+# exactly - gleeok_policy already rolls a 0-90 frame entry per attempt - but they were all sampling
+# the SAME 90 frames, and the code's own note records the failure that comes from it:
+#
+#     four diagnostics with an 8-frame spread came back byte-for-byte identical
+#
+# A boss keyed to the frame counter has a small number of genuinely distinct fights in it. Four
+# independent draws from 0-90 mostly re-roll the same corner of it, because the corners are not
+# equally likely to be interesting. So when this is set, scout k enters in its own SLICE of the
+# spread and the four of them cover the whole window with no overlap: that is coverage rather than
+# sampling, and coverage is what a phase-locked fight needs.
+ENTER_SPREAD = [0]
+
 
 BOMB_VALUE = [220]             # frames one more bomb in hand is worth to the ranking (a wall bombed saves 500+)
 BOMB_CAP = [8]                 # ...up to this many
@@ -271,7 +289,15 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             s_start = emu.load(state_name)
             st.setdefault("b0", s_start.bombs)
             rec = Recorder(emu)
-            if SETTLE[0]:
+            # Boss phase coverage: scout k gets slice k of the entry window rather than a free draw
+            # from all of it, so K scouts cover K distinct quarters of the cycle with no overlap.
+            # Outside a boss this is the old behaviour, one settle value for everybody.
+            spread = ENTER_SPREAD[0]
+            if spread:
+                lo = spread * (k % max(1, len(scouts))) // max(1, len(scouts))
+                hi = spread * (k % max(1, len(scouts)) + 1) // max(1, len(scouts))
+                rec.step((), lo + rng.randint(0, max(0, hi - lo - 1)))
+            elif SETTLE[0]:
                 rec.step((), SETTLE[0])
             if setup:
                 setup(rec, nav)

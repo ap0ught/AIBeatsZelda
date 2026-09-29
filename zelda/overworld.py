@@ -175,6 +175,44 @@ def read_enemies(emu: BizHawk) -> list[tuple[int, int, int, int, int]]:
     return [(i, ts[i], xs[i], ys[i], hp[i]) for i in range(1, 12) if ts[i] and ts[i] < 0x60]
 
 
+def damage_mask(emu: BizHawk) -> list[int]:
+    """Per-slot damage-type immunity, ObjInvincibilityMask ($4B2), one byte per object slot.
+
+    Every weapon writes a damage TYPE into [09] rather than a damage amount, and the game asks
+    whether the target is immune to that type before subtracting anything:
+
+        ; If the monster is invincible to it, then play the parry sound.
+        LDA ObjInvincibilityMask, X
+        AND $09
+        BNE ...
+
+    Types, from the four call sites that set [09]: sword 1, boomerang 2, arrow 4, bomb 8, fire $20.
+    A mask of $FE therefore means "hurt by nothing except the sword" - and that is exactly what every
+    Gleeok neck segment carries, from InitGleeok:
+
+        ; Invincible to everything but the sword.
+        LDA #$FE
+        STA ObjInvincibilityMask+1, X
+
+    Which is why a bomb cannot beat a dragon. The head is 10 HP and a bomb is 4 damage, so the arithmetic
+    looks fine for three bombs - but the neck is six more segments at 10 HP each, all sword-only, and
+    none of them are separate objects (their object type is 0) so read_enemies does not even return
+    them. The harness had no way to see this: it read HP, type, x and y, and never read the mask.
+    """
+    return list(emu.ram(0x4B2, 12))
+
+
+# A mask bit per damage type, so `mask & type` is the game's own "is this a parry" test.
+DMG_SWORD, DMG_BOOMERANG, DMG_ARROW, DMG_BOMB, DMG_FIRE = 0x01, 0x02, 0x04, 0x08, 0x20
+
+
+def immune_to(emu: BizHawk, slot: int, weapon: int) -> bool:
+    """Would the game parry this weapon against that object slot? True if it would."""
+    if not 0 <= slot < 12:
+        return False
+    return bool(damage_mask(emu)[slot] & weapon)
+
+
 def read_room_item(emu: BizHawk) -> tuple[int, int, int] | None:
     """(type, x, y) of the item lying in the room, if any (object slot 0x13)."""
     if emu.byte(0xBF) == 0xFF:      # item slot status: FF = nothing lying here ($AB/$83/$97 are then stale)

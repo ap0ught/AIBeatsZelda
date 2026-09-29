@@ -8,7 +8,8 @@ touching-close, lining up, and swinging. Attacking is disabled while Link stands
 from __future__ import annotations
 
 from .emulator import BizHawk, State
-from .overworld import Navigator, NavError, LinkDied, read_enemies, read_room_item, enemy_name, snap, DIRS
+from .overworld import (Navigator, NavError, LinkDied, read_enemies, read_room_item, enemy_name, snap,
+                        DIRS, immune_to, DMG_SWORD, DMG_BOMB)
 from .lookahead import UNKILLABLE, killable
 from . import ram
 
@@ -77,6 +78,11 @@ class Fighter:
         return s
 
     DARKNUTS = (0x0B, 0x0C)
+    # Targets worth approaching from the right rather than head-on. Gleeok's head (0x43) is the
+    # measured case: its hitbox is flawed on the right, so a swing from just off-centre right lands
+    # while Link stays out of the fire line. Kept as a per-type set rather than a special case in the
+    # approach, so a second boss with the same shape is one entry here and not another branch.
+    RIGHT_FLANK = {0x43}
     BEAM_IMMUNE = {0x16, 0x1E, 0x2B, 0x2C, 0x2D}   # Pols Voice, Armos, Bubbles. Darknuts: beam works from side/back
 
     # A Vire is 4 HP and it does not die - it divides. Z_04 CheckVireCollisions:
@@ -310,6 +316,20 @@ class Fighter:
                 else:
                     d = ("Down" if ddy > 0 else "Up") if ddy else ("Right" if ddx > 0 else "Left")
             else:
+                # The owner's Gleeok read, and it is worth encoding: that boss has a flawed hitbox on
+                # the right, so Link can stand slightly off-centre to the right, connect, and still be
+                # out of the line of fire. "Stand right of the thing and hit it" is a better default
+                # than "walk at the thing" for anything that shoots back, and it costs nothing when
+                # the target is harmless - so it is a tiebreak on the approach, not a rule.
+                if self.RIGHT_FLANK[e[1]]:
+                    if abs(dy) > ALIGN:
+                        s = self._move("Down" if dy > 0 else "Up", slot)
+                        frames += 1
+                        continue
+                    if dx > REACH + 8:
+                        s = self._move("Right", slot)
+                        frames += 1
+                        continue
                 if abs(dy) <= abs(dx):
                     if abs(dy) > ALIGN:
                         d = "Down" if dy > 0 else "Up"
@@ -630,8 +650,34 @@ class Fighter:
 
     FLIERS = {0x1B, 0x1C, 0x1D, 0x1A, 0x22}   # Keese, Peahat, flying Ghini: don't chase, ambush
 
+    def sword_immune(self, e) -> bool:
+        """Is this object one the game will parry a sword swing against?
+
+        ObjInvincibilityMask ($4B2) is a per-slot bitmask of the damage TYPES a target refuses. The
+        game tests `ObjInvincibilityMask, X / AND $09 / BNE parry` before it subtracts anything, and
+        the harness had never read that byte - so it was swinging at things that cannot be hit, and
+        (worse) considering them killable.
+
+        The case that motivates it: every Gleeok neck segment is $FE, "invincible to everything but
+        the sword", which reads as sword-proof at a glance and is the exact opposite. A Darknut's
+        shield is a facing test rather than a mask, so it is not caught here - but Zol, Gel and the
+        Vire's split children all do use it, and a target we cannot damage is a wall, not a kill.
+        """
+        return immune_to(self.emu, e[0], DMG_SWORD)
+
+    def bomb_immune(self, e) -> bool:
+        """Same question for a bomb. Separate because the two differ in practice: Gleeok's neck is
+        $FE (sword yes, bomb no) and that asymmetry is the whole reason a bomb cannot finish one."""
+        return immune_to(self.emu, e[0], DMG_BOMB)
+
+    def killable_by(self, e, weapon: int) -> bool:
+        """Can this weapon hurt this thing at all?"""
+        return killable(e) and not immune_to(self.emu, e[0], weapon)
+
     def _hittable(self, s: State, e):
         """Direction to swing if the enemy is in reach right now, else None."""
+        if immune_to(self.emu, e[0], DMG_SWORD):
+            return None
         dx, dy = e[2] - s.x, e[3] - s.y
         if abs(dy) <= ALIGN + 2 and -4 <= abs(dx) - 16 <= REACH:
             return "Right" if dx > 0 else "Left"

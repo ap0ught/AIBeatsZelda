@@ -12,7 +12,7 @@ import os
 import random
 
 from .emulator import BizHawk, State
-from .overworld import read_enemies, read_room_item
+from .overworld import read_enemies, read_room_item, immune_to, DMG_SWORD
 
 DIRS4 = ("Up", "Down", "Left", "Right")
 OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
@@ -321,6 +321,15 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         # each bomb branch costs a full fuse of emulation, so they are not free to consider
         tlist = targets(emu) if targets is not None else [
             e for e in read_enemies(emu) if killable(e) and e[0] not in ignore]
+        # A target the game will parry a swing at is not a target. ObjInvincibilityMask ($4B2) says
+        # which damage TYPES a slot refuses, and the game checks it before subtracting anything, so
+        # counting one of these as "HP to remove" has the planner trying to grind a number down that
+        # can never move. Price it as furniture instead: still something to walk round, but not
+        # something to keep hitting. This is what makes Gleeok's neck segments - $FE, invincible to
+        # everything but the sword - a wall rather than sixty hit points of imaginary work.
+        sword_reachable = [t for t in tlist if not immune_to(emu, t[0], DMG_SWORD)]
+        n_before = len(sword_reachable)
+        tlist = sword_reachable
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"

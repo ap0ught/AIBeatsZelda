@@ -46,6 +46,17 @@ REFILL_SOON = {"manhandla", "aquamentus", "gleeok", "dodongo", "digdogger", "goh
                "l4_heart", "l5_heart", "l6_heart", "l7_heart", "l8_heart",
                "g9_52_patra", "g9_42", "g9_ganon", "g9_power", "g9_32", "g9_zelda", "g9_credits"}
 
+# Bosses whose behaviour is keyed to the frame counter, so the fight depends on the phase the attempt
+# enters in rather than on the quality of the line. For these the four scouts divide the entry window
+# between them instead of each rolling their own (search.ENTER_SPREAD), because four independent draws
+# out of 90 frames keep landing in the same corner - the note in gleeok_policy records four attempts
+# 8 frames apart coming back byte-for-byte identical.
+#
+# This is REFILL_SOON minus the heart rooms and minus the Ganon coda: those are not phase fights, and
+# a segmented entry window there would only throw away a settle value that is doing useful work.
+PHASE_LOCKED = {"manhandla", "aquamentus", "gleeok", "dodongo", "digdogger", "gohma", "l7_aqua", "l8_gleeok"}
+PHASE_SPREAD = [90]              # frames of entry window, matching the 0-90 gleeok_policy already rolls
+
 
 class Run:
     def __init__(self, name: str, *, record: bool = False, log=print):
@@ -235,6 +246,11 @@ class Run:
         free = name in REFILL_SOON
         _search.HEARTS_FREE[0] = free
         _look.CAUTION_OVERRIDE[0] = 0.12 if free else None
+        # Phase-locked boss: the scouts divide the entry window instead of each rolling their own.
+        _search.ENTER_SPREAD[0] = PHASE_SPREAD[0] if name in PHASE_LOCKED else 0
+        if name in PHASE_LOCKED:
+            self.log(f"  {name} is a phase-locked fight: {len(self.scouts)} scouts split "
+                     f"0-{PHASE_SPREAD[0]} frames between them rather than all drawing from it")
         # Staged fights: a room of six Darknuts is six searches, one per kill, each starting from the best line
         # found for the kill before. The whole-room search was one draw of sixty; per kill it is sixty draws of
         # each part. Intermediate stages are played into MAIN untrimmed and are not checkpointed (a crash resumes
