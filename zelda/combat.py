@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from .emulator import BizHawk, State
 from .overworld import (Navigator, NavError, LinkDied, read_enemies, read_room_item, enemy_name, snap,
-                        DIRS, immune_to, DMG_SWORD, DMG_BOMB)
+                        DIRS, immune_to, DMG_SWORD, DMG_BOMB, read_ghost_objects)
 from .lookahead import UNKILLABLE, killable
 from . import ram
 
@@ -673,6 +673,15 @@ class Fighter:
     def killable_by(self, e, weapon: int) -> bool:
         """Can this weapon hurt this thing at all?"""
         return killable(e) and not immune_to(self.emu, e[0], weapon)
+
+    def ghost_report(self) -> list[tuple[int, int, int, int, int]]:
+        """Boss parts that are not monsters in the object table - Gleeok's neck, currently.
+
+        Read-only knowledge, and it is worth having for the unglamorous reason first: the planner was
+        walking through a body it could not see, because the segments have a real position and HP in
+        slots 1..6 and a type of 0, which read_enemies drops. Six 10 HP sword-only segments standing in
+        a room, invisible. Now they are at least furniture the fighter knows is there."""
+        return read_ghost_objects(self.emu)
 
     def _hittable(self, s: State, e):
         """Direction to swing if the enemy is in reach right now, else None."""

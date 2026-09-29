@@ -175,6 +175,46 @@ def read_enemies(emu: BizHawk) -> list[tuple[int, int, int, int, int]]:
     return [(i, ts[i], xs[i], ys[i], hp[i]) for i in range(1, 12) if ts[i] and ts[i] < 0x60]
 
 
+def read_ghost_objects(emu: BizHawk) -> list[tuple[int, int, int, int, int]]:
+    """(slot, x, y, hp, mask) for object slots with NO type but a live HP - i.e. the parts of a boss
+    that are not monsters in their own right.
+
+    Gleeok is the case that matters. InitGleeok writes the six neck segments into the object slots at
+    X+1 for X = 0..5, and says so in a comment:
+
+        ; Set the X of the current segment of each neck to $7C.
+        LDA #$7C
+        STA Gleeok_NeckXs0, X
+        ...
+        STA ObjX+1, X               ; I don't think this one is needed.
+
+        even though these aren't independent objects in the object slots -- because object type = 0
+
+    So each segment has a real position, a real HP ($A0) and a real damage mask ($FE, sword-only) in
+    slots 1..6, and a type of 0 - which read_enemies drops, because `if ts[i] and ts[i] < 0x60` is
+    right for everything else in the game and wrong here. The consequence was that the harness saw a
+    Gleeok as ONE 10 HP head, and had no idea six more 10 HP segments were standing in the room.
+
+    A ghost is not necessarily a target. Gleeok's neck is a wall the sword is the only key to, so
+    the fighter treats these as something to walk round and something to hit only with the sword. What
+    this buys is the planner no longer walking through a body it cannot see, and the fighter able to
+    put a sword in the right place instead of at the head it happened to be able to see.
+    """
+    ts = emu.ram(0x34F, 12)
+    xs = emu.ram(0x70, 12)
+    ys = emu.ram(0x84, 12)
+    hp = emu.ram(0x485, 12)
+    mk = emu.ram(0x4B2, 12)
+    out = []
+    for i in range(1, 12):
+        if ts[i] or not hp[i]:
+            continue                      # no type: a ghost. a type: an ordinary object, not ours to find
+        if i == 0:
+            continue
+        out.append((i, xs[i], ys[i], hp[i], mk[i]))
+    return out
+
+
 def damage_mask(emu: BizHawk) -> list[int]:
     """Per-slot damage-type immunity, ObjInvincibilityMask ($4B2), one byte per object slot.
 
