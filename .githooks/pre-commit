@@ -1,0 +1,66 @@
+#!/bin/sh
+# Generated docs must match the sources they are derived from.
+#
+# INSTALL, once per clone. Hooks are not tracked by git and cannot be
+# auto-installed, so a fresh clone has no doc check until you run:
+#
+#     git config core.hooksPath .githooks
+#
+# That is a local setting, not a committed one. Everyone who clones has to run
+# it, and nothing reminds them. If this check has to be enforced rather than
+# offered, it belongs in CI, which runs for every clone and every push with no
+# setup step.
+#
+# Runs --check, which is a CONTENT comparison. That is the whole point: a plain
+# generator run skips any doc whose mtime is newer than its inputs, and a doc
+# that was committed after its source changed looks fresh by mtime even when
+# its content is stale. testing/probe_map_chest.md was in exactly that state --
+# a plain run reported "183 up to date" and wrote nothing while the committed
+# doc was missing a provenance line that pickup_scan.py had carried since
+# 3b69f06. Only --check caught it.
+#
+# This hook is unconditional because --check is now fast: it took 2m50s until
+# neighbours() stopped re-reading every production file per script, and about
+# half a second after. Do not add a skip-if-unrelated-files gate on the theory
+# that this is slow; it is not, and a gate is a way for drift through.
+#
+# Do not "fix" this to run the plain generator. That reintroduces the bug it
+# exists to catch.
+
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "pre-commit: python3 not found, skipping doc drift check" >&2
+    exit 0
+fi
+
+if [ ! -f testing/make_doc.py ]; then
+    exit 0
+fi
+
+out=$(python3 testing/make_doc.py --check 2>&1)
+status=$?
+
+if [ $status -eq 0 ]; then
+    exit 0
+fi
+
+echo "pre-commit: generated docs are out of date" >&2
+echo "$out" >&2
+cat >&2 <<'MSG'
+
+  The .md files under testing/ are generated from the scripts themselves.
+  Regenerate with:
+
+      python3 testing/make_doc.py --force
+
+  Use --force, not a plain run. A plain run skips any doc whose mtime is newer
+  than its inputs, which is exactly the case where the committed content is
+  stale. If --check still fails after --force, the drift is real: something
+  changed in a way the generator does not capture, and the generator needs
+  updating.
+
+  To commit without the check, re-run with --no-verify and say so in the
+  commit body. Do not do it quietly.
+
+MSG
+
+exit 1
