@@ -198,6 +198,22 @@ EXTRA_VALUE = [None]
 BOMB_VALUE = [220]             # frames one more bomb in hand is worth to the ranking (a wall bombed saves 500+)
 BOMB_CAP = [8]                 # ...up to this many
 
+# Frames one heart in hand is worth to the ranking. This was 600, and 600 was wrong by a factor of
+# about three, in a way that cost a whole run.
+#
+# The White Sword screen (0x0A) has a Blue Lynel on it: two hearts a hit, and a sword beam that only
+# fires at `hearts >= containers`, i.e. at FULL health. Route 5 arrived there at 3.5/5 and found no
+# winning line at all - 0 of 40, measured by testing/probe_white_sword_effort.py. The same approach from
+# 4.5/5 succeeds about one time in sixty. The single heart that made the difference was sold by
+# segment `c0f_0f`, a plain walk across the overworld, which gave it up to save at most 600 frames.
+#
+# Ten seconds of game time is a real cost and it is not nothing - but it is a *linear* cost, and the
+# thing being bought with it is binary. One heart short of full and the next segment cannot be solved at
+# any patience, because the beam that would make it safe is gated on exactly the health just spent.
+HEART_VALUE = [1800]            # frames per heart, for the first four
+HEART_VALUE_MID = [900]         # ...and for hearts five through seven
+HEART_VALUE_TOP = [360]         # ...and above that, where a heart is genuinely just margin
+
 
 def _bomb_worth(a) -> float:
     return BOMB_VALUE[0] * min(getattr(a, "bombs", 0) or 0, BOMB_CAP[0])
@@ -209,7 +225,8 @@ def value_of(a, containers: float) -> float:
     h = a.hearts
     if HEARTS_FREE[0]:
         return -a.frames + (200 if h >= 2 else 0) + _bomb_worth(a) + a.bonus
-    v = 600 * min(h, 4) + 300 * max(0.0, min(h, 7) - 4) + 120 * max(0.0, h - 7)
+    v = (HEART_VALUE[0] * min(h, 4) + HEART_VALUE_MID[0] * max(0.0, min(h, 7) - 4)
+         + HEART_VALUE_TOP[0] * max(0.0, h - 7))
     cliff = min(4.0, max(1.5, 0.5 * containers))
     if h < cliff:
         v -= (cliff - h) * 4000

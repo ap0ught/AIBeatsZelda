@@ -1,6 +1,15 @@
+# run_until.sh shipped with 39 CRLF line endings and died on `bash run_until.sh`
+# with `syntax error near unexpected token $'do\r'`. A .sh with CRLF is not a Linux
+# shell script, and the error points at the loop, not at the line endings. Only the
+# shell rule is here because only the shell rule is fatal: 57 tracked files carry
+# CRLF, and Python and Lua both read it without complaint.
 *.sh text eol=lf
-*.lua text eol=lf
-*.py text eol=lf
-*.md text eol=lf
+
+# Listed explicitly rather than applied globally, so the two kinds of file in this
+# tree that must never be rewritten stay byte-identical: the cartridge, and the
+# BizHawk savestates and movies - a .bk2 or .State is load-bearing binary, and a
+# blanket `text` rule would eventually corrupt one of them.
+*.nes binary
 *.bk2 binary
+*.State binary
 *.png binary
