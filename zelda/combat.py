@@ -79,6 +79,91 @@ class Fighter:
     DARKNUTS = (0x0B, 0x0C)
     BEAM_IMMUNE = {0x16, 0x1E, 0x2B, 0x2C, 0x2D}   # Pols Voice, Armos, Bubbles. Darknuts: beam works from side/back
 
+    # A Vire is 4 HP and it does not die - it divides. Z_04 CheckVireCollisions:
+    #
+    #     ; If it was killed, then return.
+    #     LDA ObjMetastate, X
+    #     BNE @Exit                     <- died outright: no split
+    #     ; If temporarily invincible, then it was harmed.
+    #     ; Advance the state to split up.
+    #     LDA ObjInvincibilityTimer, X
+    #     BEQ @Exit
+    #     INC ObjState, X                <- hurt but alive: state 1, which creates two Keese
+    #
+    # The trigger is BEING HURT, not dying. So the damage table decides everything (Z_01):
+    #
+    #     SwordDamagePoints:  .BYTE $10, $20, $40      wood 1, white 2, magical 4
+    #     "Use $20 damage points for wooden arrows, and $40 for silver ones."
+    #     bomb $40, fire rod $10, boomerang $00 (stun only, 160 frames)
+    #
+    # and the Vire's own 4 HP is ObjectTypeToHpPairs[9] = $42, masked &$F0 by ExtractHitPointValue
+    # because type 0x12 is even, i.e. $40.
+    #
+    # So: kill it in ONE hit or do not touch it. A wooden or white sword swing and a wooden arrow all
+    # leave a live Vire that immediately becomes two Blue Keese - a strict loss, and the harness was
+    # doing exactly that, because 0x12 had no special case anywhere.
+    #
+    # A bomb is $40 and one-shots it, so bombs work. A Silver Arrow is $40 and one-shots it. And the
+    # boomerang deals $00 while setting a $10 stun timer, which is the only way to hold one still long
+    # enough to line up a real weapon - but note the Vire case in Z_01 @CheckZolVire: a boomerang goes
+    # straight to DealDamage, while any OTHER hit first copies the weapon's direction into the Vire.
+    VIRE = 0x12
+    KEEZE = (0x1B, 0x1C, 0x1D)          # what a split Vire leaves behind
+    # damage points by weapon, straight out of the disassembly
+    DMG_WOOD, DMG_WHITE, DMG_MAGICAL = 1, 2, 4
+    DMG_ARROW, DMG_SILVER_ARROW, DMG_BOMB, DMG_FIRE, DMG_BOOMERANG = 2, 4, 4, 1, 0
+
+    def sword_damage(self) -> int:
+        """What this sword is worth in HP, in the disassembly's own units. The beam is a sword swing."""
+        return {1: self.DMG_WOOD, 2: self.DMG_WHITE, 3: self.DMG_MAGICAL}.get(self.emu.state().sword, 0)
+
+    def vire_splittable(self) -> bool:
+        """True if the sword in hand cannot finish a Vire in one hit, so swinging would split it.
+
+        This is the whole of the Vire problem: there is no such thing as a safe partial hit, so the
+        fighter has to know before it swings rather than after."""
+        return self.sword_damage() < 4
+
+    def stun_with_boomerang(self, slot: int, max_frames: int = 1200) -> bool:
+        """Throw the boomerang at a Vire to hold it still ($10 = 160 frames) without hurting it.
+
+        The one weapon that cannot split a Vire and does no damage at all, which makes it the correct
+        first move when the sword is too weak: line the Vire up, freeze it, then hit it with something
+        that finishes it. Returns True if the Vire is stunned, False if the boomerang is not available,
+        not owned, or could not be thrown - and the caller then LEAVES THE VIRE ALONE rather than
+        splitting it, which is the whole point: an untouched Vire is a locked door, a split one is
+        two Blue Keese and the same locked door."""
+        from .bot import B_BOOMERANG, b_item, select_b_item
+        emu = self.emu
+        if b_item(emu) != B_BOOMERANG:
+            if not select_b_item(emu, emu.step, B_BOOMERANG, log=lambda *a: None):
+                return False
+        hearts0 = emu.state().hearts
+        for _ in range(6):
+            e = find_enemy(emu, slot)
+            if e is None:
+                return False
+            s = emu.state()
+            dx, dy = e[2] - s.x, e[3] - s.y
+            face = ("Right" if dx > 24 else "Left" if dx < -24 else
+                    "Down" if dy > 24 else "Up" if dy < -24 else None)
+            if face is None:
+                emu.step((), 8)                  # not lined up yet: shuffle and try again
+                continue
+            emu.step(face, 1)                    # the face press before B is load-bearing
+            emu.step("B", 1)
+            emu.step((), 30)                      # the boomerang has to actually travel
+            if emu.state().hearts < hearts0:
+                emu.note("MISTAKE: hit while trying to stun the Vire; abandoning it")
+                return False
+            e2 = find_enemy(emu, slot)
+            if e2 is None:
+                return False                     # dead rather than stunned: nothing to do next
+            if e2[4] >> 4 >= 4:
+                emu.note("VIRE: boomerang landed and it is stunned for 160 frames, unhurt")
+                return True
+        return False
+
     def _beam_ready(self, s: State) -> bool:
         """At full hearts the sword fires a beam: same damage, straight line, any range."""
         return s.hearts >= s.containers and s.containers > 0
@@ -128,8 +213,26 @@ class Fighter:
             return True
         name = enemy_name(e[1])
         darknut = e[1] in self.DARKNUTS
+        # A Vire must not be hit at all unless the hit finishes it. See the VIRE note above: the split
+        # triggers on being hurt, so a white-sword swing on a 4 HP Vire trades one enemy for two Keese
+        # and still leaves the door shut. The options are, in order: a weapon strong enough to one-shot
+        # it, a bomb ($40, same as the magical sword), the boomerang to freeze it, or nothing.
+        vire = e[1] == self.VIRE
+        if vire and self.vire_splittable():
+            # Nothing here can finish a 4 HP Vire without hurting it twice: the sword is worth 2 and a
+            # wooden arrow 2, and both leave it alive and splitting. A bomb ($40) or a Silver Arrow
+            # ($40) would one-shot it, and neither is wired into this routine yet - so the correct
+            # move with what is in hand is to not swing at all. The boomerang is tried first only
+            # because it is free: $00 damage and a $10 stun, so it cannot make the situation worse,
+            # and a frozen Vire is at least a Vire that is not currently at you.
+            emu.note(f"FIGHT: {name} at ({e[2]},{e[3]}), hp {enemy_hp(e)}: the sword is worth "
+                     f"{self.sword_damage()} of 4 and a hurt Vire splits into two Keese")
+            self.stun_with_boomerang(slot)
+            emu.note(f"LEAVING the {name} alive - the door is shut either way, and a split one is worse")
+            return False
         emu.note(f"FIGHT: {name} at ({e[2]},{e[3]}), hp {enemy_hp(e)}."
-                 + (" Shielded in front: side hits only" if darknut else f" Need a gap of {REACH}px or less"))
+                 + (" Shielded in front: side hits only" if darknut else f" Need a gap of {REACH}px or less")
+                 + (f" One-shot: {self.sword_damage()} of 4" if vire else ""))
         hearts0 = emu.state().hearts
         swings = hits = 0
         frames = 0
@@ -620,9 +723,31 @@ class Fighter:
             return s.hearts < s.containers
         if t == 0x00:                          # bombs: only below capacity (MaxBombs, $67C)
             return s.bombs < max(8, self.emu.byte(0x67C))
-        if t == 0x21:                          # clock: not worth a detour
-            return False
+        if t == 0x21:                          # clock: always worth it, see _clock_held
+            return not self._clock_held()
         return True                            # rupees, five rupees, keys
+
+    def _clock_held(self) -> bool:
+        """Is the dungeon clock in hand?
+
+        This used to be dead code dressed as a decision. The drop was thrown away at two places on the
+        stated grounds that "the clock is not worth a detour" - which is a remark about a game this is not.
+        In THIS cartridge the clock is the best item a run can get, and the disassembly says so in twenty
+        places: `InvClock` ($66C) is tested at the top of essentially every enemy update routine, and
+        the pattern is "if we have the magic clock, then don't move" (Z_04 UpdateFlyingGhini and nineteen
+        others). It is reset by ResetPlayerState, so it lasts exactly one screen.
+
+        And it is not only a freeze. Z_01 CheckLinkCollision:
+
+            ; If Link is invincible, or we have the magic clock,
+            ; or Link is stunned, or the monster is stunned; then return no collision.
+            LDA ObjInvincibilityTimer
+            ORA InvClock
+
+        So holding the clock makes Link immune to contact damage as well. For a harness that walks into
+        rooms it may not survive - the White Sword screen, a shutter room of Lynels, Gleeok - that is the
+        difference between a segment that cannot be solved and one that can be walked."""
+        return bool(self.emu.byte(0x66C))
 
     def collect_drop(self, max_frames: int = 240, max_detour: int = 120) -> bool:
         """Pick up what the fight left behind, nearest first, as long as it is worth the walk.

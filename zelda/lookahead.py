@@ -419,6 +419,14 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             dmg_w = max(dmg_w, damage_weight * BEAM_PREMIUM[0])   # the first hit costs the beam as well as the half heart
         if want_bombs and 5 <= help_n < 10:
             dmg_w *= 1.5                          # a hit resets the streak
+        if emu.byte(0x66C):
+            # Holding the dungeon clock. Z_01 CheckLinkCollision ORs InvClock into the same test as
+            # Link's invincibility timer, so contact does nothing at all while it is held, and every
+            # enemy update routine bails out at the top. Damage is not "less bad" here, it is zero:
+            # the planner is free to walk the shortest line through the room instead of paying frames
+            # to go round. Not zero-cost, though - the clock dies with the screen, so anything the
+            # fighter does has to be finished before Link leaves this room.
+            dmg_w = 0.0
         # true walking distance to the nearest strike spot, from where the enemies are NOW
         spot_field = None
         if lattice is not None and tlist:
@@ -513,9 +521,17 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
                     continue                                   # a heart is worthless at full health
                 if kind == 0x00 and s0.bombs >= max(8, emu.byte(0x67C)):
                     continue                                   # at MaxBombs it cannot be picked up
-                if kind == 0x21:
-                    continue                                   # the clock is not worth a detour
+                if kind == 0x21 and emu.byte(0x66C):
+                    continue                                   # already holding the clock; nothing to gain
+                # A clock is the best drop in the game for a harness that walks into rooms it cannot
+                # survive, and this line used to skip it. See combat.Fighter._clock_held for the
+                # disassembly: InvClock gates every enemy update routine, and ORA InvClock in
+                # CheckLinkCollision makes Link immune to contact damage for as long as it is held.
                 want = 1.2 + 1.6 * max(0.0, (s0.containers - s0.hearts)) / max(1.0, s0.containers)
+                if kind == 0x21:
+                    # Grab it BEFORE the fight, not after: it freezes the room it is picked up in, and
+                    # the pickup happens mid-fight when the kill that made it possible.
+                    want += 6.0
                 # Bombs are always worth the walk, and far more so when Link is short: Level 9
                 # stranded this run with zero bombs (the owner's rule: prioritise dropped bombs).
                 if kind == 0x00:
