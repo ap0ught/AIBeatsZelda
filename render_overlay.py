@@ -239,6 +239,25 @@ def render(name: str):
                 d.text((cx, cy), lab, font=F_SMALL, fill=DIM)
                 d.text((cx + 70, cy), val, font=F_TEXT, fill=GREEN if lab == "SWORD" and kv["sword"] else TEXT)
 
+            # Boss health. Only drawn when a boss is actually on screen, and the denominator is the
+            # peak the fight has reached rather than a table value, because a recording that starts
+            # mid-fight has no "full" left to read anywhere.
+            #
+            # This is the first thing on screen that shows what the bot thinks it is fighting, and
+            # until this existed the answer on a Gleeok screen was "10 HP", which was the head. The
+            # bar is the sum over the head and the six neck segments - 70, not 10 - and watching it
+            # not fall while the sword swings is a direct measure of whether the thing being hit is
+            # the thing being counted.
+            bhp, bmax = kv.get("bhp", 0), kv.get("bmax", 0)
+            if bmax:
+                bx, by, bw, bh = PX + 16, 412, 380, 14
+                frac = max(0.0, min(1.0, bhp / bmax))
+                d.text((bx, by - 15), "BOSS", font=F_SMALL, fill=DIM)
+                d.rounded_rectangle((bx, by, bx + bw, by + bh), radius=3, fill=(24, 28, 36), outline=(70, 80, 95))
+                if frac > 0:
+                    d.rounded_rectangle((bx, by, bx + max(3, int(bw * frac)), by + bh), radius=3, fill=(200, 70, 60))
+                d.text((bx + bw + 10, by), f"{bhp}/{bmax}", font=F_SMALL, fill=TEXT)
+
         # raw feed: one line per frame, newest at the bottom
         feed.append(f"f{k + 1:05d} {btxt[:11]:<11} m={kv.get('mode', 0):02X} r={kv.get('room', 0):02X} "
                     f"({kv.get('x', 0):3d},{kv.get('y', 0):3d}) sw={kv.get('sword', 0)} lag={kv.get('lag', 0)}")

@@ -56,11 +56,66 @@ local FIELDS = {
 local BUTTONS = {"Up","Down","Left","Right","Select","Start","B","A"}
 TRACE = false
 
+-- Boss health. ObjType $34F, ObjHP $485, both indexed by object slot (0 = Link), 12 slots.
+--
+-- A boss is "present" when a slot carries one of the boss object types, or - the awkward part - when
+-- a slot has NO type but live HP, which is what a Gleeok neck segment looks like (InitGleeok writes
+-- them with object type 0 and the comment "these aren't independent objects in the object slots").
+-- Summing both is the only way to get Gleeok's real health: head 10 plus six segments at 10 is 70,
+-- not 10.
+--
+-- BOSS_TYPES are the ones worth a bar. Bosses that are one object with no hidden parts (Dodongo,
+-- Digdogger, Manhandla) show up fine through the type path alone.
+local BOSS_TYPES = {
+  [0x32] = true,  -- Dodongo
+  [0x33] = true,  -- Gohma (red)
+  [0x34] = true,  -- Gohma (blue)
+  [0x36] = true,  -- Digdogger
+  [0x38] = true,  -- Little Digdogger
+  [0x3C] = true,  -- Manhandla
+  [0x43] = true,  -- Gleeok head
+  [0x44] = true,  -- Gleeok neck segment
+}
+
+local boss_seen = 0        -- the peak HP a boss has shown, so the bar has a denominator
+
+local function boss_hp()
+  local hp, mx = 0, 0
+  for i = 1, 11 do
+    local t = mainmemory.read_u8(0x34F + i)
+    local h = mainmemory.read_u8(0x485 + i)
+    if h > 0 and (BOSS_TYPES[t] or t == 0) then
+      hp = hp + h
+      if hp > mx then mx = hp end
+    end
+  end
+  if hp == 0 then
+    boss_seen = 0
+    return 0, 0
+  end
+  -- The peak is remembered rather than recomputed from a table, because the peak is only knowable
+  -- from having watched it: a boss that has already been half killed when the recording starts has
+  -- no "full" value left to read off anywhere.
+  if hp > boss_seen then boss_seen = hp end
+  return hp, boss_seen
+end
+
 local function state_str()
   local p = {"frame=" .. emu.framecount()}
   for _, f in ipairs(FIELDS) do
     p[#p+1] = f[1] .. "=" .. mainmemory.read_u8(f[2])
   end
+  -- Boss health, as a fraction of the whole thing rather than one object's HP, because most bosses
+  -- are more than one object. Gleeok is the case that forces it: the head is 10 HP in a normal slot,
+  -- and six neck segments are 10 HP each in slots whose object TYPE is 0 - which is why read_enemies
+  -- in the Python side never saw them, and why the whole fight was modelled as a 10 HP boss.
+  -- So: sum the HP of the live boss slots, divide by what was there when the boss appeared.
+  --
+  -- bhp/bmax are 0 when no boss is present. They are emitted for the recording trace only, so this
+  -- costs two reads a frame and does not touch the live run's stepping.
+  local bh, bm = boss_hp()
+  p[#p+1] = "bhp=" .. bh
+  p[#p+1] = "bmax=" .. bm
   p[#p+1] = "lag=" .. emu.lagcount()
   return table.concat(p, " ")
 end
