@@ -1,0 +1,6 @@
+*.sh text eol=lf
+*.lua text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.bk2 binary
+*.png binary
