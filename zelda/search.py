@@ -369,6 +369,17 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     log(f"  attempt {i+1}: success {a.frames} frames, hearts {a.hearts}")
                 else:
                     st["since"] += 1
+                # Say something about every attempt, not only the successful ones. Eleven minutes of
+                # Gleeok search produced 223 bytes of log because failures are silent, which makes a
+                # search that is working look exactly like one that is hung - the owner could not tell
+                # which was happening. One line per attempt is the difference between watching a fight
+                # and watching a machine.
+                #
+                # The fails counter above already exists and already summarises outcomes; this only
+                # prints. A second counter with a different key width would split every failure
+                # bucket in two and make that summary worse, which is the thing this is meant to help.
+                if not ok:
+                    log(f"  attempt {i+1}: {str(outcome)[:52]} ({len(rec.inputs)} frames)")
                 if best is None:
                     limit = patience * 2
                 elif HEARTS_FREE[0]:
