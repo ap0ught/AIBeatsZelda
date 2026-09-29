@@ -51,6 +51,27 @@ PATHS = {
 # Files that count as production: the code a reader would actually be reading.
 PROD_GLOBS = ("zelda/*.py", "*.py")
 
+# Production file contents, read at most once. The first version of this script
+# re-read every production file once per script, via cited_by() inside the
+# neighbours() loop -- O(scripts^2 x prod_files) reads. At 183 scripts a full
+# --check took 2m50s, which is far too slow for a pre-commit hook; people reach
+# for --no-verify instead, which is worse than no hook. Caching the reads makes
+# the check fast enough to run on every commit that touches a source file.
+_PROD_LINES: dict[str, list[str]] = {}
+
+
+def prod_lines() -> dict[str, list[str]]:
+    """Every production file's lines, read once, keyed by path string."""
+    if not _PROD_LINES:
+        for p in prod_files():
+            try:
+                _PROD_LINES[str(p)] = p.read_text(
+                    encoding="utf-8", errors="replace"
+                ).splitlines()
+            except OSError:
+                _PROD_LINES[str(p)] = []
+    return _PROD_LINES
+
 
 def prod_files() -> list[Path]:
     out = []
@@ -62,13 +83,12 @@ def prod_files() -> list[Path]:
 def cited_by(name: str, prod: list[Path]) -> list[tuple[str, str]]:
     """Production files that mention this script by name, with the citing line."""
     hits = []
+    lines = prod_lines()
     for p in prod:
-        try:
-            for i, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
-                if name in line:
-                    hits.append((f"`{p}`:{i}", line.strip()))
-        except OSError:
-            continue
+        key = str(p)
+        for i, line in enumerate(lines.get(key, []), 1):
+            if name in line:
+                hits.append((f"`{p}`:{i}", line.strip()))
     return hits
 
 
@@ -117,16 +137,29 @@ def deps_mtime(script: Path, prod: list[Path]) -> float:
     return newest
 
 
-def neighbours(name: str, allscripts: dict[str, dict], prod: list[Path]) -> list[str]:
+def all_citations(allscripts: dict[str, dict],
+                  prod: list[Path]) -> dict[str, list[tuple[str, str]]]:
+    """One pass over the cached production lines for every script.
+
+    cited_by() scans each production file for the script's own name, so the
+    naive form inside the neighbours() loop reads the whole tree once per
+    (script, other-script) pair. Doing it once up front is the difference
+    between a check you run and a check you skip.
+    """
+    return {name: cited_by(name, prod) for name in allscripts}
+
+
+def neighbours(name: str, allscripts: dict[str, dict],
+               cites: dict[str, list[tuple[str, str]]]) -> list[str]:
     mine = allscripts[name]
     mine_paths = {p for p, _ in mine["writes"]}
-    mine_cited = {c.split(":")[0].strip("`") for c, _ in cited_by(name, prod)}
+    mine_cited = {c.split(":")[0].strip("`") for c, _ in cites[name]}
     out = []
     for other, info in allscripts.items():
         if other == name:
             continue
         op = {p for p, _ in info["writes"]}
-        oc = {c.split(":")[0].strip("`") for c, _ in cited_by(other, prod)}
+        oc = {c.split(":")[0].strip("`") for c, _ in cites[other]}
         score = len(mine_paths & op) * 2 + len(mine_cited & oc)
         if score:
             out.append((score, other))
@@ -209,6 +242,8 @@ def main() -> None:
     if not scripts:
         raise SystemExit("no scripts found in testing/")
 
+    cites = all_citations(scripts, prod)
+
     written = drift = skipped = 0
     for name, info in sorted(scripts.items()):
         script = HERE / name
@@ -221,8 +256,8 @@ def main() -> None:
 
         src = script.read_text(encoding="utf-8", errors="replace")
         body = docstring_of(src)
-        cites = cited_by(name, prod)
-        text = render(name, info, cites, neighbours(name, scripts, prod), body)
+        mine = cites[name]
+        text = render(name, info, mine, neighbours(name, scripts, cites), body)
         if a.check:
             if not md.exists():
                 print(f"  MISSING  {md.name}")
