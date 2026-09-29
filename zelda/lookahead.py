@@ -612,10 +612,24 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
 
 
 def plan_reach(emu: BizHawk, rec, goal, *, max_frames: int = 3000, rollout: int = 12,
-               rng: random.Random | None = None, exit_ok: bool = False) -> str:
+               rng: random.Random | None = None, exit_ok: bool = False,
+               transit: bool = False) -> str:
     """Reach goal(x, y) with lookahead: score = progress toward the goal, minus damage/death.
     Used for dashes through rooms we don't want to fight (e.g. the eight-Darknut stairs room).
-    If exit_ok, a room change or mode change counts as success (walking into stairs/doors)."""
+    If exit_ok, a room change or mode change counts as success (walking into stairs/doors).
+
+    transit=True means "just run". It removes the swing from the macro list outright and stops
+    pricing a lost half heart, so the planner takes the shortest line and eats whatever is in the way.
+    That is a deliberate trade, not a better planner: on a leg whose only job is to be somewhere else,
+    half a heart is worth a few hundred frames at most and the frames are the thing being scored. The
+    owner, watching Level 4's ladder cellar, put it as "while he is leaving the room he is still
+    fighting, he should just be running" - and the reason it was fighting is right here: `all_macros`
+    offers ("swing", d) whenever anything killable is within 36 px, and a swing that connects reads as
+    progress, so a room the bot is only passing through turns into a fight it did not need. Damage is
+    priced at 800 per half heart, which is right for a fight and wrong for a corridor.
+
+    Do not use transit where the room must be CLEARED - a shutter door needs every enemy dead, and
+    "walk past" does not open one."""
     frames = 0
     walk_macros = [("hold", d, 8) for d in DIRS4] + [("wait", None, 4)]
     all_macros = walk_macros + [("swing", d, 0) for d in DIRS4]
@@ -671,12 +685,14 @@ def plan_reach(emu: BizHawk, rec, goal, *, max_frames: int = 3000, rollout: int 
                     return "arrived"
         # a swing is only worth considering with something killable in reach; offered always, it is
         # what Link does when a wall piece blocks every hold - stand there and cut the air
-        if OLD_PLANNER[0]:
+        if transit:
+            macros = walk_macros           # just run: never offer the swing
+        elif OLD_PLANNER[0]:
             macros = all_macros
         else:
             close = any(killable(e) and max(abs(e[2] - s0.x), abs(e[3] - s0.y)) <= 36 for e in read_enemies(emu))
             macros = all_macros if close else walk_macros
-        dmg_scale = caution(s0)
+        dmg_scale = 0.0 if transit else caution(s0)
         root = emu.msave()
         n_before = len([e for e in read_enemies(emu) if e[1] != 0x49 and e[1] < 0x50])
         results = []

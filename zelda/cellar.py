@@ -108,7 +108,13 @@ def take_cellar_item_la(emu: BizHawk, rec, flag_addr: int, rng=None, log=None) -
     emu.note("Cellar: down the left ladder, along the floor, up the right ladder, take the item, and back")
 
     def leg(goal, exit_ok=False, frames=1200):
-        return plan_reach(emu, rec, goal, max_frames=frames, rng=rng, exit_ok=exit_ok)
+        # transit=True, and this is the whole reason. A cellar is a corridor with an item at the end
+        # of it: nothing here has to be cleared, the exit is open, and the only job is to be at the
+        # other end holding the ladder. Offered a swing whenever anything killable came within 36 px,
+        # plan_reach used to stop and fight - which is what the owner was watching happen in Level 4's
+        # ladder cellar, on the way out. The swing also reads as progress, so it wins rollouts even
+        # at 800 points per half heart. Here the item is the objective and the Keese are scenery.
+        return plan_reach(emu, rec, goal, max_frames=frames, rng=rng, exit_ok=exit_ok, transit=True)
 
     def square_up(x):
         # A ladder only takes Link when he is exactly on its column. A goal tolerance of 4 px left him
