@@ -297,11 +297,25 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
     lattice = None if OLD_PLANNER[0] else Lattice(emu)
 
     def measure():
-        """(total hp, count) of what we are trying to kill."""
+        """(total hp, count) of what we are trying to kill.
+
+        The ghosts count, and it matters more than it looks. For Gleeok the explicit tracker sees one
+        head, so the measure was 10 HP while the fight was 70, and the cutoff fired the moment the
+        head died - at which point gleeok_dead, which checks $034D and every slot from 1 to 7, was
+        still False. The planner declared the room finished inside its own budget and the segment
+        scored it a failure. A budget measured against a tenth of the boss is a budget that ends
+        early, and an attempt that ends early looks exactly like one that ran out of room.
+        """
         if targets is None:
-            return enemy_hp_total(emu, types, ignore)
-        ts = targets(emu)
-        return sum(t[4] >> 4 for t in ts), len(ts)
+            total, n = enemy_hp_total(emu, types, ignore)
+        else:
+            ts = targets(emu)
+            total, n = sum(t[4] >> 4 for t in ts), len(ts)
+        for g in read_ghost_objects(emu):
+            if not immune_to(emu, g[0], DMG_SWORD):
+                total += g[3] >> 4
+                n += 1
+        return total, n
 
     def finished():
         if done is not None:
@@ -333,13 +347,26 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         # each bomb branch costs a full fuse of emulation, so they are not free to consider
         tlist = targets(emu) if targets is not None else [
             e for e in read_enemies(emu) if killable(e) and e[0] not in ignore]
+        # Gleeok's neck, added whichever way tlist was built. This was originally only in the
+        # read_enemies branch, which meant it silently did nothing for the one fight it was written
+        # for: gleeok_policy passes targets=gleeok_head_tracker(emu), so tlist came from the tracker
+        # and the six segments - 60 of the boss's 70 hit points - were never in the room. A 490-frame
+        # attempt came out of the other three fixes, and it still could not finish the fight, and the
+        # neck being unreachable is the most likely reason why.
+        #
+        # The tracker locks onto one head deliberately (its own docstring: re-picking every frame
+        # makes the target flicker and the planner loses its sense of progress). That reasoning is
+        # about the HEAD, and it still holds - so the head stays the lock-on target and the neck is
+        # added as what it is: something to walk through on the way, and something the sword can
+        # reach. Segments already dead are excluded, so the count falls as the fight goes on.
+        ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+        ghost_targets = [(g[0], 0x43, g[1], g[2], g[3]) for g in ghosts]
         # A target the game will parry a swing at is not a target. ObjInvincibilityMask ($4B2) says
         # which damage TYPES a slot refuses, and the game checks it before subtracting anything, so
         # counting one of these as "HP to remove" has the planner trying to grind a number down that
         # can never move. Price it as furniture instead: still something to walk round, but not
         # something to keep hitting.
-        sword_reachable = [t for t in tlist if not immune_to(emu, t[0], DMG_SWORD)]
-        # ...and now the other half, which is the half that matters for a dragon. Gleeok's six neck
+        # ...and the other half, which is the half that matters for a dragon. Gleeok's six neck
         # segments have real positions and real HP in slots 1..6 with an object type of 0, so they are
         # absent from read_enemies and the planner has been swinging at a 10 HP head in a room holding
         # sixty more hit points of boss. The mask on those segments is $FE - hurt by the sword and
@@ -348,8 +375,7 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         #
         # Added after the immunity filter, not before: a ghost that happens to be sword-immune is still
         # a wall, and putting it in the list first would just have the filter throw it away again.
-        ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
-        tlist = sword_reachable + [(g[0], 0x43, g[1], g[2], g[3]) for g in ghosts]
+        tlist = [t for t in tlist if not immune_to(emu, t[0], DMG_SWORD)] + ghost_targets
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
