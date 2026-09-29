@@ -12,7 +12,7 @@ import os
 import random
 
 from .emulator import BizHawk, State
-from .overworld import (read_enemies, read_room_item, immune_to, DMG_SWORD, read_ghost_objects)
+from .overworld import (read_enemies, read_room_item, immune_to, DMG_SWORD, DMG_BOMB, read_ghost_objects)
 
 DIRS4 = ("Up", "Down", "Left", "Right")
 OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
@@ -350,7 +350,6 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         # a wall, and putting it in the list first would just have the filter throw it away again.
         ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
         tlist = sword_reachable + [(g[0], 0x43, g[1], g[2], g[3]) for g in ghosts]
-        n_before = len(tlist)
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
@@ -395,8 +394,17 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             # when they are the point (a boss that ignores the sword) or when one blast can take a
             # whole cluster, and even then they carry a cost in the scoring below.
             cluster = 0
-            for t in tlist:
-                near_t = sum(1 for u in tlist if max(abs(u[2] - t[2]), abs(u[3] - t[3])) <= 24)
+            # A cluster only counts if a bomb could ACTUALLY hit it. That qualification was not here
+            # until ghosts entered tlist, and it is not a detail: Gleeok's six neck segments are
+            # stacked 5 px apart (GleeokSegmentYs: $6F,$74,$79,$7E,$83,$88), so counting all targets
+            # makes the neck look like a six-body cluster - and its mask is $FE, sword-only. The gate
+            # opened, the planner started throwing bombs at a body that cannot be hurt, and those bombs
+            # are what Level 8's door and Level 5's two walls are going to need later.
+            #
+            # The owner caught it by watching: "I see bomb useage." Count only what the bomb reaches.
+            bombable = [t for t in tlist if not immune_to(emu, t[0], DMG_BOMB)]
+            for t in bombable:
+                near_t = sum(1 for u in bombable if max(abs(u[2] - t[2]), abs(u[3] - t[3])) <= 24)
                 cluster = max(cluster, near_t)
             # Level 9 is entered once now, with no shop trip in the middle, and its route needs a bomb
             # for every one of five walls. A bomb thrown at a cluster there is a wall that cannot be
