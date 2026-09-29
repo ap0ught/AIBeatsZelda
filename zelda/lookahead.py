@@ -45,8 +45,20 @@ def caution(s) -> float:
     if OLD_PLANNER[0]:
         return 1.0
     h, c = s.hearts, max(1, s.containers)
-    if CAUTION_OVERRIDE[0] is not None and h > 3.5:
-        return CAUTION_OVERRIDE[0]           # a refill is coming - but only while there is health to spend
+    if CAUTION_OVERRIDE[0] is not None:
+        # A refill is coming, and it is a FULL one - the Triforce piece restores every heart. So damage
+        # is worth nothing at ANY health, including none, and this must not be gated on having health
+        # left to spend.
+        #
+        # It used to be, with the comment "a refill is coming - but only while there is health to
+        # spend", and that is exactly backwards. "There is health to spend" is the wrong condition to
+        # look at when what is behind the boss makes the health come back regardless. The effect was
+        # that the override switched itself off at 3.5 hearts and the planner became MORE careful the
+        # lower it got - inside a fight where a lost heart costs nothing - which is the one thing the
+        # boss segment exists to stop. The owner, watching a Gleeok attempt finish at 2.5 hearts:
+        # "this is another where they can just tank it and we get all our health back in the next
+        # room. Confirm that is in the logic." It was in the logic, and it did the reverse.
+        return CAUTION_OVERRIDE[0]
     if h <= 2.0:
         return 1.5
     if h <= 3.5:
@@ -325,11 +337,20 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         # which damage TYPES a slot refuses, and the game checks it before subtracting anything, so
         # counting one of these as "HP to remove" has the planner trying to grind a number down that
         # can never move. Price it as furniture instead: still something to walk round, but not
-        # something to keep hitting. This is what makes Gleeok's neck segments - $FE, invincible to
-        # everything but the sword - a wall rather than sixty hit points of imaginary work.
+        # something to keep hitting.
         sword_reachable = [t for t in tlist if not immune_to(emu, t[0], DMG_SWORD)]
-        n_before = len(sword_reachable)
-        tlist = sword_reachable
+        # ...and now the other half, which is the half that matters for a dragon. Gleeok's six neck
+        # segments have real positions and real HP in slots 1..6 with an object type of 0, so they are
+        # absent from read_enemies and the planner has been swinging at a 10 HP head in a room holding
+        # sixty more hit points of boss. The mask on those segments is $FE - hurt by the sword and
+        # nothing else - so the sword IS the key to them, which makes them targets, not furniture.
+        # The owner's read: "step straight up to the remaining necks and mash your attack button."
+        #
+        # Added after the immunity filter, not before: a ghost that happens to be sword-immune is still
+        # a wall, and putting it in the list first would just have the filter throw it away again.
+        ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+        tlist = sword_reachable + [(g[0], 0x43, g[1], g[2], g[3]) for g in ghosts]
+        n_before = len(tlist)
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
         help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
