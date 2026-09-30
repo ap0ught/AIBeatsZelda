@@ -227,6 +227,24 @@ def gleeok_policy(nav, budget=14000):
         orig = emu.step
         emu.step = rec.step
         try:
+            # Start the fight at full health if anything in this room can manage it. The sword beam is
+            # the owner's first step for this boss - "if you have full health, stay at a distance and
+            # use your sword beams to safely damage the heads from across the room" - and _beam_ready
+            # gates on `hearts >= containers`, which is EXACTLY full. Level 4's approach routinely
+            # arrives at 5.5 of 6, and half a heart short of the beam is the difference between
+            # fighting a dragon at range and walking into unblockable fireballs with a white sword.
+            #
+            # Best effort, not a guarantee: if the only heart here is one an enemy has not dropped
+            # yet, this says so and the fight goes ahead at whatever it has. A wrong note about the
+            # state is worse than no note.
+            s0 = emu.state()
+            if s0.hearts < s0.containers:
+                from zelda.combat import Fighter
+                Fighter(Navigator(emu)).collect_drop(max_frames=200, max_detour=64)
+                s0 = emu.state()
+                emu.note(f"PRE-FIGHT: {'full' if s0.hearts >= s0.containers else 'still short'} at "
+                         f"{s0.hearts}/{s0.containers}"
+                         + ("" if s0.hearts >= s0.containers else " - no heart reachable, no sword beam"))
             # A WIDE lead-in here, unlike everywhere else. Gleeok's movement and its fireballs
             # run off the frame counter, so when an attempt starts decides which phase of the
             # boss's cycle it fights - and four diagnostics with an 8-frame spread came back

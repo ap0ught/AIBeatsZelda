@@ -383,9 +383,20 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 if best is None:
                     limit = patience * 2
                 elif HEARTS_FREE[0]:
-                    # a boss: attempts differ by a factor of two or more (Gleeok: 964 one run, 2,346 the next
-                    # after stopping at six), and with four scouts the extra attempts are cheap
-                    limit = patience * 3
+                    # A boss: the FIRST success is the win. Stop there.
+                    #
+                    # This used to be `patience * 3` - keep going, 42 more attempts, hoping for a
+                    # faster line. On Gleeok that threw away the best result the project has ever
+                    # produced: attempt 43 killed it in 490 frames, 319 faster than anything in
+                    # history, and the search then spent hours looking for something better than
+                    # "the boss is dead". The owner asked the question that exposed it: "why can't
+                    # we just take the first time we kill the boss?" Because for a boss the success
+                    # test is the kill - $034D, the room-finished flag - so there is nothing above a
+                    # success to find. A room is different: clearing it faster is a real second goal,
+                    # and that is what patience is for.
+                    st["stop"] = True
+                    log("  first kill in hand - taking it (a boss success IS the win; see HEARTS_FREE)")
+                    return
                 elif best.hearts >= min(c, st["h0"]):
                     limit = patience                 # unhurt: search on a while for a faster line
                 elif best.hearts <= max(1.0, 0.35 * c):

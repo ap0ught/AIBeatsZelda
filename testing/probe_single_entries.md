@@ -26,7 +26,7 @@ usage: python probe_single_entries.py [A B C D E] [--seeds N]
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``fullgame.py`:2771` - # 5D, and down into 6D's EAST half at x=192, the half with the burnable bush. probe_single_entries.py
+- ``fullgame.py`:2789` - # 5D, and down into 6D's EAST half at x=192, the half with the burnable bush. probe_single_entries.py
 
 ## See also
 
