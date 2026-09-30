@@ -22,7 +22,7 @@ from pathlib import Path
 from .emulator import BizHawk, State, LOGS_DIR, STATES_DIR
 from .overworld import Navigator
 from .search import random_search, parallel_search
-from . import replay, bk2
+from . import replay, bk2, head
 
 CKPT_DIR = LOGS_DIR / "checkpoints"
 
@@ -56,6 +56,11 @@ REFILL_SOON = {"manhandla", "aquamentus", "gleeok", "dodongo", "digdogger", "goh
 # a segmented entry window there would only throw away a settle value that is doing useful work.
 PHASE_LOCKED = {"manhandla", "aquamentus", "gleeok", "dodongo", "digdogger", "gohma", "l7_aqua", "l8_gleeok"}
 PHASE_SPREAD = [90]              # frames of entry window, matching the 0-90 gleeok_policy already rolls
+
+# Segments fought at FULL health, because the sword beam only fires at `hearts >= containers` and a
+# single lost half-heart there costs the weapon rather than a little time. Empty by default and
+# populated per run; "revenge" is the Blue Lynel the owner wants killed with the beam.
+NEED_FULL_HEARTS: set[str] = {"revenge"}
 
 
 class Run:
@@ -131,6 +136,10 @@ class Run:
         s = self.main.load(state)
         self.main.inputs = [tuple(b for b in l.split(",") if b) for l in d["inputs"]]
         self.done = list(d["segments"])
+        # The head's phase is DERIVED from the segment list, so a resumed run picks it up from the
+        # checkpoint's own record of what it finished rather than from a flag nobody wrote down.
+        head.sync(self.done, self.log)
+        head.announce(self.main, self.log)
         self.log(f"resumed checkpoint '{name}': {len(self.main.inputs)} frames, {d['summary']}")
         return s
 
@@ -246,6 +255,14 @@ class Run:
         free = name in REFILL_SOON
         _search.HEARTS_FREE[0] = free
         _look.CAUTION_OVERRIDE[0] = 0.12 if free else None
+        # A segment can ask to be fought at full health - because the sword beam only fires at
+        # `hearts >= containers`, so one lost half-heart there is the loss of the weapon rather than a
+        # cost. That reverses the usual dial: bosses are fought AGGRESSIVELY (0.12) because the
+        # Triforce piece behind them refills everything, but a beam fight has to be APPROACHED
+        # cautiously, or Link arrives at half a heart with no beam and no way to know it.
+        _look.NEED_FULL_HEARTS[0] = name in NEED_FULL_HEARTS
+        if _look.NEED_FULL_HEARTS[0]:
+            _look.CAUTION_OVERRIDE[0] = 1.0
         # Phase-locked boss: the scouts divide the entry window instead of each rolling their own.
         _search.ENTER_SPREAD[0] = PHASE_SPREAD[0] if name in PHASE_LOCKED else 0
         if name in PHASE_LOCKED:
@@ -354,6 +371,8 @@ class Run:
         self.done.append(name)
         if checkpoint:
             self.save_checkpoint(name)
+        head.sync(self.done, self.log)
+        head.announce(main, self.log)
         self.log(f"[{name}] {best.frames} frames, hearts {best.hearts} -> {s} "
                  f"(total {len(main.inputs)} frames, {time.time()-self.t0:.0f}s wall)")
         return s
@@ -367,6 +386,13 @@ class Run:
         main.save(f"{self.name}_end")
         self.log(f"final: {final}")
         self.log(f"frames: {len(main.inputs)}  ({len(main.inputs)/60.0988:.1f}s of game time)")
+        # The head is only mentioned when this route has one, and the three cases are worth telling
+        # apart: a run that never picked it up, a run that is carrying it (the story is unfinished
+        # and finishing here would be a run that walked thirty-one screens to deliver nothing), and
+        # a run that put it down.
+        if head.TAKE in self.done:
+            self.log(f"Gleeok's head: {head.phase_text()}"
+                     + (f", on x={head.spot()}" if head.spot() is not None else ""))
         if not verify:
             return final, None
         # Close the playing emulators first. BizHawk flushes the game's battery save to disk when

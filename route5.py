@@ -29,7 +29,8 @@ which route 5 inherits unchanged."""
 from __future__ import annotations
 
 from zelda import ram
-from zelda.segments import make_cross_policy, make_cross_at_policy
+from zelda import head
+from zelda.segments import make_cross_policy, make_cross_at_policy, make_lafight_policy
 
 
 def _lane(d: str, at: int):
@@ -145,7 +146,73 @@ def build(base: list, fg) -> list:
     S.append(when(in4(0x11), ("l4_12r", lambda nav: fg.dash_bomb_policy(nav, "Right", 0x12), dok(0x12, 4), 60)))
     for n, room in (("l4_10", 0x20), ("l4_00", 0x10), ("l4_01", 0x00), ("l4_02", 0x01), ("l4_12", 0x02)):
         S.append(when(in4(room), by[n]))
-    S += block("l4_13", "warp_L4")
+    S += block("l4_13", "L4_done")
+    # Take the head off the floor of the room the dragon died in, BEFORE the warp home. After the
+    # warp there is no Gleeok room to stand in, and the mechanic has to happen where the thing is.
+    # Both the policy and the success test come from zelda/head.py so the two cannot drift apart.
+    S.append((head.TAKE, head.take_policy, head.taken_test, 30))
+    S.append(by["warp_L4"])
+    # ---- THE END OF THE STORY: walk home, kill the guard with the White Sword, deliver the head -----
+    # The Triforce piece behind Gleeok refilled the bar, so by the time we get back to 0x0A Link is at
+    # full health holding the White Sword - which is exactly the state must_kill() in lookahead.py keys
+    # off, so the guard stops being scenery and becomes the objective without any route switch naming it.
+    # Written this way on purpose: the rule that sends us at him lives in the fighter, not here, so it
+    # cannot drift out of sync with the segment that depends on it.
+    # 31 legs, every one produced by owroute.dijkstra from (0x03,128,141) to room 0x0A and collapsed
+    # to one lane per room transition (781 eight-pixel steps -> 31 screen changes). The straight run
+    # east along row 0 is NOT available - both 0x03 and 0x0A are row 0, seven screens apart, and the
+    # router goes 7779 cost units south, along, and back up instead. That is exactly the thing worth
+    # having checked rather than written from a picture of the map.
+    S.append(lane("rv_leg_1", "Right", 0x13, 61))
+    S.append(lane("rv_leg_2", "Right", 0x14, 189))
+    S.append(lane("rv_leg_3", "Right", 0x24, 61))
+    S.append(lane("rv_leg_4", "Left", 0x23, 101))
+    S.append(lane("rv_leg_5", "Right", 0x33, 61))
+    S.append(lane("rv_leg_6", "Left", 0x32, 141))
+    S.append(lane("rv_leg_7", "Left", 0x31, 141))
+    S.append(lane("rv_leg_8", "Right", 0x41, 61))
+    S.append(lane("rv_leg_9", "Left", 0x40, 93))
+    S.append(lane("rv_leg_10", "Right", 0x50, 61))
+    S.append(lane("rv_leg_11", "Right", 0x60, 61))
+    S.append(lane("rv_leg_12", "Right", 0x61, 125))
+    S.append(lane("rv_leg_13", "Right", 0x62, 125))
+    S.append(lane("rv_leg_14", "Left", 0x52, 221))
+    S.append(lane("rv_leg_15", "Right", 0x53, 189))
+    S.append(lane("rv_leg_16", "Right", 0x63, 61))
+    S.append(lane("rv_leg_17", "Right", 0x64, 125))
+    S.append(lane("rv_leg_18", "Right", 0x65, 141))
+    S.append(lane("rv_leg_19", "Left", 0x55, 221))
+    S.append(lane("rv_leg_20", "Right", 0x56, 141))
+    S.append(lane("rv_leg_21", "Left", 0x46, 221))
+    S.append(lane("rv_leg_22", "Right", 0x47, 141))
+    S.append(lane("rv_leg_23", "Right", 0x48, 141))
+    S.append(lane("rv_leg_24", "Left", 0x38, 221))
+    S.append(lane("rv_leg_25", "Left", 0x28, 221))
+    S.append(lane("rv_leg_26", "Left", 0x27, 141))
+    S.append(lane("rv_leg_27", "Left", 0x17, 221))
+    S.append(lane("rv_leg_28", "Right", 0x18, 141))
+    S.append(lane("rv_leg_29", "Right", 0x19, 141))
+    S.append(lane("rv_leg_30", "Right", 0x1A, 141))
+    S.append(lane("rv_leg_31", "Left", 0x0A, 221))
+
+    def lynel_dead(emu, s):
+        """The Blue Lynel is dead. He is the only thing that has to be true."""
+        from zelda.lookahead import read_enemies
+        return (s.room == 0x0A and s.mode == 5 and s.level == 0
+                and not any(e[1] in (0x01, 0x02) for e in read_enemies(emu)))
+
+    # types=(0x01, 0x02) and not a bare "clear the room": 0x0A is the room with the sword in it and
+    # nothing else worth a sword swing, but naming the Lynel explicitly means this segment cannot
+    # silently start succeeding on some other enemy dying while he walks out of the room unhurt.
+    S.append(("revenge", lambda nav: make_lafight_policy(nav, types=(0x01, 0x02)),
+              lynel_dead, 600))
+    # The delivery. It was `burn_cave_policy(nav, (128, 141), "Down")` with a success test of
+    # "room == 0x0A", which is true the instant Link crosses the screen edge: the segment had never
+    # burned anything, never entered the cave and never delivered anything, and the run walked
+    # thirty-one screens to skip a no-op. zelda/head.py does the walk for real - into the cave, down
+    # the corridor, out to the item row, up under the x the White Sword was measured at - and the
+    # test is RAM: inside the cave, on the item row, on that x. `--until deliver` stops here.
+    S.append((head.DELIVER, head.deliver_policy, head.delivered_test, 30))
     # ---- NEW LEG 2 of 2: L4 -> Level 1's door (route 4 walked L2's door here) --------------------------------
     # Router, 1859 frames, 7 screens: D55@128 R56@141 U46@112 R47@141 R48@141 U38@112 L37@141
     # Every lane below was checked against zelda/owroute.free() before it was written: both ends of every seam are

@@ -85,40 +85,63 @@ local BOSS_TYPES = {
   [0x43] = GLEE0K,
   [0x44] = GLEE0K,
   [0x45] = GLEE0K,
-  [0x46] = GLEE0K,
+  [0x46] = GLEE0K,          -- UpdateGleeokHead: the head that comes loose and keeps flying
 }
--- UpdateGleeokHead, the loose head. Worth its own colour: it is the only part that chases Link
--- across the room, so "is that amber cell still up" is the question the fight is actually asking.
-local LOOSE_HEAD = 0x46
 
-local boss_seen = 0        -- the peak HP a boss has shown, so the bar has a denominator
-local hud = { attempt = 0 }  -- set by the Python side, so the HUD can count attempts itself
+local boss_seen = 0        -- the peak HP a boss has shown, so the total has a denominator
 
--- One read of the object table, shared by everything that needs it. This was duplicated: boss_hud()
--- scanned the table for the cells and then called boss_hp() to scan it again for the total, so the
--- bar and the number beside it could disagree within one frame, and the table was read 22 times a
--- frame instead of 11. Returns slot -> {type, hits}, the total in hits, and the name to print.
+-- Harness-side story state, told to the HUD by the Python side. The head is not in the ROM: see
+-- zelda/head.py, which is explicit that nothing in the cartridge knows or cares. It is on the line
+-- anyway because the rest of the line is also things you cannot see in a still frame - "L0 R0A" is
+-- a room number, not a picture - and a run that is walking a dragon's head home across thirty-one
+-- screens is exactly the thing you want to be able to read at a glance while it happens.
+local story = { head = 0 }
+
+-- One read of the object table, shared by everything that needs it. Returns slot -> {type, hits},
+-- the total in hits, and the name to print.
+--
+-- The two passes are the whole bug this file spent a fight misreporting. Reading "HP is live AND the
+-- type is a boss OR untyped" as one condition let a stale byte count as a boss: scanning every
+-- checkpoint showed l4_heart - the segment AFTER the Gleeok is dead and the room is cleared - still
+-- reading 70 hits across seven untyped slots, and manhandla 15. The game does not clear the health
+-- array when an object dies. Because boss_seen only resets when the total reaches zero, those stale
+-- reads latched the peak and the HUD then drew through every ordinary fight afterwards - which is
+-- what "it shows the boss gui when we battle any creature" was.
+--
+-- So untyped slots are collected separately and only folded in while a NAMED boss type is actually
+-- present in the table. That keeps the one case the catch-all exists for - Gleeok neck segments,
+-- written with type 0, which are 60 of the boss's 70 HP - and makes every other untyped byte inert.
 local function scan()
-  local parts, hits, name = {}, 0, nil
+  local parts, hits, name, untyped = {}, 0, nil, {}
   for i = 1, 11 do
     local t = mainmemory.read_u8(0x34F + i)
     local h = mainmemory.read_u8(0x485 + i)
-    if h > 0 and (BOSS_TYPES[t] or t == 0) then
+    if h > 0 then
       -- HP is stored as a nybble pair: the harness reads ObjHP >> 4 for a hit count, so a $A0 slot
       -- is 10 hits, not 160. The first version of this HUD printed the raw byte and the total came
       -- out "1136/1376" - unreadable, and unauditable, because it was wrong. 1136/16 is 71 and
       -- 1376/16 is 86: whole hit counts, which is the first reason to trust the number at all.
       local n = math.floor(h / 16)
       if n > 0 then
-        parts[i] = { t = t, hp = n }
-        hits = hits + n
-        -- An untyped slot is neck and has no name of its own; the named type wins, so a Gleeok reads
-        -- GLEEOK rather than whatever the segments would claim.
-        if BOSS_TYPES[t] then name = BOSS_TYPES[t] end
+        if BOSS_TYPES[t] then
+          parts[i] = { t = t, hp = n }
+          hits = hits + n
+          -- An untyped slot is neck and has no name of their own; the named type wins, so a Gleeok
+          -- reads GLEEOK rather than whatever the segments would claim.
+          name = BOSS_TYPES[t]
+        elseif t == 0 then
+          untyped[i] = n
+        end
       end
     end
   end
-  return parts, hits, name
+  if name then
+    for i, n in pairs(untyped) do
+      parts[i] = { t = 0, hp = n }
+      hits = hits + n
+    end
+  end
+return parts, hits, name
 end
 
 -- Where boss parts stand, and how much of them is left. ObjType $34F, ObjHP $485, indexed by slot.
@@ -137,66 +160,59 @@ local function boss_hp()
   return hits, boss_seen
 end
 
-local function boss_hud()
-  -- A strip across the WHOLE bottom of the screen, one cell per boss object slot, rather than
-  -- numbers in a corner. The owner tried the text version and could not read it: "the numbers and
-  -- the high speed makes it hard to see." That is the right objection - a fight is watched
-  -- peripherally, and a number you have to read is a number you miss. A shape you count at a glance
-  -- is not.
+-- One line: where Link is, and - only when there is one - what is hitting him.
+--
+-- The room was added to the boss read-out rather than put beside it. The owner's reason was
+-- practical: the log says "L4 room=13" and the window said "GLEEOK: 40/70", so talking about a
+-- fight meant holding two sources in the head at once. Same convention as the log on purpose -
+-- "L4 R13" is exactly the `L4 room=13` the search report prints, so the two can be read against
+-- each other without translating.
+--
+-- Because the room is the part that is always true, the line is drawn on every step and not only
+-- during a boss fight. That is the whole point of it: the boss read-out used to appear and vanish
+-- with the fight, which made the screen useless for the far more common question of simply being
+-- lost.
+local function hud()
+  -- The framebuffer is 256x224 - not the 256x240 this was written against for years - and the
+  -- geometry has been wrong more times than the format has, which is the whole lesson of it.
   --
-  -- So: the bottom of the screen is divided into eleven cells, one per object slot, and each cell
-  -- fills left to right with the health of the part standing in it. The strip empties as the neck
-  -- comes apart, which is the shape of the fight, and the attempt counter rides underneath it where
-  -- there is no room to miss it.
+  -- 1. First attempt: strip at y=226, 14 rows of bar, text at y=245. Five rows BELOW the screen.
+  --    The emulator renders those happily into the frame buffer; nobody ever sees them.
+  -- 2. Second: everything moved up, text at 232-239. Inside the screen this time, and still
+  --    invisible - the cells drew and the text did not. A 7px line flush against the last row is
+  --    one clipping quirk from gone, and it spends the entire fight on the window edge.
+  -- 3. Third: the text became a filled band, and the eleven cells became the main event. That was
+  --    a strip of segmented health, and it was worse: the owner could read the room but not the
+  --    fight. "That HUD is not good at all." A per-slot cell is the wrong granularity for a fight
+  --    watched at speed - eleven positions to decode, each a different question.
+  -- 4. Back to one line, name and health over total, and nothing else.
+  -- 5. Then the room came back, on the same line.
   --
-  -- Colour carries the state so the strip is readable without reading: red is a live part, amber is
-  -- the loose head, near-black is a slot with nothing in it.
-  --
-  -- The geometry is deliberate and was wrong twice. The NES screen is 256x240; the first attempt
-  -- started the strip at y=226 with 14 rows of bar plus a text line, which put the text at y=245 -
-  -- five rows below the bottom of the screen, where the emulator happily renders into the frame
-  -- buffer and nobody ever sees it. So the whole thing is laid out from the top down against 240:
-  -- bar at 218 (10 rows, ending 228), the total-width line at 230, text at 232. 11 cells of 23px
-  -- is 253, so it spans the width without running off the right edge.
-  local SLOTS, W, H, Y = 11, 23, 10, 218
-  local parts, hits, name = scan()
-  if hits == 0 then
-    return
+  -- It sits at row 57, which is the first row of the playfield. The status bar is a solid black
+  -- block across rows 0-55 (measured off the emulator framebuffer), so this is the one band that is
+  -- always on screen, always the same place, and never over the fight - the Gleeok works rows
+  -- 90-150. At 216 it was three rows off the bottom and under the emulator's own save-slot bar.
+  local TEXT_Y, TEXT_H = 57, 13
+  local _, hits, name = scan()
+  if hits > 0 and hits > boss_seen then
+    boss_seen = hits                       -- latched here as well, so the denominator holds without
+  end                                      -- depending on state_str() having run this frame
+  local line = string.format("L%d R%02X", mainmemory.read_u8(0x10), mainmemory.read_u8(0xEB))
+  if hits > 0 then
+    line = line .. string.format("  %s: %d/%d", name or "BOSS", hits, boss_seen)
   end
-  if hits > boss_seen then boss_seen = hits end
-  local seen = boss_seen
+  if story.head == 1 then
+    line = line .. "  +HEAD"
+  elseif story.head == 2 then
+    line = line .. "  HEAD DOWN"
+  end
 
-  -- A part fills its cell relative to the fullest part alive, not relative to the whole boss, so
-  -- the cells stay comparable to each other as the fight goes on.
-  local full = 1
-  for _, p in pairs(parts) do
-    if p.hp > full then full = p.hp end
-  end
-
-  for i = 1, SLOTS do
-    local x = (i - 1) * W
-    local p = parts[i]
-    if p then
-      local w = math.max(2, math.floor((W - 3) * p.hp / full))
-      local col = (p.t == LOOSE_HEAD) and 0xFFFFA030 or 0xFFFF3030
-      gui.drawRectangle(x, Y, x + W - 3, Y + H - 1, 0xFF201820)
-      gui.drawRectangle(x + 1, Y + 1, x + 1 + w, Y + H - 1, col)
-      -- a white pip on a part that is nearly dead, so "almost" is visible and not just "shorter"
-      if p.hp * 2 <= full then
-        gui.drawRectangle(x + 1 + w, Y + 1, x + 1 + w + 1, Y + H - 1, 0xFFFFFFFF)
-      end
-    else
-      gui.drawRectangle(x, Y, x + W - 3, Y + H - 1, 0xFF182038)
-    end
-  end
-  -- total remaining, as a width under the strip: the one number worth having, in the one place it
-  -- can be read without looking away from the fight
-  local frac = seen > 0 and (hits / seen) or 0
-  local w = math.max(1, math.floor(255 * frac))
-  gui.drawRectangle(0, Y + H + 1, w, Y + H + 2, 0xFF40C0FF)
-  gui.drawString(2, Y + H + 4,
-                 string.format("%s  ATT %d  %d/%d", name or "BOSS", hud.attempt, hits, seen),
-                 0xFF40C0FF, 0xFF000000)
+  -- drawRectangle takes (x, y, WIDTH, HEIGHT, line, background) - every earlier version of this
+  -- passed a bottom-row coordinate where the height goes, so the "filled band" was a 255x225
+  -- rectangle outline with no fill, which is why the text kept vanishing into the floor tiles. Both
+  -- colour arguments have to be given for it to be solid.
+  gui.drawRectangle(0, TEXT_Y, 256, TEXT_H, 0xFF000000, 0xFF000000)
+  gui.drawString(4, TEXT_Y + 1, line, 0xFF40C0FF, 0xFF000000)
 end
 
 local function state_str()
@@ -256,7 +272,7 @@ local function handle(line)
     -- wanted. gui.clearGraphics first, because without it the previous frame's text stays put and
     -- the counter turns into a smear.
     gui.clearGraphics()
-    boss_hud()
+    hud()
     if TRACE then
       local lines = {}
       for _ = 1, n do
@@ -276,11 +292,20 @@ local function handle(line)
     TRACE = (rest == "on"); send("ok")
   elseif cmd == "state" then
     send(state_str())
+  elseif cmd == "story" then
+    -- "story head 0|1|2": none, carried, delivered. A cosmetic read-out, so an emulator on an
+    -- older bridge (or a bridge that has gone away entirely) must not cost the run anything - the
+    -- Python side wraps this in a try, and an unknown command would otherwise answer "err" into a
+    -- search that was working perfectly well.
+    local what, v = rest:match("^(%S+)%s*(%d+)$")
+    if what == "head" then
+      story.head = tonumber(v) or 0
+    end
+    send("ok")
   elseif cmd == "attempt" then
-    -- The Python side sets this when a segment starts searching, so the in-emulator HUD can count
-    -- attempts without the log having to be read. Sent per attempt rather than polled, because the
-    -- search is the thing that is invisible while it is happening.
-    hud.attempt = tonumber(rest) or 0
+    -- The Python side still sends this once per attempt (search.py:309), and the HUD no longer draws
+    -- a counter, so the value is accepted and dropped rather than the command erroring: removing the
+    -- command would make the sender's reply "err unknown command" on every attempt, for no gain.
     send("ok")
   elseif cmd == "ram" then
     local a, l = rest:match("^(%d+)%s+(%d+)$")

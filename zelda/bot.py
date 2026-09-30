@@ -14,15 +14,74 @@ class BotError(RuntimeError):
 
 
 # ---------------------------------------------------------------- menus
+# The name typed on the register screen. Not cosmetic - the run is called gleeok because of it.
+#
+# The grid is 11 columns x 4 rows and the cursor starts on A at (0, 0), so a name is typed by walking
+# the cursor to each letter and pressing A. Measured on this ROM rather than assumed: the first
+# attempt used fixed counts of Right/Down from A and typed "KLPPZV", because the cursor wraps at the
+# column edges and an overshoot lands somewhere else entirely. Walking the cursor and tracking where
+# it is is the only version that survives a grid this shape.
+#
+# Row 0 A B C D E F G H I J K | Row 1 L M N O P Q R S T U V | Row 2 W X Y Z ... | Row 3 0-9
+NAME = "GLEEOK"
+NAME_GRID = {
+    "A": (0, 0), "B": (0, 1), "C": (0, 2), "D": (0, 3), "E": (0, 4), "F": (0, 5),
+    "G": (0, 6), "H": (0, 7), "I": (0, 8), "J": (0, 9), "K": (0, 10),
+    "L": (1, 0), "M": (1, 1), "N": (1, 2), "O": (1, 3), "P": (1, 4), "Q": (1, 5),
+    "R": (1, 6), "S": (1, 7), "T": (1, 8), "U": (1, 9), "V": (1, 10),
+    "W": (2, 0), "X": (2, 1), "Y": (2, 2), "Z": (2, 3),
+}
+_DOWN, _UP = "Down", "Up"
+_RIGHT, _LEFT = "Right", "Left"
+
+
+def type_name(emu: BizHawk, name: str = NAME, log=print) -> State:
+    """Type `name` on the register screen and move the cursor to END. Assumes the cursor is on A.
+
+    611 frames for GLEEOK, against about 40 for the single "A" this replaced - 28 cursor moves and 6
+    A presses. The owner has said the frames are not the point.
+    """
+    missing = [c for c in name if c not in NAME_GRID]
+    if missing:
+        raise BotError(f"register grid has no cell for {missing}")
+    row, col = NAME_GRID["A"]
+    s = None
+    for ch in name:
+        r, c = NAME_GRID[ch]
+        # Row first, then column. Doing it the other way round walks the cursor through the bottom
+        # rows on the way to a top-row letter and costs more frames for the same place.
+        while row != r:
+            step = _DOWN if r > row else _UP
+            s = emu.press(step, hold=2, release=10)
+            row += 1 if r > row else -1
+        while col != c:
+            step = _RIGHT if c > col else _LEFT
+            s = emu.press(step, hold=2, release=10)
+            col += 1 if c > col else -1
+        s = emu.press("A", hold=2, release=10)          # type the letter
+    log(f"typed '{name}' on the register screen")
+    # Back out of the grid into the name field, then Select down to REGISTER. Select cycles
+    # slot1 -> slot2 -> slot3 -> REGISTER -> and wraps to the heart, so END is not in that cycle: it is
+    # the label to the RIGHT of REGISTER and needs its own press. Three Selects with no Right landed
+    # on REGISTER and Start then did nothing at all.
+    s = emu.press(_UP, hold=2, release=10)
+    for _ in range(3):
+        s = emu.press("Select", hold=2, release=10)     # -> REGISTER
+    s = emu.press(_RIGHT, hold=2, release=10)            # -> END
+    return s
+
+
 def new_game(emu: BizHawk, log=print) -> State:
-    """From power-on: title -> file select -> register a one-letter name -> start file 1.
+    """From power-on: title -> file select -> register a name -> start file 1.
 
     Empirically (this ROM, PRG1):
       * title screen is mode 0; Start goes to file select (mode 1)
       * with no saves the select cursor already sits on REGISTER YOUR NAME
-      * register screen is mode 0x0E; a blank name is rejected, one letter is enough
-      * Select x3 moves the heart slot1 -> slot2 -> slot3 -> REGISTER END; Start confirms
-      * back at select the cursor is on file 1; Start begins play (mode 3 wipe, then mode 5)
+      * register screen is mode 0x0E; a blank name is rejected
+      * the letter grid is 11x4 and the cursor starts on A - see type_name
+      * Up leaves the grid for the name field; Select x3 reaches REGISTER, Right reaches END
+      * Start confirms, back at select the cursor is on file 1; Start begins play (mode 3 wipe, mode 5)
+      * the registered name shows on the file-select screen and is how the run is identified
     """
     # The title ignores input for a while after power-on, so tap until it reacts.
     emu.note("POWER ON. Waiting for the title screen to accept input; tapping START")
@@ -33,11 +92,8 @@ def new_game(emu: BizHawk, log=print) -> State:
     s = tap_until(emu, "Start", lambda s: s.mode != ram.MODE_SELECT)     # -> register (or play, if a save exists)
     s = emu.wait(20)                                                     # let the transition settle
     if s.mode == ram.MODE_REGISTER:
-        emu.note("Register screen (mode 0E). Blank names are rejected, typing one letter: A")
-        s = emu.press("A", hold=2, release=10)              # letter 'A'
-        emu.note("Moving the heart cursor down 3 slots to REGISTER END")
-        for _ in range(3):
-            s = emu.press("Select", hold=2, release=10)     # heart -> REGISTER END
+        emu.note(f"Register screen (mode 0E). Typing the name: {NAME}")
+        type_name(emu, NAME, log=emu.note)
         emu.note("Confirming registration with START")
         s = tap_until(emu, "Start", lambda s: s.mode == ram.MODE_SELECT)     # confirm registration
         s = emu.wait(20)
@@ -209,11 +265,20 @@ def cave_item_x(emu: BizHawk) -> int | None:
     return min(cands, key=lambda x: abs(x - 120))
 
 
+LAST_CAVE_ITEM_X: list = [None]     # where the last cave item was read from the object table
+
+
 def take_cave_item(emu: BizHawk, item_x: int | None = None, flag_addr: int = ram.SWORD, log=print) -> State:
     """Inside a one-item cave: wait out the text freeze, then walk into the item from below.
 
     The item's pickup box is only hit when Link walks up through y~157 at the item's x;
     standing on the top row (y=141) directly under it does nothing, so line up at y=173 first.
+
+    The x it ended up at is published in LAST_CAVE_ITEM_X, because that number is worth keeping:
+    it is the only measurement this project has of where a given cave's item physically stood, and
+    the White Sword's is the spot the dragon's head is later left on (zelda/head.py). Writing 120
+    there instead would have been a guess that happened to be the right answer for a cave nobody had
+    measured.
     """
     before = emu.byte(flag_addr)
     # The game flips to cave mode while Link is still standing outside; only once the room is
@@ -235,6 +300,7 @@ def take_cave_item(emu: BizHawk, item_x: int | None = None, flag_addr: int = ram
             emu.note("Item not visible in the object table; assuming the usual centre x=120")
         else:
             emu.note(f"Found the item in the object table at x={item_x}")
+    LAST_CAVE_ITEM_X[0] = item_x
     emu.note("Walking up to y=173, clear of the entrance corridor but below the item")
     s = walk_to(emu, None, 173, order="yx")
     emu.note(f"Lining up under the item: walking to x={item_x}")
