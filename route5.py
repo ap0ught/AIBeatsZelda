@@ -146,11 +146,20 @@ def build(base: list, fg) -> list:
     S.append(when(in4(0x11), ("l4_12r", lambda nav: fg.dash_bomb_policy(nav, "Right", 0x12), dok(0x12, 4), 60)))
     for n, room in (("l4_10", 0x20), ("l4_00", 0x10), ("l4_01", 0x00), ("l4_02", 0x01), ("l4_12", 0x02)):
         S.append(when(in4(room), by[n]))
-    S += block("l4_13", "L4_done")
-    # Take the head off the floor of the room the dragon died in, BEFORE the warp home. After the
-    # warp there is no Gleeok room to stand in, and the mechanic has to happen where the thing is.
+    S += block("l4_13", "l4_heart")
+    # Take the head off the floor of the room the dragon died in, and take it BEFORE the Triforce.
+    #
+    # Before, because taking the Triforce piece WARPS LINK OUT of the dungeon: L4_done ends at
+    # f41564 in room 0x03 of the OVERWORLD, and warp_L4 after it is only the safety net. The first
+    # version of this segment sat between L4_done and warp_L4, which is outside Level 4 with no
+    # dragon and no room, and the run said so 60 times in a row - every attempt "could not reach
+    # (120, 141): stopped at (120,149)" in room 03 L0, walking an overworld screen that has nothing
+    # to do with a Gleeok. The lesson is in the checkpoint names: ckpt_gleeok_l4_heart is room 13
+    # of level 4 and ckpt_gleeok_L4_done is room 03 of level 0.
+    #
     # Both the policy and the success test come from zelda/head.py so the two cannot drift apart.
     S.append((head.TAKE, head.take_policy, head.taken_test, 30))
+    S.append(by["L4_done"])
     S.append(by["warp_L4"])
     # ---- THE END OF THE STORY: walk home, kill the guard with the White Sword, deliver the head -----
     # The Triforce piece behind Gleeok refilled the bar, so by the time we get back to 0x0A Link is at
