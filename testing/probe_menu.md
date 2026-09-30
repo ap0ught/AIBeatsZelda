@@ -17,7 +17,7 @@ Measure the subscreen: how many frames to open, per cursor move, and to close.
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``zelda/bot.py`:379` - # Measured (probe_menu.py): the subscreen takes 62 frames to scroll in (MenuState $E1 counts 2..6, then 7
+- ``zelda/bot.py`:445` - # Measured (probe_menu.py): the subscreen takes 62 frames to scroll in (MenuState $E1 counts 2..6, then 7
 
 ## See also
 

@@ -241,11 +241,18 @@ def gleeok_dead(emu: BizHawk) -> bool:
 
 
 def fireball_threat(emu: BizHawk, s, prev: dict, horizon: int = 26):
-    """Direction to sidestep if a fireball's straight line will cross Link soon, else None."""
+    """Direction to sidestep if a fireball's straight line will cross Link soon, else None.
+
+    A shot Link is already blocking is not a threat. Z_01 CheckLinkCollision does not harm Link for a
+    rock or a boomerang while he is idle and facing it, so sidestepping one costs frames and buys
+    nothing - see lookahead.parried_now, which is where the rule is written down. It cannot make the
+    fighter passive: this only ever removes a dodge, it never adds a place to stand.
+    """
+    from .lookahead import parried_now
     ts = emu.ram(0x34F, 20)
     xs = emu.ram(0x70, 20)
     ys = emu.ram(0x84, 20)
-    cur = {i: (xs[i], ys[i]) for i in range(20) if 0x50 <= ts[i] < 0x60}
+    cur = {i: (xs[i], ys[i]) for i in range(20) if 0x50 <= ts[i] < 0x60 and not parried_now(emu, s, i)}
     out = None
     for i, (x, y) in cur.items():
         if i in prev:

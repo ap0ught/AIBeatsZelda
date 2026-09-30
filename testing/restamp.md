@@ -13,12 +13,20 @@ resume point is still the newest checkpoint on the new list.
 - writes `logs/`, `runs/`, `shots/`
 - writes a file
 
+## Why this still matters
+
+Cited by production code. These comments are where the numbers came from,
+so if this script's method is wrong, the constant is wrong too:
+
+- ``fullgame.py`:31` - # Anything that has to find a checkpoint - restamp.py, restart_run.sh - reads it from
+- ``fullgame.py`:32` - # here rather than repeating the literal, which is how testing/restamp.py ended up
+
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_single_entries.py`](probe_single_entries.md)
+- [`probe_s9_10.py`](probe_s9_10.md)
+- [`probe_ganon.py`](probe_ganon.md)
+- [`probe_g9_41.py`](probe_g9_41.md)
 
 ---
 

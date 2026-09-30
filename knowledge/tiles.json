@@ -216,6 +216,7 @@
    138,
    148,
    150,
+   164,
    176,
    178,
    180,
@@ -269,7 +270,8 @@
    "ab": "walked onto it at (120, 85) in room 66",
    "cf": "walked onto it at (192, 77) in room 3F",
    "87": "walked onto it at (232, 141) in room 78",
-   "8a": "blocked moving Up into it at (232, 133) in room 78 of level 6"
+   "8a": "blocked moving Up into it at (232, 133) in room 78 of level 6",
+   "a4": "blocked moving Right into it at (216, 133) in room 30 of level 4"
   }
  },
  "cl": {

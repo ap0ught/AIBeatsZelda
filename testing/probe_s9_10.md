@@ -18,14 +18,14 @@ state (s9_pass3: Link just surfaced in 0x20 with 11.5/12 hearts).
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``fullgame.py`:2947` - # success 7-10 of 11.5 hearts and left Link at 1.5 for the rest of Level 9. probe_s9_10.py from the same
+- ``fullgame.py`:3001` - # success 7-10 of 11.5 hearts and left Link at 1.5 for the rest of Level 9. probe_s9_10.py from the same
 
 ## See also
 
+- [`restamp.py`](restamp.md)
 - [`probe_single_entries.py`](probe_single_entries.md)
 - [`probe_ganon.py`](probe_ganon.md)
 - [`probe_g9_41.py`](probe_g9_41.md)
-- [`probe_ending.py`](probe_ending.md)
 
 ---
 

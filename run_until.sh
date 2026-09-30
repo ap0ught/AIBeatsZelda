@@ -4,6 +4,11 @@
 # segment failure raises RuntimeError, and that stops the loop instead of retrying forever.
 LOG=${1:-/tmp/run.log}
 MAX=${2:-40}
+# Anything after the log and the restart count goes straight to fullgame.py. This is how --until
+# deliver reaches it: the run has to be able to stop AT a segment, and the wrapper was swallowing
+# the one flag that says where. Without this, the whole 377-segment route runs on to Ganon and the
+# ending we just spent a night building is 240 segments past the cave.
+shift 2 2>/dev/null || shift $#
 # Only ever one run at a time. Three of these wrappers were once alive at once, all
 # resuming the same checkpoint and all writing the same files; the emulators fought for
 # the CPU and every search crawled. mkdir is atomic, so it makes a usable lock.
@@ -24,7 +29,7 @@ echo $$ > "$LOCKDIR/pid"
 trap 'rm -rf "$LOCKDIR" 2>/dev/null' EXIT
 for i in $(seq 1 "$MAX"); do
   echo "=== attempt $i ($(date '+%F %T')) ===" >> "$LOG"
-  python fullgame.py >> "$LOG" 2>&1
+  python fullgame.py "$@" >> "$LOG" 2>&1
   code=$?
   if [ $code -eq 0 ]; then
     echo "=== finished cleanly ($(date '+%F %T')) ===" >> "$LOG"; exit 0

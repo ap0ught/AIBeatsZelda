@@ -25,14 +25,14 @@ usage: python probe_ganon.py <checkpoint-state-name> [tries]
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``fullgame.py`:2992` - # GANON. Surveyed first (probe_ganon.py from ckpt_fullgame_g9_42): the room is dark for 77 frames,
+- ``fullgame.py`:3046` - # GANON. Surveyed first (probe_ganon.py from ckpt_fullgame_g9_42): the room is dark for 77 frames,
 
 ## See also
 
+- [`restamp.py`](restamp.md)
 - [`probe_single_entries.py`](probe_single_entries.md)
 - [`probe_s9_10.py`](probe_s9_10.md)
 - [`probe_g9_41.py`](probe_g9_41.md)
-- [`probe_ending.py`](probe_ending.md)
 
 ---
 

@@ -12,7 +12,9 @@ import os
 import random
 
 from .emulator import BizHawk, State
-from .overworld import (read_enemies, read_room_item, immune_to, DMG_SWORD, DMG_BOMB, read_ghost_objects)
+from .overworld import (read_enemies, read_room_item, immune_to, DMG_SWORD, DMG_BOMB,
+                        DMG_BOOMERANG, DMG_ARROW, DMG_FIRE, read_ghost_objects)
+from . import drops as _drops
 
 DIRS4 = ("Up", "Down", "Left", "Right")
 OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
@@ -22,7 +24,7 @@ OPPOSITE = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
 CAUTION_OVERRIDE = [None]
 WALK_INTERP = [False]         # True: interpolate walking distance between lattice points (see Lattice.walk)
 SPOT_FACING = [True]          # the strike-spot field leaves out a Darknut's shield side (A/B: r8_3f 1,751 -> 1,479)
-ROW2 = {0x09, 0x0A, 0x03, 0x01, 0x12, 0x06, 0x0B, 0x24, 0x30}   # the only monsters with bombs in their drop row
+ROW2 = _drops.ROWS[2]             # the only monsters with bombs in their drop row; zelda.drops owns it
 BOMB_TARGET = [6]             # plan_fight works the ten-kill forced drop for bombs while Link holds fewer than this
 BEAMS = [True]                # full hearts: roll swings out far enough to see the sword beam land
 OLD_PLANNER = [False]          # True restores Manhattan shaping and flat damage prices (A/B probes)
@@ -160,11 +162,27 @@ URGENCY = float(os.environ.get("ZELDA_URGENCY", "7"))
 _FIGHT_DEBUG = bool(os.environ.get("ZELDA_FIGHT_DEBUG"))
 
 
-def macros_for(kind: str, bombs: bool = False, bow: bool = False):
+# B throws whatever is in the B slot - the project has been bitten by this (see the Dodongo notes in
+# boss.py). So a move called "bomb" is really "press B", and what it costs depends on the slot:
+# the Blue Candle does DMG_FIRE, a bomb DMG_BOMB, the wand another fireball, the bow DMG_ARROW.
+# Pricing all of them as DMG_BOMB means the planner scores the better weapon as the worse one and
+# never picks it - which is what happened: Link cleared a room of Vires with the candle on a crossing
+# segment and nothing in the code had any idea that was available.
+_B_ITEM_DMG = {0: DMG_BOOMERANG, 1: DMG_BOMB, 2: DMG_ARROW, 4: DMG_FIRE, 8: DMG_FIRE}
+
+
+def b_damage_type(emu) -> int:
+    """What a B press will actually do, given what is in the slot. 0 if it is not a weapon."""
+    return _B_ITEM_DMG.get(emu.byte(0x656), 0)
+
+
+def macros_for(kind: str, bombs: bool = False, bow: bool = False, emu=None):
     m = [("hold", d, 8) for d in DIRS4] + [("wait", None, 6)]
     if kind == "fight":
         m += [("swing", d, 0) for d in DIRS4]
-        if bombs:
+        # A B press is offered when the SLOT holds something that damages, not merely when bombs > 0.
+        have_weapon = b_damage_type(emu) != 0 if emu is not None else bombs
+        if have_weapon:
             m += [("bomb", d, 0) for d in DIRS4]
         if bow:
             m += [("shoot", d, 0) for d in DIRS4]
@@ -230,6 +248,44 @@ UNKILLABLE = {0x49, 0x2B, 0x2C, 0x2D, 0x40, 0x4B, 0x4C}
 # Lynels (0x01/0x02) hit for two hearts and take many hits; the guides say avoid, not fight.
 NEVER_CHASE = UNKILLABLE | {0x11, 0x1A, 0x01, 0x02}
 
+# The owner's standing rule, and it is a rule about STATE rather than about a segment: "anytime he
+# has a full health and the white sword he must kill the lynol."
+#
+# That is better than putting "revenge" in a NEED_FULL_HEARTS set, because the condition switches
+# itself on. The route walks PAST the Blue Lynel on the way in - correctly, it is in NEVER_CHASE and
+# the sword is not worth a fight yet - and then the Triforce piece behind Gleeok refills the bar and
+# the White Sword is already in hand, so on the way back the same enemy becomes the objective with no
+# route edit at all. The story writes itself: get by the guard, take the head, come back and kill him.
+#
+# "must kill" is deliberate wording. The Lynel is not merely allowed to be a target here, he is the
+# objective, so a segment that is fighting at full health with the White Sword should be searching for
+# his death and not for a way past him.
+def must_kill(t: int, s) -> bool:
+    """Is this enemy the objective right now, rather than something to walk around?"""
+    return t in (0x01, 0x02) and s.sword >= 2 and s.hearts >= s.containers
+
+# "I want to be at FULL health for this one."
+#
+# The owner asked for two separate things and they are two separate mechanisms. This is the first:
+# a declared desire, in the same shape as BOMB_TARGET and HEARTS_FREE, so any segment can ask for it
+# rather than one boss policy hardcoding a private refill. The second is in fight_score below.
+#
+# Why it exists at all: the sword beam fires only at `hearts >= containers` (Fighter._beam_ready,
+# combat.py), so a fight that wants the beam is not a fight about damage dealt - it is a fight about
+# damage NOT taken, because one lost half-heart removes the weapon. Gleeok already does this with a
+# hand-rolled pre-fight refill; this makes it a property of a segment instead.
+#
+# FICTION, CLEARLY LABELLED: the run's story is that Link carries the dragon's head home and leaves it
+# in the cave the White Sword came from. The game has no such mechanic and no head item - nothing here
+# pretends otherwise. The cave is the finish because the owner said it is, not because the ROM does
+# anything with a head.
+NEED_FULL_HEARTS = [False]
+
+
+def hearts_full(s) -> bool:
+    return s.hearts >= s.containers
+
+
 
 def killable(e) -> bool:
     return e[1] not in UNKILLABLE and e[1] < 0x50
@@ -244,7 +300,53 @@ def fireballs_near(emu: BizHawk, s, radius: int = 56) -> bool:
     ts = emu.ram(0x34F, 20)
     xs = emu.ram(0x70, 20)
     ys = emu.ram(0x84, 20)
-    return any(0x50 <= ts[i] < 0x60 and max(abs(xs[i] - s.x), abs(ys[i] - s.y)) <= radius for i in range(20))
+    return any(0x50 <= ts[i] < 0x60 and max(abs(xs[i] - s.x), abs(ys[i] - s.y)) <= radius
+               and not parried_now(emu, s, i) for i in range(20))
+
+
+# ---------------------------------------------------------------- the shield, for free
+#
+# Z_01.asm CheckLinkCollision (5598-5705). A monster's shot does NOT harm Link when, in order:
+#   1. it is not $56 (Fireball2) or $5A - those always harm, magic shield or not;
+#   2. Link's own ObjState high nybble is $00 - he is IDLE, not walking and not swinging;
+#   3. Link and the shot face OPPOSITE directions.
+# Then a shot below $55 (flying rock) or at/above $5B (boomerang) is parried outright, while $55-$5A
+# need InvMagicShield ($676) - bought in the Level 5 shop for 130 rupees, so not before then.
+#
+# The owner had this as "Link starts with a shield that blocks if he is not moving or using his sword",
+# which is exactly rule 2. He was right and the harness was wrong to assume otherwise: there was no
+# shield code here at all, only dodging.
+#
+# WHAT THIS DELIBERATELY DOES NOT DO: it never suggests standing still. It only declines to charge
+# for a hit that the game is not going to land, so the fighter stops paying frames to sidestep a rock
+# it is already blocking. A parry that rewarded idling would stop Link closing on Gleeok, and Gleeok
+# is immune to the whole idea anyway - UpdateGleeok shoots $56 (Z_04.asm:8639-8640), one of the two
+# types rule 1 excludes outright, so no dragon frame can be won or lost by anything in this section.
+SHOT_ALWAYS_HARMS = {0x56, 0x5A}
+LINK_STATE = 0xAC          # ObjState; the bridge's FIELDS table calls this "anim", which is wrong
+LINK_DIR = 0x98            # ObjDir
+# ON by default: the owner watched it helping and asked to keep it ("2. keep the parry I was seeing
+# it helping"). It was gated off purely as caution on a cold change, and that caution has now been
+# overruled by an observation I did not make. ZELDA_PARRY=0 turns it off without a code edit, which
+# is how to A/B it - the free parry only ever saves the damage, never presses a button.
+PARRY = [bool(int(os.environ.get("ZELDA_PARRY", "1")))]
+
+
+def parried_now(emu: BizHawk, s, i: int) -> bool:
+    """Is shot `i` bouncing off Link's shield right now, needing no item and no button?"""
+    if not PARRY[0]:
+        return False
+    ts = emu.ram(0x34F, 20)
+    dirs = emu.ram(0x98, 20)
+    t = ts[i]
+    if t in SHOT_ALWAYS_HARMS or not (0x50 <= t < 0x60):
+        return False
+    if not (t < 0x55 or t >= 0x5B):         # $55-$5A are the fireballs, and they need the shield item
+        return False
+    if emu.byte(LINK_STATE) & 0xF0:         # rule 2: Link must be idle, not mid-step or mid-swing
+        return False
+    d = dirs[0] | dirs[i]                   # rule 3: opposite facings, either axis
+    return (d & 0x0C) == 0x0C or (d & 0x03) == 0x03
 
 
 def fight_score(before: State, after: State, hp0: int, n0: int, hp1: int, n1: int, frames: int,
@@ -256,6 +358,16 @@ def fight_score(before: State, after: State, hp0: int, n0: int, hp1: int, n1: in
         return -50000            # leaving the room (or a scroll) is not clearing it
     sc = 0.0
     sc -= damage_weight * (before.hearts - after.hearts) * 2       # per half heart
+    if NEED_FULL_HEARTS[0]:
+        # The second half of "I want to be at full health for this one", and the half that actually
+        # changes behaviour. damage_weight prices a lost heart in frames; for a beam fight a lost
+        # heart is not a cost, it is the LOSS OF THE WEAPON, so it has to dominate every other term
+        # here or the planner will happily trade the beam for two swings. Being short when the fight
+        # is over is worse than being slow, and being full at the end is worth a lot.
+        lost = max(0.0, after.containers - after.hearts)
+        sc -= 9000.0 * lost
+        if after.hearts >= after.containers:
+            sc += 3000.0
     # bosses can swap in a fresh head, which raises the tracked health; never punish that
     sc += hp_weight * max(0, hp0 - hp1)
     sc += 150 * (n0 - n1)
@@ -377,11 +489,19 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
         # a wall, and putting it in the list first would just have the filter throw it away again.
         tlist = [t for t in tlist if not immune_to(emu, t[0], DMG_SWORD)] + ghost_targets
         near_target = any(max(abs(t[2] - s0.x), abs(t[3] - s0.y)) <= 48 for t in tlist)
-        help_n = emu.byte(0x50)                   # kills in a row since Link was last hit
+        help_n = emu.byte(_drops.STREAK)              # kills in a row since Link was last hit
         want_bombs = (not OLD_PLANNER[0]) and 1 <= s0.bombs < BOMB_TARGET[0] and use_bombs != "never"
         streak_bomb = want_bombs and help_n == 9 and streak_patience > 0
-        row2_next = (want_bombs and emu.byte(0x52A) in (0, 5, 7) and any(t_[1] in ROW2 for t_ in tlist)
-                     and not all(t_[1] in ROW2 for t_ in tlist))
+        # Same arithmetic the clock uses, from the one table: bombs are row 2 columns 1, 6 and 8, so
+        # the pre-kill $52A has to be 0, 5 or 7. prefer_target also encodes the "there must be a
+        # monster to burn the cycle on" half that used to be spelled `not all(ROW2 ...)`.
+        #
+        # order[0] being a ROW2 monster is what makes this mean "the NEXT kill is the bomb column".
+        # prefer_target also returns an order when the next column is not wanted - it puts a filler
+        # first to advance the cycle - and reading that as a "yes" here would have paid the +120
+        # reward for killing the wrong monster.
+        _order = _drops.prefer_target(emu, tlist, _drops.BOMBS) if want_bombs else None
+        row2_next = bool(_order) and _order[0][1] in ROW2
         if streak_bomb and len(rec.inputs) >= streak_fuse_until:
             streak_patience -= 1                  # not for ever: after a while the sword may have the tenth kill
         # Branching costs a lot of emulation. When everything is far away and nothing is incoming,
@@ -428,7 +548,11 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
             # are what Level 8's door and Level 5's two walls are going to need later.
             #
             # The owner caught it by watching: "I see bomb useage." Count only what the bomb reaches.
-            bombable = [t for t in tlist if not immune_to(emu, t[0], DMG_BOMB)]
+            # Count only what the B slot's weapon reaches. It is DMG_BOMB when bombs are selected and
+            # DMG_FIRE when the candle is, so asking about DMG_BOMB with a candle in hand credited the
+            # planner for hits it cannot land.
+            _bd = b_damage_type(emu) or DMG_BOMB
+            bombable = [t for t in tlist if not immune_to(emu, t[0], _bd)]
             for t in bombable:
                 near_t = sum(1 for u in bombable if max(abs(u[2] - t[2]), abs(u[3] - t[3])) <= 24)
                 cluster = max(cluster, near_t)
@@ -441,7 +565,7 @@ def plan_fight(emu: BizHawk, rec, *, max_frames: int = 3000, rollout: int = 14, 
                 use_bombs == "free" or (use_bombs == "sparing" and cluster >= 3))
             if streak_bomb and near_target:
                 offer_bombs = True               # the tenth kill, made with a bomb, pays four bombs back
-            macros = macros_for("fight", bombs=offer_bombs, bow=use_bow and s0.rupees > 0)
+            macros = macros_for("fight", bombs=offer_bombs, bow=use_bow and s0.rupees > 0, emu=emu)
             this_rollout = rollout
             if streak_bomb and len(rec.inputs) < streak_fuse_until:
                 # a bomb laid for the tenth kill is ticking: keep the sword out of it, or the sword takes the kill

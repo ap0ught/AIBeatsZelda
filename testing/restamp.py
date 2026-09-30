@@ -14,15 +14,17 @@ import time
 
 import fullgame
 
+PREFIX = f"{fullgame.RUN_NAME}_"
+
 names = [s[0] for s in fullgame.segments()]
 assert len(names) == len(set(names)), "duplicate names"
 h = hashlib.sha1("|".join(names).encode()).hexdigest()[:12]
 ck = pathlib.Path("logs/checkpoints")
-newest = max(ck.glob("fullgame_*.json"), key=lambda p: json.loads(p.read_text())["frames"])
+newest = max(ck.glob(f"{PREFIX}*.json"), key=lambda p: json.loads(p.read_text())["frames"])
 bak = pathlib.Path("logs/archive/partial_" + time.strftime("%Y%m%d_%H%M%S"))
 removed = 0
-for p in ck.glob("fullgame_*.json"):
-    n = p.stem.replace("fullgame_", "")
+for p in ck.glob(f"{PREFIX}*.json"):
+    n = p.stem.replace(PREFIX, "")
     if n not in names:
         bak.mkdir(parents=True, exist_ok=True)
         shutil.copy2(p, bak / p.name)
@@ -33,10 +35,10 @@ for p in ck.glob("fullgame_*.json"):
     if d.get("list_hash") != h:
         d["list_hash"] = h
         p.write_text(json.dumps(d))
-have = [n for n in names if (ck / f"fullgame_{n}.json").exists()]
-d = json.loads((ck / f"fullgame_{have[-1]}.json").read_text())
+have = [n for n in names if (ck / f"{PREFIX}{n}.json").exists()]
+d = json.loads((ck / f"{PREFIX}{have[-1]}.json").read_text())
 print(f"{len(names)} segments, fingerprint {h}; removed {removed} off-route checkpoints")
 print(f"resume point: {have[-1]} at {d['frames']} frames (newest before: {newest.stem})")
-assert "fullgame_" + have[-1] == newest.stem, "the newest checkpoint is not the resume point"
+assert PREFIX + have[-1] == newest.stem, "the newest checkpoint is not the resume point"
 gaps = [n for n in names[:names.index(have[-1])] if n not in have]
 assert not gaps, f"checkpoints missing before the resume point: {gaps[:5]}"

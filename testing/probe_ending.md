@@ -24,14 +24,14 @@ usage: python probe_ending.py [checkpoint]   (default ckpt_fullgame_g9_ganon)
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``fullgame.py`:2998` - # After Ganon, all four steps validated from his checkpoint by probe_ending.py:
+- ``fullgame.py`:3052` - # After Ganon, all four steps validated from his checkpoint by probe_ending.py:
 
 ## See also
 
+- [`restamp.py`](restamp.md)
 - [`probe_single_entries.py`](probe_single_entries.md)
 - [`probe_s9_10.py`](probe_s9_10.md)
 - [`probe_ganon.py`](probe_ganon.md)
-- [`probe_g9_41.py`](probe_g9_41.md)
 
 ---
 

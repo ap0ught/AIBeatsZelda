@@ -26,6 +26,13 @@ from zelda.emulator import LOGS_DIR
 
 LOG = open(LOGS_DIR / "fullgame.txt", "a", buffering=1)
 
+# The run's name, and therefore its checkpoint namespace (runner._ckpt_paths):
+# logs/checkpoints/<name>_<segment>.json and states/ckpt_<name>_<segment>.State.
+# Anything that has to find a checkpoint - restamp.py, restart_run.sh - reads it from
+# here rather than repeating the literal, which is how testing/restamp.py ended up
+# globbing "fullgame_*.json" for a run it now calls gleeok and matching nothing.
+RUN_NAME = "gleeok"
+
 
 def P(*a):
     print(*a, flush=True)
@@ -186,11 +193,19 @@ def dash_bomb_policy(nav, direction, then_room=None):
     return policy
 
 
-def gleeok_policy(nav, budget=14000):
-    # 14,000, and the number is stale in a way worth recording rather than just overwriting.
+def gleeok_policy(nav, budget=6000):
+    # 6,000, restored 2026-09-30. This had been scaled to 14,000 on the sevenfold reasoning below, and
+    # the file itself said to revisit it "if this fight stalls again". It stalled four runs running,
+    # every one of them dying rather than timing out, and run_until.sh halts the whole run on a genuine
+    # segment failure - so the wrong budget was not just slow, it was stopping the run.
     #
-    # The 6,000 below was tuned against a fight the harness thought was 10 hit points: one head.
-    # It is 70. The head is 10 HP in an ordinary object slot and six neck segments are 10 HP each in
+    # 6,000 is the value that has actually won this fight, and the size of the evidence for it is not
+    # even: the archived winner's room clears by frame 2,345, and EVERY successful attempt landed at
+    # 6,012-6,020 against a 6,000 budget. It is right-sized to the frame the room actually takes.
+    #
+    # Why it was 14,000, and why that was a guess: the 6,000 below was tuned against a fight the
+    # harness thought was 10 hit points: one head. It is 70. The head is 10 HP in an ordinary object
+    # slot and six neck segments are 10 HP each in
     # slots whose object type is 0, which read_enemies filtered out - so for this project's entire
     # history the planner had a tenth of the boss and every budget, win rate and timing note here was
     # measured against that tenth. Scaling by the sevenfold is a guess with a reason behind it, not a
@@ -1468,6 +1483,13 @@ def cave_item_policy(nav, flag_addr):
             bot.walk_to(emu, ex, None, stop=lambda s: s.mode == 0x0B)
             emu.wait_until(lambda s: s.mode == 0x0B, 400, buttons=("Up",))
             bot.take_cave_item(emu, item_x=None, flag_addr=flag_addr, log=lambda *a: None)
+            if flag_addr == ram.SWORD:
+                # The White Sword's x is remembered, because the dragon's head is later left on it
+                # (zelda/head.py). Only the sword: every other cave item in the game is a rumour
+                # about a spot, and one measured spot is worth exactly as much as it is worth.
+                from zelda import head
+                head.remember_spot(bot.LAST_CAVE_ITEM_X[0])
+                emu.note(f"Sword x measured at {bot.LAST_CAVE_ITEM_X[0]}; that is where the head goes")
             bot.exit_cave_down(emu, log=lambda *a: None)
             return "got it"
         except (NavError, LinkDied, bot.BotError) as e:
@@ -2352,9 +2374,41 @@ def segments_v3():
     L3 = [("7c_left", lambda nav: make_cross_policy(nav, "Left"), 0x7B, 20, {}),
           ("7b_key", lambda nav: make_grab_policy(nav, "Up"), 0x6B, 40, {"keys": 1}),
           ("6b_up", lambda nav: make_cross_policy(nav, "Up"), 0x5B, 40, {}),
+          # THE BOMB CHAIN, and which room pays. Read off the archived successful run's own
+          # checkpoints, which is the only evidence that settles it:
+          #
+          #     6b_up     ends 0x5B  bombs 0    keys 1
+          #     5b_bombs  ends 0x4B  bombs 4    keys 1     <- 4 bombs, from clearing 0x5B
+          #     4b_left   ends 0x4A  bombs 4    keys 0     <- a crossing; the key is SPENT here
+          #     4a_bombs  ends 0x49  bombs 8    keys 0     <- 4 more bombs, from clearing 0x4A
+          #
+          # A SEGMENT'S NAME IS THE ROOM IT ENDS IN, not the room it starts in, and that is what this
+          # got wrong. `5b_bombs` runs in 0x5B; reading its name as its location, 0x4B was believed to
+          # be the room that pays bombs, which turned `5b_bombs` into a plain crossing (throwing the
+          # 4 bombs away) and put a `bombs >= 1` requirement on `4b_left` - a segment that stands in
+          # 0x4B, pays nothing to grab, and crosses into 0x4A. It then failed 19 of 19 attempts with
+          # 7 of them reaching room 0x4A in a state the segment's own success test rejected, which is
+          # what stopped the run at frame 4,634 on 2026-09-30: RuntimeError: segment 4b_left failed.
+          #
+          # Both halves of the bomb chain are therefore where they were: the bombs come from clearing
+          # 0x5B and from clearing 0x4A, one room either side of the crossing. A room name in this
+          # route is an address, and the address to ask "what is in this room" is the name of the
+          # segment that ENDS there - which for 0x4A is `4a_bombs`, not `4b_left`.
           ("5b_bombs", lambda nav: make_clear_grab_policy(nav, "Up"), 0x4B, 80, {"bombs": 1}),
           ("4b_left", lambda nav: make_cross_policy(nav, "Left"), 0x4A, 30, {}),
-          ("4a_bombs", lambda nav: make_clear_policy(nav, "Left"), 0x49, 60, {"bombs": 5}),
+          # `4a_bombs` was make_clear_policy and needed 5 bombs while arriving with 4, so the fifth
+          # had to be a MONSTER's bomb drop: make_clear_policy never reads the room item at all, so
+          # the cache 0x4A pays on clear was walked past every time. The archived run got one (4 -> 8
+          # at this segment) and this run got none - 0 successes in 3 attempts from the same state,
+          # every attempt ending "cleared+left" in room 0x49 holding 4. Six segments of this route
+          # have wanted bombs since 0x5B and none of them may be spent on a gamble.
+          #
+          # make_clear_grab_policy is the one that waits for read_room_item and grabs it, so the
+          # +4 is the room's and not a Peahat's. Measured from the same state: 3 successes in 4
+          # attempts, 4 -> 7 bombs, the one failure being a run that spent two of them on the five
+          # Peahats and finished on 3. The drop is worth 4 and the segment needs 5, which leaves a
+          # margin of exactly one bomb - tight, and worth knowing before the next route leans on it.
+          ("4a_bombs", lambda nav: make_clear_grab_policy(nav, "Left"), 0x49, 60, {"bombs": 5}),
           ("49_key", lambda nav: make_grab_policy(nav, "Down"), 0x59, 40, {"keys": 1}),
           ("59_fight", lambda nav: make_lafight_policy(nav, "Down"), 0x69, 20, {}),
           ]
@@ -3014,7 +3068,7 @@ def main():
     args = sys.argv[1:]
     segs = segments()
     names = [s[0] for s in segs]
-    with Run("fullgame", log=P) as run:
+    with Run(RUN_NAME, log=P) as run:
         run.stamp_segment_list(segs)
         run.allow_legacy = "--allow-legacy" in args
         if "--verify" in args:
@@ -3030,7 +3084,7 @@ def main():
             # A fresh run must start at frame 0. Resuming a checkpoint from the old route would keep
             # its input prefix and skip every segment whose name still matches - and the replay would
             # still say MATCH, because the hybrid log is self-consistent. Refuse instead.
-            stale = [p for p in (LOGS_DIR / "checkpoints").glob("fullgame_*.json")]
+            stale = [p for p in (LOGS_DIR / "checkpoints").glob(f"{run.name}_*.json")]
             if stale and not run.allow_legacy:
                 P(f"--fresh: {len(stale)} checkpoints from an earlier run are still in "
                   f"logs/checkpoints. Archive or delete them first (logs/archive/ has a copy).")
