@@ -333,6 +333,132 @@ def legal(cells, kb: TileKB, x: int, y: int, optimistic: bool = False, extra: se
     return True
 
 
+class Screen:
+    """The tile pattern of the screen Link is on, cached, with the knowledge base that reads it.
+
+    WHY THE FIGHTER NEEDS ONE. `plan()` walks over `legal()`, so the navigator never sends Link
+    into a wall. The fighter never asked the map anything: `Fighter._move` steps by the SIGN of
+    the difference ("Right" if dx > 0 else "Left") and `attack_slot` swings whenever the box test
+    passes, and both of those were measured against geometry they could not see. A step into a
+    known-solid tile costs a frame and moves nobody, and the approach loop repeats it until
+    max_frames; a swing whose swept cells are solid does nothing at all, which is the `wasted shot`
+    line in zelda/combat.py and the whole reason that instrument was written. Both now ask the
+    map, through this one object - which is also what `Fighter._escape` was already doing by hand,
+    correctly and far too expensively: it builds a TileKB and re-reads the bus on every call.
+
+    THE CACHE IS THE POINT, and it is why this is not just `legal()` again. The bus read is 32x22
+    bytes - 960, one round trip - and a fight asks the question four or five times a frame. So the
+    pattern is read once per SCREEN and re-read when the screen changes, and `reread()` is
+    available for the one case the cache cannot know about: Link pushes a block, a locked door
+    opens, or a bomb blows a hole, and the pattern that was correct a second ago is not correct
+    now. The fighter calls it whenever a step it believed was blocked turns out not to be.
+
+    UNKNOWN TILES DO NOT BLOCK, and that is the second decision in this class. `legal(...,
+    optimistic=True)` treats an unclassified tile as walkable. The alternative - a fighter that
+    refuses to move in a room whose tiles it has never seen - is a stall, not a fix, and a stall
+    in a fight is how a segment burns its whole budget standing still. So only a tile the
+    knowledge base positively calls solid stops Link, and being stopped is EVIDENCE: learn_blocked
+    records the tile with the room and the pixel it was proved in, in the same shape as every other
+    line in tiles.json. The knowledge base grows from real blocked steps instead of from a guess
+    about which of the 256 ids are walls.
+    """
+
+    def __init__(self, emu: BizHawk, kb: TileKB | None = None):
+        self.emu, self.kb = emu, kb or TileKB()
+        self.key = None
+        self.cells: list[list[int]] = []
+        self.learned: set = set()          # (level, room, tid) already written to disk
+
+    def reread(self) -> None:
+        self.key, self.cells = None, []
+        self.use(self.emu.state())
+
+    def use(self, s) -> bool:
+        """Read the pattern if the screen changed. Returns True if it did."""
+        self.kb.use(s.level, s.mode)
+        key = (s.level, s.room, s.mode)
+        if key != self.key:
+            self.cells = read_cells(self.emu)
+            self.key = key
+            return True
+        return False
+
+    # -- the two questions -------------------------------------------------
+    def blocked(self, s, x: int, y: int) -> int | None:
+        """The tile id that stops Link standing at (x, y), or None if he may stand there."""
+        self.use(s)
+        if x < 0 or x > 240 or y + 3 < PLAY_TOP or y + 19 > PLAY_TOP + 176:
+            return -1                       # off the playfield: the wall is the screen edge
+        for cy, cx in box_cells(x, y):
+            t = self.cells[cy][cx]
+            if not self.kb.is_walkable(t, True):     # optimistic: unknown does not block
+                return t
+        return None
+
+    def free(self, x: int, y: int) -> bool:
+        return self.blocked(self.emu.state(), x, y) is None
+
+    def cell_solid(self, x: int, y: int) -> int | None:
+        """The tile id under the single 8x8 cell at (x, y), or None if it is not a wall.
+
+        One cell rather than Link's whole body box: this is the instrument's question ("was that
+        swing aimed into something?"), and a body box would call half a doorway solid.
+        """
+        self.use(self.emu.state())
+        return self._solid_cell(x, y)
+
+    def confirm(self, s, x: int, y: int) -> int | None:
+        """Re-read the screen and ask again, because the cache cannot know what just changed.
+
+        Link pushes a block, a locked door opens under a key, a bomb blows a hole: the pattern
+        that was correct a second ago is not correct now, and a fighter that refuses to walk
+        through a door which has just opened is exactly as stuck as one that walks into a wall.
+        Only ever called on the blocked path, so the extra 960-byte bus read is rare.
+        """
+        self.reread()
+        return self.blocked(s, x, y)
+
+    def wall_between(self, x0: int, y0: int, x1: int, y1: int) -> tuple[int, int, int] | None:
+        """First solid cell on the straight line from (x0,y0) to (x1,y1), as (x, y, tile id).
+
+        Sampled every 8 px because that is the cell size, and the last sample is forced to the
+        target itself so "the thing is standing in a wall" is caught and not rounded away: a Gibdo
+        on the far side of a wall block, or an object slot reporting a position inside one, is the
+        case the wasted-shot instrument was built to see.
+        """
+        s = self.emu.state()
+        self.use(s)
+        dx, dy = x1 - x0, y1 - y0
+        n = max(abs(dx), abs(dy))
+        if n == 0:
+            return None
+        for i in range(0, n + 8, 8):
+            x = x0 + (dx * i) // n
+            y = y0 + (dy * i) // n
+            t = self._solid_cell(x, y)
+            if t is not None:
+                return (x, y, t)
+        return None
+
+    def _solid_cell(self, x: int, y: int) -> int | None:
+        cy, cx = (y + 3 - PLAY_TOP) // 8, x // 8
+        if not (0 <= cy < ROWS and 0 <= cx < COLS):
+            return -1
+        t = self.cells[cy][cx]
+        return None if self.kb.is_walkable(t, True) else t
+
+    def learn_blocked(self, s, d: str, tid: int, x: int, y: int) -> None:
+        """A step into this tile moved nobody, so the tile is a wall here. Recorded once each."""
+        if tid is None or tid < 0:
+            return
+        key = (s.level, s.room, tid)
+        if key in self.learned or tid in self.kb.solid:
+            return
+        self.learned.add(key)
+        self.kb.learn(tid, False, f"blocked moving {d} into it at ({x},{y}) in room {s.room:02X} of level {s.level}")
+        self.cells = read_cells(self.emu)         # the pattern just changed under us
+
+
 Y_PHASE = [5]     # Link's y is 5 mod 8 in rooms; cellars use a different phase, measured on entry
 
 
@@ -655,10 +781,18 @@ class Navigator:
 
     def _in_the_way(self, s, d: str, enemies):
         """A killable enemy directly ahead within sword reach, or None."""
-        from .lookahead import NEVER_CHASE
+        from .lookahead import NEVER_CHASE, must_kill
         best = None
         for e in enemies:
             t = e[1]
+            if must_kill(t, s):
+                # Full health, White Sword, guard: he is the objective, so a Lynel that blocks the
+                # lane is now fought head-on rather than edged around. Checked before the NEVER_CHASE
+                # filter below, which is the whole point - otherwise the rule is a no-op.
+                d = "Right" if e[2] > s.x else ("Left" if e[2] < s.x else ("Down" if e[3] > s.y else "Up"))
+                ex, ey = e[2] - s.x, e[3] - s.y
+                if abs(ex) + abs(ey) <= 20:
+                    return e
             if t >= 0x40 or (t in NEVER_CHASE and t not in (0x01, 0x02)) or t in (0x0B, 0x0C):
                 continue                      # bosses/flames, the unkillable, and Darknuts' shields
                 # (Lynels are never CHASED, but one standing in the lane is cut down like anything else)

@@ -7,18 +7,264 @@ touching-close, lining up, and swinging. Attacking is disabled while Link stands
 """
 from __future__ import annotations
 
+import os
+
 from .emulator import BizHawk, State
 from .overworld import (Navigator, NavError, LinkDied, read_enemies, read_room_item, enemy_name, snap,
                         DIRS, immune_to, DMG_SWORD, DMG_BOMB, read_ghost_objects)
 from .lookahead import UNKILLABLE, killable
+from . import drops
 from . import ram
 
 REACH = 10          # max box gap that still hits (measured)
 ALIGN = 4           # max cross-axis offset between Link and the enemy
 
+# ---------------------------------------------------------------- the dungeon clock
+#
+# All of this lives in zelda/drops.py now. It used to be a second hand-copy of the arithmetic that
+# lookahead.py had already hardcoded for bombs, with its own ROWS and its own copy of the pre-kill
+# -> post-kill rule, and the only thing that ever checked the two agreed was a probe. One table,
+# one function: drops.prefer_target(emu, targets, item).
+#
+# Why a clock is worth steering for at all, and why there is no separate "is this room dangerous?"
+# test: the clock sits in the drop rows of the two enemy families that FILL rooms (row 1: Ghini,
+# Tektite, Leever, Zol, Stalfos, Pols Voice; row 2: blue Lynel/Moblin/Octorok, Vire, Gibdos, Red
+# Darknut, Wizzrobe, Goriya). A room where a clock is reachable is therefore already a room worth
+# fighting carefully, and the reachability condition IS the desire condition. It is also nearly
+# free: every one of these kills was going to happen anyway, because the room is being cleared, so
+# steering only chooses the ORDER and never adds a kill.
+CLOCK_MIN_ROOM = 4
+CLOCK_STEER = [True]          # module flag, so this can be turned off without editing clear_room
+
+# The wall gate, as an A/B. Every other behaviour change in this file that was not obviously right
+# got one of these, because "obviously right" is what a change that only ever runs on rooms with
+# furniture in them looks like from the outside. ZELDA_NO_WALLS=1 puts the fighter back to walking
+# by the sign of the difference and swinging whenever the box test passes, which is what it did
+# for the whole of this project's history.
+NO_WALLS = [bool(int(os.environ.get("ZELDA_NO_WALLS", "0")))]
+
 
 def enemy_hp(e) -> int:
     return e[4] >> 4
+
+
+# ---- where the sword actually reaches ----------------------------------------------------------------------
+#
+# THIS MODEL WAS BACKWARDS, and it is the largest thing wrong with the fighter.
+#
+# It used to be a pair of box sizes: REACH = 10 on the gap between the monster's half-width (16) and
+# Link's, ALIGN = 4 across, so a swing was offered when the monster was 16 to 26 px away and lined
+# up. It is a reasonable model of two boxes touching, and the game does not implement it. Measured on
+# Level 3 room $4A: 33 hits in 115 aimed swings, and every one of the 82 misses was a swing at
+# something 16 to 32 px away - i.e. every miss was a swing the cartridge had already refused, and the
+# hits that did land were monsters that walked into the blade during the 13 frames of the animation.
+#
+# What the cartridge does (Z_01.asm, and it is four short routines with no guesswork in it):
+#
+#   CheckMonsterSwordCollision -> CheckMonsterStabbingCollision sets a threshold per axis and
+#   SWAPS them on Link's facing: facing horizontally $0D = $10 (16) across, $0E = $0C (12) down;
+#   facing vertically $0D = $0C (12) across, $0E = $10 (16) down.
+#
+#   CheckMonsterSlenderWeaponCollision2: the sword's own centre is a:ObjX + 8 / a:ObjY + 6 when
+#   Link faces horizontally, + 6 / + 8 when he faces vertically. (The comment in the source asks
+#   whether it should follow the weapon's direction rather than Link's facing. It does not, and that
+#   is why a sword swung Left and a sword swung Right use the same 8/6.)
+#
+#   GetObjectMiddle: the monster's centre is ObjX + 8 and ObjY + 8 - or ObjX + 4 when ObjAttr ($4BF)
+#   bit $40, "half width", is set.
+#
+#   DoObjectsCollideWithThresholds: |dx| >= threshold on X -> no hit; |dy| >= threshold on Y -> no
+#   hit. Both are "nearer than", not "further than". So for a horizontal swing:
+#
+#       |ObjX - LinkX| < 16   and   |ObjY - LinkY + 2| < 12
+#
+# Sixteen is the whole reach. The old model refused to swing inside 16 px and reached to 26, which is
+# outside the sword's actual range at one end and inside it at the other, and the fighter spent the
+# room swinging at things it could not reach while standing next to things it could.
+#
+# One note on what is NOT in here: the beam (CheckMonsterSwordShotOrMagicShotCollision) uses a
+# different box and a longer range, and is left alone. Nor is the Zol special-cased: UpdateZolState
+# has three states - 0 Wander, 1 Shove, 2 Split - so "state 3" that hittable_now once tested for a
+# Zol is a state a Zol cannot be in, which is why that gate made a room unclearable instead of
+# clearing it faster. Z_04 Zol_CheckCollisions hits only in state 0 and turns the Zol around when it
+# survives, which is the real reason a Zol is awkward: it does not stand still to be hit twice.
+SWORD_ACROSS, SWORD_ALONG = 12, 16        # the smaller threshold, and the larger one
+GEOM = [bool(int(os.environ.get("ZELDA_SWORD_GEOM", "1")))]
+AXIS = {"Right": 0, "Left": 0, "Down": 1, "Up": 1}
+
+
+def reach_box_model(s, e) -> str | None:
+    """The model this file used until 2026-09-30, kept deliberately for two callers.
+
+    A pair of box sizes: 16 for the monster's half-width, REACH = 10 of gap, ALIGN = 4 of line-up.
+    It is wrong - see sword_reach - and it is NOT removed, because the two Darknut routines are built
+    around it: they stand off at 16 + REACH - 4 = 22 px and strike as a Darknut walks past, and that
+    distance was chosen against this reach. Correcting the reach without re-deriving that strategy
+    would leave them walking to a post they can never swing from, and there is no Darknut checkpoint
+    in this tree to measure the re-derivation on. So: measured correction for the ordinary path
+    (attack_slot, fliers), and this kept, named, for the Darknuts until someone has a room for it.
+    """
+    dx, dy = e[2] - s.x, e[3] - s.y
+    gx, gy = abs(dx) - 16, abs(dy) - 16
+    if abs(dy) <= ALIGN and 0 <= gx <= REACH:
+        return "Right" if dx > 0 else "Left"
+    if abs(dx) <= ALIGN and 0 <= gy <= REACH:
+        return "Down" if dy > 0 else "Up"
+    return None
+
+
+def sword_reach(emu: BizHawk, s, e) -> str | None:
+    """Direction to swing at `e` and have the cartridge agree it landed, or None if nothing is in reach.
+
+    ZELDA_SWORD_GEOM=0 restores the old box model, which is what the A/B in testing/probe_walls.py
+    measures against.
+    """
+    if not GEOM[0]:
+        return reach_box_model(s, e)
+    half = 4 if emu.byte(0x4BF + e[0]) & 0x40 else 8
+    mx, my = e[2] + half, e[3] + 8
+    for d in ("Right", "Left", "Down", "Up"):
+        vertical = AXIS[d] == 1
+        sx = s.x + (6 if vertical else 8)
+        sy = s.y + (8 if vertical else 6)
+        across, along = (SWORD_ACROSS, SWORD_ALONG) if vertical else (SWORD_ALONG, SWORD_ACROSS)
+        if abs(mx - sx) < across and abs(my - sy) < along:
+            return d
+    return None
+
+
+def shield_side(facing: int, d: str, dx: int, dy: int) -> bool:
+    """Is this swing into a Darknut's shield? Only a swing along its facing axis can be."""
+    if AXIS[d] == 0:
+        return (facing == 1 and dx < 0) or (facing == 2 and dx > 0)
+    return (facing == 4 and dy < 0) or (facing == 8 and dy > 0)
+
+
+# ---- wasted-shot instrument ---------------------------------------------------------------------------------
+# A swing that was AIMED at a specific enemy and did no damage is a measurement, not a mood. It is
+# the only signal that can tell "the fighter is aiming into a wall" apart from "the enemy moved" and
+# "Link swung at nothing on purpose", and those three have been indistinguishable from the outside
+# all session. One logged line with a tile coordinate settles it.
+#
+# The condition that keeps this from being noise: only swings committed to a TARGET count. Link
+# swings at empty air constantly while repositioning, so an unconditional miss counter would be
+# almost entirely legitimate swings and would drown the one line that matters.
+#
+# OFF by default - it notes, it never steers, but there is no reason to pay for it on a normal run.
+WASTED = [bool(int(os.environ.get("ZELDA_WASTED", "0")))]
+_wasted_stats = {"swings": 0, "hits": 0, "wasted": 0, "solid": 0, "in_wall": 0,
+                  "buried": 0, "bumped": 0}
+_wasted_log: list[str] = []
+
+
+def hittable_now(emu: BizHawk, slot: int, t: int) -> bool:
+    """Can this slot be hit AT ALL this frame, whatever Link does?
+
+    Peahats ($0F) and Leevers ($10) spend most of their life in a burrow with state != 3, and the
+    game will not damage them there - the navigator has known this for a long time (threats() leaves
+    both out while st[slot] != 3, with the comment "neither is even drawn"), and the fighter never
+    asked. So it walked up to a Peahat that was still underground, lined up on it and swung:
+    measured on Level 3 room $4A, 82 aimed swings in six attempts that hit nothing, the top of the
+    log the same two coordinates over and over with the enemy unmoved. Not one of them was a wall.
+    They were a target the cartridge was refusing to let Link touch.
+
+    $13, the ZOL, LOOKS like the same case and IS NOT, and it cost a run to find out. Every wasted
+    swing the instrument reported on room $4A was a Zol at 2 HP, at a legal sword gap, reading state
+    $00 - so the obvious extrapolation is that a Zol is unhittable until it comes out of the wall,
+    the way a Leever is. Gating on that took the room from 82 wasted swings in six attempts to
+    ZERO - and also from 33 hits to zero, and every attempt ended "died fighting" with the fighter
+    never once swinging. A gate that makes a room unclearable has not removed wasted swings, it has
+    removed the fight, and the two look identical in the counter that was supposed to tell them
+    apart. There is no evidence anywhere in this project that a Zol's "out" state is 3; the Leever
+    and Peahat rule is in production because threats() has always used it, and the Zol is left alone
+    until someone reads UpdateZol rather than UpdateLeever.
+
+    The Zora ($11) is the same shape with a different range: states 2, 3 and 4 are out of the water
+    and 0, 1, 5 are not, so it is listed the way threats() lists it.
+    """
+    st = emu.byte(0xAC + slot)
+    if t in (0x0F, 0x10):
+        return st == 3
+    if t == 0x11:
+        return st in (2, 3, 4)
+    return True
+
+
+def _judge_swing(floor, here, slot: int, hp0: int, x: int, y: int, room: int) -> None:
+    """Was the swing we just taken worth taking? Records it either way."""
+    if not WASTED[0]:
+        return
+    emu = floor.emu
+    e = find_enemy(emu, slot)
+    _wasted_stats["swings"] += 1
+    # Every aimed swing, hit or miss, binned by type and by how far away the target was. This is the
+    # table that settles "how far does the sword reach" with evidence instead of arithmetic: the
+    # disassembly gives the rule, and this says whether the rule is the one the cartridge is using.
+    bucket = min(31, max(0, (abs(x - here[0]) + abs(y - here[1])) // 4 * 4))
+    key = f"{e[1]:02X}@{bucket:02d}" if e is not None else f"--@{bucket:02d}"
+    _wasted_stats.setdefault("reach", {})
+    _wasted_stats["reach"].setdefault(key, [0, 0])[0 if (e is None or enemy_hp(e) < hp0) else 1] += 1
+    # A dead enemy is a HIT, not a miss. The first version of this fell through to "wasted" here and
+    # scored 1 swing / 0 hits / 1 wasted on a kill - a false positive on the most common event there
+    # is, which would have made the instrument confidently wrong on almost every line it printed.
+    if e is None or enemy_hp(e) < hp0:
+        _wasted_stats["hits"] += 1
+        return
+    _wasted_stats["wasted"] += 1
+    # THREE questions, because a miss has three different causes and only one of them is a wall.
+    # The wall test is the LINE and not the target's own cell, because the first version asked the
+    # cell and could therefore only ever report "the enemy is standing in a wall" - the rare case -
+    # while the thing the strike gate prevents is a wall BETWEEN them. On room $4A the cell version
+    # said "no" eighty-two times out of eighty-two, so it was measuring nothing at all.
+    w = floor.wall_between(here[0], here[1], x, y)
+    in_wall = floor.cell_solid(x, y) is not None
+    buried = e is not None and not hittable_now(emu, slot, e[1])
+    for key, on in (("solid", w is not None), ("in_wall", in_wall), ("buried", buried)):
+        if on:
+            _wasted_stats[key] += 1
+    why = ("wall in the way" if w is not None else
+           "target in a wall" if in_wall else
+           f"still in its burrow (state {emu.byte(0xAC + slot):02X})" if buried else
+           f"moved to ({e[2]},{e[3]})" if e is not None else "gone")
+    # The type, the state byte and the gap, on the same line. A wasted swing that cannot say WHAT it
+    # was aimed at is a wasted swing that has to be investigated again next time, and this one has
+    # now cost two rounds of that: 82 of them on room $4A, none of them a wall, none of them a
+    # burrow, and every one of them reported an enemy that stood still and took nothing.
+    # Every byte the cartridge's own "can this be hit" path looks at, on the one line that has to
+    # answer it: ObjAttr $4BF bit $20 Invincible (which skips ALL weapon collisions outright),
+    # ObjInvincibilityTimer $4F0 (any value -> return), ObjMetastate $405 (nonzero -> dying).
+    what = (f"type {e[1]:02X} {enemy_name(e[1])}" if e is not None else "type --")
+    stt = emu.byte(0xAC + slot) if e is not None else 0
+    attr = emu.byte(0x4BF + slot) if e is not None else 0
+    inv = emu.byte(0x4F0 + slot) if e is not None else 0
+    meta = emu.byte(0x405 + slot) if e is not None else 0
+    _wasted_log.append(
+        f"    wasted shot  room {room:02X}  aimed ({x},{y})  gap ({x - here[0]:+d},{y - here[1]:+d})"
+        f"  {what}  hp {enemy_hp(e) if e is not None else 0}  state {stt:02X}  attr {attr:02X}"
+        f"  inv {inv:02X}  meta {meta:02X}  {why}")
+
+
+def wasted_report(emu: BizHawk) -> None:
+    """Dump the instrument. Call once a segment has gone wrong, not every frame."""
+    if not WASTED[0]:
+        return
+    st = _wasted_stats
+    if not st["swings"] and not st["bumped"]:
+        return
+    if st["swings"]:
+        emu.note(f"  [wasted] {st['wasted']} of {st['swings']} aimed swings did nothing"
+                 + (f"; {st['solid']} had a wall in the way" if st["solid"] else "")
+                 + (f"; {st['in_wall']} were aimed into a wall" if st["in_wall"] else "")
+                 + (f"; {st['buried']} hit a target still in its burrow" if st["buried"] else ""))
+    if st["bumped"]:
+        emu.note(f"  [wasted] {st['bumped']} steps were refused as walls, blocks or water")
+    if st.get("reach"):
+        # type@distance: hits/misses. Printed because the sword's reach is the one number every
+        # fighter decision leans on and it was wrong once already - see sword_reach.
+        emu.note("  [reach] " + "  ".join(f"{k}:{v[0]}/{v[1]}"
+                                          for k, v in sorted(st["reach"].items())))
+    for line in _wasted_log[-12:]:
+        emu.note(line)
 
 
 def find_enemy(emu: BizHawk, slot: int):
@@ -29,12 +275,56 @@ def find_enemy(emu: BizHawk, slot: int):
 
 
 class Fighter:
+    # The two ways off a wall, for a step that is blocked. Which one is tried first is decided by
+    # how far each takes us from what we were walking towards, so going round a wall does not
+    # double back the way it came.
+    PERP_DIRS = {"Right": ("Down", "Up"), "Left": ("Down", "Up"),
+                 "Up": ("Right", "Left"), "Down": ("Right", "Left")}
+    GO_AROUND = 24          # frames to keep sliding along a wall before the geometry is re-read
+
     def __init__(self, nav: Navigator):
+        from .overworld import Screen
         self.nav, self.emu = nav, nav.emu
         self.jitter = None       # (rng, probability) random pauses while positioning, used by search
+        # One cached read of the screen's tiles per room, shared by every question the fighter asks
+        # of the map: may I step there, is the sword's path clear, was that swing aimed at a wall.
+        # See overworld.Screen for why the fighter needs one at all.
+        self.floor = Screen(nav.emu, nav.kb)
+        self.bumped = 0          # consecutive refused steps, for the note and the instrument
+        self._around: tuple[str, int] | None = None
 
-    def _move(self, d: str, target_slot: int | None = None) -> State:
-        """One step toward d, unless another enemy is about to be walked into; then step away from it."""
+    def _around_candidates(self, d: str, s, toward=None) -> list[str]:
+        """Sideways options off a blocked step, the one that closes on the target first."""
+        a, b = self.PERP_DIRS[d]
+        if toward is None:
+            return [a, b]
+        ax, ay = DIRS[a]
+        bx, by = DIRS[b]
+        da = abs(s.x + ax - toward[0]) + abs(s.y + ay - toward[1])
+        db = abs(s.x + bx - toward[0]) + abs(s.y + by - toward[1])
+        return [a, b] if da <= db else [b, a]
+
+    def _move(self, d: str, target_slot: int | None = None, toward=None) -> State:
+        """One step toward d, unless another enemy is about to be walked into; then step away from it.
+
+        And now: unless there is a wall, a block or water in the way, in which case go round it.
+
+        The navigator never walks into a wall, because `plan()` walks over `legal()`. This did:
+        the approach was "step by the sign of the difference", so a Gibdo on the far side of a
+        block cost one frame of nothing, per frame, until the budget ran out - the same invisible
+        waste the wasted-shot instrument was built to find on the swing side, and the reason a
+        room with furniture in it fought slower than the same room bare.
+
+        Three things make the escape a route round rather than a refusal:
+          * the tile is ASKED, with optimistic=True, so an unclassified tile never blocks - a
+            fighter that stands still in a room it has not classified is a stall, and a stall in a
+            fight is how a segment spends its whole budget doing nothing;
+          * the slide is held for GO_AROUND frames rather than re-chosen every frame, because
+            re-choosing every frame is a one-frame oscillation that never gets past a wall that is
+            thicker than one pixel;
+          * being refused is EVIDENCE. The tile goes into knowledge/tiles.json as solid, with the
+            room and the pixel that proved it, in the same shape as every other line in there.
+        """
         emu = self.emu
         if self.jitter and self.jitter[0].random() < self.jitter[1]:
             emu.step((), self.jitter[0].choice([1, 2, 4]))
@@ -43,7 +333,9 @@ class Fighter:
         nx, ny = s.x + dx, s.y + dy
         ens = read_enemies(emu)
         # blade traps: crossing their line is fine (they take ~50 frames to arrive from a corner);
-        # what kills is lingering. Only react to a trap that is actually sliding and close.
+        # what kills is lingering. Only react to a trap that is actually sliding and close. First,
+        # before the geometry below, because it is the only one of the three that is about this
+        # frame rather than about where we are going.
         for e in ens:
             if e[1] != 0x49:
                 continue
@@ -52,6 +344,29 @@ class Fighter:
                 if abs(e[3] - s.y) < 16:
                     return emu.step("Up" if s.y > e[3] or s.y > 141 else "Down", 1)
                 return emu.step("Left" if s.x < e[2] and s.x > 40 else "Right", 1)
+        tid = None if NO_WALLS[0] else self.floor.blocked(s, nx, ny)
+        if tid is not None:
+            tid = self.floor.confirm(s, nx, ny)          # one bus read, only on this path
+        if tid is not None:
+            self.floor.learn_blocked(s, d, tid, nx, ny)
+            _wasted_stats["bumped"] += 1
+            cands = ([self._around[0]] if self._around and self._around[1] > 0
+                     else self._around_candidates(d, s, toward))
+            for c in cands:
+                cdx, cdy = DIRS[c]
+                if self.floor.blocked(s, s.x + cdx, s.y + cdy) is not None:
+                    continue
+                self._around = (c, self.GO_AROUND)
+                self.bumped += 1
+                if self.bumped == 24:
+                    emu.note(f"a wall (tile ${tid:02X}) is in the way of {d} at ({nx},{ny}); going round it")
+                return emu.step(c, 1)
+            self._around = None
+            self.bumped += 1
+            return emu.step((), 1)                 # boxed in on both sides: hold, do not lean on it
+        if self._around:
+            self._around = (self._around[0], self._around[1] - 1)
+        self.bumped = 0
         for e in ens:
             if e[0] == target_slot or e[1] == 0x49:
                 continue
@@ -64,6 +379,26 @@ class Fighter:
                     away = "Left" if ax <= 0 else "Right"
                 return emu.step(away, 1)
         return emu.step(d, 1)
+
+    def reach_clear(self, s, e, d: str) -> bool:
+        """Is the sword's path to this enemy clear of walls? If not, do not swing.
+
+        The box test says the enemy is 16 to 26 px away and lined up. It says nothing about what
+        is between them, and a wall in between is the whole content of a wasted swing: the swing
+        plays, the enemy does not move, the fighter counts a miss and tries again from the same
+        place. Sampled every 8 px - one cell - from Link's centre to the enemy's, which at that
+        range is the sword's own reach and nothing more, and which also catches an enemy standing
+        inside a wall rather than one hidden behind it.
+
+        The beam is deliberately NOT gated here. Whether the sword beam stops at a wall is not
+        established anywhere in this project, and a guess in either direction is worth less than
+        the question: a wrong "it stops" would refuse beams that land, and a wrong "it passes"
+        would only cost the same frames this gate saves.
+        """
+        if NO_WALLS[0]:
+            return True
+        return self.floor.wall_between(s.x, s.y, e[2], e[3]) is None
+
 
     def swing(self, d: str, back_off: bool = False) -> State:
         """Face d and swing. Link is committed for ~12 frames. Optionally step back afterwards."""
@@ -244,8 +579,20 @@ class Fighter:
         frames = 0
         while frames < max_frames:
             e = find_enemy(emu, slot)
-            if e is None:
-                emu.note(f"The {name} is dead ({swings} swings, {hits} hits)")
+            if e is None or enemy_hp(e) == 0:
+                # DEAD, and the object table has not caught up. read_enemies filters on the TYPE
+                # byte and nothing else, so a corpse keeps its slot - and its slot keeps its
+                # position - until the game clears it, which for a Gel is a long time. Measured on
+                # room $4A: the fighter threw six beam swings at one dead Gel from 103 to 142 px
+                # away, 144 frames, because the slot was still there and hp still read 0. The other
+                # half of that log is the Gel's state byte, $02: it is an effect object by then.
+                #
+                # Narrow on purpose. This is the Fighter's ordinary-room path; the bosses that
+                # wake up at 0 HP (Gohma, Armos - the latter is in UNKILLABLE) are fought through
+                # plan_fight with their own policies, so nothing here can decide a boss is over
+                # before the boss says so.
+                emu.note(f"The {name} is dead ({swings} swings, {hits} hits)"
+                         + ("" if e is None else " - still in the object table at 0 HP"))
                 return True
             s = emu.state()
             if s.hearts <= 0:
@@ -255,16 +602,21 @@ class Fighter:
                 hearts0 = s.hearts
             ex, ey = e[2], e[3]
             dx, dy = ex - s.x, ey - s.y
-            gx, gy = abs(dx) - 16, abs(dy) - 16
-            beam = self._beam_shot(s, e)
+            # A beam at a target the game will not let it hit is the same 24 wasted frames as a sword
+            # swing at one, and the room-$4A instrument found six of them a side. Whether the beam
+            # stops at a WALL is a separate question this project has not answered, and is left open
+            # on purpose; whether the target is still in its burrow is not a question at all.
+            beam = self._beam_shot(s, e) if hittable_now(emu, slot, e[1]) else None
             if beam:
                 if swings == 0:
                     emu.note(f"Full hearts: firing sword beams at the {name} from range instead of closing in")
                 hp0 = enemy_hp(e)
+                aim, here = (e[2], e[3]), (s.x, s.y)      # where Link stood when he swung
                 s = self.swing(beam)
                 s = emu.step((), 10)                 # let the beam travel
                 swings += 1; frames += 24
                 e2 = find_enemy(emu, slot); hits += (e2 is None or enemy_hp(e2) < hp0)
+                _judge_swing(self.floor, here, slot, hp0, aim[0], aim[1], s.room)
                 continue
             facing = self._facing(slot) if darknut else 0
             # 1. never stand in a Darknut's line: sidestep out of it first
@@ -279,23 +631,23 @@ class Fighter:
                     frames += 2
                     continue
             # 2. in position? swing (for Darknuts only from the side/back)
-            front_h = darknut and ((facing == 1 and dx < 0) or (facing == 2 and dx > 0))
-            front_v = darknut and ((facing == 4 and dy < 0) or (facing == 8 and dy > 0))
-            if abs(dy) <= ALIGN and 0 <= gx <= REACH and not front_h:
+            #    ...and not into a wall. reach_clear is the other half of the same test: lined up and
+            #    in range is not the same as able to reach, and swinging anyway is how the fighter
+            #    spent sixty frames a Gibdo behind a block. Folded into the CONDITION rather than
+            #    checked inside the branch, so a blocked reach falls through to the approach below -
+            #    which steps, and so keeps the loop's frame budget honest. Skipping the swing without
+            #    stepping would spin this loop on one frame of state until max_frames, forever.
+            d = sword_reach(emu, s, e)
+            if d and not (darknut and shield_side(facing, d, dx, dy)) \
+                    and self.reach_clear(s, e, d) and hittable_now(emu, slot, e[1]):
                 hp0 = enemy_hp(e)
-                s = self.swing("Right" if dx > 0 else "Left")
+                aim, here = (e[2], e[3]), (s.x, s.y)      # where Link stood when he swung
+                s = self.swing(d)
                 swings += 1; frames += 14
                 e2 = find_enemy(emu, slot)
                 if e2 is None or enemy_hp(e2) < hp0:
                     hits += 1
-                continue
-            if abs(dx) <= ALIGN and 0 <= gy <= REACH and not front_v:
-                hp0 = enemy_hp(e)
-                s = self.swing("Down" if dy > 0 else "Up")
-                swings += 1; frames += 14
-                e2 = find_enemy(emu, slot)
-                if e2 is None or enemy_hp(e2) < hp0:
-                    hits += 1
+                _judge_swing(self.floor, here, slot, hp0, aim[0], aim[1], s.room)
                 continue
             # 3. choose where to stand. Darknuts: beside them, relative to their facing.
             if darknut:
@@ -321,32 +673,33 @@ class Fighter:
                 # out of the line of fire. "Stand right of the thing and hit it" is a better default
                 # than "walk at the thing" for anything that shoots back, and it costs nothing when
                 # the target is harmless - so it is a tiebreak on the approach, not a rule.
-                if self.RIGHT_FLANK[e[1]]:
+                if e[1] in self.RIGHT_FLANK:
                     if abs(dy) > ALIGN:
-                        s = self._move("Down" if dy > 0 else "Up", slot)
+                        s = self._move("Down" if dy > 0 else "Up", slot, toward=(ex, ey))
                         frames += 1
                         continue
-                    if dx > REACH + 8:
-                        s = self._move("Right", slot)
+                    if abs(dx) >= SWORD_ALONG:
+                        s = self._move("Right", slot, toward=(ex, ey))
                         frames += 1
                         continue
-                if abs(dy) <= abs(dx):
-                    if abs(dy) > ALIGN:
-                        d = "Down" if dy > 0 else "Up"
-                    elif gx > REACH - 4:
-                        d = "Right" if dx > 0 else "Left"
-                    else:
-                        d = "Left" if dx > 0 else "Right"
+                # Line up before closing, because a swing cannot reach across more than 12 or along
+                # more than 16 (or the other way round, see sword_reach). A target 14 px off-line is
+                # unreachable from any distance on its row, so walking along the row instead is the
+                # oscillation the old ALIGN test existed to stop - and ALIGN = 4 was itself part of the
+                # same wrong model, demanding a far tighter line-up than the game asks for.
+                if abs(dy) >= SWORD_ALONG:
+                    d = "Down" if dy > 0 else "Up"
+                elif abs(dx) >= SWORD_ACROSS and dy:
+                    d = "Down" if dy > 0 else "Up"
                 else:
-                    if abs(dx) > ALIGN:
-                        d = "Right" if dx > 0 else "Left"
-                    elif gy > REACH - 4:
-                        d = "Down" if dy > 0 else "Up"
-                    else:
-                        d = "Up" if dy > 0 else "Down"
-            s = self._move(d, slot)
+                    d = "Right" if dx > 0 else "Left" if dx else ("Down" if dy > 0 else "Up")
+            # toward= is what makes a detour round a wall a route round rather than a drift: the
+            # sideways step is ordered by which way closes on the target, so Link slides along the
+            # obstacle towards the enemy instead of away from him.
+            s = self._move(d, slot, toward=(ex, ey))
             frames += 1
         emu.note(f"Couldn't finish the {name} in {max_frames} frames ({swings} swings, {hits} hits)")
+        wasted_report(emu)      # a no-op unless ZELDA_WASTED=1; this is where the instrument is read
         return False
 
 
@@ -442,15 +795,13 @@ class Fighter:
             coming = (vx and (vx > 0) == (dx < 0) and abs(dy) < 16) or (vy and (vy > 0) == (dy < 0) and abs(dx) < 16)
             safe_swing = not any(self._predicted_contact(s, o, ff, 18, margin=2) for o, ff in dks)
             if not coming and safe_swing:
-                if abs(dy) <= ALIGN and 0 <= abs(dx) - 16 <= REACH:
+                # reach_clear in the condition, as in attack_slot: a blocked swing falls through to
+                # the approach below, which steps, rather than spinning here on one frame of state.
+                dh = reach_box_model(s, e)          # Darknuts keep the reach they were built on
+                if dh and not shield_side(f, dh, dx, dy) \
+                        and self.reach_clear(s, e, dh) and hittable_now(emu, slot, e[1]):
                     hp0 = enemy_hp(e)
-                    s = self.swing("Right" if dx > 0 else "Left")
-                    swings += 1; frames += 14
-                    e2 = find_enemy(emu, slot); hits += (e2 is None or enemy_hp(e2) < hp0)
-                    continue
-                if abs(dx) <= ALIGN and 0 <= abs(dy) - 16 <= REACH:
-                    hp0 = enemy_hp(e)
-                    s = self.swing("Down" if dy > 0 else "Up")
+                    s = self.swing(dh)
                     swings += 1; frames += 14
                     e2 = find_enemy(emu, slot); hits += (e2 is None or enemy_hp(e2) < hp0)
                     continue
@@ -480,7 +831,7 @@ class Fighter:
             if any(self._predicted_contact(nxt, o, ff, 8) for o, ff in dks):
                 s = emu.step((), 1); frames += 1; hold = None
                 continue
-            s = self._move(d, slot); frames += 1
+            s = self._move(d, slot, toward=(ex, ey)); frames += 1
         emu.note(f"Couldn't finish the {name} in {max_frames} frames ({swings} swings, {hits} hits)")
         return False
 
@@ -547,11 +898,13 @@ class Fighter:
                 coming = (vx and (vx > 0) == (dx < 0) and abs(dy) < 16) or (vy and (vy > 0) == (dy < 0) and abs(dx) < 16)
                 if coming:
                     continue
-                if abs(dy) <= ALIGN and 0 <= abs(dx) - 16 <= REACH:
-                    hp0 = enemy_hp(o); s = self.swing("Right" if dx > 0 else "Left"); swings += 1; frames += 14
-                    o2 = find_enemy(emu, o[0]); hits += (o2 is None or enemy_hp(o2) < hp0); struck = True; break
-                if abs(dx) <= ALIGN and 0 <= abs(dy) - 16 <= REACH:
-                    hp0 = enemy_hp(o); s = self.swing("Down" if dy > 0 else "Up"); swings += 1; frames += 14
+                # The post is chosen to be floor with a block beside it, so a wall in the way here
+                # is a Darknut that has come round the block - the same swing into a wall the
+                # instrument was built to count, and here it is a wasted 14 frames per pass.
+                do = reach_box_model(s, o)         # as hunt_darknut: see reach_box_model
+                if do and not shield_side(f, do, dx, dy) \
+                        and self.reach_clear(s, o, do) and hittable_now(emu, o[0], o[1]):
+                    hp0 = enemy_hp(o); s = self.swing(do); swings += 1; frames += 14
                     o2 = find_enemy(emu, o[0]); hits += (o2 is None or enemy_hp(o2) < hp0); struck = True; break
             if struck:
                 continue
@@ -636,7 +989,7 @@ class Fighter:
         emu = self.emu
         for _ in range(max_enemies * 3):
             s = emu.state()
-            ens = [e for e in read_enemies(emu) if e[1] != 0x49 and e[1] < 0x50]
+            ens = [e for e in read_enemies(emu) if e[1] != 0x49 and e[1] < 0x50 and enemy_hp(e) > 0]
             if not ens:
                 self.collect_drop(); return True
             walkers = [e for e in ens if e[1] not in self.FLIERS]
@@ -646,7 +999,10 @@ class Fighter:
             elif not self.ambush():
                 break
             self.collect_drop()
-        return not [e for e in read_enemies(emu) if killable(e)]
+        left = [e for e in read_enemies(emu) if killable(e) and enemy_hp(e) > 0]
+        if left:
+            wasted_report(emu)
+        return not left
 
     FLIERS = {0x1B, 0x1C, 0x1D, 0x1A, 0x22}   # Keese, Peahat, flying Ghini: don't chase, ambush
 
@@ -684,15 +1040,18 @@ class Fighter:
         return read_ghost_objects(self.emu)
 
     def _hittable(self, s: State, e):
-        """Direction to swing if the enemy is in reach right now, else None."""
+        """Direction to swing if the enemy is in reach right now, else None.
+
+        The wall gate is here too, and it costs a flier ambush the most of anything in this file:
+        Keese and Octoroks come in over the furniture, so the interesting moments are the ones
+        where something is 20 px away on the far side of a block.
+        """
         if immune_to(self.emu, e[0], DMG_SWORD):
             return None
-        dx, dy = e[2] - s.x, e[3] - s.y
-        if abs(dy) <= ALIGN + 2 and -4 <= abs(dx) - 16 <= REACH:
-            return "Right" if dx > 0 else "Left"
-        if abs(dx) <= ALIGN + 2 and -4 <= abs(dy) - 16 <= REACH:
-            return "Down" if dy > 0 else "Up"
-        return None
+        if not hittable_now(self.emu, e[0], e[1]):
+            return None              # a Peahat still in its hole cannot be cut, whatever the geometry
+        d = sword_reach(self.emu, s, e)
+        return d if d and self.reach_clear(s, e, d) else None
 
     def ambush(self, max_frames: int = 1800) -> bool:
         """Stand mostly still and swing at whatever flies into reach. Small steps to line up
@@ -709,7 +1068,7 @@ class Fighter:
             if s.hearts < hearts0:
                 emu.note(f"MISTAKE (unplanned hit): clipped by a flier, {s.hearts} hearts left")
                 hearts0 = s.hearts
-            ens = [e for e in read_enemies(emu) if e[1] in self.FLIERS]
+            ens = [e for e in read_enemies(emu) if e[1] in self.FLIERS and enemy_hp(e) > 0]
             if not ens:
                 emu.note(f"No fliers left ({swings} swings, {hits} hits)")
                 return True
@@ -808,21 +1167,37 @@ class Fighter:
         """Pick up what the fight left behind, nearest first, as long as it is worth the walk.
 
         Several drops can land at once, so take up to four, but never chase one more than
-        `max_detour` pixels away or spend more than `max_frames` frames in total."""
+        `max_detour` pixels away or spend more than `max_frames` frames in total.
+
+        A drop that cannot be reached is SKIPPED, not treated as the end of the collection. Both of
+        these used to `break`: one that was further than `max_detour`, and one the navigator raised
+        NavError on. Either one abandoned every other drop on the floor, including a clock lying
+        behind the unreachable one - and a clock is the one item where being second-best loses the
+        segment. `skip` holds the ones already known to be unreachable so the loop makes progress.
+        """
         from .overworld import snap, NavError
         emu, nav = self.emu, self.nav
         took = False
         f0 = emu.state().frame
+        skip: set = set()
         for _ in range(4):
             s = emu.state()
             if s.frame - f0 > max_frames:
                 break
-            drops = [d for d in self.visible_drops() if self._worth(d[0], s)]
-            if not drops:
+            # `on_floor`, not `drops`: the module zelda.drops is imported at the top of this file and a
+            # local named `drops` shadowed it, so `drops.CLOCK` below raised AttributeError - on the
+            # one code path that only runs when a clock is actually on the floor.
+            on_floor = [d for d in self.visible_drops() if self._worth(d[0], s) and d[0] not in skip]
+            if not on_floor:
                 break
-            t, ix, iy, slot = min(drops, key=lambda d: abs(d[1] - s.x) + abs(d[2] - s.y))
+            # The clock outranks distance. It is contact immunity for a whole screen and it expires,
+            # so a clock four steps away is worth more than a rupee underfoot.
+            t, ix, iy, slot = min(on_floor, key=lambda d: (d[0] != drops.CLOCK,
+                                                           abs(d[1] - s.x) + abs(d[2] - s.y)))
             if abs(ix - s.x) + abs(iy - s.y) > max_detour:
-                break
+                emu.note(f"A {self.DROPS[t]} at ({ix},{iy}) is too far to chase; leaving it")
+                skip.add(t)
+                continue
             name = self.DROPS[t]
 
             def gone():
@@ -839,17 +1214,56 @@ class Fighter:
                         break
                     nav.go(lambda x, y: x == tx and y == ty, f"the {name} exactly", max_replans=10)
                     emu.step((), 4)
+                # Close the last few pixels, then make contact. This is the step that was missing and
+                # it is why a clock was never once picked up: `snap` quantises to Link's 16px grid, so
+                # the navigator's "exactly" target can leave Link ~7px short of an item whose position
+                # is not on the grid, and the 3x4 idle frames that followed were not enough contact.
+                # Measured in L3 room 0x5B, where a clock lands on the floor 10 attempts out of 10 and
+                # was collected 0: a clock at (149,141) snaps to (144,141), and only pressing into it
+                # again took it ($66C 00 -> 01).
+                for _ in range(8):
+                    if gone():
+                        break
+                    if emu.state().frame - f0 > max_frames:
+                        break
+                    s2 = emu.state()
+                    btn = ("Right" if ix > s2.x + 1 else "Left" if ix < s2.x - 1 else "")
+                    btn2 = ("Down" if iy > s2.y + 1 else "Up" if iy < s2.y - 1 else "")
+                    emu.step(btn, 2)
+                    emu.step(btn2, 2)
             except NavError as e:
-                emu.note(f"Couldn't reach the {name}: {str(e)[:50]}")
-                break
+                emu.note(f"Couldn't reach the {name}: {str(e)[:50]}; trying something else")
+                skip.add(t)
+                continue
             if gone():
                 s2 = emu.state()
                 emu.note(f"Got the {name}: hearts {s2.hearts}, bombs {s2.bombs}, rupees {s2.rupees}")
                 took = True
             else:
                 emu.note(f"The {name} vanished before I got there")
-                break
+                skip.add(t)
         return took
+
+    def _clock_order(self, walkers, s: State):
+        """Order this room's kills so one of them lands on a clock column of DropItemTable.
+
+        Nearest-first is the fallback, and it is preserved inside every choice prefer_target makes -
+        reordering the queue is safe, picking the far corner of the room over the Gibdo at your feet
+        is not. Returns a new list, or the plain nearest-first sort when there is nothing to steer
+        towards (clock already held, room too small, no enemy in a row that drops one, or no enemy
+        outside those rows to advance the cycle with).
+        """
+        by_distance = sorted(walkers, key=lambda e: abs(e[2] - s.x) + abs(e[3] - s.y))
+        if not (CLOCK_STEER[0] and len(walkers) >= CLOCK_MIN_ROOM) or self._clock_held():
+            return by_distance
+        order = drops.prefer_target(self.emu, walkers, drops.CLOCK)
+        if order is None:
+            return by_distance
+        # Keep prefer_target's CHOICE as the next kill; sort only the rest back to nearest-first.
+        # Sorting the whole list by distance - which is what this did first - silently undid the
+        # entire feature: 3000 randomised rooms came back with zero reorders.
+        near = {e[0]: i for i, e in enumerate(by_distance)}
+        return [order[0]] + sorted(order[1:], key=lambda e: near[e[0]])
 
     def clear_room(self, max_enemies: int = 12) -> bool:
         """Kill everything in the room: walkers nearest first, fliers by ambush. Collect drops."""
@@ -863,7 +1277,10 @@ class Fighter:
             emu.step(d, 20)     # never fight from a doorway (attacks are disabled there)
         for _ in range(max_enemies * 3):
             s = emu.state()
-            ens = [e for e in read_enemies(emu) if killable(e)]   # traps, bubbles and projectiles don't count
+            # hp > 0 as well as killable: a dead slot keeps its type and its position until the
+            # game clears it, and read_enemies filters on type alone. See attack_slot's note - one
+            # dead Gel cost 144 frames of beam swings before this.
+            ens = [e for e in read_enemies(emu) if killable(e) and enemy_hp(e) > 0]
             if not ens:
                 self.collect_drop()
                 emu.note("Room clear")
@@ -885,7 +1302,8 @@ class Fighter:
                     waited = 0
                     while waited < 120 and not safe:
                         emu.step((), 4); waited += 4
-                        walkers = [e for e in read_enemies(emu) if e[1] not in self.FLIERS and killable(e)]
+                        walkers = [e for e in read_enemies(emu)
+                                   if e[1] not in self.FLIERS and killable(e) and enemy_hp(e) > 0]
                         safe = [e for e in walkers if not in_trap_line(e)]
                     if not safe:
                         if walkers:
@@ -894,7 +1312,10 @@ class Fighter:
                     if not safe:
                         continue
                 walkers = safe
-                walkers.sort(key=lambda e: abs(e[2] - s.x) + abs(e[3] - s.y))
+                # Nearest-first, unless a clock is winnable by reordering: _clock_order falls back to
+                # exactly this sort whenever it declines to steer, so this line is the only ordering
+                # decision in the room.
+                walkers = self._clock_order(walkers, s)
                 if walkers[0][1] in self.DARKNUTS:
                     self.hunt_darknut(walkers[0][0])
                 else:
@@ -903,7 +1324,7 @@ class Fighter:
                 if not self.ambush():
                     break
             self.collect_drop()
-        return not [e for e in read_enemies(emu) if killable(e)]
+        return not [e for e in read_enemies(emu) if killable(e) and enemy_hp(e) > 0]
 
     def grab_key_by_dodging(self, item_type: int = 0x19) -> State | None:
         """Fetch the room's item using avoidance navigation, not combat."""

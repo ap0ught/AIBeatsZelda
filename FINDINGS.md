@@ -485,3 +485,87 @@ appears *twice* — L4 and L8. Worth settling before spending a search, not afte
 - **Upstream's credits contain a literal `[add]` placeholder** where the
   disassembly link belongs. Left alone, since it is upstream's file.
 - **`route5.py` is specced but not built** — issue #2, and see `RUN-IDEAS.md`.
+
+---
+
+## 7. Walls, and what was actually behind them (2026-09-30)
+
+"Stop him running into walls and blocks" is two different bugs wearing one coat, and only one of
+them is about walls. `testing/probe_walls.py` measures both on Level 3's room `$4A` — a
+`make_clear_policy`, so the code under test is `Fighter`, not the lookahead planner — with the wall
+gate on and off (`ZELDA_NO_WALLS=1`) and the same seeds on both sides.
+
+**Walking into them: real, and fixed.** `Fighter._move` stepped by the sign of the difference and
+never asked the tile map, so a step into a wall cost one frame, moved nobody, and repeated until
+`max_frames`. Measured: **26 to 277 refused steps** on one side, **0** on the other, depending on
+the trajectory. `zelda/overworld.py`'s new `Screen` is the one cached read of the tile pattern
+behind it — the pattern is 960 bytes and a fight asks the question four or five times a frame — and
+a refused step is now *evidence*: the tile is learned as solid in `knowledge/tiles.json` with the
+room and the pixel that proved it, in the same shape as every other line in there. Unknown tiles do
+**not** block, on purpose: a fighter that stands still in a room it has not classified is a stall,
+and a stall in a fight is how a segment spends its budget doing nothing.
+
+**Swinging into them: not what it looked like.** The wasted-shot instrument said `solid=YES` on
+nothing, and it was the instrument that was wrong. It tested the **target's own cell**; the thing a
+strike gate prevents is a wall **between** Link and the target. It tests the line now, and reports
+three separate causes instead of one — and the line version also says zero on this room.
+
+**The real cost was the same mistake wearing a different coat: swinging at things the game will not
+let Link hit.** Six beam swings at *one dead Gel* from 103 to 142 px away — 144 frames — because
+`read_enemies` filters on the type byte and nothing else, so a corpse keeps its type, its slot and
+its position until the game clears it. A slot at 0 HP is not a target now. The same gate covers a
+Leever or Peahat still in its burrow (`ObjState` `$AC` != 3), which the navigator has always known
+and the fighter never asked.
+
+**What is still open, and it is a wall question rather than a fight one:** whether the sword *beam*
+stops at a wall. Nothing here establishes it either way, so `Fighter.reach_clear` deliberately
+does not gate beams on geometry — a wrong "it stops" would refuse beams that land. The wasted-shot
+line can now answer it on any room that has both: a beam at a target with a wall between them and
+no damage taken.
+
+---
+
+## 8. The sword's reach was backwards (2026-09-30)
+
+The largest single defect found in the fighter, and it was found by refusing to believe the
+instrument for a third time.
+
+`REACH = 10`, `ALIGN = 4` and a box model were a reasonable reading of "two 16 px boxes touch when
+their centres are 16–26 px apart". **The game does not implement that.** Z_01 implements a fixed
+threshold on the centre-to-centre distance:
+
+| routine | what it says |
+|---|---|
+| `CheckMonsterStabbingCollision` | a threshold per axis, **swapped on Link's facing**: horizontal `$0D`=$10 (16) across, `$0E`=$0C (12) down; vertical 12 across, 16 down |
+| `CheckMonsterSlenderWeaponCollision2` | the sword's centre is `a:ObjX+8, a:ObjY+6` facing horizontally, `+6, +8` vertically |
+| `GetObjectMiddle` | the monster's centre is `ObjX+8, ObjY+8`, or `ObjX+4` when `ObjAttr` (`$4BF`) bit `$40` is set |
+| `DoObjectsCollideWithThresholds` | `|dx| >= threshold` → no hit; `|dy| >= threshold` → no hit |
+
+So a horizontal swing connects iff `|ObjX − LinkX| < 16` and `|ObjY − LinkY + 2| < 12`. Sixteen is
+the whole reach. The old model **refused to swing inside 16 px and reached to 26** — inside the
+sword's range at one end, outside it at the other.
+
+Measured on Level 3 room `$4A`, same seeds, `ZELDA_SWORD_GEOM=0` for the old one:
+
+| | hits / aimed swings | room |
+|---|---|---|
+| box model | 33 / 115 (29%) | 1,500–3,000 frames, usually not cleared |
+| cartridge's rule | 8 / 12 (67%) | 324–1,468 frames, cleared every time |
+
+Every one of the old model's 82 misses was a swing at something 16–32 px away — a swing the cartridge
+had already refused. The hits that did land were monsters that walked into the blade during the
+13 frames of the animation.
+
+**What is deliberately not changed:** the two Darknut routines. `hunt_darknut` and `darknut_ambush`
+stand off at `16 + REACH − 4 = 22` px and strike as a Darknut walks past, and that distance was
+chosen against the box model. Correcting the reach without re-deriving that strategy would leave
+them walking to a post they cannot swing from, and there is **no Darknut checkpoint in this tree** to
+measure the re-derivation on. `reach_box_model()` is kept, named, for exactly those two callers.
+
+**Still unexplained, and left as an open item rather than a guess.** The Zol takes damage at 12–15 px
+(3 hits in 14 swings) and **never** at 4–11 px (0 in 5). `attr $01`, invincibility timer `$00`,
+metastate `$00` — every byte the cartridge's own "can this be hit" path checks says it should land.
+The reach histogram the instrument now prints (`type@px: hits/misses`) is how to find out: a room
+where the same type is hit at one distance and not at another is the measurement that settles it,
+and `$4A` only has one Zol in it.
+

@@ -6,6 +6,7 @@ from the same state, and later spliced into the master power-on log.
 """
 from __future__ import annotations
 
+import os
 import random
 import time
 from dataclasses import dataclass, field
@@ -100,6 +101,11 @@ def nudge_into_room(emu, step) -> None:
     The planner cannot move him out of a doorway (the only way out is the door tunnel itself),
     and on top of that an old man's text can freeze him for well over a hundred frames. So hold
     the inward direction until he actually moves rather than for a fixed count.
+
+    The map is asked before the hold starts, because the one case where this burns its whole
+    40 frames is Link in a doorway with a wall on the inward side: he leans on it, moves nothing,
+    and the segment pays 40 frames to learn what the tile map already says. A room's tile pattern
+    is one 960-byte read, which is cheaper than the frames and is not paid when he can move.
     """
     s = emu.state()
     if not s.level:
@@ -107,6 +113,10 @@ def nudge_into_room(emu, step) -> None:
     d = ("Right" if s.x <= 16 else "Left" if s.x >= 224 else
          "Up" if s.y >= 205 else "Down" if s.y <= 69 else None)
     if d is None:
+        return
+    from .overworld import Screen
+    dx, dy = {"Right": (1, 0), "Left": (-1, 0), "Up": (0, -1), "Down": (0, 1)}[d]
+    if Screen(emu).blocked(s, s.x + dx * 8, s.y + dy * 8) is not None:
         return
     start = (s.x, s.y)
     for _ in range(40):
@@ -251,14 +261,45 @@ def value_of(a, containers: float) -> float:
     return v - a.frames + _bomb_worth(a) + a.bonus
 
 
+CONVERGE = [True]
+CONVERGE_TOL = [20]            # frames; see the note on parallel_search
+
+# "Just get through the game." ZELDA_JUST_GET_THROUGH=1 makes every segment stop at its first
+# success, not only the bosses'. Costs about 6% of frames on the archived run and removes almost all
+# of the patience searching, which is where the wall clock went. Off by default, so it is one env var
+# to undo rather than an edit to find.
+JUST_GET_THROUGH = [bool(int(os.environ.get("ZELDA_JUST_GET_THROUGH", "0")))]
+
+
 def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: int = 60, max_frames: int = 900,
                     setup=None, log=print, label: str = "", patience: int = 14):
     """random_search across several emulators at once: one thread per scout, attempts handed out by seed.
     Same ranking, same early stop. Emulation releases the GIL (it is socket I/O), so K scouts run K attempts
-    in nearly the time of one. The winner is an input list from the shared start state, exactly as before."""
+    in nearly the time of one. The winner is an input list from the shared start state, exactly as before.
+
+    CONVERGE adds a second early stop: if more than half the SCOUTS have each returned a success within
+    CONVERGE_TOL frames of the best so far, take it and move on. Counted per scout, not per attempt -
+    attempts are handed out round-robin, so one scout can produce three results in a row and three
+    attempts agreeing is not evidence of anything. The owner's phrasing was "if over half of the scouts
+    report the same time we continue on without doing the rest of the cycle".
+
+    Measured on the archived run's 428 successes, EXACT agreement never happens - not one segment in
+    179 had three identical frame counts - so the tolerance is not a nicety, it is the whole rule. What
+    the data does show: 41 of the 65 segments with three or more successes have three of them within
+    +20 frames of the best. At +5 it is 12 of 65.
+
+    What this costs, stated plainly because the last wall-clock idea here was refuted for exactly this
+    reason: patience scaling buys wall time with an unbounded frame loss, and knowledge/rerun_findings
+    shows it losing 2,000-5,000 frames. This one is bounded BY CONSTRUCTION - stopping early can only
+    forfeit the difference between the best found and whatever a later attempt would have found, and
+    the rule only fires once that difference is already under CONVERGE_TOL. So the worst case is
+    CONVERGE_TOL frames per segment, and less than that whenever the best arrived first. 20 frames is
+    1.1% of the 1,800 a heart is priced at.
+    """
     import threading
     lock = threading.Lock()
-    st = {"next": 0, "best": None, "since": 0, "stop": False, "done": 0, "containers": 3.0, "h0": None}
+    st = {"next": 0, "best": None, "since": 0, "stop": False, "done": 0, "containers": 3.0, "h0": None,
+          "scout_best": {}}         # scout index -> best frames IT has achieved
     fails: dict = {}
     t0 = time.time()
     scouts[0].note(f"SEARCH{': ' + label if label else ''}: up to {tries} attempts on {len(scouts)} scouts")
@@ -376,6 +417,24 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     log(f"  attempt {i+1}: success {a.frames} frames, hearts {a.hearts}")
                 else:
                     st["since"] += 1
+                # Convergence: more than half the SCOUTS inside CONVERGE_TOL of the best. Checked after
+                # the best is updated, and against the best's frames rather than the whole ranking -
+                # value_of mixes in hearts and bombs, and two lines of equal length are the thing
+                # being counted, not two lines of equal worth.
+                if ok and CONVERGE[0]:
+                    prev = st["scout_best"].get(k)
+                    if prev is None or a.frames < prev:
+                        st["scout_best"][k] = a.frames
+                    # Window on the BEST, not on this attempt: an attempt that is worse than the best
+                    # would otherwise widen the window to include results 40 frames adrift.
+                    bst = st["best"].frames
+                    near = sum(1 for v in st["scout_best"].values() if v <= bst + CONVERGE_TOL[0])
+                    # More than half - 3 of 4. I read "if they all finish within the tolerance" as a
+                    # unanimous rule and changed it; the owner corrected that back to a majority.
+                    if near > len(scouts) / 2 and not st["stop"]:
+                        st["stop"] = True
+                        log(f"  converged: {near} of {len(scouts)} scouts within "
+                            f"{CONVERGE_TOL[0]} frames of {bst} - taking it")
                 # Say something about every attempt, not only the successful ones. Eleven minutes of
                 # Gleeok search produced 223 bytes of log because failures are silent, which makes a
                 # search that is working look exactly like one that is hung - the owner could not tell
@@ -389,8 +448,9 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     log(f"  attempt {i+1}: {str(outcome)[:52]} ({len(rec.inputs)} frames)")
                 if best is None:
                     limit = patience * 2
-                elif HEARTS_FREE[0]:
-                    # A boss: the FIRST success is the win. Stop there.
+                elif HEARTS_FREE[0] or JUST_GET_THROUGH[0]:
+                    # A boss: the FIRST success is the win. Stop there. With JUST_GET_THROUGH set, every
+                    # segment behaves this way.
                     #
                     # This used to be `patience * 3` - keep going, 42 more attempts, hoping for a
                     # faster line. On Gleeok that threw away the best result the project has ever
@@ -401,8 +461,21 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     # test is the kill - $034D, the room-finished flag - so there is nothing above a
                     # success to find. A room is different: clearing it faster is a real second goal,
                     # and that is what patience is for.
+                    #
+                    # The owner's new theory - "just get through the game" - is the generalisation of
+                    # that question, and the archived log says it is cheap. Taking each segment's
+                    # first success rather than its best, over 192 comparable segments: 74,325 frames
+                    # against the 70,099 actually kept. 4,226 frames, +6%, for stopping the patience
+                    # search almost everywhere. knowledge/rerun_findings.json already said the same
+                    # thing segment by segment - farm43 and farm53 ran all 40 attempts for a gain of
+                    # exactly 0 frames.
+                    #
+                    # Indicative, not exact: attempt seeds are 1000 + i, so the sequence a segment sees
+                    # is not quite the one it saw while searching hard. The shape is not in doubt.
                     st["stop"] = True
-                    log("  first kill in hand - taking it (a boss success IS the win; see HEARTS_FREE)")
+                    log("  first success in hand - taking it ("
+                        + ("a boss success IS the win; see HEARTS_FREE)" if HEARTS_FREE[0]
+                           else "JUST_GET_THROUGH: not searching for a better line)"))
                     return
                 elif best.hearts >= min(c, st["h0"]):
                     limit = patience                 # unhurt: search on a while for a faster line
