@@ -186,7 +186,23 @@ def dash_bomb_policy(nav, direction, then_room=None):
     return policy
 
 
-def gleeok_policy(nav, budget=6000):
+def gleeok_policy(nav, budget=14000):
+    # 14,000, and the number is stale in a way worth recording rather than just overwriting.
+    #
+    # The 6,000 below was tuned against a fight the harness thought was 10 hit points: one head.
+    # It is 70. The head is 10 HP in an ordinary object slot and six neck segments are 10 HP each in
+    # slots whose object type is 0, which read_enemies filtered out - so for this project's entire
+    # history the planner had a tenth of the boss and every budget, win rate and timing note here was
+    # measured against that tenth. Scaling by the sevenfold is a guess with a reason behind it, not a
+    # measurement, and it is the first thing to revisit if this fight stalls again.
+    #
+    # What is NOT the problem, having assumed it was: the budget. With the neck as a target the first
+    # attempts died at 2,779 and 3,118 recorded frames, well inside 6,000 - and "died" means Link's
+    # hearts reached zero, not that the window closed. That is a death rate, so the lever was the
+    # damage price (runner.py now puts a 0.5 floor under a refill-backed fight) and not the clock.
+    # The old note below is kept because the shape of it is still true; only the boss it describes
+    # has changed.
+    #
     # 6,000, the value that has actually won this fight. Widening it to 10,000 made things WORSE,
     # not better: the boss finished on 4-8 health and Link fell to 0.5-2.5 hearts, so extra time
     # buys the planner more damage taken rather than a kill. The old run won here about one

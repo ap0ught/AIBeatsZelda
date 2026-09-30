@@ -251,6 +251,15 @@ class Run:
         if name in PHASE_LOCKED:
             self.log(f"  {name} is a phase-locked fight: {len(self.scouts)} scouts split "
                      f"0-{PHASE_SPREAD[0]} frames between them rather than all drawing from it")
+        # "Damage is free here" stops being true at zero hearts: a Triforce piece behind the boss
+        # means a lost heart costs nothing, but DEATH still ends the attempt, and `died` is what the
+        # search sees. So a refill-backed fight gets a floor under its damage price rather than the
+        # near-zero one it wants - 0.12 lets the planner tank straight into the fireballs, and the
+        # first Gleeok attempts under it died at 2,779 and 3,118 frames with a 6,000 budget, which
+        # is a death rate and not a time limit. 0.5 is still a fifth of an unrefilled fight's price,
+        # so the tanking behaviour is preserved and the suicide is not.
+        if name in PHASE_LOCKED:
+            _look.CAUTION_OVERRIDE[0] = 0.5
         # Staged fights: a room of six Darknuts is six searches, one per kill, each starting from the best line
         # found for the kill before. The whole-room search was one draw of sixty; per kill it is sixty draws of
         # each part. Intermediate stages are played into MAIN untrimmed and are not checkpointed (a crash resumes

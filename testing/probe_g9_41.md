@@ -18,7 +18,7 @@ frames (the first run: 591). Try the sword fighter and the damage-aware dash fro
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``fullgame.py`:2930` - # pins Link); probe_g9_41.py from the same state: damage-aware dash 2/3 at 1,018 frames, sword 3/3 at
+- ``fullgame.py`:2946` - # pins Link); probe_g9_41.py from the same state: damage-aware dash 2/3 at 1,018 frames, sword 3/3 at
 
 ## See also
 
