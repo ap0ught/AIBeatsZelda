@@ -64,10 +64,16 @@ TRACE = false
 -- Summing both is the only way to get Gleeok's real health: head 10 plus six segments at 10 is 70,
 -- not 10.
 --
+-- The type list is zelda/boss.py's GLEEOK_TYPES, not a guess. That is FOUR UpdateGleeok variants
+-- (0x42-0x45, one per head count) plus 0x46, the head that comes loose when its neck is cut and
+-- goes on flying and spitting. The first version of this file listed only 0x43 and 0x44, so most
+-- of the boss was never counted and the denominator could not match the parts on screen.
+--
 -- BOSS_TYPES are the ones worth a bar, and the value is the name to print. Names come from the
 -- harness's own enemy table (zelda/overworld.py ENEMY_NAMES) so the HUD and the log cannot drift
--- apart. Gleeok's 0x44 neck segments have no name of their own - the fight is the head, the neck is
--- body - so they carry the same one and are counted as "parts" separately.
+-- apart. Gleeok's segments have no name of their own - the fight is the head, the neck is body - so
+-- they carry the same one and are counted as parts separately.
+local GLEE0K = "GLEEOK"     -- an E. The zero in "GLEE0K" was a typo, and it was on screen a lot.
 local BOSS_TYPES = {
   [0x32] = "DODONGO",
   [0x33] = "GOHMA",
@@ -75,72 +81,122 @@ local BOSS_TYPES = {
   [0x36] = "DIGDOGGER",
   [0x38] = "DIGDOGGER",
   [0x3C] = "MANHANDLA",
-  [0x43] = "GLEE0K",
-  [0x44] = "GLEE0K",
+  [0x42] = GLEE0K,
+  [0x43] = GLEE0K,
+  [0x44] = GLEE0K,
+  [0x45] = GLEE0K,
+  [0x46] = GLEE0K,
 }
+-- UpdateGleeokHead, the loose head. Worth its own colour: it is the only part that chases Link
+-- across the room, so "is that amber cell still up" is the question the fight is actually asking.
+local LOOSE_HEAD = 0x46
 
 local boss_seen = 0        -- the peak HP a boss has shown, so the bar has a denominator
 local hud = { attempt = 0 }  -- set by the Python side, so the HUD can count attempts itself
 
--- Where boss parts stand, and how much of them is left. Reads the object table directly rather than
--- going through the game: ObjType $34F, ObjHP $485, both indexed by slot.
-local function boss_hp()
-  local hp, mx = 0, 0
+-- One read of the object table, shared by everything that needs it. This was duplicated: boss_hud()
+-- scanned the table for the cells and then called boss_hp() to scan it again for the total, so the
+-- bar and the number beside it could disagree within one frame, and the table was read 22 times a
+-- frame instead of 11. Returns slot -> {type, hits}, the total in hits, and the name to print.
+local function scan()
+  local parts, hits, name = {}, 0, nil
   for i = 1, 11 do
     local t = mainmemory.read_u8(0x34F + i)
     local h = mainmemory.read_u8(0x485 + i)
     if h > 0 and (BOSS_TYPES[t] or t == 0) then
-      hp = hp + h
-      if hp > mx then mx = hp end
+      -- HP is stored as a nybble pair: the harness reads ObjHP >> 4 for a hit count, so a $A0 slot
+      -- is 10 hits, not 160. The first version of this HUD printed the raw byte and the total came
+      -- out "1136/1376" - unreadable, and unauditable, because it was wrong. 1136/16 is 71 and
+      -- 1376/16 is 86: whole hit counts, which is the first reason to trust the number at all.
+      local n = math.floor(h / 16)
+      if n > 0 then
+        parts[i] = { t = t, hp = n }
+        hits = hits + n
+        -- An untyped slot is neck and has no name of its own; the named type wins, so a Gleeok reads
+        -- GLEEOK rather than whatever the segments would claim.
+        if BOSS_TYPES[t] then name = BOSS_TYPES[t] end
+      end
     end
   end
-  if hp == 0 then
+  return parts, hits, name
+end
+
+-- Where boss parts stand, and how much of them is left. ObjType $34F, ObjHP $485, indexed by slot.
+local function boss_hp()
+  local _, hits = scan()
+  if hits == 0 then
     boss_seen = 0
     return 0, 0
   end
-  -- The peak is remembered rather than recomputed from a table, because the peak is only knowable
-  -- from having watched it: a boss that has already been half killed when the recording starts has
-  -- no "full" value left to read off anywhere.
-  if hp > boss_seen then boss_seen = hp end
-  return hp, boss_seen
+  -- The peak is remembered rather than recomputed, because a boss that is already half killed when
+  -- the window opened has no "full" value left to read off anywhere. It is remembered in HITS, and
+  -- it only clears when the room has no boss part left at all - which is what made the first version
+  -- read 1280, 1376 and 1312 in three windows at the same moment: each scout's denominator was set
+  -- by whichever frame that particular window happened to open on.
+  if hits > boss_seen then boss_seen = hits end
+  return hits, boss_seen
 end
 
 local function boss_hud()
-  -- A live read-out in the lower-left of the emulator window, drawn by the client-side Lua that
-  -- `--lua=` loads. It exists because the log was not enough: for most of a Gleeok search the only
-  -- thing written anywhere was "attempt N: died (4439 frames)", which says how the fight ended and
-  -- nothing about the fight. Boss HP, the number of neck segments still standing, and the attempt
-  -- counter are the three numbers that turn watching it into reading it.
+  -- A strip across the WHOLE bottom of the screen, one cell per boss object slot, rather than
+  -- numbers in a corner. The owner tried the text version and could not read it: "the numbers and
+  -- the high speed makes it hard to see." That is the right objection - a fight is watched
+  -- peripherally, and a number you have to read is a number you miss. A shape you count at a glance
+  -- is not.
   --
-  -- Drawn here rather than in the Python overlay because this is where the game is actually being
-  -- watched during a run. The video overlay (render_overlay.py) is a separate, after-the-fact thing
-  -- that only exists once a run has been recorded and traced; this is live.
-  local bh, bm = boss_hp()
-  if bh == 0 then
+  -- So: the bottom of the screen is divided into eleven cells, one per object slot, and each cell
+  -- fills left to right with the health of the part standing in it. The strip empties as the neck
+  -- comes apart, which is the shape of the fight, and the attempt counter rides underneath it where
+  -- there is no room to miss it.
+  --
+  -- Colour carries the state so the strip is readable without reading: red is a live part, amber is
+  -- the loose head, near-black is a slot with nothing in it.
+  --
+  -- The geometry is deliberate and was wrong twice. The NES screen is 256x240; the first attempt
+  -- started the strip at y=226 with 14 rows of bar plus a text line, which put the text at y=245 -
+  -- five rows below the bottom of the screen, where the emulator happily renders into the frame
+  -- buffer and nobody ever sees it. So the whole thing is laid out from the top down against 240:
+  -- bar at 218 (10 rows, ending 228), the total-width line at 230, text at 232. 11 cells of 23px
+  -- is 253, so it spans the width without running off the right edge.
+  local SLOTS, W, H, Y = 11, 23, 10, 218
+  local parts, hits, name = scan()
+  if hits == 0 then
     return
   end
-  local heads, hp, name = 0, 0, nil
-  for i = 1, 11 do
-    local t = mainmemory.read_u8(0x34F + i)
-    local h = mainmemory.read_u8(0x485 + i)
-    if h > 0 and (BOSS_TYPES[t] or t == 0) then
-      heads = heads + 1
-      hp = hp + h
-      -- An untyped slot is neck, and it has no name of its own; the named type wins, so a Gleeok
-      -- reads GLEE0K rather than whatever the segments claim.
-      if BOSS_TYPES[t] then name = BOSS_TYPES[t] end
+  if hits > boss_seen then boss_seen = hits end
+  local seen = boss_seen
+
+  -- A part fills its cell relative to the fullest part alive, not relative to the whole boss, so
+  -- the cells stay comparable to each other as the fight goes on.
+  local full = 1
+  for _, p in pairs(parts) do
+    if p.hp > full then full = p.hp end
+  end
+
+  for i = 1, SLOTS do
+    local x = (i - 1) * W
+    local p = parts[i]
+    if p then
+      local w = math.max(2, math.floor((W - 3) * p.hp / full))
+      local col = (p.t == LOOSE_HEAD) and 0xFFFFA030 or 0xFFFF3030
+      gui.drawRectangle(x, Y, x + W - 3, Y + H - 1, 0xFF201820)
+      gui.drawRectangle(x + 1, Y + 1, x + 1 + w, Y + H - 1, col)
+      -- a white pip on a part that is nearly dead, so "almost" is visible and not just "shorter"
+      if p.hp * 2 <= full then
+        gui.drawRectangle(x + 1 + w, Y + 1, x + 1 + w + 1, Y + H - 1, 0xFFFFFFFF)
+      end
+    else
+      gui.drawRectangle(x, Y, x + W - 3, Y + H - 1, 0xFF182038)
     end
   end
-  local y = 214
-  gui.drawString(4, y, string.format("%s %d/%d", name or "BOSS", hp, bm),
-                 0xFFFF4040, 0xFF000000)
-  gui.drawString(4, y + 9, string.format("PARTS %d  ATTEMPT %d", heads, hud.attempt),
+  -- total remaining, as a width under the strip: the one number worth having, in the one place it
+  -- can be read without looking away from the fight
+  local frac = seen > 0 and (hits / seen) or 0
+  local w = math.max(1, math.floor(255 * frac))
+  gui.drawRectangle(0, Y + H + 1, w, Y + H + 2, 0xFF40C0FF)
+  gui.drawString(2, Y + H + 4,
+                 string.format("%s  ATT %d  %d/%d", name or "BOSS", hud.attempt, hits, seen),
                  0xFF40C0FF, 0xFF000000)
-  -- one tick per remaining part, so the shape of what is left is legible at a glance
-  if bm > 0 then
-    local w = math.max(2, math.floor(100 * hp / bm))
-    gui.drawRectangle(4, y + 18, 4 + w, y + 20, 0xFFFF4040)
-  end
 end
 
 local function state_str()
