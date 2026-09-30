@@ -302,6 +302,13 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             if setup:
                 setup(rec, nav)
             rec.cap = cutoff
+            # Tell the emulator window which attempt this is, so the in-emulator HUD can count. The
+            # log is the wrong place to watch from - it says how an attempt ended and nothing about
+            # the fight - and the HUD is the only view of a boss that updates while the search runs.
+            try:
+                emu.cmd(f"attempt {i + 1}")
+            except Exception:
+                pass                        # an emulator that predates the command still plays fine
             step0 = emu.step
             try:
                 outcome = policy(emu, rec, rng, max_frames)

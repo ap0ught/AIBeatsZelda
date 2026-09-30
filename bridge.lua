@@ -64,21 +64,26 @@ TRACE = false
 -- Summing both is the only way to get Gleeok's real health: head 10 plus six segments at 10 is 70,
 -- not 10.
 --
--- BOSS_TYPES are the ones worth a bar. Bosses that are one object with no hidden parts (Dodongo,
--- Digdogger, Manhandla) show up fine through the type path alone.
+-- BOSS_TYPES are the ones worth a bar, and the value is the name to print. Names come from the
+-- harness's own enemy table (zelda/overworld.py ENEMY_NAMES) so the HUD and the log cannot drift
+-- apart. Gleeok's 0x44 neck segments have no name of their own - the fight is the head, the neck is
+-- body - so they carry the same one and are counted as "parts" separately.
 local BOSS_TYPES = {
-  [0x32] = true,  -- Dodongo
-  [0x33] = true,  -- Gohma (red)
-  [0x34] = true,  -- Gohma (blue)
-  [0x36] = true,  -- Digdogger
-  [0x38] = true,  -- Little Digdogger
-  [0x3C] = true,  -- Manhandla
-  [0x43] = true,  -- Gleeok head
-  [0x44] = true,  -- Gleeok neck segment
+  [0x32] = "DODONGO",
+  [0x33] = "GOHMA",
+  [0x34] = "GOHMA",
+  [0x36] = "DIGDOGGER",
+  [0x38] = "DIGDOGGER",
+  [0x3C] = "MANHANDLA",
+  [0x43] = "GLEE0K",
+  [0x44] = "GLEE0K",
 }
 
 local boss_seen = 0        -- the peak HP a boss has shown, so the bar has a denominator
+local hud = { attempt = 0 }  -- set by the Python side, so the HUD can count attempts itself
 
+-- Where boss parts stand, and how much of them is left. Reads the object table directly rather than
+-- going through the game: ObjType $34F, ObjHP $485, both indexed by slot.
 local function boss_hp()
   local hp, mx = 0, 0
   for i = 1, 11 do
@@ -98,6 +103,44 @@ local function boss_hp()
   -- no "full" value left to read off anywhere.
   if hp > boss_seen then boss_seen = hp end
   return hp, boss_seen
+end
+
+local function boss_hud()
+  -- A live read-out in the lower-left of the emulator window, drawn by the client-side Lua that
+  -- `--lua=` loads. It exists because the log was not enough: for most of a Gleeok search the only
+  -- thing written anywhere was "attempt N: died (4439 frames)", which says how the fight ended and
+  -- nothing about the fight. Boss HP, the number of neck segments still standing, and the attempt
+  -- counter are the three numbers that turn watching it into reading it.
+  --
+  -- Drawn here rather than in the Python overlay because this is where the game is actually being
+  -- watched during a run. The video overlay (render_overlay.py) is a separate, after-the-fact thing
+  -- that only exists once a run has been recorded and traced; this is live.
+  local bh, bm = boss_hp()
+  if bh == 0 then
+    return
+  end
+  local heads, hp, name = 0, 0, nil
+  for i = 1, 11 do
+    local t = mainmemory.read_u8(0x34F + i)
+    local h = mainmemory.read_u8(0x485 + i)
+    if h > 0 and (BOSS_TYPES[t] or t == 0) then
+      heads = heads + 1
+      hp = hp + h
+      -- An untyped slot is neck, and it has no name of its own; the named type wins, so a Gleeok
+      -- reads GLEE0K rather than whatever the segments claim.
+      if BOSS_TYPES[t] then name = BOSS_TYPES[t] end
+    end
+  end
+  local y = 214
+  gui.drawString(4, y, string.format("%s %d/%d", name or "BOSS", hp, bm),
+                 0xFFFF4040, 0xFF000000)
+  gui.drawString(4, y + 9, string.format("PARTS %d  ATTEMPT %d", heads, hud.attempt),
+                 0xFF40C0FF, 0xFF000000)
+  -- one tick per remaining part, so the shape of what is left is legible at a glance
+  if bm > 0 then
+    local w = math.max(2, math.floor(100 * hp / bm))
+    gui.drawRectangle(4, y + 18, 4 + w, y + 20, 0xFFFF4040)
+  end
 end
 
 local function state_str()
@@ -151,6 +194,13 @@ local function handle(line)
     local n, btn = rest:match("^(%d+)%s*(%S*)$")
     n = tonumber(n) or 1
     local t = parse_buttons(btn)
+    -- Redraw the boss read-out on every step. The bridge holds the main thread waiting for
+    -- commands, so there is no idle frame loop to draw from; `step` is the heartbeat - the Python
+    -- side calls it constantly during a run and not at all when idle, which is exactly the cadence
+    -- wanted. gui.clearGraphics first, because without it the previous frame's text stays put and
+    -- the counter turns into a smear.
+    gui.clearGraphics()
+    boss_hud()
     if TRACE then
       local lines = {}
       for _ = 1, n do
@@ -170,6 +220,12 @@ local function handle(line)
     TRACE = (rest == "on"); send("ok")
   elseif cmd == "state" then
     send(state_str())
+  elseif cmd == "attempt" then
+    -- The Python side sets this when a segment starts searching, so the in-emulator HUD can count
+    -- attempts without the log having to be read. Sent per attempt rather than polled, because the
+    -- search is the thing that is invisible while it is happening.
+    hud.attempt = tonumber(rest) or 0
+    send("ok")
   elseif cmd == "ram" then
     local a, l = rest:match("^(%d+)%s+(%d+)$")
     local arr = mainmemory.read_bytes_as_array(tonumber(a), tonumber(l))
