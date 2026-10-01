@@ -132,6 +132,10 @@ DASH_CROSS = [0.25]           # share of dungeon crossings (with monsters about)
 import os as _os
 SETTLE = [int(_os.environ.get("ZELDA_SETTLE", "0"))]
 FIGHT_PATIENCE = [float(_os.environ.get("ZELDA_FIGHT_PATIENCE", "1.0"))]   # x the long-room patience tiers
+# Attempts without improvement before the search takes what it has. A NAME rather than a literal,
+# because it is the knob a per-segment budget multiplies (runner.MORE_SEARCH) and a literal in a
+# signature is not something another module can reach.
+PATIENCE = 14
 _DOOR_SPOT = {"Up": (120, 85), "Down": (120, 189), "Left": (32, 141), "Right": (208, 141)}
 
 
@@ -272,7 +276,7 @@ JUST_GET_THROUGH = [bool(int(os.environ.get("ZELDA_JUST_GET_THROUGH", "0")))]
 
 
 def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: int = 60, max_frames: int = 900,
-                    setup=None, log=print, label: str = "", patience: int = 14):
+                    setup=None, log=print, label: str = "", patience: int = PATIENCE):
     """random_search across several emulators at once: one thread per scout, attempts handed out by seed.
     Same ranking, same early stop. Emulation releases the GIL (it is socket I/O), so K scouts run K attempts
     in nearly the time of one. The winner is an input list from the shared start state, exactly as before.

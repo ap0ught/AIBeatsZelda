@@ -62,6 +62,29 @@ PHASE_SPREAD = [90]              # frames of entry window, matching the 0-90 gle
 # populated per run; "revenge" is the Blue Lynel the owner wants killed with the beam.
 NEED_FULL_HEARTS: set[str] = {"revenge"}
 
+# Segments that get a longer search than the patience default, and by how much. The knob is
+# PATIENCE, not `tries`, and the difference matters: the stop is
+#
+#     limit = min(tries, max(patience, patience * FIGHT_PATIENCE * 2.5))    # once the best is >= 500
+#
+# so with the defaults a segment stops at 35 non-improving attempts whatever its `tries` says - 80
+# on 5b_bombs is a number that has never once bound. Raising `tries` there would have changed
+# nothing at all, which is why this is a multiplier on patience and not a bigger tries count.
+#
+# 5b_bombs is here because it is measurably the wrong shape for the default: clearing Level 3's
+# 0x5B for the four bombs, a room the lookahead planner runs, where attempts vary by a factor of
+# two and the best found so far is 672 frames against 633 in the archived run. It took 24 attempts
+# and 15 minutes to find that 672, and every attempt after the first good one is cut at 672 by
+# cutoff() - which is the point of cutoff() and also why the only way to a better line is more
+# attempts.
+#
+# The trade, so it is written down rather than discovered later: 3x is about 45 minutes on this
+# segment for a realistic gain of tens of frames - 0.2% of the run. It is here because the owner
+# asked for it, and because the wall clock is not the thing being scored on an overnight run.
+# ZELDA_JUST_GET_THROUGH=1 is the opposite trade and takes the FIRST success instead (measured at
+# +6% frames for removing the patience search almost everywhere); the two cannot both be on.
+MORE_SEARCH: dict[str, float] = {"5b_bombs": 3.0}
+
 
 class Run:
     def __init__(self, name: str, *, record: bool = False, log=print):
@@ -286,8 +309,10 @@ class Run:
             start = f"{self.name}_{name}_start"      # the last stage begins where the stages left MAIN
             main.save(start)
         # Four scouts make attempts cheap, and fights vary by a factor of two between attempts: look longer.
+        from .search import PATIENCE
         best = parallel_search(self.scouts, self.snavs, start, factory, success, tries=max(tries, MIN_TRIES[0]),
-                               max_frames=max_frames, label=name, log=self.log, setup=reset_beliefs)
+                               max_frames=max_frames, label=name, log=self.log, setup=reset_beliefs,
+                               patience=max(1, round(PATIENCE * MORE_SEARCH.get(name, 1.0))))
         for nav in self.snavs:
             nav.blocked = copy.deepcopy(blocked0)
         if best is None:
