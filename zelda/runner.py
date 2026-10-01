@@ -71,19 +71,22 @@ NEED_FULL_HEARTS: set[str] = {"revenge"}
 # on 5b_bombs is a number that has never once bound. Raising `tries` there would have changed
 # nothing at all, which is why this is a multiplier on patience and not a bigger tries count.
 #
-# 5b_bombs is here because it is measurably the wrong shape for the default: clearing Level 3's
-# 0x5B for the four bombs, a room the lookahead planner runs, where attempts vary by a factor of
-# two and the best found so far is 672 frames against 633 in the archived run. It took 24 attempts
-# and 15 minutes to find that 672, and every attempt after the first good one is cut at 672 by
-# cutoff() - which is the point of cutoff() and also why the only way to a better line is more
-# attempts.
+# IT IS EMPTY, and it was not. 5b_bombs was given 3x on 2026-10-01 because clearing Level 3's 0x5B
+# for the four bombs had spent 24 attempts and 15 minutes, and the owner asked for more budget.
+# Measured, 3x bought NOTHING: the run reached attempt 54, the best line was still the 672 frames
+# found at attempt 8, and all 46 attempts after it were cut at 672 by cutoff() without beating it.
+# 25 extra minutes, zero frames - the same shape as knowledge/rerun_findings.json's "farm43 and
+# farm53 ran all 40 attempts for a gain of exactly 0 frames". So it is retracted, the segment is
+# below, and the rule for adding a name here is: a measurement, not a feeling about a slow segment.
 #
-# The trade, so it is written down rather than discovered later: 3x is about 45 minutes on this
-# segment for a realistic gain of tens of frames - 0.2% of the run. It is here because the owner
-# asked for it, and because the wall clock is not the thing being scored on an overnight run.
-# ZELDA_JUST_GET_THROUGH=1 is the opposite trade and takes the FIRST success instead (measured at
-# +6% frames for removing the patience search almost everywhere); the two cannot both be on.
-MORE_SEARCH: dict[str, float] = {"5b_bombs": 3.0}
+# The knob stays because it is the one that would work if a segment's patience search ever did pay:
+# the stop is min(tries, patience-scaled), so raising `tries` on a slow segment is a silent no-op
+# and this is the only version of "give it more" that is not.
+MORE_SEARCH: dict[str, float] = {}
+
+# Segments that take their FIRST success rather than searching for a faster line. See the note on
+# MORE_SEARCH for why 5b_bombs ended up here instead of there.
+FIRST_SUCCESS: set[str] = {"5b_bombs"}
 
 
 class Run:
@@ -277,6 +280,17 @@ class Run:
         # Per-segment context: is every heart about to be refilled (a boss, the Triforce behind it)?
         free = name in REFILL_SOON
         _search.HEARTS_FREE[0] = free
+        # Per-segment "just get through this one": the first success is the win, no patience search.
+        # The same behaviour as ZELDA_JUST_GET_THROUGH, scoped to names, so it can be right about one
+        # segment and wrong about the next.
+        #
+        # 5b_bombs is here on a measurement, and the measurement is a retraction. Given 3x the search
+        # budget it reached attempt 54 and the best line was still the 672 frames found at attempt 8,
+        # with all 46 attempts after it cut at 672 by cutoff() and beating nothing: 25 minutes for zero
+        # frames. The archived run's line for this segment is 633, so even a perfect search was chasing
+        # 39 frames - 0.2% of the run - and it demonstrably is not there to be found by drawing more
+        # attempts from the same distribution. 793 is what attempt 4 produced and it will do.
+        _search.JUST_GET_THROUGH[0] = name in FIRST_SUCCESS
         _look.CAUTION_OVERRIDE[0] = 0.12 if free else None
         # A segment can ask to be fought at full health - because the sword beam only fires at
         # `hearts >= containers`, so one lost half-heart there is the loss of the weapon rather than a
