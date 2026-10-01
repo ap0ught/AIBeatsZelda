@@ -187,8 +187,14 @@ def make_lafight_policy(nav, then_exit=None, types=None):
     return policy
 
 
-def make_lareach_policy(nav, goal, then_exit=None, exit_ok=False):
-    """Policy: reach goal(x, y) with lookahead (dash through enemies), optionally then leave."""
+def make_lareach_policy(nav, goal, then_exit=None, exit_ok=False, transit=False):
+    """Policy: reach goal(x, y) with lookahead (dash through enemies), optionally then leave.
+
+    transit=True means "this leg is only a journey": the planner never offers the sword and stops
+    pricing damage, because on the eight-Darknut legs the Darknuts do not need to die at all (see
+    zelda.captions: "None of these eight Darknuts needs to die. Dash through them to the staircase").
+    Without it the planner fights what it is passing, which in that room is eight knights.
+    """
     from .lookahead import plan_reach
     def policy(emu, rec, rng, max_frames):
         orig = emu.step; emu.step = rec.step
@@ -197,7 +203,8 @@ def make_lareach_policy(nav, goal, then_exit=None, exit_ok=False):
             from .search import nudge_into_room
             nudge_into_room(emu, rec.step)
             emu.step = orig
-            res = plan_reach(emu, rec, goal, max_frames=max_frames, rng=rng, exit_ok=exit_ok)
+            res = plan_reach(emu, rec, goal, max_frames=max_frames, rng=rng, exit_ok=exit_ok,
+                             transit=transit)
             if res != "arrived":
                 return res
             emu.step = rec.step

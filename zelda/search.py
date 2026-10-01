@@ -26,6 +26,7 @@ class Attempt:
     note: str = ""
     bombs: int = 0
     bonus: float = 0.0          # extra frames-equivalent worth of the end state (staged fights: EXTRA_VALUE)
+    accepted: str = ""          # why the search stopped on this line (accept-after); "" = it ran its limit
 
 
 class OverBudget(BaseException):
@@ -136,6 +137,25 @@ FIGHT_PATIENCE = [float(_os.environ.get("ZELDA_FIGHT_PATIENCE", "1.0"))]   # x t
 # because it is the knob a per-segment budget multiplies (runner.MORE_SEARCH) and a literal in a
 # signature is not something another module can reach.
 PATIENCE = 14
+# Attempts without improvement after the search already HAS a line, before it stops and plays that
+# line instead of hunting for a faster one. This is the "take what we have" the owner asked for, and
+# it is a cap on patience rather than a different stop rule, so a segment whose line keeps improving
+# is never cut off - only the fruitless tail is.
+#
+# Why it exists, measured on 59_fight (Level 3 room $59 -> $69) at 2026-10-01 10:49. The search found
+# the room at attempt 3 in 509 frames and again at attempt 4 in 503. The stop rule then said "35 more
+# attempts without improvement", because the >= 500-frame tier is `patience * FIGHT_PATIENCE * 2.5`
+# and patience is 14. Attempts 5-8 came back at 502-509 frames - none of them beat 503 - and the run
+# was STILL on this segment 30 minutes later with an 8-attempt log and two successes in hand, heading
+# for roughly two hours of search to shave a percent off a room fight. A segment that is already
+# solvable was being treated as a segment that is not.
+#
+# It is deliberately NOT PATIENCE and not `tries`. Those are about how long a segment may search
+# BEFORE it has anything; this is about how long it may keep polishing what it already has, and the
+# two answer different questions. 8 is ~30 minutes at the 3.7 minutes an attempt of this segment
+# costs, which is one more polish round than the data above justifies skipping. ZELDA_ACCEPT_AFTER=0
+# restores the old behaviour exactly, and the owner has that escape hatch on purpose.
+ACCEPT_AFTER = [int(_os.environ.get("ZELDA_ACCEPT_AFTER", "8"))]
 _DOOR_SPOT = {"Up": (120, 85), "Down": (120, 189), "Left": (32, 141), "Right": (208, 141)}
 
 
@@ -276,7 +296,8 @@ JUST_GET_THROUGH = [bool(int(os.environ.get("ZELDA_JUST_GET_THROUGH", "0")))]
 
 
 def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: int = 60, max_frames: int = 900,
-                    setup=None, log=print, label: str = "", patience: int = PATIENCE):
+                    setup=None, log=print, label: str = "", patience: int = PATIENCE,
+                    seed_base: int = 1000, accept_after: int | None = None, phase_prefix: str = ""):
     """random_search across several emulators at once: one thread per scout, attempts handed out by seed.
     Same ranking, same early stop. Emulation releases the GIL (it is socket I/O), so K scouts run K attempts
     in nearly the time of one. The winner is an input list from the shared start state, exactly as before.
@@ -299,6 +320,12 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
     the rule only fires once that difference is already under CONVERGE_TOL. So the worst case is
     CONVERGE_TOL frames per segment, and less than that whenever the best arrived first. 20 frames is
     1.1% of the 1,800 a heart is priced at.
+
+    `seed_base` moves the whole attempt sequence. Attempts are `random.Random(seed_base + i)`, so the
+    default draws seeds 1000, 1001, ... and a caller retrying a segment that just failed passes 2000,
+    3000, ... instead. That is the difference between a retry and a repeat: same policy, same state,
+    same budget, a different sample of the plans - which is all a stuck segment can be given from
+    outside, and the only thing that changes when nothing about the segment itself has changed.
     """
     import threading
     lock = threading.Lock()
@@ -321,6 +348,38 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
         _Full.bombs = min(BOMB_CAP[0], st.get("b0", 0) + 4)     # ...and one drop of bombs it might still pick up
         return int(value_of(_Full, c) - value_of(b, c))
 
+    def phase_now(i: int) -> str:
+        """Which of the search's phases this window is in, in the window's own words, numbered.
+
+        Four scout windows showing the same room look identical, and the room is not the interesting
+        part: a search that has never found a line and a search that has one and is trying to beat it
+        are the same picture and want opposite things from the person watching. The attempt counter
+        used to carry that and was removed as clutter; here it rides with the phase, which is what
+        makes it mean something - "#7" alone is a number, "POLISH #7" says what that number is FOR.
+
+        The vocabulary is the search's own stop rules, not a mood: why a search stopped is the single
+        most useful thing to know about it, and `converged`, `capped` and `searched` are three
+        different decisions that all used to print the same "(early stop after N attempts)".
+        """
+        if st["best"] is None:
+            return f"{phase_prefix}BASELINE #{i + 1}"     # nothing found yet: still looking for a line
+        if st["stop"]:
+            return f"{phase_prefix}{st.get('why', 'DONE')}"   # decided; in-flight attempts land first
+        return f"{phase_prefix}POLISH #{i + 1}"         # we have a line and are trying to beat it
+
+    def announce(why: str) -> None:
+        """Tell every scout why the search stopped, while they are still stepping.
+
+        A scout's window paints on the next frame it renders, and a search that has just decided to
+        stop still has attempts in flight - so this is the one moment a stop reason can actually be
+        seen on screen. Sent after the threads join it would be correct in the bridge and invisible.
+        """
+        for emu in scouts:
+            try:
+                emu.cmd(f"phase {why}")
+            except Exception:
+                pass                            # cosmetic; an older bridge must not break a search
+
     def work(k):
         emu, nav = scouts[k], navs[k]
         policy = factory(nav)
@@ -330,7 +389,7 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     return
                 i = st["next"]
                 st["next"] += 1
-            rng = random.Random(1000 + i)
+            rng = random.Random(seed_base + i)
             s_start = emu.load(state_name)
             st.setdefault("b0", s_start.bombs)
             rec = Recorder(emu)
@@ -354,6 +413,14 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 emu.cmd(f"attempt {i + 1}")
             except Exception:
                 pass                        # an emulator that predates the command still plays fine
+            try:
+                # ...and the phase, so the window says which of the three it is in. Sent per attempt
+                # rather than on change because a scout only looks at its own window between attempts
+                # anyway, and one line per attempt on a socket that already carries every frame's
+                # buttons costs nothing.
+                emu.cmd(f"phase {phase_now(i)}")
+            except Exception:
+                pass                        # same: cosmetic, and an old bridge must not break a search
             step0 = emu.step
             try:
                 outcome = policy(emu, rec, rng, max_frames)
@@ -437,8 +504,10 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     # unanimous rule and changed it; the owner corrected that back to a majority.
                     if near > len(scouts) / 2 and not st["stop"]:
                         st["stop"] = True
+                        st["why"] = "CONVERGED"
                         log(f"  converged: {near} of {len(scouts)} scouts within "
                             f"{CONVERGE_TOL[0]} frames of {bst} - taking it")
+                        announce("CONVERGED")
                 # Say something about every attempt, not only the successful ones. Eleven minutes of
                 # Gleeok search produced 223 bytes of log because failures are silent, which makes a
                 # search that is working look exactly like one that is hung - the owner could not tell
@@ -494,9 +563,25 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 # at the best one's length, so looking longer is cheap next to what the long tail is worth.
                 if best is not None and best.frames >= 500 and limit < tries:
                     limit = min(tries, max(limit, int(patience * FIGHT_PATIENCE[0] * (3.2 if best.frames >= 900 else 2.5))))
+                # ...and then the cap. `limit` above can reach 35 non-improving attempts on a room this
+                # long (patience 14 x the >= 500 tier's 2.5), which is an hour of search spent on a
+                # segment that was already solved. ACCEPT_AFTER bounds the polishing tail: it counts
+                # attempts since the best last IMPROVED, so a segment still getting better lines is
+                # never cut off, and a segment whose attempts have all come back equal stops at 8.
+                # 59_fight on 2026-10-01 is the case this was written for - see ACCEPT_AFTER's note.
+                cap = ACCEPT_AFTER[0] if accept_after is None else accept_after
+                if best is not None and cap > 0 and st["since"] >= cap and not st["stop"]:
+                    st["stop"] = True
+                    st["why"] = "CAPPED"
+                    st["accepted"] = (f"took the {best.frames}-frame line after {st['done']} attempts "
+                                      f"({st['since']} without improvement)")
+                    log(f"  (accept-after {cap}: {st['accepted']} - flagged for a later pass)")
+                    announce("CAPPED")
                 if best is not None and st["since"] >= limit:
                     if not st["stop"]:
+                        st["why"] = "SEARCHED"
                         log(f"  (early stop after {st['done']} attempts)")
+                        announce("SEARCHED")
                     st["stop"] = True
 
     threads = [threading.Thread(target=work, args=(k,), daemon=True) for k in range(len(scouts))]
@@ -504,7 +589,18 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
         th.start()
     for th in threads:
         th.join()
+    # Tell every scout the search is over. Measured, with a real state in a parked window: setting the
+    # label does NOT repaint it, and neither does `step 0` - a window composites the overlay only when
+    # it renders an actual frame, and a scout between searches renders nothing. So this is correct in
+    # the bridge and usually invisible on screen; the window keeps showing the last phase it drew, and
+    # the log is where "the search is over" is actually readable. Kept because it costs one line each
+    # and any future step of a parked scout paints it.
+    announce("DONE")
     best = st["best"]
+    if best is not None and st.get("accepted"):
+        # Hand the reason to the runner, which is what writes the flagged-for-improvement entry: the
+        # search knows WHY it stopped early, and only the runner knows the run it belongs to.
+        best.accepted = st["accepted"]
     dead = st.get("dead", 0)
     if dead:
         # Say so on the same line as the result, because this is the failure that does not announce

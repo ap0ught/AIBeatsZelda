@@ -281,6 +281,11 @@ def must_kill(t: int, s) -> bool:
 # anything with a head.
 NEED_FULL_HEARTS = [False]
 
+# Does the reach/dash planner know that a swing into a Darknut's shield achieves nothing?
+# On by default; ZELDA_SHIELD_AWARE=0 restores the old "is anything killable within 36 px" question,
+# which testing/probe_69_stairs.py A/Bs against it on the eight-Darknut stairs room.
+SHIELD_AWARE = [bool(int(os.environ.get("ZELDA_SHIELD_AWARE", "1")))]
+
 
 def hearts_full(s) -> bool:
     return s.hearts >= s.containers
@@ -289,6 +294,42 @@ def hearts_full(s) -> bool:
 
 def killable(e) -> bool:
     return e[1] not in UNKILLABLE and e[1] < 0x50
+
+
+# Red and Blue Darknut. Their shield is the cartridge's own: a swing along the axis they face is
+# stopped by it, so only a side or back hit lands (combat.shield_side, Z_01 CheckMonsterStabbingCollision).
+DARKNUT_TYPES = (0x0B, 0x0C)
+
+
+def facing_of(emu: BizHawk, slot: int) -> int:
+    """Which way an enemy is facing: 1 Right, 2 Left, 4 Down, 8 Up."""
+    return emu.byte(0x98 + slot)
+
+
+def swing_connects(emu: BizHawk, s, d: str) -> bool:
+    """Would a swing in direction `d` from state `s` land on something that can be hurt?
+
+    This is the question `plan_reach` should have been asking before it offered the swing. It used to
+    ask "is anything killable within 36 px", and a Darknut answers that question while facing you -
+    so the eight-Darknut legs spent their attempts swinging into shields: no damage, 14 frames a
+    swing, and a knight's return for the trouble. `killable` is about the monster, not about this
+    swing, and the shield is a property of the two of them together.
+
+    One swing can cross two monsters, so a direction still counts if anything in it is reachable and
+    unshielded; only a swing that can hit nothing but shields is worthless.
+    """
+    from .combat import sword_reach, shield_side
+    for e in read_enemies(emu):
+        if not killable(e) or sword_reach(emu, s, e) != d:
+            continue
+        if e[1] in DARKNUT_TYPES and shield_side(facing_of(emu, e[0]), d, e[2] - s.x, e[3] - s.y):
+            continue                      # the blade lands on the shield and nothing dies
+        return True
+    return False
+
+
+def any_swing_connects(emu: BizHawk, s) -> bool:
+    return any(swing_connects(emu, s, d) for d in DIRS4)
 
 
 def enemy_hp_total(emu: BizHawk, types=None, ignore=()) -> tuple[int, int]:
@@ -877,9 +918,16 @@ def plan_reach(emu: BizHawk, rec, goal, *, max_frames: int = 3000, rollout: int 
             macros = walk_macros           # just run: never offer the swing
         elif OLD_PLANNER[0]:
             macros = all_macros
-        else:
+        elif not SHIELD_AWARE[0]:
             close = any(killable(e) and max(abs(e[2] - s0.x), abs(e[3] - s0.y)) <= 36 for e in read_enemies(emu))
             macros = all_macros if close else walk_macros
+        else:
+            # Offer a swing only in a direction that lands on something hittable. Offering all four
+            # whenever anything killable is nearby is what produced the head-on shield beating: the
+            # planner had no way to say "that one is facing me", so it kept choosing the swing that
+            # changed nothing. `swing_connects` knows, and it is the same shield_side the Darknut
+            # hunter uses - one fact, asked in one place. ZELDA_SHIELD_AWARE=0 is the old question.
+            macros = walk_macros + [("swing", d, 0) for d in DIRS4 if swing_connects(emu, s0, d)]
         dmg_scale = 0.0 if transit else caution(s0)
         root = emu.msave()
         n_before = len([e for e in read_enemies(emu) if e[1] != 0x49 and e[1] < 0x50])

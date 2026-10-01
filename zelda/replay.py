@@ -55,6 +55,13 @@ def verify(inputs_path: Path, expected_fp: str | None = None, log=print,
             f"  ZELDA_ALLOW_UNVERIFIED_ROM=1 if finding the divergence is the point.")
     frames = load_inputs(inputs_path)
     with BizHawk(rom=rom, log_name="replay.log") as emu:
+        # The one phase label that is on screen for the whole verification: this emulator is stepped
+        # every frame of the run, so unlike the parked MAIN it repaints. Anyone watching the windows
+        # during a verify needs to know that what they are looking at is NOT the run.
+        try:
+            emu.cmd("phase verify")
+        except Exception:
+            pass
         s = run_inputs(emu, frames)
         fp = fingerprint(emu)
         emu.screenshot(Path(inputs_path).stem + "_replay")

@@ -97,6 +97,33 @@ local boss_seen = 0        -- the peak HP a boss has shown, so the total has a d
 -- screens is exactly the thing you want to be able to read at a glance while it happens.
 local story = { head = 0 }
 
+-- What this window is being used for right now, set by the Python side with `phase <label>`.
+-- A scout window shows a SEARCH PHASE (baseline / polish / taking it) and MAIN shows what it is
+-- doing with the winner (replay / trim). Four identical-looking windows are otherwise unreadable:
+-- from the room alone you cannot tell a search that has never found a line from one that has a line
+-- and is trying to beat it, and those two want opposite things from you - the first needs more
+-- attempts, the second needs you to leave it alone.
+--
+-- Drawn right-aligned on the HUD line rather than appended, because the line already carries the
+-- room and the boss read-out and they collide. Colour is by phase so four windows can be read at a
+-- glance from across the desk.
+local phase = ""
+-- Colour is keyed on the FIRST WORD, so a numbered label ("POLISH #7") or a staged one
+-- ("STAGE 2/5 POLISH #7") colours by what it is, not by its numbering.
+local PHASE_COLOUR = {
+  BASELINE = 0xFF60FF60,   -- green: nothing found yet, every attempt is still looking for a line
+  SEARCH   = 0xFF60FF60,
+  POLISH   = 0xFFFFA040,   -- amber: we have a line and are hunting for a faster one
+  STAGE    = 0xFFFFA040,
+  CONVERGED = 0xFFB0B0B0,  -- grey: decided. The four stop reasons, told apart, because they are
+  CAPPED   = 0xFFB0B0B0,   --       four different decisions and all four used to print the same line
+  SEARCHED = 0xFFB0B0B0,
+  DONE     = 0xFFB0B0B0,
+  REPLAY   = 0xFF60C0FF,   -- blue: MAIN is playing a winner in
+  TRIM     = 0xFF60C0FF,
+  VERIFY   = 0xFF60C0FF,
+}
+
 -- One read of the object table, shared by everything that needs it. Returns slot -> {type, hits},
 -- the total in hits, and the name to print.
 --
@@ -213,6 +240,23 @@ local function hud()
   -- colour arguments have to be given for it to be solid.
   gui.drawRectangle(0, TEXT_Y, 256, TEXT_H, 0xFF000000, 0xFF000000)
   gui.drawString(4, TEXT_Y + 1, line, 0xFF40C0FF, 0xFF000000)
+  if phase ~= "" then
+    -- Right-aligned: the room line grows to the right as the boss read-out is added, and a phase
+    -- label in the middle of that would be overwritten on exactly the segments where the phase is
+    -- most interesting. 8 px per cell is the built-in font's fixed width, and the sender caps the
+    -- label at 14 cells (112 px), so it starts no further left than column 17.
+    --
+    -- On a boss segment the boss read-out is the longest line there is ("L3 R59  GLEEOK: 12/14", 22
+    -- cells) and the phase label's opaque background does cover the last three characters of it.
+    -- That is the trade: on a boss the phase is BASELINE until the kill and DONE after it, and the
+    -- attempt number behind it is the part worth reading.
+    local label = string.upper(phase)
+    local colour = nil
+    for w in label:gmatch("%S+") do            -- "S2/5 POLISH #7" colours by POLISH, not "S2/5"
+      colour = PHASE_COLOUR[w] or colour
+    end
+    gui.drawString(252 - 8 * #label, TEXT_Y + 1, label, colour or PHASE_COLOUR.DONE, 0xFF000000)
+  end
 end
 
 local function state_str()
@@ -306,6 +350,18 @@ local function handle(line)
     -- The Python side still sends this once per attempt (search.py:309), and the HUD no longer draws
     -- a counter, so the value is accepted and dropped rather than the command erroring: removing the
     -- command would make the sender's reply "err unknown command" on every attempt, for no gain.
+    send("ok")
+  elseif cmd == "phase" then
+    -- `phase <label>` or `phase` alone to clear it. Cosmetic, like `story head`: an emulator on an
+    -- older bridge must not cost the run anything, so the Python side wraps this in a try. Capped at
+    -- 14 cells to match what the HUD draws, so a longer label is cut rather than run off the row.
+    phase = rest:sub(1, 14)
+    -- Draw it now rather than waiting for the next `step`. The HUD is painted from the step handler
+    -- because there is no idle frame loop to paint from, which means a label set while the window is
+    -- parked - which is exactly when the search has just finished and told every scout "done" -
+    -- would not appear until that window was stepped again, i.e. probably never. A status light that
+    -- only lights up when something else happens is not a status light.
+    pcall(function() gui.clearGraphics(); hud() end)
     send("ok")
   elseif cmd == "ram" then
     local a, l = rest:match("^(%d+)%s+(%d+)$")

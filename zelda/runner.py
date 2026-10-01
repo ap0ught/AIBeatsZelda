@@ -86,7 +86,47 @@ MORE_SEARCH: dict[str, float] = {}
 
 # Segments that take their FIRST success rather than searching for a faster line. See the note on
 # MORE_SEARCH for why 5b_bombs ended up here instead of there.
-FIRST_SUCCESS: set[str] = {"5b_bombs"}
+FIRST_SUCCESS: set[str] = {"5b_bombs", "59_fight"}
+
+# --- not sitting still ---------------------------------------------------
+#
+# Two failure shapes cost this project hours and neither was a bug in a policy. Both are here.
+#
+# 1. A segment that is ALREADY SOLVED keeps searching for a faster line. search.ACCEPT_AFTER caps
+#    that tail at 8 non-improving attempts and hands back why it stopped; the flag file below is the
+#    "improve this later" list that makes taking the line a decision instead of a surrender.
+#
+# 2. A segment that is NOT SOLVED fails, raises, and the wrapper restarts the process onto the same
+#    checkpoint with the same seeds - an identical search, drawing the identical plans, as many times
+#    as the wrapper has attempts left. That is not a retry, it is a loop, and nothing in the run
+#    records that it happened. So a failure is written to a ledger, the retry draws from a different
+#    band of seeds, and after BACKPROP_AFTER failures the runner hands control back to the segment
+#    loop asking to be rewound one segment: the decision that produced this state is re-drawn and the
+#    failed segment is tried again from a different one.
+#
+# The ledger and the flag list live in logs/ beside the checkpoints: they are per-run mutable state,
+# not knowledge about the game, and knowledge/ is full of things that should outlive a run.
+STUCK_PATH = LOGS_DIR / "stuck.json"
+FLAGS_PATH = LOGS_DIR / "flagged.json"
+BACKPROP_AFTER = [int(os.environ.get("ZELDA_BACKPROP_AFTER", "2"))]   # failures before rewinding one segment
+MAX_BACKPROP = [int(os.environ.get("ZELDA_MAX_BACKPROP", "2"))]       # rewinds allowed per segment, ever
+
+
+class NeedsBackprop(RuntimeError):
+    """This segment has failed enough times that the one before it should be searched again.
+
+    Deliberately NOT the plain "segment X failed" RuntimeError: run_until.sh stops the run on that
+    message, and a segment worth rewinding is not a segment worth stopping for. main() catches this,
+    rewinds, and carries on; if it cannot rewind (nothing before it, or the cap is spent) it
+    re-raises the plain error so the run still stops rather than spinning.
+    """
+
+    def __init__(self, segment: str, fails: int, backprops: int):
+        super().__init__(f"segment {segment} failed {fails} times; rewinding one segment "
+                         f"(backprop {backprops})")
+        self.segment = segment
+        self.fails = fails
+        self.backprops = backprops
 
 
 class Run:
@@ -191,6 +231,82 @@ class Run:
         self.list_hash = hashlib.sha1(blob.encode()).hexdigest()[:12]
         return self.list_hash
 
+    # -- stuck segments ---------------------------------------------------
+    @staticmethod
+    def _read_json(path: Path) -> dict:
+        try:
+            d = json.loads(path.read_text())
+            return d if isinstance(d, dict) else {}
+        except (OSError, ValueError):
+            return {}                 # absent, truncated or hand-edited: treat as "nothing recorded"
+
+    @staticmethod
+    def _write_json(path: Path, data: dict) -> None:
+        # Never allowed to be the reason a run stops. Both files are advisory - the ledger can be
+        # deleted and the flag list can be rebuilt from the log - so a write failure is logged by the
+        # caller's next line and otherwise ignored.
+        try:
+            tmp = path.with_suffix(".tmp")
+            tmp.write_text(json.dumps(data, indent=1, sort_keys=True))
+            tmp.replace(path)
+        except OSError:
+            pass
+
+    def stuck_entry(self, name: str) -> dict:
+        return self._read_json(STUCK_PATH).get(name, {}) or {}
+
+    def _note_stuck(self, name: str, **fields) -> dict:
+        data = self._read_json(STUCK_PATH)
+        entry = dict(data.get(name, {}))
+        entry.update(fields)
+        entry["last"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        data[name] = entry
+        self._write_json(STUCK_PATH, data)
+        return entry
+
+    def _clear_stuck(self, name: str) -> None:
+        data = self._read_json(STUCK_PATH)
+        if data.pop(name, None) is not None:
+            self._write_json(STUCK_PATH, data)
+
+    def _flag_for_improvement(self, name: str, best, reason: str, **extra) -> None:
+        """Write down a segment that was played on a line the search stopped polishing.
+
+        Taking what the search has is only a decision if the thing left on the table is written
+        down. Without this the cost of ACCEPT_AFTER is invisible: the run looks the same whether a
+        segment stopped at 503 frames because nothing better exists or because we stopped asking.
+        """
+        data = self._read_json(FLAGS_PATH)
+        data[name] = {"frames": best.frames, "hearts": round(float(best.hearts), 2),
+                      "run": self.name, "reason": reason, "when": time.strftime("%Y-%m-%d %H:%M:%S"),
+                      "total_frames": len(self.main.inputs), **extra}
+        self._write_json(FLAGS_PATH, data)
+        self.log(f"  flagged {name} for a later improvement pass ({reason}); "
+                 f"{len(data)} flagged in {FLAGS_PATH.name}")
+
+    def backprop(self, failed: str) -> str | None:
+        """Rewind the last completed segment so the decision before `failed` is searched again.
+
+        Returns the segment to redo, or None if there is nothing to rewind to. The rewind is a real
+        checkpoint load: MAIN's state AND its input prefix both go back, so the redo's output replaces
+        the old line in the run's log rather than being appended to a state it never followed from.
+        `done` loses the last entry afterwards, because after rewinding that segment is unfinished -
+        leaving it marked done is what would make main() skip straight past the redo.
+        """
+        if not self.done:
+            self.log(f"  {failed} has failed repeatedly but it is the first segment of the run; "
+                     f"nothing to backpropagate into")
+            return None
+        prev = self.done[-1]
+        if self.resume(prev) is None:
+            self.log(f"  cannot rewind to {prev!r} (no usable checkpoint); giving up on the backprop")
+            return None
+        self.done.pop()
+        self._note_stuck(failed, backprops=self.stuck_entry(failed).get("backprops", 0) + 1)
+        self.log(f"  BACKPROP: rewound to {prev!r} ({len(self.done)} segments done). "
+                 f"{prev} will be searched again and {failed} retried from a different state")
+        return prev
+
     # -- staged fights ---------------------------------------------------
     STAGED = ("make_lafight_policy", "make_clear_grab_policy", "clear_push_stairs_policy")
 
@@ -238,7 +354,11 @@ class Run:
             try:
                 best = parallel_search(self.scouts, self.snavs, st, factory, ok, tries=STAGE_TRIES[0],
                                        max_frames=1500, label=sname, log=self.log, setup=reset_beliefs,
-                                       patience=STAGE_PATIENCE[0])
+                                       patience=STAGE_PATIENCE[0],
+                                       # A staged fight is several searches wearing one segment's
+                                       # name, and from the windows they are indistinguishable. "S3/5"
+                                       # says which kill this window is working on.
+                                       phase_prefix=f"S{k}/{n_start - 1} ")
             finally:
                 _look.KILL_STAGE[0] = None
                 _search.EXTRA_VALUE[0] = None
@@ -323,16 +443,41 @@ class Run:
             start = f"{self.name}_{name}_start"      # the last stage begins where the stages left MAIN
             main.save(start)
         # Four scouts make attempts cheap, and fights vary by a factor of two between attempts: look longer.
-        from .search import PATIENCE
+        from .search import PATIENCE, ACCEPT_AFTER
+        # What this segment has done before decides what it is allowed to do now. A segment that has
+        # already failed gets a different band of seeds - otherwise the wrapper's restart replays the
+        # identical search, plan for plan - and one more polish round, because a failure is evidence
+        # that this particular sample of plans does not contain the answer.
+        stuck = self.stuck_entry(name)
+        fails = int(stuck.get("fails", 0))
+        seed_base = 1000 + 1000 * fails
+        if fails:
+            self.log(f"  {name} has failed {fails} time(s) before; drawing seeds from {seed_base} "
+                     f"instead of 1000 so this is a different search and not the same one again")
         best = parallel_search(self.scouts, self.snavs, start, factory, success, tries=max(tries, MIN_TRIES[0]),
                                max_frames=max_frames, label=name, log=self.log, setup=reset_beliefs,
-                               patience=max(1, round(PATIENCE * MORE_SEARCH.get(name, 1.0))))
+                               patience=max(1, round(PATIENCE * MORE_SEARCH.get(name, 1.0))),
+                               seed_base=seed_base, accept_after=ACCEPT_AFTER[0] + 2 * fails)
         for nav in self.snavs:
             nav.blocked = copy.deepcopy(blocked0)
         if best is None:
             main.note(f"SEGMENT {name}: no success in {tries} attempts")
+            entry = self._note_stuck(name, fails=fails + 1, tries=tries,
+                                     hearts=round(float(s0.hearts), 2), room=f"{s0.room:02X}")
+            backprops = int(entry.get("backprops", 0))
+            if fails + 1 >= BACKPROP_AFTER[0] and backprops < MAX_BACKPROP[0]:
+                raise NeedsBackprop(name, fails + 1, backprops)
             raise RuntimeError(f"segment {name} failed")
+        if best.accepted:
+            self._flag_for_improvement(name, best, best.accepted)
         main.note(f"SEGMENT {name}: best of {tries} = {best.frames} frames, {best.hearts} hearts. Playing it")
+        try:
+            # What MAIN's window is for, in MAIN's window. It is parked and black for most of a search
+            # (nothing steps it), so when it does move this is the difference between "why is that
+            # window moving" and "oh - it is playing the winner in".
+            main.cmd("phase replay")
+        except Exception:
+            pass                            # cosmetic; an older bridge must not break the segment
         # Play the winner into MAIN and stop the moment the segment is genuinely finished.
         #
         # The scout and MAIN do not always agree about how long a fight takes: the planner branches
@@ -371,6 +516,10 @@ class Run:
         MINOR_DROPS = {0x00, 0x0F, 0x18, 0x19, 0x21, 0x22, 0x23}
         keep = len(best.inputs)
         if trim and not any(m in name for m in NO_TRIM):
+            try:
+                main.cmd("phase trim")     # its own phase: MAIN steps every frame in here, so it shows
+            except Exception:
+                pass
             hits = 0
             for i, b in enumerate(best.inputs):
                 main.step(b, 1)
@@ -407,7 +556,15 @@ class Run:
         s = main.state()
         if not success(main, s):
             raise RuntimeError(f"segment {name}: main diverged from scout ({s})")
+        # Only now is the segment genuinely done. Clearing the ledger one step earlier - when the
+        # search handed back a winner - would forgive a segment whose replay diverged, and that is a
+        # failure like any other: it should draw a different band of seeds next time, not be forgotten.
+        self._clear_stuck(name)
         self.done.append(name)
+        try:
+            main.cmd("phase done")
+        except Exception:
+            pass
         if checkpoint:
             self.save_checkpoint(name)
         head.sync(self.done, self.log)

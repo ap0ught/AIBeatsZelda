@@ -569,3 +569,212 @@ The reach histogram the instrument now prints (`type@px: hits/misses`) is how to
 where the same type is hit at one distance and not at another is the measurement that settles it,
 and `$4A` only has one Zol in it.
 
+## 9. Two ways a segment can waste the run without failing (2026-10-01)
+
+The run sat on one segment for half an hour and was not stuck on it in any interesting sense. `59_fight`
+(Level 3, room `$59` -> `$69`) had **already been solved twice** and was still searching. From
+`logs/gleeok_run8.log`, attempt 1 of the wrapper at 10:49:
+
+```
+  attempt 4: success 503 frames, hearts 3.0
+  attempt 3: success 509 frames, hearts 3.0
+  attempt 1: over budget (509 frames)
+  attempt 2: over budget (509 frames)
+  attempt 8: over budget (509 frames)
+  attempt 5: over budget (508 frames)
+  attempt 7: over budget (505 frames)
+  attempt 6: over budget (502 frames)
+```
+
+Two successes in eight attempts, the second six frames better than the first, and nothing after it
+beat 503. That is not a hard segment. The stop rule is what kept it there: with a full-health best
+the search allows `patience` (14) non-improving attempts, and the "long rooms vary most" tier for a
+best of 500+ frames turns that into `patience * FIGHT_PATIENCE * 2.5` = 35. Attempts 5-8 came back
+at 502-509 - inside the noise of the room - and the remaining 27 attempts were queued. At the ~3.7
+minutes an attempt of this segment costs, the segment had ~1.5 hours of polishing left to do on a
+fight it had already won.
+
+So two changes, both in the search's stop rules rather than in any policy.
+
+**Take what we have, and write down what was left.** `search.ACCEPT_AFTER` (default 8, env
+`ZELDA_ACCEPT_AFTER`, 0 restores the old rule) caps attempts-since-last-improvement. It is not
+`patience` and not `tries`: those answer "how long may a segment search before it has anything",
+this answers "how long may it keep polishing what it has". A segment whose line keeps improving is
+never cut off - the counter resets on every improvement - so the cap only ever truncates the
+fruitless tail. When it fires, `parallel_search` records why on the returned `Attempt.accepted` and
+the runner writes `logs/flagged.json`: segment, frames, hearts, run, total frames, reason. Without
+that file the cost of the cap is invisible, because the run looks identical whether a segment stopped
+at 503 frames because nothing better exists or because we stopped asking.
+
+**Do not sit still.** A segment that genuinely fails has a worse habit: `run_until.sh` restarts the
+process, the run resumes the same checkpoint, and the search draws seeds `1000, 1001, ...` again -
+the identical search, plan for plan, once per wrapper attempt. Nothing recorded that it happened.
+Three things changed:
+
+- a failure is written to `logs/stuck.json` (`fails`, `backprops`, room, hearts, when), and a segment
+  that later passes is cleared from it;
+- a retry draws seeds from `1000 + 1000 * fails`, so attempt 5 of a segment that has failed four
+  times is a different sample of plans and not the same search again. `parallel_search` grew a
+  `seed_base` parameter for exactly this;
+- after `BACKPROP_AFTER` (2) failures the runner raises `NeedsBackprop` instead of the plain
+  "segment failed" error, and `main()` rewinds **one segment**: it loads the previous segment's
+  checkpoint - state *and* input prefix - drops it from `done`, and re-searches it. The decision that
+  produced the failing state is drawn again and the failed segment is retried from a different one.
+  `fullgame.main()`'s segment loop is now a `while` over an index because a `for` loop cannot go
+  backwards.
+
+`NeedsBackprop` is deliberately not the string `run_until.sh` stops on (`RuntimeError: segment`): a
+segment worth rewinding is not a segment worth stopping for. When a rewind is impossible - it is the
+first segment, or `MAX_BACKPROP` (2) rewinds are already spent - `main()` re-raises the plain error
+so an actually-stuck run still stops instead of spinning.
+
+Both new files are advisory and live in `logs/`, not `knowledge/`: they are per-run mutable state, the
+ledger can be deleted and the flag list rebuilt from the log, and neither is knowledge about the
+game. `ZELDA_ACCEPT_AFTER=0`, `ZELDA_BACKPROP_AFTER` and `ZELDA_MAX_BACKPROP` turn the behaviour off
+or retune it without an edit.
+
+`59_fight` is additionally in `FIRST_SUCCESS`, on the same evidence as `5b_bombs`: it takes its first
+success rather than searching for a faster line, which costs the 6 frames between attempt 3's 509 and
+attempt 4's 503. That is the owner's call, not a measurement - the measurement above only says the
+attempts after the second one were not better.
+
+**What this does not claim.** Nothing here makes a hard segment easier. A segment that cannot be
+solved still fails; it now fails into a ledger and a one-segment rewind instead of into an identical
+retry. The tests for both rules are `search`-level fakes with no emulator (`tries`/patience/seed
+behaviour) and runner-level ledger tests - the real proof for `59_fight` is that it passes.
+
+## 10. The planner knew a Darknut was killable and not that it was shielded (2026-10-01)
+
+Watching `69_stairs` run: all four scouts walked into a knight and swung at its face. The route's own
+caption for that room says the opposite plan - "None of these eight Darknuts needs to die. Dash
+through them to the staircase on the east side" - so this was not a room the planner could not solve.
+
+The knowledge was in the tree and simply was not connected to the code making the decision.
+`combat.shield_side` has said since the Darknut hunter was written that a swing along the axis a
+knight faces is stopped by its shield and only a side or back hit lands. `lookahead.killable` says a
+Darknut is killable - correctly, that is a fact about the monster. What nobody asked was whether
+*this* swing would land, so `plan_reach` offered a swing in all four directions whenever anything
+killable was within 36 px and scored the result by what happened afterwards. A swing into a shield
+earns no kill credit and should have lost on the score, but it also *moves Link*, and movement is most
+of what that score is made of.
+
+`lookahead.swing_connects` now asks the missing question with the fact that already existed: a swing is
+offered only in a direction where `sword_reach` finds something and, for a Darknut, `shield_side`
+says the blade is not on the shield. `ZELDA_SHIELD_AWARE=0` restores the old question;
+`testing/probe_69_stairs.py` A/Bs them on the real room from `ckpt_gleeok_59_fight`, four seeds a side:
+
+| | passes | deaths | sword frames per attempt | frames of the passes |
+|---|---|---|---|---|
+| blind | 3/4 | 1 | 46, 26, 36, 18 | 818, 639, 394 |
+| shield-aware | 2/4 | **0** | 0, 2, 0, 0 | 505, 559 |
+| `transit=True` | 1/4 | 2 | 0 | 355 |
+
+**The caption is not an argument for `transit`.** Taking "none of these eight needs to die" literally
+- never offer the sword, stop pricing damage - is the *worst* of the three: 1 pass and 2 deaths in four
+attempts, dead at 176 and 323 frames. `transit` deletes the damage term along with the swing, and a
+Darknut hurts from every side; eight of them is not a corridor. So neither eight-Darknut leg asks for
+`transit`, and the sword stays priced. The parameter is kept, with the measurement in its docstring,
+because it is right for a leg that is only a journey and this room is not one.
+
+Four seeds cannot rank 2/4 against 3/4. They can rank the deaths and the sword, and those are not
+close. What is left open: two shield-aware attempts failed *without dying*, ending in mode `$10` and
+mode `$07` instead of the cellar in mode `$09` - a stairwell transition that did not finish. That is
+the next thing to look at in this room and it is not a shield problem.
+
+## 11. What each window is for, and why a parked one is black (2026-10-01)
+
+Two things came out of watching five emulator windows side by side.
+
+**The windows now say what they are for.** Four scout windows showing the same room are the same
+picture, and the room is not the interesting part: a search that has never found a line and a search
+that has one and is trying to beat it look identical and want opposite things from the person
+watching - the first needs more attempts, the second needs to be left alone. So `bridge.lua` grew a
+`phase <label>` command and draws it right-aligned on the HUD line, coloured by phase, and
+`parallel_search` sends one per attempt from the state it already keeps:
+
+| label | meaning | colour |
+|---|---|---|
+| `BASELINE` | no success yet - every attempt is still looking for a line | green |
+| `POLISH` | we have a line and are spending attempts trying to beat it | amber |
+| `DONE` | decided: converged, capped by ACCEPT_AFTER, out of tries, or out of patience | grey |
+
+MAIN gets `REPLAY` while it plays a winner in and `DONE` after the segment commits. Right-aligned
+because the room line already grows rightward with the boss read-out, and a phase label in the middle
+would be overwritten on exactly the segments where the phase matters most. This replaces the attempt
+counter that used to be on that line and was removed as clutter - a number told you how many attempts
+had run, not what the search was doing with them.
+
+**What the label can and cannot do, measured rather than assumed.** `BASELINE` and `POLISH` both showed
+up on the live run within a minute of each other, which is the case that matters: a scout is being
+stepped constantly while it searches, so the label paints on its next frame. `DONE` mostly does not
+appear, and the reason is the same one as the black MAIN window below: a parked window composites the
+overlay only when it renders a real frame. Setting the phase does not repaint it (`pcall(hud)` in the
+command handler: no), and neither does `step 0` - measured, on a real checkpoint in a parked window:
+
+| after | phase visible |
+|---|---|
+| `step 40` (game painted) | no label set yet |
+| `phase polish`, zero frames | no |
+| `phase done` + `step 0` | no |
+| one real frame (`step 1`) | **DONE**, in grey |
+
+So a scout window freezes on the last phase it drew, which after a search is BASELINE or POLISH, and
+between searches the window is a still of what the search was doing when it stopped. That is honest
+enough to read - "POLISH" on all four windows with the log's `(early stop after N attempts)` is a
+finished search - and the log is where the ending is actually stated. MAIN's labels do show, because
+MAIN is stepped for every frame of the replay.
+
+**The black window is not a Mono rendering bug.** This corrects section 9's guess. The bridge draws
+the HUD from its `step` handler ("the bridge holds the main thread waiting for commands, so there is
+no idle frame loop to draw from; `step` is the heartbeat"), which means an emulator nobody is stepping
+does not repaint at all: MAIN sits parked and black through every search, and a scout that is resized
+while parked shows a stale surface - black after a state load, or yesterday's colours - until its next
+step. That explains every observation that was attributed to surface corruption, including the two
+that looked most like corruption: a greyscale scout that healed on the next fullscreen round-trip
+(it was stepping, so it repainted) and a MAIN that no Expose, workspace remap or resize would ever
+paint (it was not stepping). i3 still floats the BizHawk windows rather than tiling them, so a parked
+window is never resized into a stale surface and the mosaic stays deterministic - but the reason is
+avoiding a stale surface, not surviving a broken one.
+
+Consequence for reading the mosaic: a black MAIN window is normal between segments and says nothing
+about the run. The phase label is the thing to read.
+
+## 12. The old man could not be tested, and the reason is a checkpoint that was never saved (2026-10-01)
+
+The owner, watching the run sit on the White Sword approach: *"you could test if the old man is in
+there by going back and looking. btw if you had full life you would be in revenge mode. but since you
+are not you will flee."* Two claims, one of them about behaviour, neither tested. `testing/probe_old_man.py`
+goes back and looks, and what it found is mostly about what is missing.
+
+**There is no state from inside that cave.** Every `*_white_sword` checkpoint is taken after the segment
+succeeded - Link already has the sword (`$657 = 2`) and the item slot reads `$BF = FF`, nothing lying -
+so in every saved state the old man has already been dealt with. And the harness cannot invent one:
+`BizHawk` has no write primitive at all, deliberately, because the input log is the artifact and poking
+`$66F` to give Link a heart bar would be a run that never happened. So the probe's other job is to
+leave one behind: it watches for the frame Link is inside the cave with the sword still untaken and
+saves `ckpt_probe_old_man_*_inside`. The first run died on a Fatal IO error against the nested X server
+before it got there; the state does not exist yet.
+
+**What two real states do say.** `ckpt_gleeok_ws_0a` (this route, 3.5/5) against `ckpt_fullgame_ws_0a`
+(run6, 5.0/5), same screen, same policy, `white_sword`:
+
+| side | hearts | attempts | result |
+|---|---|---|---|
+| gleeok | 3.5/5 | 2 | died on the approach both times, never got inside |
+| fullgame | 5.0/5 | 2 | seed 1000 **took the sword** (3521 frames, no hearts lost); seed 1001 died |
+
+So the segment is a heart-margin problem and not an old-man problem - which is what `search.py`'s
+`HEART_VALUE` note and `testing/probe_white_sword_bomb.py` already said about this screen and its Blue
+Lynel. Both sides die at y≈93 on the screen, hundreds of frames short of the cave mouth, so neither
+run ever met the old man and this measurement says nothing about him either way. It is not the
+experiment the owner's note asks for, and it is recorded as the negative result it is.
+
+**What would make it an experiment.** Three things, in order: a saved state from inside the cave before
+the pickup (the probe now produces one when it can get in); a way to vary the heart bar from a single
+state, which needs a RAM write the harness deliberately does not have, so it wants two checkpoints
+differing only in `$66F`; and a way to tell "the old man is blocking" from "Link is frozen typing his
+line", because journal/15's 140-frame freeze and a man who will not move look identical from outside.
+That third one is the detection the owner's "going back and looking" is really asking for: he is an
+object in the same twenty slots as his torches (type 0x40) and the item, and nothing in the tree reads
+that row - `read_room_item` reads one slot of it. Until something reads it, the harness can only tell
+"this doorway will not open", which is the belief that cost sixty identical failures in journal/15.
