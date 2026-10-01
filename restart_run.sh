@@ -43,9 +43,17 @@ kill_matching() {                     # kill_matching <comm-regex> <cmdline-rege
   for pid in $(pgrep -f "$line_re" 2>/dev/null); do
     [ "$pid" = "$$" ] && continue
     comm=$(cat "/proc/$pid/comm" 2>/dev/null) || continue
-    case "$comm" in
-      $comm_re) kill -9 "$pid" 2>/dev/null ;;
-    esac
+    # grep -E, NOT `case "$comm" in $comm_re`. A case pattern list is parsed before expansion, so an
+    # expanded "bash|sh|zsh" is the LITERAL string bash|sh|zsh and matches no comm value at all -
+    # verified on this machine, where `case bash in bash|sh|zsh` does not match "bash". Two of the four
+    # calls here passed an alternation, so those two lines had never killed anything: the wrapper was
+    # never stopped and the emulators were never stopped, and the wrapper went on to respawn python.
+    # The visible symptom was this machine ending up with two run_until.sh wrappers, two fullgame.py
+    # and ELEVEN emulators - the exact contention run_until.sh's lock exists to prevent, produced by
+    # the script whose job is to clean up before a run starts.
+    if printf '%s' "$comm" | grep -qE "$comm_re"; then
+      kill -9 "$pid" 2>/dev/null
+    fi
   done
 }
 
