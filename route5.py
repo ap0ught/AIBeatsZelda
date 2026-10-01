@@ -161,48 +161,92 @@ def build(base: list, fg) -> list:
     S.append((head.TAKE, head.take_policy, head.taken_test, 30))
     S.append(by["L4_done"])
     S.append(by["warp_L4"])
-    # ---- THE END OF THE STORY: walk home, kill the guard with the White Sword, deliver the head -----
-    # The Triforce piece behind Gleeok refilled the bar, so by the time we get back to 0x0A Link is at
-    # full health holding the White Sword - which is exactly the state must_kill() in lookahead.py keys
-    # off, so the guard stops being scenery and becomes the objective without any route switch naming it.
-    # Written this way on purpose: the rule that sends us at him lives in the fighter, not here, so it
-    # cannot drift out of sync with the segment that depends on it.
-    # 31 legs, every one produced by owroute.dijkstra from (0x03,128,141) to room 0x0A and collapsed
-    # to one lane per room transition (781 eight-pixel steps -> 31 screen changes). The straight run
-    # east along row 0 is NOT available - both 0x03 and 0x0A are row 0, seven screens apart, and the
-    # router goes 7779 cost units south, along, and back up instead. That is exactly the thing worth
-    # having checked rather than written from a picture of the map.
-    S.append(lane("rv_leg_1", "Right", 0x13, 61))
-    S.append(lane("rv_leg_2", "Right", 0x14, 189))
-    S.append(lane("rv_leg_3", "Right", 0x24, 61))
-    S.append(lane("rv_leg_4", "Left", 0x23, 101))
-    S.append(lane("rv_leg_5", "Right", 0x33, 61))
-    S.append(lane("rv_leg_6", "Left", 0x32, 141))
-    S.append(lane("rv_leg_7", "Left", 0x31, 141))
-    S.append(lane("rv_leg_8", "Right", 0x41, 61))
-    S.append(lane("rv_leg_9", "Left", 0x40, 93))
-    S.append(lane("rv_leg_10", "Right", 0x50, 61))
-    S.append(lane("rv_leg_11", "Right", 0x60, 61))
-    S.append(lane("rv_leg_12", "Right", 0x61, 125))
-    S.append(lane("rv_leg_13", "Right", 0x62, 125))
-    S.append(lane("rv_leg_14", "Left", 0x52, 221))
-    S.append(lane("rv_leg_15", "Right", 0x53, 189))
-    S.append(lane("rv_leg_16", "Right", 0x63, 61))
-    S.append(lane("rv_leg_17", "Right", 0x64, 125))
-    S.append(lane("rv_leg_18", "Right", 0x65, 141))
-    S.append(lane("rv_leg_19", "Left", 0x55, 221))
-    S.append(lane("rv_leg_20", "Right", 0x56, 141))
-    S.append(lane("rv_leg_21", "Left", 0x46, 221))
-    S.append(lane("rv_leg_22", "Right", 0x47, 141))
-    S.append(lane("rv_leg_23", "Right", 0x48, 141))
-    S.append(lane("rv_leg_24", "Left", 0x38, 221))
-    S.append(lane("rv_leg_25", "Left", 0x28, 221))
-    S.append(lane("rv_leg_26", "Left", 0x27, 141))
-    S.append(lane("rv_leg_27", "Left", 0x17, 221))
-    S.append(lane("rv_leg_28", "Right", 0x18, 141))
-    S.append(lane("rv_leg_29", "Right", 0x19, 141))
-    S.append(lane("rv_leg_30", "Right", 0x1A, 141))
-    S.append(lane("rv_leg_31", "Left", 0x0A, 221))
+    # ---- THE WAY HOME, and the twenty crossings and one river that were missing from it ----------
+    #
+    # The 31 legs below were planned by owroute.dijkstra from (0x03, 128, 141). Link does not start
+    # there. warp_L4 ends him in room 0x45 at (128, 125) - the L4 island bank, which is where the
+    # raft put him on the way IN (l4_sail ends 0x55 -> 0x45 at (128,221)) - and the run proved the
+    # omission 60 times over: "no path to the Right edge from (128,125) @ room 45 L0", every attempt
+    # identical, then RuntimeError: segment rv_leg_1 failed at frame 45,413.
+    #
+    # The router is unambiguous about it, and it is worth having asked rather than having looked:
+    #     dijkstra((0x03, 128, 141), ladder=False) -> 0x0A   7,779 frames, 31 crossings
+    #     dijkstra((0x45, 128, 125), ladder=False) -> 0x0A   NO PATH
+    # 0x45's only walkable screen edge is its SOUTH one (27 lattice points at y=189, and nothing at
+    # any of the other three), and the river between the banks is water, so the router - which has
+    # no raft edge at all, RAFT=420 being defined in owroute.py and never used in neighbors() - can
+    # only see a wall. The crossing is the raft, and the raft is not in the map.
+    #
+    # So the way home is the way out, reversed, and it is 51 crossings rather than 31:
+    #   1. ride the dock in 0x45 back to 0x55 (the same dock_policy l4_sail used, other direction),
+    #   2. 19 crossings from 0x55 to 0x03, every lane below produced by the same dijkstra call and
+    #      collapsed to one lane per screen transition, exactly as the 31 are,
+    #   3. the 31 that were already here, which are correct for a start in 0x03 and were never wrong.
+    #
+    # leg 19 lands in 0x03 at y=160, and the old leg 1 wanted 0x03's exit at y=141; the two are on
+    # the same screen and the search can walk between them, which is the same situation as every
+    # other lane seam in this route, so they are left as measured.
+    S.append(("rv_sail", fg.dock_policy, lambda emu, s: s.room == 0x55 and s.mode == 5 and s.hearts > 0, 20))
+    S.append(lane("rv_leg_1", "Down", 0x65, 112))
+    S.append(lane("rv_leg_2", "Left", 0x64, 141))
+    S.append(lane("rv_leg_3", "Left", 0x63, 141))
+    S.append(lane("rv_leg_4", "Up", 0x53, 144))
+    S.append(lane("rv_leg_5", "Left", 0x52, 189))
+    S.append(lane("rv_leg_6", "Down", 0x62, 80))
+    S.append(lane("rv_leg_7", "Left", 0x61, 125))
+    # THE LOST WOODS, which is not one crossing. 0x61 loops until you walk north, west, south,
+    # west, and the router models the whole thing as ONE edge of 1,013 frames (WOODS_WEST) - so
+    # collapsing its path to one lane per screen transition produces a leg that cannot be walked:
+    # "Left into 0x60" from inside the maze, which is a screen Link never stands on. The forward
+    # route already has the sequence as l7_61 + woods_0..3, proved by a run that reached Level 7, so
+    # the three in-maze moves are reused verbatim. leg 7 is this route's own pinned crossing into
+    # 0x61 and leg 8 is the fourth move, out to 0x60.
+    for _old, _new in (("woods_0", "rv_woods_0"), ("woods_1", "rv_woods_1"), ("woods_2", "rv_woods_2")):
+        _n, _f, _s, _t = by[_old]          # the same policy and the same success test, renamed:
+        S.append((_new, _f, _s, _t))       # woods_0..3 are already in this route from Level 7
+    S.append(lane("rv_leg_8", "Left", 0x60, 125))
+    S.append(lane("rv_leg_9", "Up", 0x50, 208))
+    S.append(lane("rv_leg_10", "Up", 0x40, 224))
+    S.append(lane("rv_leg_11", "Right", 0x41, 93))
+    S.append(lane("rv_leg_12", "Up", 0x31, 32))
+    S.append(lane("rv_leg_13", "Right", 0x32, 141))
+    S.append(lane("rv_leg_14", "Right", 0x33, 141))
+    S.append(lane("rv_leg_15", "Up", 0x23, 208))
+    S.append(lane("rv_leg_16", "Right", 0x24, 101))
+    S.append(lane("rv_leg_17", "Up", 0x14, 160))
+    S.append(lane("rv_leg_18", "Left", 0x13, 189))
+    S.append(lane("rv_leg_19", "Up", 0x03, 160))
+    S.append(lane("rv_leg_20", "Down", 0x13, 160))
+    S.append(lane("rv_leg_21", "Right", 0x14, 189))
+    S.append(lane("rv_leg_22", "Down", 0x24, 160))
+    S.append(lane("rv_leg_23", "Left", 0x23, 101))
+    S.append(lane("rv_leg_24", "Down", 0x33, 208))
+    S.append(lane("rv_leg_25", "Left", 0x32, 141))
+    S.append(lane("rv_leg_26", "Left", 0x31, 141))
+    S.append(lane("rv_leg_27", "Down", 0x41, 32))
+    S.append(lane("rv_leg_28", "Left", 0x40, 93))
+    S.append(lane("rv_leg_29", "Down", 0x50, 224))
+    S.append(lane("rv_leg_30", "Down", 0x60, 208))
+    S.append(lane("rv_leg_31", "Right", 0x61, 125))
+    S.append(lane("rv_leg_32", "Right", 0x62, 125))
+    S.append(lane("rv_leg_33", "Up", 0x52, 80))
+    S.append(lane("rv_leg_34", "Right", 0x53, 189))
+    S.append(lane("rv_leg_35", "Down", 0x63, 64))
+    S.append(lane("rv_leg_36", "Right", 0x64, 125))
+    S.append(lane("rv_leg_37", "Right", 0x65, 141))
+    S.append(lane("rv_leg_38", "Up", 0x55, 112))
+    S.append(lane("rv_leg_39", "Right", 0x56, 141))
+    S.append(lane("rv_leg_40", "Up", 0x46, 112))
+    S.append(lane("rv_leg_41", "Right", 0x47, 141))
+    S.append(lane("rv_leg_42", "Right", 0x48, 141))
+    S.append(lane("rv_leg_43", "Up", 0x38, 112))
+    S.append(lane("rv_leg_44", "Up", 0x28, 112))
+    S.append(lane("rv_leg_45", "Left", 0x27, 141))
+    S.append(lane("rv_leg_46", "Up", 0x17, 160))
+    S.append(lane("rv_leg_47", "Right", 0x18, 141))
+    S.append(lane("rv_leg_48", "Right", 0x19, 141))
+    S.append(lane("rv_leg_49", "Right", 0x1A, 141))
+    S.append(lane("rv_leg_50", "Up", 0x0A, 208))
 
     def lynel_dead(emu, s):
         """The Blue Lynel is dead. He is the only thing that has to be true."""
