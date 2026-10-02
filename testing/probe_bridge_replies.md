@@ -45,8 +45,7 @@ Needs a display. Default 300 seconds.
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``zelda/emulator.py`:88` - segments that make the most `state` calls per attempt. `testing/probe_bridge_replies.py` then ran
-- ``zelda/search.py`:437` - (testing/probe_bridge_replies.py). Replacing an emulator costs a process launch and up to
+- ``zelda/emulator.py`:89` - segments that make the most `state` calls per attempt. `testing/probe_bridge_replies.py` then ran
 
 ## See also
 

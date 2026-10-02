@@ -62,6 +62,57 @@ PHASE_SPREAD = [90]              # frames of entry window, matching the 0-90 gle
 # populated per run; "revenge" is the Blue Lynel the owner wants killed with the beam.
 NEED_FULL_HEARTS: set[str] = {"revenge"}
 
+# Segments that must not CALL THEMSELVES CONVERGED below a floor of health, because the screen after
+# them cannot be solved below it. The value is the hearts the next screen needs, measured.
+#
+# The White Sword is the case, and it has been measured three times now. `search.HEART_VALUE` is 1800
+# frames a heart because of it. `testing/probe_white_sword_effort.py` found 0 winning lines in 40
+# from 3.5/5 and about one in sixty from 4.5/5. And the archived route-5 run took the sword from
+# 3.5/5 on attempt 7 of 14. So 3.5 is where it is possible and 1.5 is where it is not: the Blue Lynel
+# on 0x0A hits for two hearts and the beam that would make it safe only fires at full health.
+#
+# What actually cost this run the sword was not the fight. It was convergence. On 2026-10-02 five
+# consecutive segments between the heart rock and the sword banked a line that gave half a heart away,
+# every one of them because three of four scouts produced the same length and `parallel_search`
+# counted that as settled:
+#
+#     ow1_38   4.0/4 -> 3.0/4   3 scouts at 208, 217, 227 frames; converged on attempt 4
+#     ws_2a    3.0/4 -> 2.0/4   3 scouts; converged on attempt 2
+#     c0f_1d   3.0/5 -> 2.5/5   converged on attempt 2
+#     c0f_0f   2.5/5 -> 2.0/5   converged on attempt 2
+#     cdl_0c   2.0/5 -> 1.5/5   converged on attempt 3
+#
+# and the White Sword then failed 60 of 60 with "approach: died". The ranking would have paid 900-1800
+# frames for any of those hearts; convergence never let it ask. With a floor, those segments keep
+# searching until they find a line at 3.5 hearts or until ACCEPT_AFTER stops them 8 attempts after the
+# last improvement - which is the same bounded patience every other segment already pays.
+#
+# 3.5 is deliberately the LOW end of what is known to work, not the middle: it is the only value any
+# run has actually taken the sword from.
+#
+# The A/B, on this run's own bookmark for ow1_38 (Link at 4.0/4 on 0x48), floor off and then on, same
+# seeds, same four scouts:
+#
+#     floor off   converged on attempt 1    272 frames, 3.0 hearts
+#     floor on    13 attempts              212 frames, 3.5 hearts
+#
+# Faster AND a heart better, so the floor is not a tax here - three scouts converging on the same
+# 272-frame line was never the best line, it was the first line they all agreed on.
+#
+# And on cdl_0c, which the run entered at 2.0/5 with the floor already out of reach, `search` falls
+# back to "do not give any more away" (`min(floor, hearts Link started with)`) and finds 478 frames at
+# 2.5 hearts where the run banked 482 at 1.5. A heart GAINED, on the segment the floor was supposed
+# to stop from losing one.
+#
+# The twenty-two names are every segment from the White Sword approach to the sword cave itself, and
+# the run is rewound to `ow1_48` - the last screen before them, at a known 4.0/4 out of the Triforce
+# refill - so the whole approach is searched again with the floor on rather than patched from 1.5.
+HEART_FLOOR: dict[str, float] = dict.fromkeys(
+    ("ow1_38", "ws_28", "ws_29", "ws_2a", "ws_2b", "ws_2c",
+     "h2c_2d", "c0f_1d", "c0f_1e", "c0f_1f", "c0f_0f", "cave_0f",
+     "c0f_b1f", "c0f_b1e", "c0f_b1d", "cdl_0d", "cdl_0c",
+     "buy_candle", "candle_leave", "cdl_1c", "ws_1b", "ws_1a"), 3.5)
+
 # Segments that get a longer search than the patience default, and by how much. The knob is
 # PATIENCE, not `tries`, and the difference matters: the stop is
 #
@@ -442,6 +493,14 @@ class Run:
         # 39 frames - 0.2% of the run - and it demonstrably is not there to be found by drawing more
         # attempts from the same distribution. 793 is what attempt 4 produced and it will do.
         _search.JUST_GET_THROUGH[0] = name in FIRST_SUCCESS
+        # How much health the NEXT screen needs before this segment is allowed to call itself
+        # converged. Set here, next to the other per-segment context, and cleared on the way out -
+        # a floor left set would silently apply to every segment after this one.
+        _search.HEART_FLOOR[0] = HEART_FLOOR.get(name, 0.0)
+        if _search.HEART_FLOOR[0]:
+            self.log(f"  {name}: the next screen needs {_search.HEART_FLOOR[0]:g} hearts, so this "
+                     f"segment will keep searching past a converged frame count until it finds a "
+                     f"line that has them")
         _look.CAUTION_OVERRIDE[0] = 0.12 if free else None
         # A segment can ask to be fought at full health - because the sword beam only fires at
         # `hearts >= containers`, so one lost half-heart there is the loss of the weapon rather than a

@@ -39,7 +39,7 @@ RAM only, so work RAM is the entire question.
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``zelda/emulator.py`:49` - A patched ROM is a legitimate thing to run here - testing/compare_roms.py exists
+- ``zelda/emulator.py`:50` - A patched ROM is a legitimate thing to run here - testing/compare_roms.py exists
 
 ## See also
 

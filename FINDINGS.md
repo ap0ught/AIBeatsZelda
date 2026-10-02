@@ -977,3 +977,87 @@ measured 2% of attempts, so it would buy a scout that usually did not need it. T
 the scout lives, and the count is on its own line at the end of every search -
 `N attempt(s) lost to a bridge reply that could not be read (x% of them); the emulators were kept` -
 because without it a search can sit at 98% of its attempts for hours with nothing in the log to say so.
+
+## 16. Convergence was the reason the run could not take the White Sword (2026-10-02)
+
+The route-5 run from power-on stopped at `RuntimeError: segment white_sword failed` at 03:54, 61
+segments and 22,037 frames in, having done everything right up to it. All sixty attempts read the
+same thing:
+
+```
+  attempt 1: approach: died (188 frames)
+  ...
+  no success; most common: 60x approach: died @ room 0A L0
+```
+
+**Not the sword. The hearts.** The White Sword screen 0x0A has a Blue Lynel on it that hits for two
+hearts, and the beam that would make it safe only fires at `hearts >= containers`. This run stood on
+that screen with **1.5 of 5**. The archived route-5 run stood on it with 3.5 and took the sword on
+attempt 7 of 14. `testing/probe_white_sword_effort.py` had already measured 0 winning lines in 40 from
+3.5 and about one in sixty from 4.5 - and `search.HEART_VALUE` is 1800 frames a heart *because of this
+screen*. So the run had somewhere between half a heart and two hearts less than it needed, and 60
+attempts is what that looks like.
+
+**Where the hearts went, and it was not the fight.** Heart after heart, both runs:
+
+| segment | this run | archived |
+|---|---|---|
+| `L3_done` (the Triforce refill) | 4.0/4 | 4.0/4 |
+| `ow1_38` | **3.0/4** | 3.5/4 |
+| `ws_2a` | **2.0/4** | 2.5/4 |
+| `h2c_heart` (the heart rock, container 5) | 3.0/5 | 3.5/5 |
+| `c0f_1d` | **2.5/5** | 3.5/5 |
+| `c0f_0f` | **2.0/5** | 2.5/5 |
+| `cdl_0c` | **1.5/5** | 2.5/5 |
+| `ws_0a` -> sword | 1.5/5, **0 of 60** | 3.5/5, attempt 7 of 14 |
+
+Five plain walks gave up two and a half hearts between them, one of them a whole heart inside
+`ow1_38`. That is not a routing problem and it is not a policy problem: `HEART_VALUE` already pays
+1800 frames for the first four hearts and 900 for the next three, so a heart-preserving line should
+have won the ranking outright.
+
+**It lost anyway, because convergence counts frames and nothing else.** And that is deliberate -
+`parallel_search` compares `a.frames`, and the note there is explicit that "two lines of equal length
+are the thing being counted, not two lines of equal worth". The consequence is that a segment whose
+whole search collapses onto one heart-losing line is *settled* after three or four attempts, and the
+line that keeps the heart is never drawn:
+
+```
+  ow1_38   4.0/4 -> 3.0/4   attempt 3: 227 frames, 3.0    attempt 4: 217, 3.0
+                                 attempt 2: 208, 3.0    converged: 3 of 4 within 20 frames
+  ws_2a    3.0/4 -> 2.0/4   attempt 2: 288, 2.0         converged: 3 of 4 within 20 frames
+  c0f_1d   3.0/5 -> 2.5/5   attempt 2: 252, 2.5         converged: 3 of 4 within 20 frames
+  c0f_0f   2.5/5 -> 2.0/5   attempt 2: 758, 2.0         converged: 3 of 4 within 20 frames
+  cdl_0c   2.0/5 -> 1.5/5   attempt 3: 486, 1.5         converged: 3 of 4 within 20 frames
+```
+
+Three scouts independently produce the same 208-frame line, the search agrees with itself, and the
+heart is gone. Convergence is one of this project's best ideas and it is right about time; it is
+wrong about a segment whose frame count is settled and whose health is not.
+
+**The fix, and the A/B.** `search.HEART_FLOOR` and `runner.HEART_FLOOR`: on a segment with a floor,
+"three of four scouts agree on the length" stops meaning "the answer is settled" while the best line
+ends below the health the next screen needs. `ACCEPT_AFTER` still stops the search 8 attempts after
+the last improvement, so the cost is bounded by the patience every segment already pays. And the floor
+falls back to `min(floor, hearts Link started the segment with)`, because a segment that begins below
+it cannot reach it and asking for the impossible is how a mechanism meant to save hearts spends a
+segment's whole patience.
+
+Measured on this run's own bookmarks, floor off and then on, same seeds, same four scouts:
+
+| segment | start | floor off | floor on |
+|---|---|---|---|
+| `ow1_38` | 4.0/4 | 272 frames, **3.0** hearts, converged on attempt 1 | **212 frames, 3.5 hearts**, 13 attempts |
+| `cdl_0c` | 2.0/5 (floor out of reach, so "keep what you have") | 482 frames, **1.5** hearts | **478 frames, 2.5 hearts** |
+
+The first is faster *and* a heart better: three scouts converging on the same 272-frame line was never
+the best line, it was the first line they all agreed on. The second gains a heart on the segment the
+floor was introduced to stop losing one.
+
+**What is not claimed.** Both numbers are one search each, on one segment each, and a different seed
+band would move them. The floor is a floor, not a guarantee: it says the search will not *stop* while
+it is below the health the next screen needs, and if no line that keeps the heart exists it will spend
+its patience and take the best it has - which is what `cdl_0c` did, and why the run is rewound to
+`ow1_48` at a known 4.0/4 rather than patched forward from 1.5. And nothing here says the sword is
+now takeable: 3.5 is the only value any run has taken it from, and 4.5 was measured at one line in
+sixty.

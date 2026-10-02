@@ -295,6 +295,25 @@ def value_of(a, containers: float) -> float:
 CONVERGE = [True]
 CONVERGE_TOL = [20]            # frames; see the note on parallel_search
 
+# The health the segment AFTER this one needs, and below which this search must not call itself
+# converged. 0 = no floor, which is every segment except the ones runner.HEART_FLOOR names.
+#
+# Convergence counts FRAMES and nothing else, on purpose: two lines of equal length are the thing
+# being counted, not two lines of equal worth. The consequence is that it will happily settle a
+# segment on a line that gave a heart away, without ever looking for the one that did not - and
+# HEART_VALUE is 1800 frames a heart precisely because that heart is worth buying. Measured on route
+# 5, 2026-10-02: ow1_38 arrived at 4.0/4, three scouts independently produced 3.0-heart lines at 208,
+# 217 and 227 frames, convergence fired on the fourth attempt and the segment was banked at 3.0. The
+# same thing happened at ws_2a, c0f_1d, c0f_0f and cdl_0c. Five half-hearts later the run stood on the
+# White Sword's screen with 1.5 of 5 and took the sword 0 times in 60 attempts; the archived run, which
+# lost the same hearts more slowly and reached that screen with 3.5, took it on attempt 7 of 14.
+#
+# So on a segment with a floor, "three of four scouts agree on the length" stops meaning "the answer
+# is settled" while the best line is below the health the next screen needs. It does not make the
+# search look harder: ACCEPT_AFTER still stops it 8 attempts after the last improvement, so the cost is
+# bounded by the same patience every other segment pays.
+HEART_FLOOR = [0.0]
+
 # "Just get through the game." ZELDA_JUST_GET_THROUGH=1 makes every segment stop at its first
 # success, not only the bosses'. Costs about 6% of frames on the archived run and removes almost all
 # of the patience searching, which is where the wall clock went. Off by default, so it is one env var
@@ -603,7 +622,19 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                     near = sum(1 for v in st["scout_best"].values() if v <= bst + CONVERGE_TOL[0])
                     # More than half - 3 of 4. I read "if they all finish within the tolerance" as a
                     # unanimous rule and changed it; the owner corrected that back to a majority.
-                    if near > len(scouts) / 2 and not st["stop"]:
+                    # min(), not the absolute number: a segment that BEGINS below the floor cannot
+                    # reach it, and asking for the impossible is how a mechanism meant to save hearts
+                    # spends a segment's whole patience. Link arrives with h0 and the floor becomes
+                    # "do not give any more away", which is the part still in his power.
+                    floor = min(HEART_FLOOR[0], st["h0"]) if st["h0"] is not None else HEART_FLOOR[0]
+                    if near > len(scouts) / 2 and not st["stop"] and floor and best is not None \
+                            and best.hearts < floor:
+                        if not st.get("floor_said"):
+                            st["floor_said"] = True
+                            log(f"  not calling it converged: the best line is {bst} frames and ends "
+                                f"at {best.hearts} hearts, and the next screen needs {floor:g}. "
+                                f"Keeping looking for one that keeps the heart.")
+                    elif near > len(scouts) / 2 and not st["stop"]:
                         st["stop"] = True
                         st["why"] = "CONVERGED"
                         log(f"  converged: {near} of {len(scouts)} scouts within "
