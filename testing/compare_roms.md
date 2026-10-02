@@ -32,7 +32,6 @@ RAM only, so work RAM is the entire question.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 
 ## Why this still matters
 
@@ -43,10 +42,7 @@ so if this script's method is wrong, the constant is wrong too:
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_bridge_replies.py`](probe_bridge_replies.md)
 
 ---
 

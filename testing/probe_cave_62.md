@@ -11,15 +11,15 @@ the eastern lane (the one the Level 8 walk uses) and found nothing, so drop into
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `shots/`, `states/`
 - loads savestate(s): `ckpt_fullgame_w8_52`
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_ending.py`](probe_ending.md)
+- [`probe_61.py`](probe_61.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

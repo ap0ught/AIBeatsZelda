@@ -37,7 +37,6 @@ Needs a display. Default 300 seconds.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `states/`
 - loads savestate(s): `ckpt_gleeok_start`
 
 ## Why this still matters
@@ -49,10 +48,7 @@ so if this script's method is wrong, the constant is wrong too:
 
 ## See also
 
-- [`probe_walls.py`](probe_walls.md)
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_old_man.py`](probe_old_man.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
+- [`compare_roms.py`](compare_roms.md)
 
 ---
 

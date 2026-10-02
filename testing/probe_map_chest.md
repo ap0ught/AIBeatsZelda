@@ -84,7 +84,6 @@ inside the two windows. About 80 seconds. Run it detached and tail the file.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`, `states/`
 
 ## Why this still matters
 
@@ -94,13 +93,6 @@ so if this script's method is wrong, the constant is wrong too:
 - ``zelda/pickups.py`:105` - # Measured, per-frame, not inferred: testing/probe_map_chest.py.
 - ``zelda/pickups.py`:231` - f"not a purchase; see testing/probe_map_chest.py"))
 - ``pickup_scan.py`:54` - # dungeon, testing/probe_map_chest.py), taking the count from 30 to 32. The path stays
-
-## See also
-
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
-- [`probe_fight_ab4.py`](probe_fight_ab4.md)
-- [`probe_fight_ab3.py`](probe_fight_ab3.md)
 
 ---
 

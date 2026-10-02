@@ -74,16 +74,8 @@ Run:  python3 testing/test_replay_fingerprint.py
 
 ## What it touches
 
-- **drives BizHawk** - replays, searches or steps frames
-- writes `runs/`
+- nothing at runtime; it exists to be read, or to be applied once
 - writes a file
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`test_state_parse.py`](test_state_parse.md)
 
 ---
 

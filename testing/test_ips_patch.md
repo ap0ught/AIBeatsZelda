@@ -84,15 +84,8 @@ Run:  python3 testing/test_ips_patch.py
 
 ## What it touches
 
-- **drives BizHawk** - replays, searches or steps frames
-- writes `journal/`
+- nothing at runtime; it exists to be read, or to be applied once
 - writes a file
-
-## See also
-
-- [`test_ram_addresses.py`](test_ram_addresses.md)
-- [`probe_old_man.py`](probe_old_man.md)
-- [`make_doc.py`](make_doc.md)
 
 ---
 

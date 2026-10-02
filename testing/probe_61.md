@@ -12,15 +12,15 @@ and report where the passage really comes out.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `knowledge/`, `logs/`, `runs/`, `shots/`
+- writes `shots/`, `states/`
 - loads savestate(s): `ckpt_fullgame_s9_43`
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.md)
-- [`probe_cave_1a.py`](probe_cave_1a.md)
-- [`probe_cave_0f.py`](probe_cave_0f.md)
-- [`patch_water_kb.py`](patch_water_kb.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_ending.py`](probe_ending.md)
+- [`probe_cave_62.py`](probe_cave_62.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

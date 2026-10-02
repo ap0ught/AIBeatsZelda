@@ -12,15 +12,15 @@ right-hand column.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `shots/`
 - loads savestate(s): `ckpt_fullgame_s9_25`
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`smoke_test.py`](smoke_test.md)
+- [`show_problem.py`](show_problem.md)
+- [`show_47_cave.py`](show_47_cave.md)
+- [`show_2c_cave.py`](show_2c_cave.md)
 
 ---
 

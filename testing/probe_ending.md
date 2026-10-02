@@ -17,7 +17,7 @@ usage: python probe_ending.py [checkpoint]   (default ckpt_fullgame_g9_ganon)
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `shots/`, `states/`
 
 ## Why this still matters
 
@@ -28,10 +28,10 @@ so if this script's method is wrong, the constant is wrong too:
 
 ## See also
 
-- [`restamp.py`](restamp.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_cave_62.py`](probe_cave_62.md)
+- [`probe_61.py`](probe_61.md)
 - [`probe_single_entries.py`](probe_single_entries.md)
-- [`probe_s9_10.py`](probe_s9_10.md)
-- [`probe_ganon.py`](probe_ganon.md)
 
 ---
 

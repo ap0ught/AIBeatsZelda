@@ -19,7 +19,7 @@ usage: python probe_single_entries.py [A B C D E] [--seeds N]
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `shots/`
 
 ## Why this still matters
 
@@ -30,10 +30,10 @@ so if this script's method is wrong, the constant is wrong too:
 
 ## See also
 
-- [`restamp.py`](restamp.md)
-- [`probe_s9_10.py`](probe_s9_10.md)
-- [`probe_ganon.py`](probe_ganon.md)
-- [`probe_g9_41.py`](probe_g9_41.md)
+- [`probe_ending.py`](probe_ending.md)
+- [`smoke_test.py`](smoke_test.md)
+- [`show_problem.py`](show_problem.md)
+- [`show_47_cave.py`](show_47_cave.md)
 
 ---
 

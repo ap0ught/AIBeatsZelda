@@ -138,6 +138,8 @@ print("ITEM_COLUMNS agrees with TABLE in both directions. Columns per item per r
 # ROWS holds only the three listed rows; row 3 is the separate `ROW3` frozenset that row_of's
 # fallback of 3 names, so the two have to be checked against each other rather than assumed.
 assert set(drops.ROWS) == {0, 1, 2}, sorted(drops.ROWS)
+assert all(drops.ROWS[r] for r in (0, 1, 2)), "no listed row may be empty"
+assert len(drops.TABLE) == 4 and set(drops.TABLE) == set(drops.RATES), sorted(drops.TABLE)
 for r, types in drops.ROWS.items():
     for t in types:
         assert drops.row_of(t) == r, (hex(t), drops.row_of(t), r)

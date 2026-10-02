@@ -10,14 +10,6 @@ the passage from 0x30 surfaces in Level 9's room 0x04, Link with no bombs.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
 
 ---
 

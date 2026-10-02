@@ -10,7 +10,6 @@ frames (the first run: 591). Try the sword fighter and the damage-aware dash fro
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 - loads savestate(s): `ckpt_fullgame_g9_51`
 
 ## Why this still matters

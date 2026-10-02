@@ -23,14 +23,14 @@ on the floor and walk onto it, watching $066D.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `knowledge/`, `logs/`, `runs/`, `shots/`
+- writes `shots/`
 
 ## See also
 
-- [`probe_cave_1a.py`](probe_cave_1a.md)
-- [`probe_cave_0f.py`](probe_cave_0f.md)
-- [`probe_61.py`](probe_61.md)
-- [`patch_water_kb.py`](patch_water_kb.md)
+- [`smoke_test.py`](smoke_test.md)
+- [`show_problem.py`](show_problem.md)
+- [`show_47_cave.py`](show_47_cave.md)
+- [`show_2c_cave.py`](show_2c_cave.md)
 
 ---
 

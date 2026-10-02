@@ -19,16 +19,16 @@ WHIRLWIND, from the disassembly (Z_07 WieldFlute, Z_01 SummonWhirlwind/UpdateWhi
 
 ## What it touches
 
-- writes `logs/`, `runs/`, `shots/`
+- writes `states/`
 - **edits a tracked source file in place**
 - writes a file
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_old_man.py`](probe_old_man.md)
+- [`probe_hc47.py`](probe_hc47.md)
+- [`probe_hc.py`](probe_hc.md)
 
 ---
 

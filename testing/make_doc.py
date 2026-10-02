@@ -31,6 +31,7 @@ del _os, _sys, _pathlib
 import argparse
 import ast
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -92,25 +93,162 @@ def cited_by(name: str, prod: list[Path]) -> list[tuple[str, str]]:
     return hits
 
 
-def docstring_of(src: str) -> str:
+def parse(src: str):
+    """The script's module tree, or None if it does not parse.
+
+    Parsed once per script and used for the docstring, for what the script WRITES and for what it
+    CALLS. The previous version asked those questions with `in` and `re.search` over the source
+    text, which means it read the prose: a docstring saying "no emulator needed, but see BizHawk"
+    put "drives BizHawk - replays, searches or steps frames" into the generated doc of a script that
+    never opens an emulator, and seven such docs shipped. A doc is a claim about what a script does,
+    so it has to be derived from what the script does.
+    """
     try:
-        return (ast.get_docstring(ast.parse(src)) or "").strip()
+        return ast.parse(src)
     except SyntaxError:
+        return None
+
+
+def docstring_of(tree) -> str:
+    if tree is None:
         return ""
+    return (ast.get_docstring(tree) or "").strip()
 
 
-def analyse(src: str, name: str) -> dict:
+def string_nodes(tree) -> list:
+    """Every string constant in the module EXCEPT the module docstring, as NODES.
+
+    Nodes rather than values, because whether a literal is a destination or a source depends on where
+    it sits in the tree, and an id() lookup on a string you have already copied does not work.
+
+    Excluding the docstring is the whole point of one of the two bugs this file had: the docstrings in
+    testing/ talk about logs/, states/ and shots/ constantly, and the substring test read all of it.
+    Comments need no exclusion - ast never sees one, and that is why the `_os.chdir(_ROOT)  # logs/,
+    shots/, runs/ are repo-relative` line at the top of most scripts stopped being evidence the moment
+    the analysis stopped being a text search.
+    """
+    if tree is None:
+        return []
+    skip = set()
+    if (tree.body and isinstance(tree.body[0], ast.Expr)
+            and isinstance(tree.body[0].value, ast.Constant)
+            and isinstance(tree.body[0].value.value, str)):
+        skip.add(id(tree.body[0].value))
+    return [n for n in ast.walk(tree)
+            if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in skip]
+
+
+def call_name(node) -> str:
+    """How a call is written: `save`, `emu.save`, `replay.verify` -> its last attribute."""
+    f = node.func if isinstance(node, ast.Call) else None
+    if isinstance(f, ast.Name):
+        return f.id
+    if isinstance(f, ast.Attribute):
+        return f.attr
+    return ""
+
+
+def called(tree) -> set[str]:
+    """Names this module calls, as written: `BizHawk`, `random_search`, `replay.verify`."""
+    if tree is None:
+        return set()
+    out = set()
+    for n in ast.walk(tree):
+        if not isinstance(n, ast.Call):
+            continue
+        f = n.func
+        if isinstance(f, ast.Name):
+            out.add(f.id)
+        elif isinstance(f, ast.Attribute):
+            out.add(f.attr)
+            if isinstance(f.value, ast.Name):
+                out.add(f"{f.value.id}.{f.attr}")
+    return out
+
+
+# The harness's own writers, and where each one lands. A literal-prefix test cannot see these at all -
+# `emu.screenshot("frame")` writes into shots/ whatever path it is handed - and the alternative that
+# CAN see them is reading the source text, which is what put "writes logs/, runs/, shots/" on 196
+# scripts that write none of them, on the strength of one comment:
+#
+#     _os.chdir(_ROOT)          # logs/, shots/, runs/ are repo-relative
+#
+# Sixty years of that comment sit at the top of most scripts in this directory. So: literals passed to
+# a writing call, PLUS the harness's own writers whose destination is known from emulator.py
+# (save -> STATES_DIR, screenshot -> SHOTS_DIR, save_inputs -> LOGS_DIR) - those three take a NAME,
+# not a path, so there is no literal to read and the call itself is the evidence.
+WRITES_WHERE = {"screenshot": "shots/", "save_inputs": "logs/", "save": "states/"}
+
+# What counts as driving the emulator, asked of the CALLS rather than of the text. `BizHawk` is the
+# constructor, so any script that opens an emulator has it; the search entry points and
+# replay.verify cover the scripts that are handed one to drive. An import is not a call and does not
+# count - a script that imports random_search without calling it is not driving anything, and being
+# wrong in this direction costs a missing claim rather than a false one.
+DRIVES_CALLS = {"BizHawk", "random_search", "parallel_search", "run_segment",
+                "replay.verify", "zelda.replay.verify"}
+
+# A path literal is a DESTINATION if it is inside a call that writes, and a SOURCE if it is inside one
+# that reads. `Path("shots/x.png").write_text(...)` is the first and `Path("runs/run6/inputs.txt")` is
+# the second, and the two differ by nothing you can see in the literal - so the question is asked of
+# the tree, carrying the enclosing call down as it walks. The old text test could only answer "the
+# directory name appears", which is how 196 scripts were documented as writing three directories on
+# the strength of one comment, and how one script was documented as WRITING the run it reads.
+WRITER_CONTEXT = {"write_text", "write_bytes", "writelines", "dump", "save", "screenshot",
+                  "save_inputs", "copy", "copy2"}
+READER_CONTEXT = {"read_text", "read_bytes", "exists", "is_file", "iterdir", "glob", "rglob",
+                  "unlink", "rename", "load", "loads", "open_read"}
+
+
+def path_literals(tree) -> tuple[list[str], list[str]]:
+    """(destination, source) path-ish literal values, decided by the call each one sits inside."""
+    if tree is None:
+        return [], []
+    skip = set()
+    if (tree.body and isinstance(tree.body[0], ast.Expr)
+            and isinstance(tree.body[0].value, ast.Constant)
+            and isinstance(tree.body[0].value.value, str)):
+        skip.add(id(tree.body[0].value))
+    dest, src = [], []
+
+    def visit(node: ast.AST, in_writer: bool) -> None:
+        for child in ast.iter_child_nodes(node):
+            here = in_writer
+            if isinstance(child, ast.Call):
+                name = call_name(child)
+                if name in WRITER_CONTEXT:
+                    here = True
+                elif name in READER_CONTEXT:
+                    here = False
+            if (isinstance(child, ast.Constant) and isinstance(child.value, str)
+                    and "/" in child.value and id(child) not in skip):
+                (dest if here else src).append(child.value)
+            visit(child, here)
+
+    for stmt in tree.body:
+        visit(stmt, False)
+    return dest, src
+
+
+def analyse(src: str, name: str, tree=None) -> dict:
+    if name == SELF:
+        # This generator holds the path prefixes as DATA (the PATHS table above). Reading them as
+        # "writes logs/, shots/, states/" would be the same mistake one level down: a claim about a
+        # table, treated as a claim about behaviour.
+        return dict(writes=[], mutates=[], drives=True, loads=[], usage=[])
     writes, mutates, drives, loads = [], [], False, []
+    dest, _src = path_literals(tree)
+    names = called(tree)
+    hits = {k for k in PATHS if any(t.startswith(k) for t in dest)}
+    hits |= {where for call, where in WRITES_WHERE.items() if call in names}
     for key, human in PATHS.items():
-        if key in src:
+        if key in hits:
             writes.append((key, human))
     if re.search(r"\.write_text\(|\.write_bytes\(", src):
         mutates.append("writes a file")
     # a patch script that rewrites a tracked source is not safe to re-run
     if name.startswith("patch_") and re.search(r"\.replace\(|write_text", src):
         mutates.append("**edits a tracked source file in place**")
-    if re.search(r"\bBizHawk\b|random_search|emu\.load\(", src):
-        drives = True
+    drives = bool(called(tree) & DRIVES_CALLS)
     for m in re.finditer(r'emu\.load\(\s*["\']([^"\']+)["\']', src):
         loads.append(m.group(1))
     for m in re.finditer(r'load_inputs\(\s*(?:Path\()?f?["\']([^"\']+)["\']', src):
@@ -118,6 +256,51 @@ def analyse(src: str, name: str) -> dict:
     argv = re.findall(r"usage:\s*(\S+)", src)
     return dict(writes=sorted(set(writes)), mutates=sorted(set(mutates)),
                 drives=drives, loads=sorted(set(loads)), usage=argv[:1])
+
+
+def tracked_scripts() -> set[str]:
+    """The testing/*.py files git has in the index, as bare names.
+
+    Falls back to every script on disk when git cannot answer (a tarball, a fresh clone with no
+    index): the old all-of-disk behaviour, which is right when there is nothing else to go on.
+    """
+    try:
+        out = subprocess.run(["git", "ls-files", "--", "testing/*.py"],
+                             capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return {p.name for p in HERE.glob("*.py")}
+    if out.returncode != 0:
+        return {p.name for p in HERE.glob("*.py")}
+    names = {Path(line).name for line in out.stdout.splitlines() if line.endswith(".py")}
+    return names or {p.name for p in HERE.glob("*.py")}
+
+
+def tracked_orphans(tracked: set[str]) -> set[str]:
+    """Tracked testing/*.md with no script beside them, in the index or on disk."""
+    try:
+        out = subprocess.run(["git", "ls-files", "--", "testing/*.md"],
+                             capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return set()
+    if out.returncode != 0:
+        return set()
+    orphans = set()
+    for line in out.stdout.splitlines():
+        if not line.endswith(".md"):
+            continue
+        p = Path(line)
+        if p.stem + ".py" in tracked:
+            continue
+        if (HERE / (p.stem + ".py")).exists():
+            continue                            # tracked late, or a doc whose script is untracked
+        # Only generated docs can be orphans. testing/README.md is hand-written and has no script.
+        try:
+            if "Generated by `testing/" not in (HERE / p.name).read_text(encoding="utf-8"):
+                continue
+        except OSError:
+            continue
+        orphans.add(p.name)
+    return orphans
 
 
 def deps_mtime(script: Path, prod: list[Path]) -> float:
@@ -232,13 +415,37 @@ def main() -> None:
     ap.add_argument("--check", action="store_true",
                     help="compare every doc against a fresh render; write nothing")
     ap.add_argument("--force", action="store_true", help="regenerate all, ignoring mtimes")
+    ap.add_argument("--all", action="store_true",
+                    help="cover every script in testing/, including ones git does not track")
     a = ap.parse_args()
 
     prod = prod_files()
+    # THE GATE POLICES WHAT GIT KNOWS ABOUT, NOT WHAT HAPPENS TO BE ON DISK.
+    #
+    # It used to walk testing/*.py, so on a machine where several people are working at once any
+    # agent who had a script half-written on disk blocked EVERY other agent's commit with
+    # "MISSING <stem>.md" until somebody generated a doc for a file that was not even supposed to be
+    # committed yet. A hook that fires on other people's scratch files is a global lock with no owner,
+    # and the fix is not to argue about it in the commit message - it is to ask git which scripts are
+    # real. Staged counts as tracked: `git add script.py` without its .md still fails the check, which
+    # is exactly the case the gate exists for.
+    tracked = tracked_scripts()
+    on_disk = {p.name for p in HERE.glob("*.py")}
+    stray = sorted(on_disk - tracked)
+    untracked = stray if a.all else []
     scripts = {}
-    for p in sorted(HERE.glob("*.py")):
+    for name in sorted(tracked):
+        p = HERE / name
+        if not p.exists():
+            continue                            # deleted in the working tree; the doc is checked below
         src = p.read_text(encoding="utf-8", errors="replace")
-        scripts[p.name] = analyse(src, p.name)
+        tree = parse(src)
+        scripts[name] = analyse(src, name, tree)
+    for name in untracked:
+        p = HERE / name
+        src = p.read_text(encoding="utf-8", errors="replace")
+        tree = parse(src)
+        scripts[name] = analyse(src, name, tree)
     if not scripts:
         raise SystemExit("no scripts found in testing/")
 
@@ -255,7 +462,7 @@ def main() -> None:
             continue
 
         src = script.read_text(encoding="utf-8", errors="replace")
-        body = docstring_of(src)
+        body = docstring_of(parse(src))
         mine = cites[name]
         text = render(name, info, mine, neighbours(name, scripts, cites), body)
         if a.check:
@@ -269,8 +476,17 @@ def main() -> None:
             md.write_text(text, encoding="utf-8")
             written += 1
 
+    # A doc whose script is gone is a dead cross-reference, and this tree once had 182 of them:
+    # journal/48. The loop above can only see docs it has a script for, so orphans are counted here.
+    for orphan in sorted(tracked_orphans(tracked)):
+        print(f"  ORPHAN   {orphan}")
+        drift += 1
+
     if a.check:
         print(f"compared {len(scripts)} docs against a fresh render: {drift} drifted")
+        if stray and not a.all:
+            print(f"  {len(stray)} script(s) not tracked by git, not checked: "
+                  + ", ".join(n[:-3] for n in stray[:6]) + (", ..." if len(stray) > 6 else ""))
         if drift:
             raise SystemExit(1)
         return

@@ -10,7 +10,6 @@ state (s9_pass3: Link just surfaced in 0x20 with 11.5/12 hearts).
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 - loads savestate(s): `ckpt_fullgame_s9_pass3`
 
 ## Why this still matters

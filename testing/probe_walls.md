@@ -69,7 +69,6 @@ attempts in a room this one is worth.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `shots/`, `states/`
 
 ## Why this still matters
 
@@ -77,13 +76,6 @@ Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/combat.py`:119` - ZELDA_SWORD_GEOM=0 restores the old box model, which is what the A/B in testing/probe_walls.py
-
-## See also
-
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_old_man.py`](probe_old_man.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
-- [`probe_map_chest.py`](probe_map_chest.md)
 
 ---
 

@@ -9,7 +9,6 @@ Measure the subscreen: how many frames to open, per cursor move, and to close.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 - loads savestate(s): `ckpt_fullgame_l8_3b`
 
 ## Why this still matters
@@ -18,13 +17,6 @@ Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/bot.py`:445` - # Measured (probe_menu.py): the subscreen takes 62 frames to scroll in (MenuState $E1 counts 2..6, then 7
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
 
 ---
 

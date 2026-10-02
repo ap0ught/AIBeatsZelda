@@ -27,15 +27,8 @@ No emulator, no display: the paths are pointed at a temporary directory, `Run` i
 
 ## What it touches
 
-- writes `logs/`
+- nothing at runtime; it exists to be read, or to be applied once
 - writes a file
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
 
 ---
 

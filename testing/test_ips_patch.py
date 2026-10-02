@@ -734,12 +734,13 @@ assert not (extra or missing), (
 assert not wrong_val, (
     f"{len(wrong_val)} byte(s) differ in VALUE at the right offsets, so the writes landed in the "
     f"wrong ORDER or overlapped wrongly: "
-    + ", ".join(f"${i:05X} is ${actual[i]:02X}, IPS said ${expected[i]:02X}" for i in wrong_val[:6]))
+    + ", ".join(f"${i:05X} is ${actual[i]:02X}, said ${expected[i]:02X}"
+                for i in wrong_val[:6]))
 assert expected[0x42] == 0x99 and expected[0x43] == 0x98, \
-    "the expected values took the FIRST record's bytes, so order is not being tested"
+    "the expected values came from the FIRST record, so order is untested"
 assert patched[0x42] == 0x99 and patched[0x41] == 0xBB, (patched[0x41:0x44].hex())
 print(f"23. the diff is EXACTLY the {len(actual)} written bytes over all {PRG_SIZE:,} "
-      f"(${min(actual):05X}..${max(actual):05X}), correct values, overlap resolved last-writer-wins")
+      f"(${min(actual):05X}..${max(actual):05X}), correct values, overlap last-writer-wins")
 
 # 24. THE WORK-RAM-NEUTRAL SMOKE CHECK, emulator-free. `harm_halfhearts` is the one place in
 #     the navigator that asserts a cartridge-sensitive fact about the bytes on disk: it reads

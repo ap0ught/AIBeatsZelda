@@ -57,14 +57,6 @@ that is two copies of one number agreeing, not independent evidence of where the
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`test_runner_stuck.py`](test_runner_stuck.md)
 
 ---
 

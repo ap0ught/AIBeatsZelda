@@ -11,16 +11,9 @@ corridor leaves him 48 px below the stairs (the owner's suggestion, and the prob
 
 ## What it touches
 
-- writes `knowledge/`, `logs/`, `runs/`, `shots/`
+- nothing at runtime; it exists to be read, or to be applied once
 - **edits a tracked source file in place**
 - writes a file
-
-## See also
-
-- [`probe_cave_pay3.py`](probe_cave_pay3.md)
-- [`probe_cave_1a.py`](probe_cave_1a.md)
-- [`probe_cave_0f.py`](probe_cave_0f.md)
-- [`probe_61.py`](probe_61.md)
 
 ---
 

@@ -59,7 +59,6 @@ Needs a display.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `states/`
 
 ## Why this still matters
 
@@ -68,13 +67,6 @@ so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/head.py`:268` - testing/probe_head_exit.py) and the end of it is a screen in the overworld where a route can
 - ``route5.py`:314` - # the cave (testing/probe_head_exit.py, all eight lanes landing where they were asked to, four
-
-## See also
-
-- [`probe_walls.py`](probe_walls.md)
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_old_man.py`](probe_old_man.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
 
 ---
 

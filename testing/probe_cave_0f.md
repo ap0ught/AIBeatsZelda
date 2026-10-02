@@ -13,15 +13,15 @@ Route: from 0x1C (where the Level 2 -> hills chain lands) Up to 0x0C, then east 
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `knowledge/`, `logs/`, `runs/`, `shots/`
+- writes `shots/`
 - loads savestate(s): `ckpt_fullgame_l5w05_1c`
 
 ## See also
 
-- [`probe_cave_pay3.py`](probe_cave_pay3.md)
-- [`probe_cave_1a.py`](probe_cave_1a.md)
-- [`probe_61.py`](probe_61.md)
-- [`patch_water_kb.py`](patch_water_kb.md)
+- [`smoke_test.py`](smoke_test.md)
+- [`show_problem.py`](show_problem.md)
+- [`show_47_cave.py`](show_47_cave.md)
+- [`show_2c_cave.py`](show_2c_cave.md)
 
 ---
 

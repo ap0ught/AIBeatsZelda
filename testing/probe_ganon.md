@@ -18,7 +18,6 @@ usage: python probe_ganon.py <checkpoint-state-name> [tries]
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 
 ## Why this still matters
 

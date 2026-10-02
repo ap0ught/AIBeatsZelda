@@ -9,15 +9,15 @@ Re-validate hc_cave_policy on 0x47 (burn) after squaring up exactly on the spot.
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `states/`
 - loads savestate(s): `ckpt_fullgame_h9_48`
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_old_man.py`](probe_old_man.md)
+- [`probe_hc.py`](probe_hc.md)
+- [`probe_ending.py`](probe_ending.md)
 
 ---
 

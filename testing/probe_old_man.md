@@ -39,14 +39,14 @@ Run it:  python3 testing/probe_old_man.py [attempts]
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `journal/`, `logs/`, `shots/`, `states/`
+- writes `states/`
 
 ## See also
 
-- [`make_doc.py`](make_doc.md)
-- [`probe_walls.py`](probe_walls.md)
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_hc47.py`](probe_hc47.md)
+- [`probe_hc.py`](probe_hc.md)
+- [`probe_ending.py`](probe_ending.md)
 
 ---
 

@@ -19,10 +19,20 @@
 # doc was missing a provenance line that pickup_scan.py had carried since
 # 3b69f06. Only --check caught it.
 #
-# This hook is unconditional because --check is now fast: it took 2m50s until
-# neighbours() stopped re-reading every production file per script, and about
-# half a second after. Do not add a skip-if-unrelated-files gate on the theory
-# that this is slow; it is not, and a gate is a way for drift through.
+# This hook is unconditional because --check is fast enough to always run: it
+# took 2m50s until neighbours() stopped re-reading every production file per
+# script, and about 2 seconds after - the AST pass over 200 scripts is most of
+# what it costs now. Do not add a skip-if-unrelated-files gate on the theory that
+# this is slow; it is not, and a gate is a way for drift through.
+#
+# WHAT IT CHECKS is what GIT KNOWS ABOUT. --check used to walk testing/*.py on
+# disk, which made it a global lock with no owner: on a machine where several
+# people work at once, any agent with a half-written script on disk failed every
+# other agent's commit with "MISSING <stem>.md" until somebody generated a doc
+# for a file that was not supposed to be committed yet. `git ls-files` decides
+# the set instead, and STAGED counts as tracked - so `git add script.py` without
+# its .md still fails here, which is the case this hook exists for. If you want
+# a doc rendered for an untracked script, say so with --all.
 #
 # Do not "fix" this to run the plain generator. That reintroduces the bug it
 # exists to catch.

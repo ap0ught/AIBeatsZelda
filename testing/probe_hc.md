@@ -10,14 +10,14 @@ caves that were verified by screenshot: 0x47 (burn) and 0x2C (bomb).
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `states/`
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_sword.py`](probe_sword.md)
+- [`probe_old_man.py`](probe_old_man.md)
+- [`probe_hc47.py`](probe_hc47.md)
+- [`probe_ending.py`](probe_ending.md)
 
 ---
 

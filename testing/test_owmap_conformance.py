@@ -553,7 +553,15 @@ assert rx["exact"] == REDUX_EXACT == 53, (
 assert rx["bad"] == REDUX_FAILING, (
     f"{len(drift)} screen(s) changed status: {drift}. If the decode improved, delete the "
     f"failing screens from REDUX_FAILING above and set REDUX_EXACT; if it regressed, "
-    f"something in zelda/ changed.")
+    f"something in zelda/ changed."
+    if drift else
+    # Same 45 screens, different cell counts. Worth its own message: the drift set is
+    # empty here, so "0 screen(s) changed status: []" would read as "nothing moved" when
+    # in fact every count in the list above is stale.
+    f"the same {len(rx['bad'])} screens differ, but the cell counts moved: "
+    + ", ".join(f"{k} {REDUX_FAILING.get(k)}->{rx['bad'][k]}"
+                for k in sorted(rx['bad']) if REDUX_FAILING.get(k) != rx['bad'][k])
+    + f" (total {sum(REDUX_FAILING.values())}->{sum(rx['bad'].values())})")
 assert sum(rx["bad"].values()) == REDUX_DIFF_CELLS == 842, sum(rx["bad"].values())
 assert len(rx["bad"]) == len(REDUX_FAILING) == 45, len(rx["bad"])
 print()

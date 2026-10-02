@@ -75,15 +75,7 @@ WHAT IT NEEDS: nothing but Python and the cartridge. No display, no socket, no B
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `runs/`
 - writes a file
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`test_state_parse.py`](test_state_parse.md)
 
 ---
 

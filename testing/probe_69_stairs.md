@@ -63,7 +63,6 @@ Run it:  python3 testing/probe_69_stairs.py [attempts]
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `shots/`, `states/`
 
 ## Why this still matters
 
@@ -71,13 +70,6 @@ Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/lookahead.py`:286` - # which testing/probe_69_stairs.py A/Bs against it on the eight-Darknut stairs room.
-
-## See also
-
-- [`probe_walls.py`](probe_walls.md)
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_old_man.py`](probe_old_man.md)
-- [`probe_new_seg.py`](probe_new_seg.md)
 
 ---
 

@@ -82,14 +82,7 @@ Run:  python3 testing/test_owmap_conformance.py
 
 ## What it touches
 
-- writes `knowledge/`
-
-## See also
-
-- [`probe_cave_pay3.py`](probe_cave_pay3.md)
-- [`probe_cave_1a.py`](probe_cave_1a.md)
-- [`probe_cave_0f.py`](probe_cave_0f.md)
-- [`probe_61.py`](probe_61.md)
+- nothing at runtime; it exists to be read, or to be applied once
 
 ---
 

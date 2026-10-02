@@ -10,7 +10,7 @@ resume point is still the newest checkpoint on the new list.
 
 ## What it touches
 
-- writes `logs/`, `runs/`, `shots/`
+- nothing at runtime; it exists to be read, or to be applied once
 - writes a file
 
 ## Why this still matters

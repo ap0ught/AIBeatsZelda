@@ -62,7 +62,7 @@ Run:  python3 testing/test_cartridge_identity.py
 
 ## What it touches
 
-- **drives BizHawk** - replays, searches or steps frames
+- nothing at runtime; it exists to be read, or to be applied once
 - writes a file
 
 ---

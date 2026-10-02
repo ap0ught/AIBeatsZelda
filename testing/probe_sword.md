@@ -11,15 +11,15 @@ pickup failure INSIDE the cave (mode 0x0B), which proves everything before the p
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
+- writes `shots/`, `states/`
 - loads savestate(s): `ckpt_fullgame_bw3_31`, `probe_on_21`
 
 ## See also
 
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
+- [`probe_ending.py`](probe_ending.md)
+- [`probe_cave_62.py`](probe_cave_62.md)
+- [`probe_61.py`](probe_61.md)
+- [`smoke_test.py`](smoke_test.md)
 
 ---
 

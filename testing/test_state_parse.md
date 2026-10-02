@@ -66,15 +66,7 @@ Run:  python3 testing/test_state_parse.py
 
 ## What it touches
 
-- **drives BizHawk** - replays, searches or steps frames
-- writes `runs/`
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`test_replay_fingerprint.py`](test_replay_fingerprint.md)
+- nothing at runtime; it exists to be read, or to be applied once
 
 ---
 

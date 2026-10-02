@@ -70,15 +70,7 @@ Run:  python3 testing/test_combat_reach.py
 
 ## What it touches
 
-- **drives BizHawk** - replays, searches or steps frames
-- writes `journal/`
-
-## See also
-
-- [`test_value_of.py`](test_value_of.md)
-- [`test_ram_addresses.py`](test_ram_addresses.md)
-- [`test_ips_patch.py`](test_ips_patch.md)
-- [`probe_old_man.py`](probe_old_man.md)
+- nothing at runtime; it exists to be read, or to be applied once
 
 ---
 

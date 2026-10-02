@@ -175,6 +175,7 @@ CLAIMS = [
     ("$0670", "HEART_FRAC", "byte", "$00 / $01-$7F / $80-$FF"),
     ("$0671", "TRIFORCE", "bitfield", "one bit per piece"),
 ]
+assert len(CLAIMS) == 12, len(CLAIMS)
 for text, name, kind, _why in CLAIMS:
     assert ADDRS[name] == int(text.lstrip("$"), 16), \
         f"{name} is ${ADDRS[name]:04X}, the docstring says {text}"

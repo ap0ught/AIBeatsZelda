@@ -481,6 +481,11 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 st["next"] += 1
             rng = random.Random(seed_base + i)
             step0 = emu.step
+            # Bound before the attempt starts: `rec` and `s_start` are created inside the try below,
+            # and a bridge that fails during `load` reaches an outcome handler that falls through to
+            # `rec.inputs` two paragraphs down. Unbound there is an UnboundLocalError inside the
+            # error path of an error path, which is the worst place for one.
+            rec, s_start = None, None
             # The whole attempt is inside the error handling - loading the state, the settle steps,
             # the policy call - not just the policy call. A bridge that dies during `load` used to
             # kill the worker thread outright, uncaught and uncounted: no "lost its emulator" line,
@@ -578,20 +583,21 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 ok = False
             if outcome == "over budget":
                 ok = False
-            a = Attempt(1000 + i, rec.inputs, len(rec.inputs), ok, s.hearts, outcome, s.bombs)
+            inputs = rec.inputs if rec is not None else []
+            a = Attempt(1000 + i, inputs, len(inputs), ok, s.hearts, outcome, s.bombs)
             if ok and EXTRA_VALUE[0] is not None:
                 try:
                     a.bonus = float(EXTRA_VALUE[0](emu))
                 except Exception:
                     a.bonus = 0.0
             if _os.environ.get("ZELDA_SEARCH_DEBUG"):
-                log(f"    [attempt {i + 1}] {'ok' if ok else 'NO'} {len(rec.inputs)} frames, hearts {s.hearts}, bombs {s.bombs}: {str(outcome)[:60]}")
+                log(f"    [attempt {i + 1}] {'ok' if ok else 'NO'} {len(inputs)} frames, hearts {s.hearts}, bombs {s.bombs}: {str(outcome)[:60]}")
             if _os.environ.get("ZELDA_SEARCH_DUMP"):          # every attempt's inputs, for the documentary's search wall
                 import json as _json, pathlib as _pl
                 d = _pl.Path(_os.environ["ZELDA_SEARCH_DUMP"]); d.mkdir(parents=True, exist_ok=True)
                 (d / f"attempt_{i + 1:03d}.json").write_text(_json.dumps({
-                    "seed": 1000 + i, "ok": ok, "frames": len(rec.inputs), "hearts": s.hearts, "bombs": s.bombs,
-                    "outcome": str(outcome)[:80], "inputs": [",".join(b) for b in rec.inputs]}))
+                    "seed": 1000 + i, "ok": ok, "frames": len(inputs), "hearts": s.hearts, "bombs": s.bombs,
+                    "outcome": str(outcome)[:80], "inputs": [",".join(b) for b in inputs]}))
             with lock:
                 st["done"] += 1
                 st["containers"] = max(st["containers"], s.containers)

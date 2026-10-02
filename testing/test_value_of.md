@@ -88,14 +88,7 @@ Run:  python3 testing/test_value_of.py
 
 ## What it touches
 
-- writes `journal/`
-
-## See also
-
-- [`test_ram_addresses.py`](test_ram_addresses.md)
-- [`test_ips_patch.py`](test_ips_patch.md)
-- [`test_combat_reach.py`](test_combat_reach.md)
-- [`probe_old_man.py`](probe_old_man.md)
+- nothing at runtime; it exists to be read, or to be applied once
 
 ---
 

@@ -9,14 +9,6 @@ Run a segment's policy from the CURRENT run's checkpoint state (states/ckpt_full
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`, `states/`
-
-## See also
-
-- [`probe_seg2.py`](probe_seg2.md)
-- [`probe_map_chest.py`](probe_map_chest.md)
-- [`probe_fight_ab4.py`](probe_fight_ab4.md)
-- [`probe_fight_ab3.py`](probe_fight_ab3.md)
 
 ---
 

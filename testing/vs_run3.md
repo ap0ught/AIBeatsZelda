@@ -9,14 +9,7 @@ that differ most so far. usage: python vs_run3.py [top]
 
 ## What it touches
 
-- writes `logs/`, `runs/`, `shots/`
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
-- [`smoke_test.py`](smoke_test.md)
+- nothing at runtime; it exists to be read, or to be applied once
 
 ---
 

@@ -9,15 +9,7 @@ White Sword cave screen (0x0A): where is the cave mouth, what does the approach 
 ## What it touches
 
 - **drives BizHawk** - replays, searches or steps frames
-- writes `logs/`, `runs/`, `shots/`
 - loads savestate(s): `ckpt_fullgame_ws_0a`
-
-## See also
-
-- [`vs_run4.py`](vs_run4.md)
-- [`vs_run3.py`](vs_run3.md)
-- [`trace_phases.py`](trace_phases.md)
-- [`still_report.py`](still_report.md)
 
 ---
 
