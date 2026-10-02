@@ -26,6 +26,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Any, cast
 
 from zelda import profile
 from zelda.emulator import ROM, VERIFIED_ROM_MD5
@@ -125,22 +126,63 @@ class ProfileIdentity(unittest.TestCase):
         # keyed_cache is a plain dict, not an lru_cache, so it holds every (md5, room) pair
         # it has seen. That is the right trade for two cartridges and 256 screens; it is
         # also why cache_clear exists, and why this asserts the key really is the md5.
+        #
+        # This line used to read
+        #     keys = {k[0] for k in owmap.cells.__wrapped__ and [] or []}
+        # which always evaluates to `[]`: `__wrapped__` is a function, and truthy, so the
+        # `and` arm is the literal `[]`, which is falsy, so the `or` arm runs and yields
+        # `[]` again. `keys` was therefore always the empty set, every assertion beneath it
+        # was dead, and the test passed whatever `keyed_cache` did with the key. The claim
+        # the dead assertions were reaching for - "two cartridges, two entries" - rested
+        # entirely on the differing decode above, which cannot tell a keyed cache from a
+        # lucky one.
+        #
+        # The store is reached through `cache_clear`, which `keyed_cache` defines as
+        # `store.clear`: a bound method of the very dict the wrapper reads and writes, so
+        # `cache_clear.__self__` IS the store rather than a copy of it. Read it before the
+        # `finally` clears it, and read it through getattr so that losing `cache_clear`
+        # fails here legibly instead of as an AttributeError three lines later.
         from zelda import owmap
         with tempfile.TemporaryDirectory() as td:
             v = _variant(Path(td))
+            # `cells` is a plain function at type-check time; cache_clear is attached by
+            # keyed_cache at decoration time, so it is reached through getattr throughout.
+            cells = owmap.cells
+            clear = cast(Any, getattr(cells, "cache_clear", None))
+            store = getattr(clear, "__self__", None)
+            self.assertTrue(callable(clear),
+                            "keyed_cache no longer publishes cache_clear on the wrapper")
+            self.assertIsInstance(
+                store, dict,
+                "owmap.cells.cache_clear is not a bound method of a dict, so the wrapper's "
+                "store is no longer reachable. Asserting on the decoded output instead would "
+                "pass even if the cache stopped being keyed on the cartridge at all.")
+            assert isinstance(store, dict)          # narrows the type for anything below
             try:
+                # the md5s are read here, while the variant file still exists: resolve()
+                # hashes the file, and the temp directory goes away with this block
+                stock_md5 = profile.resolve(STOCK).md5
+                variant_md5 = profile.resolve(v).md5
                 os.environ["ZELDA_ROM"] = str(STOCK)
-                owmap.cells(0)
+                cells(0)
                 os.environ["ZELDA_ROM"] = str(v)
-                owmap.cells(0)
-                keys = {k[0] for k in owmap.cells.__wrapped__ and [] or []}
+                cells(0)
+                # same screen, two cartridges: two entries, keyed on two md5s.
+                # k[0] is read defensively: a key that is not (md5, args) is the failure
+                # being looked for, and the message below should say so rather than
+                # raising IndexError on a key shape nobody expected.
+                keys = {k[0] if len(k) > 1 else ("NOT (md5, args)", k) for k in store}
+                rooms = {k[1] if len(k) > 1 else None for k in store}
+                entries = sorted(map(repr, store))
             finally:
                 os.environ.pop("ZELDA_ROM", None)
-                owmap.cells.cache_clear()
-        # the store is private, so assert the observable thing instead: same screen, two
-        # cartridges, two cache entries - proved by the differing decode above. Here we
-        # only assert the wrapper exposes a way to reset it.
-        self.assertTrue(callable(getattr(owmap.cells, "cache_clear", None)))
+                clear()
+        self.assertEqual(keys, {stock_md5, variant_md5},
+                         "the cache is not keyed on the cartridge md5: same screen, two "
+                         "cartridges, one entry")
+        self.assertEqual(len(keys), 2, f"expected two cartridge identities, got {keys}")
+        self.assertEqual(rooms, {(0,)}, f"one screen was decoded, so one entry per cartridge: {rooms}")
+        self.assertEqual(len(entries), 2, f"the store should hold exactly two entries: {entries}")
 
 
 class SelectionIsRecordedNotInferred(unittest.TestCase):
