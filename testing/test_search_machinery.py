@@ -34,6 +34,7 @@ Run:  python3 testing/test_search_machinery.py
 """
 
 import os
+import types
 import sys
 import time
 from pathlib import Path
@@ -285,5 +286,52 @@ assert calls == [], f"an unreadable reply is one attempt of bad luck, not a dead
 assert any("unreadable bridge reply" in l for l in log), [l for l in log if "unreadable" in l]
 assert any("attempt(s) lost to a bridge reply that could not be read" in l for l in log), log
 print("unreadable reply: scout kept, attempt lost, and the search's summary says so")
+
+# 10. A BadReply names the replies that came before it, and a good reply is appended to the record.
+#     Checked against the REAL BizHawk.cmd - only the socket underneath is fake - because the thing
+#     being tested is what that function puts in the message, and a test of a copy of it proves
+#     nothing. A garbled reply on its own says the stream slipped; the replies before it say where,
+#     and "'ok' as the answer to `step`" is only interpretable if the log carries what preceded it.
+import io as _io
+from collections import deque as _deque
+
+from zelda.emulator import BizHawk
+
+
+def wire(lines):
+    """A BizHawk with no emulator: a socket that swallows writes and a reader that hands back
+    `lines` one at a time, exactly as a bridge would."""
+    emu = object.__new__(BizHawk)
+    emu.conn = types.SimpleNamespace(sendall=lambda b: None, settimeout=lambda t: None)
+    emu._rf = _io.BytesIO("".join(l + "\n" for l in lines).encode())
+    emu._recent = _deque(maxlen=8)
+    return emu
+
+
+emu = wire(["frame=1 mode=05 sub=00", "frame=1 mode=05 sub=00", "0a0b0c", "ok"])
+assert BizHawk.cmd(emu, "state") == "frame=1 mode=05 sub=00"
+assert BizHawk.cmd(emu, "state") == "frame=1 mode=05 sub=00"
+assert BizHawk.cmd(emu, "ram 485 3") == "0a0b0c"
+try:
+    BizHawk.cmd(emu, "ram 847 12")
+except BadReply as e:
+    msg = str(e)
+    assert "ram 847 12" in msg and "'ok'" in msg, msg
+    # the three replies before it, in order: the point of the ring buffer
+    assert msg.count("->") == 3, msg
+    assert "'state'->'frame=1 mode=05 sub=00" in msg, msg
+    assert "'ram 485 3'->'0a0b0c'" in msg, msg
+    print("BadReply names the command, the reply it got, and the three replies before it")
+else:
+    raise AssertionError("a reply that cannot be right did not raise")
+
+# and the ring is cleared by the raise, so the NEXT failure does not quote a stale history
+emu2 = wire(["ok"])
+try:
+    BizHawk.cmd(emu2, "state")
+except BadReply as e:
+    assert "before:" not in str(e), str(e)
+else:
+    raise AssertionError("a reply that cannot be right did not raise")
 
 print("all checks passed")

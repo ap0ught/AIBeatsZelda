@@ -7,6 +7,7 @@ import subprocess
 import sys
 import textwrap
 import time
+from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -288,6 +289,7 @@ class BizHawk:
         self.conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         self.conn.settimeout(120)
         self._rf = self.conn.makefile("rb")
+        self._recent: deque = deque(maxlen=8)     # the last few (command, reply); see cmd()
         self.inputs: list[tuple[str, ...]] = []   # one entry per emulated frame since power-on
         self.events: list[tuple[int, str]] = []   # (frame, text) notes from the bot, for overlays
         self.input_log_valid = True                 # False once a savestate load breaks the frame chain
@@ -318,7 +320,15 @@ class BizHawk:
         if resp.startswith("err "):
             raise RuntimeError(resp)
         if not _reply_answers(line, resp):
-            raise BadReply(f"the bridge's answer to {line!r} is not an answer to it: {resp[:140]!r}")
+            # Say what came BEFORE as well as what came now. A garbled reply on its own says the
+            # stream slipped; the two replies before it say where. `'ok'` showing up as the answer to
+            # `step` or `ram` means a reply that answers `ok` - load, mload, mfree, phase, attempt -
+            # was read by the wrong command, and the log can only tell that if the log has it.
+            before = " | ".join(f"{c!r}->{r[:24]!r}" for c, r in self._recent)
+            self._recent.clear()
+            raise BadReply(f"the bridge's answer to {line!r} is not an answer to it: {resp[:140]!r}"
+                           + (f"  (before: {before})" if before else ""))
+        self._recent.append((line, resp))
         return resp
 
     # -- control ---------------------------------------------------------
