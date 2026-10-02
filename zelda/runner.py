@@ -60,7 +60,25 @@ PHASE_SPREAD = [90]              # frames of entry window, matching the 0-90 gle
 # Segments fought at FULL health, because the sword beam only fires at `hearts >= containers` and a
 # single lost half-heart there costs the weapon rather than a little time. Empty by default and
 # populated per run; "revenge" is the Blue Lynel the owner wants killed with the beam.
-NEED_FULL_HEARTS: set[str] = {"revenge"}
+#
+# "white_sword" joined it on 2026-10-02, and the reason is the shape of `lookahead.caution`, which is
+# a step function of health:
+#
+#     h <= 2.0  -> 1.5        h >= 8, or h >= 5 and h/c >= 0.75  -> 0.3
+#     h <= 3.5  -> 1.0        otherwise                            -> 0.55
+#
+# 3.5 hearts of 5 buys 1.0; 4.0 hearts of 5 buys 0.55. Half a heart MORE and the planner decides a
+# lost half heart is worth 220 frames instead of 400 - on the one screen where the Blue Lynel hits for
+# TWO hearts and the beam that would make it safe needs a full bar. Measured, same screen, same
+# policy: from 3.5 the archived run walked the approach and died at the sword's pickup 12 times in 14
+# and took it on the 13th; from 4.0 this run died ON THE APPROACH 180 times, at 100-500 frames, never
+# reaching the cave. More hearts, 0 successes, because the planner got careless holding them.
+#
+# So the set is not only "this one wants the beam" - it is also "on this one, do not let good health
+# make you brave", which is the same lever and the same reason. CAUTION_OVERRIDE 1.0 is what 3.5
+# hearts was already getting for free, so this restores the archived behaviour and adds the beam
+# premium on top of it for whenever the bar does fill.
+NEED_FULL_HEARTS: set[str] = {"revenge", "white_sword"}
 
 # Segments that must not CALL THEMSELVES CONVERGED below a floor of health, because the screen after
 # them cannot be solved below it. The value is the hearts the next screen needs, measured.

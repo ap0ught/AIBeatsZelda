@@ -1061,3 +1061,62 @@ its patience and take the best it has - which is what `cdl_0c` did, and why the 
 `ow1_48` at a known 4.0/4 rather than patched forward from 1.5. And nothing here says the sword is
 now takeable: 3.5 is the only value any run has taken it from, and 4.5 was measured at one line in
 sixty.
+
+## 17. The White Sword screen, and the one crossing that was selling the run its heart margin (2026-10-02)
+
+Section 16 got the run to the White Sword's screen with **4.0 of 5 hearts** instead of 1.5, which is
+the margin the sword has ever been taken from. It then failed anyway, and this section is why, and
+the fix.
+
+**The sword screen 0x0A.** One Blue Lynel at (160,93), two hearts a hit. The cave mouth is at (32,77)
+and `cave_item_policy` asks the damage-aware planner for `Goal(32, 93, 6)` - so the goal ROW is the
+Lynel's row. Measured from `gleeok_ws_0a_start` (Link at 4.0/5, at (208,221)) with the real policy:
+
+```
+approach only            died  4403f h=0.0 (130,93) | died 4403f (130,93) | died 5029f (144,93)
++ CAUTION_OVERRIDE 1.0   died  4403f h=0.0 (130,93) | died 4403f (130,93) | died 5029f (144,93)
++ rollout 30             died 10961f h=0.0 (101,93) | died  9963f (136,93) | died 10163f (120,93)
+kill the Lynel first     fight=died (lynel still up), then died at (56,93)
+```
+
+Every death is on y=93, every configuration, and they are all the same death: Link walks west along
+the row the Lynel is standing on. Raising caution does nothing because `plan_reach` prices damage only
+inside its `rollout` - twelve frames by default - and no twelve-frame branch from (208,221) contains a
+hit. The planner is not choosing badly; it cannot see. A longer rollout sees further and walks him
+*into* it for longer (10,961 frames). Fighting it does not work either: the Blue Lynel has 96 HP and
+hits for two hearts, and Link at 4.0/5 has two hits' worth, so `plan_fight` returns `died`.
+
+And the row below IS safe: a two-leg approach that stages on y=117 first came back **four times out of
+four at 4.0 hearts and never took a hit**, though `plan_reach` then timed out reaching (32,117) and
+burned 64,991 frames. So the road exists and the planner will not take it.
+
+**The fix that was actually available was one segment earlier.** The heart rock at 0x2C is the last
+refill before the sword, and it turns "hearts Link arrived with" into "containers plus a heart". Link
+was arriving at it with 2.5 of 4 because `ws_2a` gave a heart away crossing room 0x29 - which has
+**four type-`$10` monsters on it** - and with 2.5/4 the rock can only give 3.5/5, which is 4.0/5 at the
+sword screen after the half heart `cdl_1c` finds. With 3.5/4 the rock gives 4.5/5.
+
+And `ws_2a` did not have to give that heart up. Room 0x29, this run's own bookmark, five seeds a side:
+
+| policy | frames | hearts |
+|---|---|---|
+| `make_cross_policy` (what the route used) | 359, 323, 374, 365, 323 | **2.5 on 5 of 5** |
+| `make_lareach_policy` (damage-aware) | 310, 312, 353, 315, 310 | **3.5 on 5 of 5** |
+
+Faster on all five and a heart better on all five, which is what a damage-aware planner is for and
+what a plain crossing is not. Only `ws_2a` changes: `ws_28`, `ws_29`, `ws_2b`, `ws_2c`, `ws_1b`, `ws_1a`
+and `ws_0a` all held their hearts through the same policy, so changing them would be a change with no
+measurement behind it.
+
+**Why this did not cost the run.** `runner.stamp_segment_list` hashes segment NAMES AND ORDER ONLY, so
+a policy change is invisible to the checkpoint guard and the run resumed from `ws_29` with all 84
+segments and 22,020 frames of power-on prefix intact. A segment added or renamed would have cost the
+whole run; a policy changed costs nothing. That is the cheapest possible place for this fix to live
+and it was worth checking rather than assuming.
+
+**Still open, and this is the honest end of it.** With the heart margin repaired the arithmetic says
+Link arrives on 0x0A at about 4.5-5.0 of 5 rather than 4.0, and `testing/probe_white_sword_effort.py`
+measured the White Sword at about one line in sixty from 4.5/5 against none at all from 3.5 in forty.
+That is a better bet, not a solved segment, and the planner still walks the Lynel's row on principle.
+The one thing measured to work - staging on y=117 - times out there, and why (32,117) is walkable in
+`owroute.free()` but not to `plan_reach`'s own lattice is not yet explained.

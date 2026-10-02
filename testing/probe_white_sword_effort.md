@@ -27,7 +27,7 @@ routing problem, not a patience problem. The difference matters, so measure it r
 Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
-- ``zelda/runner.py`:69` - # frames a heart because of it. `testing/probe_white_sword_effort.py` found 0 winning lines in 40
+- ``zelda/runner.py`:87` - # frames a heart because of it. `testing/probe_white_sword_effort.py` found 0 winning lines in 40
 - ``zelda/search.py`:265` - # winning line at all - 0 of 40, measured by testing/probe_white_sword_effort.py. The same approach from
 
 ---

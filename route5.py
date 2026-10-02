@@ -33,7 +33,9 @@ from __future__ import annotations
 
 from zelda import ram
 from zelda import head
-from zelda.segments import make_cross_policy, make_cross_at_policy, make_lafight_policy
+from zelda.lookahead import Goal
+from zelda.segments import (make_cross_at_policy, make_cross_policy,
+                         make_lafight_policy, make_lareach_policy)
 
 
 def _lane(d: str, at: int):
@@ -81,7 +83,26 @@ def build(base: list, fg) -> list:
     # ---- north-east: heart rock, the hidden hundred, the candle, the White Sword ---------------------------
     # Identical to route 4 up to and including the White Sword. This is the shared prefix both orders start from.
     S += take("ow1_73", "ow1_63", "ow1_64", "ow1_65", "ow1_66", "ow1_67", "ow1_68", "ow1_58", "ow1_48", "ow1_38",
-              "ws_28", "ws_29", "ws_2a", "ws_2b", "ws_2c")
+              "ws_28", "ws_29")
+    # ws_2a crosses 0x29, which has FOUR type-$10 monsters on it, and the plain crossing paid a heart
+    # for it every single time. This is the last heart leak between the Triforce refill and the heart
+    # rock, so it is the difference between arriving at the rock with 2.5/4 - and therefore standing on
+    # the White Sword's screen at 4.0/5, where the Blue Lynel kills Link in two hits and this run took
+    # the sword 0 times in 300+ attempts - and arriving with 3.5/4.
+    #
+    # Measured on this run's own bookmark (gleeok_ws_2a_start, Link at 3.5/4), five seeds a side:
+    #
+    #     make_cross_policy     359 323 374 365 323 frames, 2.5 hearts  (5 of 5)
+    #     make_lareach_policy   310 312 353 315 310 frames, 3.5 hearts  (5 of 5)
+    #
+    # Faster on all five AND a heart better on all five, which is what a damage-aware planner is for.
+    # Only this one segment: ws_28, ws_29, ws_2b, ws_2c, ws_1b, ws_1a and ws_0a all kept their hearts
+    # through the same crossing policy, so changing them would be a change with no measurement behind
+    # it. The segment NAME is unchanged, which is what keeps every checkpoint in this run resumable -
+    # runner.stamp_segment_list hashes names and order only.
+    S.append(("ws_2a", lambda nav: make_lareach_policy(nav, Goal(240, 141, 8), then_exit="Right"),
+              lambda emu, s: s.room == 0x2A and s.mode == 5 and s.level == 0 and s.hearts > 0, 30))
+    S += take("ws_2b", "ws_2c")
     # HEART ROCK: the fifth heart is what the White Sword asks for, and this one is on the road to it.
     S.append(("h2c_heart", lambda nav: fg.hc_cave_policy(nav, (144, 173), "Up", "bomb"),
               lambda emu, s: (s.containers >= started().containers + 1 and s.level == 0 and s.mode == 5

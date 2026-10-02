@@ -67,7 +67,7 @@ Cited by production code. These comments are where the numbers came from,
 so if this script's method is wrong, the constant is wrong too:
 
 - ``zelda/head.py`:268` - testing/probe_head_exit.py) and the end of it is a screen in the overworld where a route can
-- ``route5.py`:293` - # the cave (testing/probe_head_exit.py, all eight lanes landing where they were asked to, four
+- ``route5.py`:314` - # the cave (testing/probe_head_exit.py, all eight lanes landing where they were asked to, four
 
 ## See also
 
