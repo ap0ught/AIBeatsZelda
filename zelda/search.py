@@ -11,7 +11,7 @@ import random
 import time
 from dataclasses import dataclass, field
 
-from .emulator import BizHawk, State
+from .emulator import BadReply, BizHawk, State
 from .overworld import read_enemies, LinkDied
 from .combat import Fighter, REACH, ALIGN, enemy_hp, find_enemy
 
@@ -391,6 +391,62 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
     def work(k):
         emu, nav = scouts[k], navs[k]
         policy = factory(nav)
+
+        def lost_channel(why: Exception) -> bool:
+            """This scout's emulator can no longer be trusted. True if the worker carries on.
+
+            A closure rather than inline code because there are now two places that can reach it: the
+            attempt itself, and the state read after it. `emu` and `nav` and `policy` are rebound
+            here, and Python's `nonlocal` reaches the worker's own frame - which is the point, since
+            the caller's loop keeps using those names.
+
+            The emulator underneath is gone, so this worker used to stop - which meant a scout that
+            died was dead for the REST OF THE SEARCH, and only came back when the whole run process
+            restarted. Eight deaths in one session, and the run spent its last hours searching
+            three-wide while the log said four scouts. So the worker asks the runner - which owns the
+            emulators - to put a fresh one in its slot and carries on. Without a respawn callback, or
+            once RESPAWN replacements have been spent, this is the old behaviour: the worker stops,
+            and st["dead"] lets the caller see that the search is running short-handed instead of
+            quietly searching with fewer quarters than it thinks it has.
+            """
+            nonlocal emu, nav, policy
+            with lock:
+                st["dead"] = st.get("dead", 0) + 1
+            log(f"  scout {k} lost its emulator ({str(why)[:80]})")
+            if respawn is None or st["dead"] > len(scouts) * RESPAWN[0] or not respawn(k):
+                log(f"  scout {k} is not coming back this search; it is done")
+                return False
+            # The runner swapped scouts[k]/navs[k] in place. Re-bind the LOCALS too - they were
+            # bound once at the top of this thread - and rebuild the policy, which closed over
+            # the old Navigator and would otherwise keep planning against a dead emulator's state.
+            emu, nav = scouts[k], navs[k]
+            policy = factory(nav)
+            with lock:
+                st["respawned"] = st.get("respawned", 0) + 1
+                alive = len(scouts)
+            log(f"  scout {k} replaced with a fresh emulator; the search continues on "
+                f"{alive} scout(s), {st['respawned']} replacement(s) so far")
+            return True
+
+        def unreadable(e: Exception) -> bool:
+            """A reply the parser cannot read. The attempt is lost; the scout is not.
+
+            Not the same thing as `lost_channel`, and deliberately not routed to it. A garbled reply
+            MIGHT mean the request/reply stream is out of step - in which case the scout is finished
+            - or it might be one truncated line, which 65,149 clean commands say is the commoner case
+            (testing/probe_bridge_replies.py). Replacing an emulator costs a process launch and up to
+            60s waiting for its bridge, and the measured rate of this is 2% of attempts, so rebuilding
+            on every one of them would buy a scout that usually did not need it. It is counted instead
+            and reported in the search's summary line, so the rate is visible in an overnight log and
+            a rise in it is a fact rather than a rumour.
+            """
+            with lock:
+                st["unreadable"] = st.get("unreadable", 0) + 1
+                n = st["unreadable"]
+            log(f"  scout {k}: unreadable bridge reply ({str(e)[:70]}); the attempt is lost, "
+                f"the scout is not  [{n} so far this search]")
+            return True
+
         while True:
             with lock:
                 if st["stop"] or st["next"] >= tries:
@@ -439,6 +495,10 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 outcome = "timeout: " + str(e)[:40]
             except (OSError, ValueError, KeyError, IndexError) as e:
                 outcome = f"error: {type(e).__name__}: {str(e)[:40]}"     # one bad attempt, not a dead scout
+            except BadReply as e:
+                if not unreadable(e):                      # kept separate from RuntimeError below
+                    return
+                continue
             except RuntimeError as e:
                 # The bridge died mid-attempt - "bridge connection lost ... EmuHawk exit code 0" is
                 # the common one on Linux, where a scout emulator occasionally just goes. This is the
@@ -449,34 +509,27 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 # permanently unsampled and the coverage - the entire point of the split - silently
                 # degrades). Three scouts died this way in one afternoon before this was caught by
                 # watching the process list rather than the log.
-                #
-                # The emulator underneath is gone, so this worker used to stop here - which meant a
-                # scout that died was dead for the REST OF THE SEARCH, and only came back when the
-                # whole run process restarted. Eight deaths in one session, and the run spent its
-                # last hours searching three-wide while the log said four scouts. So the worker asks
-                # the runner - which owns the emulators - to put a fresh one in its slot and carries
-                # on. Without a respawn callback, or once RESPAWN replacements have been spent, this
-                # is the old behaviour: the worker stops, and st["dead"] lets the caller see that the
-                # search is running short-handed instead of quietly searching with fewer quarters
-                # than it thinks it has.
-                with lock:
-                    st["dead"] = st.get("dead", 0) + 1
-                log(f"  scout {k} lost its emulator ({str(e)[:60]})")
-                if respawn is None or st["dead"] > len(scouts) * RESPAWN[0] or not respawn(k):
-                    log(f"  scout {k} is not coming back this search; it is done")
+                if not lost_channel(e):
                     return
-                # The runner swapped scouts[k]/navs[k] in place. Re-bind the LOCALS too - they were
-                # bound once at the top of this thread - and rebuild the policy, which closed over
-                # the old Navigator and would otherwise keep planning against a dead emulator's state.
-                emu, nav = scouts[k], navs[k]
-                policy = factory(nav)
-                with lock:
-                    st["respawned"] = st.get("respawned", 0) + 1
-                    alive = len(scouts)
-                log(f"  scout {k} replaced with a fresh emulator; the search continues on "
-                    f"{alive} scout(s), {st['respawned']} replacement(s) so far")
                 continue
-            s = emu.state()
+            # The state AFTER the attempt, read outside the handling above. A reply the parser cannot
+            # read raises here, and this was the last place in the worker where an exception still
+            # escaped: the archived four-hour log has one, at exactly this line, with no "lost its
+            # emulator" line, no counter and no replacement - the same class of bug one line above,
+            # in the one place section 13's widening did not reach. Read it through the same handling,
+            # because a garbled reply means the socket is out of step and nothing after it is
+            # trustworthy; and note the attempt index is already spent (st["next"] was incremented
+            # above), so continuing costs one attempt and not one scout.
+            try:
+                s = emu.state()
+            except (BadReply, OSError, ValueError, KeyError, IndexError) as e:
+                if not unreadable(e):
+                    return
+                continue
+            except RuntimeError as e:
+                if not lost_channel(e):
+                    return
+                continue
             try:
                 ok = outcome != "died" and not str(outcome).startswith("error:") and success(emu, s)
             except Exception:
@@ -638,6 +691,13 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             f"the search ran on {len(scouts) - (dead - back)} of {len(scouts)}"
             + ("" if back == dead else " for at least part of it")
             + ", so the phase window was covered unevenly")
+    # Replies the parser could not read. Its own line because it is the failure that does not announce
+    # itself anywhere else: the attempts it cost are counted as ordinary losses and the emulators
+    # survive, so a search can sit at 98% of its attempts for hours with nothing in the log but this.
+    garbled = st.get("unreadable", 0)
+    if garbled:
+        log(f"  {garbled} attempt(s) lost to a bridge reply that could not be read "
+            f"({garbled / max(1, st['done']):.1%} of them); the emulators were kept")
     if best is None and fails:
         top = sorted(fails.items(), key=lambda kv: -kv[1])[:4]
         log("  no success; most common: " + " | ".join(f"{n}x {k}" for k, n in top))

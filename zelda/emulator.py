@@ -72,6 +72,69 @@ VIDEO_DIR = HARNESS_DIR / "video"
 BUTTONS = ("Up", "Down", "Left", "Right", "Select", "Start", "B", "A")
 
 
+class BadReply(RuntimeError):
+    """The bridge answered, but not with an answer to the question that was asked.
+
+    A RuntimeError on purpose: `parallel_search` already treats a RuntimeError from an attempt as
+    "this emulator's channel is gone" and asks the runner for a replacement (FINDINGS section 13),
+    and that is exactly the right response to a request/reply stream that has come out of step -
+    everything after the slip is suspect, so continuing on the same socket would search garbage.
+
+    Why this exists at all: the failure was invisible. A garbled reply reached `State.parse`, which
+    does `int(v)` on the right of every `k=v` token, so a token with no `=` in it raised
+    `ValueError: invalid literal for int() with base 10: ''` - a message that names neither the
+    command nor the emulator nor the reply, three frames away from anything that could explain it.
+    Measured at 12 attempts in 590 over a four-hour log (2.0%), all of them in fights, which are the
+    segments that make the most `state` calls per attempt. `testing/probe_bridge_replies.py` then ran
+    65,149 commands against a live bridge on one thread and saw none of them, so the trigger is
+    something about the run rather than about the socket; what is fixed here is that the next
+    occurrence will say what it was instead of what a parser choked on.
+    """
+
+
+_HEX = set("0123456789abcdefABCDEF")
+
+
+def _is_state_line(resp: str) -> bool:
+    """Every token of a `state_str()` is `name=<non-negative integer>`, and nothing else.
+
+    Stricter than "starts with frame=" on purpose: the reply this exists to catch was a state line
+    TRUNCATED mid-token, so its first token was intact and only a later one read `mode=`. The values
+    are all `read_u8`, `framecount`, `lagcount` and two counters out of boss_hp(), so none of them
+    can be anything but digits.
+    """
+    toks = resp.split()
+    if not toks:
+        return False
+    for t in toks:
+        name, sep, val = t.partition("=")
+        if not sep or not name or not val or not val.isdigit():
+            return False
+    return True
+
+
+def _reply_answers(cmd: str, resp: str) -> bool:
+    """Does this reply answer this command? Deliberately coarse - only the shapes that are fixed.
+
+    `state` answers with `state_str()` and `step` answers with the same thing (or, with the trace on,
+    with several of them joined by `;`). `ram`/`ramd` answer with hex. Everything else in the bridge
+    answers `ok`, `fail`, a GUID, or free text, and is left alone rather than guessed at: a check that
+    is wrong in the strict direction costs a whole emulator, so this only rejects replies that cannot
+    possibly be right.
+    """
+    head = cmd.split(" ", 1)[0]
+    if head == "state":
+        return _is_state_line(resp)
+    if head == "step":
+        # A traced multi-frame step is semicolon-joined, so its tokens are not tokens; only the
+        # single-frame form is checked properly, and that is the form a search uses.
+        return _is_state_line(resp) if ";" not in resp else resp.startswith("frame=")
+    if head in ("ram", "ramd"):
+        body = resp.replace(" ", "")
+        return len(body) % 2 == 0 and not (set(body) - _HEX)
+    return True
+
+
 def _click_really_quit(timeout: float = 4.0) -> bool:
     """Find EmuHawk's 'Really quit?' A/V dialog and click its Yes button (Windows only)."""
     try:
@@ -254,6 +317,8 @@ class BizHawk:
         resp = resp.decode().rstrip("\n")
         if resp.startswith("err "):
             raise RuntimeError(resp)
+        if not _reply_answers(line, resp):
+            raise BadReply(f"the bridge's answer to {line!r} is not an answer to it: {resp[:140]!r}")
         return resp
 
     # -- control ---------------------------------------------------------

@@ -888,12 +888,73 @@ road exists and is connected, not that it is quick. The eight lanes can still lo
 Octorok, which is what the 1.5 hearts on this walk was. And nothing here says anything about the rest
 of route 5 past Level 1's door, which has never been run.
 
-**One thing found on the way, not yet fixed.** Roughly one attempt in three of a crossing segment
-ends `error: ValueError: invalid literal for int() with base 10: ''` from `State.parse`, and the same
-log has `ValueError: non-hexadecimal number found in ...` from `BizHawk.ram`. Ten occurrences in a
-four-hour log. Both are a malformed bridge REPLY - a token with no `=` in it, or hex that is not hex -
-which is the signature of the reply stream coming out of step with the commands, and
-`bridge.lua`'s `send()` does not check what `conn:send` returned. Worse: the one in `gleeok_run8.log`
-at `search.py:479 s = emu.state()` killed a worker thread outright, which is the same class of
-uncaught-exception-in-the-worker that section 13 fixed one line earlier. Not chased yet; written down
-so it is not rediscovered from the log.
+**One thing found on the way.** Two attempts in the archived four-hour log end
+`error: ValueError: invalid literal for int() with base 10: ''` from `State.parse`, and others end
+`error: ValueError: non-hexadecimal number found in ...` from `BizHawk.ram`. Both are a malformed
+bridge REPLY - a token with no `=` in it, or hex that is not hex - which is the signature of the
+reply stream coming out of step with the commands, and `bridge.lua`'s `send()` does not check what
+`conn:send` returned.
+
+Measured over the whole of `gleeok_run8.log`: **12 error attempts in 590, or 2.0%**, seven of them the
+`int('')` form and five the non-hex form. They are not spread evenly and they are not where I first
+looked: the four segments that had any were `l4_61` (1 of 6), `l4_b30` (1 of 7), `l4_32` (2 of 22)
+and `l4_70` (1 of 26) - all four are fights, not crossings, and a fight is where the search makes
+the most `state` calls per attempt. My first estimate, from a scratch replay under heavy load, was
+"one attempt in three of a crossing segment"; that was wrong by a factor of fifteen and it is
+retracted here rather than left in a comment.
+
+One of the twelve was not an attempt at all. At `search.py:479 s = emu.state()` - the state read
+AFTER the policy returns, which is outside the error handling section 13 widened - an unreadable
+reply killed the worker thread outright: no `lost its emulator` line, no counter, no replacement, and
+a `ValueError` traceback in the middle of another segment's attempts. Same class of
+uncaught-exception-in-the-worker, one line further on.
+
+## 15. An unreadable bridge reply cost 2% of attempts and named nothing (2026-10-02)
+
+Section 14 turned up an error in the archived run's log that has nothing to do with the route:
+`error: ValueError: invalid literal for int() with base 10: ''`. Chased because two attempts were
+wasted on it every hundred, and because one of the twelve was not an attempt at all.
+
+**Where it comes from, as far as the evidence goes.** `State.parse` does `int(v)` on the right of
+every `k=v` token in the bridge's `state` line, so a reply that is a state line **truncated
+mid-token** raises exactly that - `mode=` gives `int('')`. And `BizHawk.ram` does
+`bytes.fromhex(...)`, so a reply that is not hex at all - `non-hexadecimal number found in f`, where
+the `f` is the first character of `frame=` - is a **state line arriving where a `ram` reply was
+expected**. Both are the same thing: the request/reply stream came out of step, or one line was cut
+short. Measured over the whole of `gleeok_run8.log`: **12 in 590 attempts, 2.0%**, seven the
+`int('')` form and five the non-hex form, and all four segments that had any were fights.
+
+**What it is not.** Not two writers on one socket: the run gives each scout its own emulator and one
+thread. Not `msave`: `memorysavestate.savecorestate()` answers with a GUID
+(`17f1db10-c491-4f26-b6f7-ffdf264c4608`, 36 characters, no newline), measured, and the stream stayed
+in step across two of them. Not the socket in general: **65,149 commands against a live bridge on one
+thread over 900s, zero malformed** (`testing/probe_bridge_replies.py`, first version - a synthetic
+mix of `state`/`step`/`ram`). So the trigger is something about the run rather than about the socket,
+and it is still open. `bridge.lua`'s `send()` is the obvious suspect and it is written as if `conn:send`
+cannot fail: it sets a 5s timeout, calls `conn:send(line .. "\n")` and **ignores the return value**,
+which is the number of bytes actually written. A partial write of a `state` line is precisely a line
+truncated mid-token. That is a mechanism, not a measurement, and it is labelled as one.
+
+**What is fixed is the invisibility, and the one place it was fatal.** `BizHawk.cmd` now checks the
+reply against the command it sent and raises `BadReply` naming both - `the bridge's answer to 'state'
+is not an answer to it: 'frame=43620 mode=05 sub=00 ... mode='` - instead of letting a parser three
+frames downstream report `int('')`. The check is deliberately one-sided: only shapes that cannot
+possibly be right are rejected, because a check that is wrong in the strict direction costs a whole
+emulator. `testing/probe_bridge_replies.py` (second version) runs the **real** Gleeok fight from
+`states/ckpt_gleeok_start.State` through `parallel_search`, four scouts wide with the 0-90 phase
+spread, wrapping `cmd` so it sees every reply the harness asks for: **111,799 replies, 0 rejected.**
+That is the whole claim, and it is the claim the check has to be able to make.
+
+And the fatal one: `s = emu.state()` after an attempt - the state read that decides whether the
+attempt succeeded - sits *outside* the error handling section 13 widened, so an unreadable reply there
+killed the worker thread outright. The archived log has exactly that, at `search.py:479`, with a
+`ValueError` traceback in the middle of another segment's attempts and no `lost its emulator` line. It
+is read through the same handling now.
+
+**Deliberately not done: replacing the emulator.** A garbled reply *might* mean the stream is out of
+step - in which case that scout is finished - and it might be one truncated line, which 111,799 clean
+replies say is commoner. Respawning costs an EmuHawk launch and up to 60s waiting for its bridge, at a
+measured 2% of attempts, so it would buy a scout that usually did not need it. The attempt is lost,
+the scout lives, and the count is on its own line at the end of every search -
+`N attempt(s) lost to a bridge reply that could not be read (x% of them); the emulators were kept` -
+because without it a search can sit at 98% of its attempts for hours with nothing in the log to say so.
