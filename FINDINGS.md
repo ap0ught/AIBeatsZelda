@@ -778,3 +778,42 @@ That third one is the detection the owner's "going back and looking" is really a
 object in the same twenty slots as his torches (type 0x40) and the item, and nothing in the tree reads
 that row - `read_room_item` reads one slot of it. Until something reads it, the harness can only tell
 "this doorway will not open", which is the belief that cost sixty identical failures in journal/15.
+
+## 13. A scout whose emulator died was dead for the rest of the search (2026-10-01)
+
+Asked while watching the mosaic: *"are you restarting them if they go dead?"* No. `parallel_search`
+caught the bridge loss, logged `scout k lost its emulator ... that worker is done`, and returned from
+the worker thread. That scout was then dead until the whole `fullgame.py` process exited - which the
+wrapper only does on a real failure. So a search that lost two of four workers spent its remaining
+budget three-wide while the log line above it still said four scouts, and on a phase-locked boss
+(`search.ENTER_SPREAD` divides the 0-90 frame entry window by the *configured* scout count) the dead
+scout's quarter of the cycle went unsampled for the rest of that fight. Eight deaths in one session.
+
+Three changes, and the middle one was found by the test rather than by reading:
+
+1. **The worker asks for a replacement instead of stopping.** The runner owns the emulators, so
+   `Run.respawn_scout(k)` constructs a fresh `BizHawk` and `Navigator` in that slot - in place, because
+   `parallel_search` holds the same list objects - and `parallel_search` re-binds its *locals* and
+   rebuilds the policy, which had closed over the dead Navigator. Capped by `search.RESPAWN` (2 per
+   scout per search): a respawn builds a whole EmuHawk and waits up to 60s for its bridge, so with the
+   display gone four scouts times 60s would turn a dead display into a slow one. Passing no callback
+   keeps the old behaviour exactly, which is what the test asserts for the no-callback case.
+
+2. **A death during `emu.load()` was not caught at all.** The error handling wrapped only the policy
+   call, so an emulator that died while loading the segment's start state killed its worker thread
+   outright - no `lost its emulator` line, no counter, no replacement, one fewer scout and nothing in
+   the log to explain it. This is the failure mode the user was asking about, and the *worse* half of
+   it was invisible. The whole attempt - load, settle steps, policy call - is inside the handling now,
+   so all three read the same.
+
+3. **The summary line now separates deaths from replacements.** `2 scout emulator(s) died mid-search,
+   1 replaced; the search ran on 3 of 4 for at least part of it, so the phase window was covered
+   unevenly`. "A scout died" and "a scout died and was replaced" are different things to read in an
+   overnight log, and the old line could not tell them apart.
+
+The tests for all three use fake scouts with no emulator: two that raise `RuntimeError` on their second
+load, a respawn callback, and assertions that both were replaced, that the search still produced a
+winner, and that without a callback both workers stop as before. One thing that test had to be taught:
+a fake attempt that returns instantly lets one worker take every attempt index before the other thread
+is ever scheduled - the GIL, not a bug - so the fake sleeps to hand it over. A real attempt spends
+minutes inside the emulator with the GIL released, which is the case that matters.

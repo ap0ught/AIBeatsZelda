@@ -154,6 +154,37 @@ class Run:
         self.snavs = [Navigator(e) for e in self.scouts]
         self.snav = self.snavs[0]
 
+    def respawn_scout(self, k: int) -> bool:
+        """Put a fresh emulator in scout k's slot. False if it cannot be done.
+
+        Called by parallel_search when a scout's bridge dies mid-search. The point is that a dead
+        scout is not dead for the rest of the search: eight emulator deaths in one session left the
+        run searching three-wide for hours while the log still said four scouts, and on a phase-locked
+        boss the dead scout's slice of the entry window went unsampled for good.
+
+        In place, deliberately - parallel_search holds the same list objects, so swapping an element
+        is all it takes. Returns False rather than raising, because the caller has to fall back to
+        running short-handed, and that is a decision it makes, not an exception it has to catch.
+        """
+        old = self.scouts[k]
+        try:
+            old.close()                      # already gone; close is best-effort
+        except Exception:
+            pass
+        try:
+            self.scouts[k] = BizHawk(log_name=f"{self.name}_scout{k if k else ''}.log", clean_sram=False)
+            self.snavs[k] = Navigator(self.scouts[k])
+        except Exception as e:
+            self.log(f"  scout {k} could not be replaced: {str(e)[:70]}")
+            return False
+        # scout 0 is aliased as self.scout / self.snav all over this file (and reset_beliefs closes
+        # over self.snav), so a replacement in slot 0 has to be re-aliased or the segment would plan
+        # against the dead Navigator.
+        if k == 0:
+            self.scout = self.scouts[0]
+            self.snav = self.snavs[0]
+        return True
+
     def close(self) -> None:
         for e in list(getattr(self, "scouts", []) or [self.scout]) + [self.main]:
             if e is not None:
@@ -354,7 +385,7 @@ class Run:
             try:
                 best = parallel_search(self.scouts, self.snavs, st, factory, ok, tries=STAGE_TRIES[0],
                                        max_frames=1500, label=sname, log=self.log, setup=reset_beliefs,
-                                       patience=STAGE_PATIENCE[0],
+                                       patience=STAGE_PATIENCE[0], respawn=self.respawn_scout,
                                        # A staged fight is several searches wearing one segment's
                                        # name, and from the windows they are indistinguishable. "S3/5"
                                        # says which kill this window is working on.
@@ -457,7 +488,8 @@ class Run:
         best = parallel_search(self.scouts, self.snavs, start, factory, success, tries=max(tries, MIN_TRIES[0]),
                                max_frames=max_frames, label=name, log=self.log, setup=reset_beliefs,
                                patience=max(1, round(PATIENCE * MORE_SEARCH.get(name, 1.0))),
-                               seed_base=seed_base, accept_after=ACCEPT_AFTER[0] + 2 * fails)
+                               seed_base=seed_base, accept_after=ACCEPT_AFTER[0] + 2 * fails,
+                               respawn=self.respawn_scout)
         for nav in self.snavs:
             nav.blocked = copy.deepcopy(blocked0)
         if best is None:

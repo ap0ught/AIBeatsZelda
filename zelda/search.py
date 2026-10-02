@@ -156,6 +156,13 @@ PATIENCE = 14
 # costs, which is one more polish round than the data above justifies skipping. ZELDA_ACCEPT_AFTER=0
 # restores the old behaviour exactly, and the owner has that escape hatch on purpose.
 ACCEPT_AFTER = [int(_os.environ.get("ZELDA_ACCEPT_AFTER", "8"))]
+
+# How many times one scout's emulator may be replaced during a single search. Bounded because a
+# respawn constructs a whole EmuHawk and waits up to 60s for its bridge: if the display has gone,
+# four scouts times 60s is four minutes of hanging before anyone notices. Two per scout is enough to
+# ride out the ordinary Linux flakiness ("EmuHawk exit code 0" with no traceback) without turning a
+# dead display into a slow one.
+RESPAWN = [int(_os.environ.get("ZELDA_SCOUT_RESPAWN", "2"))]
 _DOOR_SPOT = {"Up": (120, 85), "Down": (120, 189), "Left": (32, 141), "Right": (208, 141)}
 
 
@@ -297,7 +304,8 @@ JUST_GET_THROUGH = [bool(int(os.environ.get("ZELDA_JUST_GET_THROUGH", "0")))]
 
 def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: int = 60, max_frames: int = 900,
                     setup=None, log=print, label: str = "", patience: int = PATIENCE,
-                    seed_base: int = 1000, accept_after: int | None = None, phase_prefix: str = ""):
+                    seed_base: int = 1000, accept_after: int | None = None, phase_prefix: str = "",
+                    respawn=None):
     """random_search across several emulators at once: one thread per scout, attempts handed out by seed.
     Same ranking, same early stop. Emulation releases the GIL (it is socket I/O), so K scouts run K attempts
     in nearly the time of one. The winner is an input list from the shared start state, exactly as before.
@@ -390,39 +398,37 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 i = st["next"]
                 st["next"] += 1
             rng = random.Random(seed_base + i)
-            s_start = emu.load(state_name)
-            st.setdefault("b0", s_start.bombs)
-            rec = Recorder(emu)
-            # Boss phase coverage: scout k gets slice k of the entry window rather than a free draw
-            # from all of it, so K scouts cover K distinct quarters of the cycle with no overlap.
-            # Outside a boss this is the old behaviour, one settle value for everybody.
-            spread = ENTER_SPREAD[0]
-            if spread:
-                lo = spread * (k % max(1, len(scouts))) // max(1, len(scouts))
-                hi = spread * (k % max(1, len(scouts)) + 1) // max(1, len(scouts))
-                rec.step((), lo + rng.randint(0, max(0, hi - lo - 1)))
-            elif SETTLE[0]:
-                rec.step((), SETTLE[0])
-            if setup:
-                setup(rec, nav)
-            rec.cap = cutoff
-            # Tell the emulator window which attempt this is, so the in-emulator HUD can count. The
-            # log is the wrong place to watch from - it says how an attempt ended and nothing about
-            # the fight - and the HUD is the only view of a boss that updates while the search runs.
-            try:
-                emu.cmd(f"attempt {i + 1}")
-            except Exception:
-                pass                        # an emulator that predates the command still plays fine
-            try:
-                # ...and the phase, so the window says which of the three it is in. Sent per attempt
-                # rather than on change because a scout only looks at its own window between attempts
-                # anyway, and one line per attempt on a socket that already carries every frame's
-                # buttons costs nothing.
-                emu.cmd(f"phase {phase_now(i)}")
-            except Exception:
-                pass                        # same: cosmetic, and an old bridge must not break a search
             step0 = emu.step
+            # The whole attempt is inside the error handling - loading the state, the settle steps,
+            # the policy call - not just the policy call. A bridge that dies during `load` used to
+            # kill the worker thread outright, uncaught and uncounted: no "lost its emulator" line,
+            # no replacement, one fewer scout and nothing in the log to say why. Same failure as
+            # dying mid-policy, so it gets the same handling.
             try:
+                s_start = emu.load(state_name)
+                st.setdefault("b0", s_start.bombs)
+                rec = Recorder(emu)
+                # Boss phase coverage: scout k gets slice k of the entry window rather than a free
+                # draw from all of it, so K scouts cover K distinct quarters of the cycle with no
+                # overlap. Outside a boss this is the old behaviour, one settle value for everybody.
+                spread = ENTER_SPREAD[0]
+                if spread:
+                    lo = spread * (k % max(1, len(scouts))) // max(1, len(scouts))
+                    hi = spread * (k % max(1, len(scouts)) + 1) // max(1, len(scouts))
+                    rec.step((), lo + rng.randint(0, max(0, hi - lo - 1)))
+                elif SETTLE[0]:
+                    rec.step((), SETTLE[0])
+                if setup:
+                    setup(rec, nav)
+                rec.cap = cutoff
+                # Tell the emulator window which attempt this is, and which of the search's phases it
+                # is in, so the window says so rather than only the log. Both cosmetic, both wrapped:
+                # an emulator on an older bridge must still be able to search.
+                for line in (f"attempt {i + 1}", f"phase {phase_now(i)}"):
+                    try:
+                        emu.cmd(line)
+                    except Exception:
+                        pass
                 outcome = policy(emu, rec, rng, max_frames)
             except OverBudget:
                 outcome = "over budget"
@@ -444,13 +450,32 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
                 # degrades). Three scouts died this way in one afternoon before this was caught by
                 # watching the process list rather than the log.
                 #
-                # The emulator underneath is gone, so this worker stops rather than looping on a dead
-                # socket. st["dead"] lets the caller see that the search is running short-handed
-                # instead of quietly searching with fewer quarters than it thinks it has.
+                # The emulator underneath is gone, so this worker used to stop here - which meant a
+                # scout that died was dead for the REST OF THE SEARCH, and only came back when the
+                # whole run process restarted. Eight deaths in one session, and the run spent its
+                # last hours searching three-wide while the log said four scouts. So the worker asks
+                # the runner - which owns the emulators - to put a fresh one in its slot and carries
+                # on. Without a respawn callback, or once RESPAWN replacements have been spent, this
+                # is the old behaviour: the worker stops, and st["dead"] lets the caller see that the
+                # search is running short-handed instead of quietly searching with fewer quarters
+                # than it thinks it has.
                 with lock:
                     st["dead"] = st.get("dead", 0) + 1
-                log(f"  scout {k} lost its emulator ({str(e)[:60]}); that worker is done")
-                return
+                log(f"  scout {k} lost its emulator ({str(e)[:60]})")
+                if respawn is None or st["dead"] > len(scouts) * RESPAWN[0] or not respawn(k):
+                    log(f"  scout {k} is not coming back this search; it is done")
+                    return
+                # The runner swapped scouts[k]/navs[k] in place. Re-bind the LOCALS too - they were
+                # bound once at the top of this thread - and rebuild the policy, which closed over
+                # the old Navigator and would otherwise keep planning against a dead emulator's state.
+                emu, nav = scouts[k], navs[k]
+                policy = factory(nav)
+                with lock:
+                    st["respawned"] = st.get("respawned", 0) + 1
+                    alive = len(scouts)
+                log(f"  scout {k} replaced with a fresh emulator; the search continues on "
+                    f"{alive} scout(s), {st['respawned']} replacement(s) so far")
+                continue
             s = emu.state()
             try:
                 ok = outcome != "died" and not str(outcome).startswith("error:") and success(emu, s)
@@ -605,9 +630,14 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
     if dead:
         # Say so on the same line as the result, because this is the failure that does not announce
         # itself: a search that lost two of four workers still reports a time and a result, and the
-        # coverage it actually had is smaller than the one it planned for.
-        log(f"  {dead} of {len(scouts)} scouts lost their emulator mid-search; "
-            f"the remaining {len(scouts) - dead} covered the phase window between them")
+        # coverage it actually had is smaller than the one it planned for. Deaths and replacements
+        # are reported apart, because "a scout died" and "a scout died and was replaced" are
+        # different things to read in an overnight log.
+        back = st.get("respawned", 0)
+        log(f"  {dead} scout emulator(s) died mid-search, {back} replaced; "
+            f"the search ran on {len(scouts) - (dead - back)} of {len(scouts)}"
+            + ("" if back == dead else " for at least part of it")
+            + ", so the phase window was covered unevenly")
     if best is None and fails:
         top = sorted(fails.items(), key=lambda kv: -kv[1])[:4]
         log("  no success; most common: " + " | ".join(f"{n}x {k}" for k, n in top))
