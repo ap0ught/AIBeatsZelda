@@ -515,11 +515,12 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             # The state AFTER the attempt, read outside the handling above. A reply the parser cannot
             # read raises here, and this was the last place in the worker where an exception still
             # escaped: the archived four-hour log has one, at exactly this line, with no "lost its
-            # emulator" line, no counter and no replacement - the same class of bug one line above,
-            # in the one place section 13's widening did not reach. Read it through the same handling,
-            # because a garbled reply means the socket is out of step and nothing after it is
-            # trustworthy; and note the attempt index is already spent (st["next"] was incremented
-            # above), so continuing costs one attempt and not one scout.
+            # emulator" line, no counter and no replacement - the same class of bug one line above, in
+            # the one place section 13's widening did not reach. It is read through the same handling
+            # now, which is the part that matters: not the choice of handler but that an exception
+            # here no longer leaves the thread. The attempt index is already spent (st["next"] was
+            # incremented above), so this costs one attempt and not one scout. Why `unreadable` and
+            # not `lost_channel` is argued in its own docstring.
             try:
                 s = emu.state()
             except (BadReply, OSError, ValueError, KeyError, IndexError) as e:
