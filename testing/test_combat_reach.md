@@ -1,0 +1,85 @@
+# `test_combat_reach.py`
+
+The swing that could not land: the shield table, the deliberately-wrong box model, and the mask.
+
+`journal/49-five-windows-and-a-black-one.md:141-165` is the record. `combat.shield_side` "had always
+known" a swing along a knight's facing is stopped by its shield, and `lookahead.killable` "had
+always known" a Darknut was killable. Nobody asked whether *this* swing would land, so `plan_reach`
+offered one in all four directions whenever anything killable was within 36 px. The shield-aware fix
+took sword frames per attempt from **46, 26, 36, 18** to **0, 2, 0, 0**. That fix has never had a
+test, and it is the difference between a fight and 126 wasted frames per attempt.
+
+Two of the four things below are *supposed* to be wrong, and the tests say so in as many words:
+
+  * `reach_box_model` (`combat.py:96-110`) is the model this file used until 2026-09-30 and is kept
+    **deliberately wrong**, because `hunt_darknut` and `darknut_ambush` stand off at
+    16 + REACH - 4 = 22 px and strike as a knight walks past, and that distance was chosen against
+    it. The test therefore pins the *wrongness*, not correctness. If someone "fixes" it, two callers
+    walk to a post they can never swing from.
+  * `SWORD_ACROSS, SWORD_ALONG = 12, 16` is the measured correction for the ordinary path, and its
+    asymmetry (facing horizontally -> 16 across, 12 down; facing vertically -> 12 across, 16 down) is
+    a fact about four short routines in Z_01.asm. It is pinned so a "simplification" cannot make it
+    symmetric.
+
+Ten checks, each printing the number or the cell it established:
+
+  1. shield_side: the full 4 facings x 4 directions x 2 axes table (128 cells)  6. `enemy_hp` is the
+  2. ...and it is built from a rule, not read back from the code          HIGH nybble, so $0F is 0
+  3. reach_box_model's window is exactly [16, 26] px and refuses to touch  7. the window's two ends
+  4. ...which is wrong in exactly the documented way                         are both load-bearing
+  5. sword_reach's thresholds are 16 across / 12 down, and SWAP with facing  8. $FE is sword-only:
+  (and 9: a Gleeok neck segment, the case the mask exists for)               sword no, bomb yes
+                                                          10. killable() and the mask are separate
+                                                             questions, and both are needed
+
+WHAT IT DOES NOT CLAIM.
+
+* **No monster is fought.** `shield_side`, `reach_box_model`, `enemy_hp` and the three immunity
+  methods are pure ints and table lookups; the emulator is faked with a four-line object that
+  answers `ram(0x4B2, 12)`, which is the entire surface `immune_to` touches. Nothing here says
+  whether a swing *lands* - it says what the code *offers* and what the code believes about masks.
+  Check 5 exists because that distinction is the bug: the old model offered swings the cartridge
+  refused, and every one of them cost 14 frames and a knight's return.
+
+* **`sword_reach` itself is not tested for correctness against the cartridge**, only for the shape of
+  its model, because that needs BizHawk and a live swing. The constants are pinned; the claim that
+  `|dx| < 16 and |dy| < 12` is what `DoObjectsCollideWithThresholds` computes is quoted from
+  Z_01.asm (`combat.py:62-83`) and not re-derived here.
+
+* **`Fighter` is built with `__new__`, not `__init__`.** `Fighter.__init__` builds a `Screen` and
+  wants a live Navigator; `search.py:60` already does exactly this for its noise policy, and the
+  three methods under test read `self.emu` and nothing else. So this proves the mask *logic*, and not
+  that the Fighter is constructed correctly.
+
+* **The mask table is a fixture, not a measurement.** `$FE` is what `InitGleeok` writes to every
+  neck segment (`overworld.py:225-232` quotes the disassembly), so it is a documented fact; the
+  other three masks in check 9 are chosen to discriminate the lookups, not to describe anything.
+
+* **The 128-cell shield table is a restatement, not a discovery.** It is written from the game's
+  rule - a knight's shield is on the side it faces, so it blocks a swing arriving along its facing
+  axis from the far side of Link - and compared against the code. That is the only way to be useful:
+  a test that copied the implementation would pass when the implementation is wrong, which is the
+  failure mode this whole file exists to prevent. What it cannot do is tell you the *sign* is right;
+  for that, `journal/49` has a room with eight knights in it.
+
+Run:  python3 testing/test_combat_reach.py
+
+---
+
+    python3 testing/test_combat_reach.py          # any cwd; the bootstrap chdirs to the repo root
+
+## What it touches
+
+- **drives BizHawk** - replays, searches or steps frames
+- writes `journal/`
+
+## See also
+
+- [`test_value_of.py`](test_value_of.md)
+- [`test_ram_addresses.py`](test_ram_addresses.md)
+- [`test_ips_patch.py`](test_ips_patch.md)
+- [`probe_old_man.py`](probe_old_man.md)
+
+---
+
+*Generated by `testing/make_doc.py` from the script's own docstring and code. Regenerate with `python3 testing/make_doc.py`; do not hand-edit - `git log` on this file says when.*
