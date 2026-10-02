@@ -42,7 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
 from zelda import search
-from zelda.emulator import State
+from zelda.emulator import BadReply, State
 from zelda.search import parallel_search, OverBudget
 
 # CONVERGE is the other early stop and it fires on identical results, which is exactly what these
@@ -241,5 +241,49 @@ best2 = search.parallel_search(scouts2, [object(), object()], "start", factory, 
 assert best2 is None, best2
 assert sum(1 for l in log2 if "is not coming back this search" in l) == 2, log2
 print("no callback: both workers stopped, as before")
+
+# 9. A DEAD CHANNEL and an UNREADABLE REPLY are different things and must be handled differently.
+#    Check 7 covers the first from the other side (the emulator raising RuntimeError mid-attempt);
+#    this covers both at the post-attempt state read, which is where the distinction was got wrong.
+#    A scout whose socket has timed out must be REPLACED, because Python will never read that socket
+#    again; a scout whose reply merely cannot be parsed must be KEPT. Getting that backwards kept a
+#    finished scout in the search and let it answer every remaining attempt instantly.
+class Dead(FakeEmu):
+    """Raises where a timed-out socket raises: from state(), after the policy has run."""
+
+    def __init__(self, log, tag=None, exc=None):
+        super().__init__(log, tag)
+        self.exc = exc
+
+    def state(self):
+        raise self.exc
+
+
+def one(exc):
+    log = []
+    emus = [Dead(log, tag=0, exc=exc)]
+    calls = []
+
+    def respawn(k):
+        calls.append(k)
+        emus[k] = FakeEmu(log, tag=f"fresh{k}")
+        return True
+
+    search.parallel_search(emus, [object()], "start", factory, lambda e, s: True, tries=4,
+                           max_frames=1500, log=log.append, label="distinguish", patience=3,
+                           respawn=respawn)
+    return calls, log
+
+
+calls, log = one(OSError("cannot read from timed out object"))
+assert calls == [0], f"a timed-out socket is a dead channel and must be replaced: {calls}"
+assert any("lost its emulator" in l for l in log), [l for l in log if "lost" in l]
+print(f"dead channel: replaced {calls}, which is the only thing that can help")
+
+calls, log = one(BadReply("the bridge's answer to 'state' is not an answer to it: 'frame=1 mode='"))
+assert calls == [], f"an unreadable reply is one attempt of bad luck, not a dead scout: {calls}"
+assert any("unreadable bridge reply" in l for l in log), [l for l in log if "unreadable" in l]
+assert any("attempt(s) lost to a bridge reply that could not be read" in l for l in log), log
+print("unreadable reply: scout kept, attempt lost, and the search's summary says so")
 
 print("all checks passed")

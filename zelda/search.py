@@ -429,16 +429,23 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             return True
 
         def unreadable(e: Exception) -> bool:
-            """A reply the parser cannot read. The attempt is lost; the scout is not.
+            """A reply that ARRIVED and cannot be read. The attempt is lost; the scout is not.
 
-            Not the same thing as `lost_channel`, and deliberately not routed to it. A garbled reply
-            MIGHT mean the request/reply stream is out of step - in which case the scout is finished
-            - or it might be one truncated line, which 65,149 clean commands say is the commoner case
-            (testing/probe_bridge_replies.py). Replacing an emulator costs a process launch and up to
-            60s waiting for its bridge, and the measured rate of this is 2% of attempts, so rebuilding
-            on every one of them would buy a scout that usually did not need it. It is counted instead
-            and reported in the search's summary line, so the rate is visible in an overnight log and
-            a rise in it is a fact rather than a rumour.
+            Not the same thing as `lost_channel`, and the distinction is the whole point of this
+            function. `BadReply` means the bridge answered, and what it said does not fit the question
+            - possibly a truncated line, possibly the stream out of step. Replacing an emulator costs
+            a process launch and up to 60s waiting for its bridge, and the measured rate is 2% of
+            attempts, so rebuilding on every one would buy a scout that usually did not need it. It is
+            counted instead and reported in the search's summary line, so the rate is visible in an
+            overnight log and a rise in it is a fact rather than a rumour.
+
+            A socket that has timed out is NOT this. `OSError: cannot read from timed out object` is
+            Python refusing to read from a socket whose timeout has already fired, which is a socket
+            that will never read again - the scout is finished and nothing after it can be trusted.
+            Routing that here kept the scout, lost the attempt, and left a worker that answered every
+            remaining attempt instantly: 115 such lines in one search, and the scout never replaced.
+            That is `lost_channel`, and the arm that reads the post-attempt state says so where it is
+            read.
             """
             with lock:
                 st["unreadable"] = st.get("unreadable", 0) + 1
@@ -492,14 +499,17 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             except LinkDied:
                 outcome = "died"
             except TimeoutError as e:
+                # A POLICY's deadline, not the socket's: emu.wait_until raises this when a walk or a
+                # fight runs out of its own budget, and the attempt is simply lost. It has to stay
+                # ABOVE the OSError arm below, because a socket timeout is also a TimeoutError.
                 outcome = "timeout: " + str(e)[:40]
-            except (OSError, ValueError, KeyError, IndexError) as e:
-                outcome = f"error: {type(e).__name__}: {str(e)[:40]}"     # one bad attempt, not a dead scout
             except BadReply as e:
-                if not unreadable(e):                      # kept separate from RuntimeError below
+                if not unreadable(e):
                     return
                 continue
-            except RuntimeError as e:
+            except (ValueError, KeyError, IndexError) as e:
+                outcome = f"error: {type(e).__name__}: {str(e)[:40]}"     # one bad attempt, not a dead scout
+            except (OSError, RuntimeError) as e:
                 # The bridge died mid-attempt - "bridge connection lost ... EmuHawk exit code 0" is
                 # the common one on Linux, where a scout emulator occasionally just goes. This is the
                 # emulator, not the policy, so the attempt is a loss and the thread must live on:
@@ -519,15 +529,27 @@ def parallel_search(scouts, navs, state_name: str, factory, success, *, tries: i
             # the one place section 13's widening did not reach. It is read through the same handling
             # now, which is the part that matters: not the choice of handler but that an exception
             # here no longer leaves the thread. The attempt index is already spent (st["next"] was
-            # incremented above), so this costs one attempt and not one scout. Why `unreadable` and
-            # not `lost_channel` is argued in its own docstring.
+            # incremented above), so this costs one attempt and not one scout. Which of the two
+            # handlers a given exception gets is argued at each arm below and in `unreadable`'s own
+            # docstring.
             try:
                 s = emu.state()
-            except (BadReply, OSError, ValueError, KeyError, IndexError) as e:
+            except BadReply as e:
                 if not unreadable(e):
                     return
                 continue
-            except RuntimeError as e:
+            except (ValueError, KeyError, IndexError) as e:
+                unreadable(e)                           # a reply the parser could not read
+                continue
+            except (OSError, RuntimeError) as e:
+                # NOT unreadable(), and this is the correction that cost a segment. `OSError: cannot
+                # read from timed out object` is not a garbled reply - it is Python refusing to read
+                # from a socket whose timeout has already fired, which is a socket that will never
+                # read again. Routing it to unreadable() kept the scout and lost the attempt, and a
+                # worker in that state answers every remaining attempt instantly, so one hung bridge
+                # ate the whole segment's attempt budget: 115 such lines in one search, and the scout
+                # was never replaced. A dead channel goes to lost_channel(); only a reply that is
+                # present and unreadable is an attempt's worth of bad luck.
                 if not lost_channel(e):
                     return
                 continue
