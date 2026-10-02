@@ -11,9 +11,12 @@
    117,
    118,
    119,
+   120,
    121,
    122,
    123,
+   124,
+   125,
    126,
    127,
    128,
@@ -172,7 +175,10 @@
    "a0": "blocked moving Up into it at (120, 125) in room 0B",
    "7a": "walked onto it at (120, 141) in room 46",
    "79": "walked onto it at (112, 149) in room 46",
-   "8b": "blocked moving Up into it at (104, 125) in room 1A"
+   "8b": "blocked moving Up into it at (104, 125) in room 1A",
+   "78": "walked onto it at (112, 141) in room 46",
+   "7d": "walked onto it at (80, 181) in room 0A",
+   "7c": "walked onto it at (80, 173) in room 0A"
   }
  },
  "dg": {
