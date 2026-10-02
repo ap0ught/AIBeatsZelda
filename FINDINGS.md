@@ -1120,3 +1120,35 @@ measured the White Sword at about one line in sixty from 4.5/5 against none at a
 That is a better bet, not a solved segment, and the planner still walks the Lynel's row on principle.
 The one thing measured to work - staging on y=117 - times out there, and why (32,117) is walkable in
 `owroute.free()` but not to `plan_reach`'s own lattice is not yet explained.
+
+## 18. The White Sword, taken (2026-10-02)
+
+```
+[ws_0a]        213 frames, hearts 3.5 -> f21949 mode=05/00 L0 room=0a pos=(208,221) sword=1
+[white_sword] 1813 frames, hearts 3.5 -> f23762 mode=05/00 L0 room=0a pos=(32,91)   sword=2
+```
+
+From 3.5 of 5, on the screen with the Blue Lynel, taking **no damage at all** - the run's first
+successful `white_sword` since the archived one on 2026-10-01, and the first one this route has ever
+produced. That is the same 3.5/5 the archived run took it from, and `probe_white_sword_effort.py`'s
+"about one line in sixty from 4.5/5, none from 3.5 in forty" turned out to be pessimistic about 3.5 in
+this instance and the archived one: 3.5 is possible, it is just rare, and rare is what a randomized
+search on a 60-attempt budget looks like.
+
+So the win in section 17 was not the arithmetic it predicted. `ws_2a` was fixed and the run still
+arrived at the heart rock with 3.5/4 - one heart better than before - but the ROCK gave 3.0/5 this time
+where it gave 3.5/5 last time (it converts "hearts Link arrived with" into containers, and how much
+it restores depends on the exact state it finds), and the half heart `cdl_1c` found last time did not
+appear this time either. The run came out the other side of the whole approach at **3.5/5**, which is
+the number that mattered, and which the floor had already put within reach in section 16.
+
+What is honest about this: the two changes are not separable from one run. `ws_2a` is measurably
+better - 5 seeds a side, faster on all five and a heart better on all five - and it moved the rock's
+input by a heart. It did not by itself produce the sword. What produced the sword is a run that
+arrived at 3.5/5, and the heart floor of section 16 is the change that made arriving there possible:
+without it this route stood on that screen at 1.5/5 and failed 60 of 60.
+
+`ws_0a` still crosses 0x0A with the Lynel alive and 213 frames, and `white_sword` then spends 1,813
+frames on the approach and the pickup without losing a heart. Whether that line walks past the Lynel
+or waits it out is not something the log says, and `plan_reach` still walks the goal row by design.
+Not chased: the segment is solved, and the next thing that fails should get the attention.
