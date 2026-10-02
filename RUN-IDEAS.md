@@ -1,6 +1,10 @@
 # Run ideas
 
-Everything below was worked out against this checkout on 2026-09-25. Costs marked
+Everything below was worked out against this checkout on 2026-09-25, and the file
+is kept as written rather than rewritten. What has changed since is marked where
+it changed: the Gleeok idea has been **run and banked** (`runs/gleeok_dragon`), and
+the "~search" column below has proved optimistic by a wide margin — see "What it
+actually cost" under that section. Costs marked
 "model" come from `route_planner.py`, which is planning arithmetic on the decoded
 overworld map and needs no emulator; it predicts route 3 at 41.33 min against
 41.26 actual, so it is good to about half a minute. Costs marked "~search" are
@@ -20,6 +24,13 @@ replayed 136526 frames -> f136526 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8
 That is the fingerprint in `runs/run6/VERIFICATION.txt`. Two different numbers
 describe it and both are right: 136,526 frames at the NES's 60.0988 Hz is 37:52
 of emulated time, and the game's own in-game timer reads 37:02.
+
+**Since 2026-10-02 there is a second one.** `runs/gleeok_dragon` is route 5 from
+power-on, 60,589 frames and 161 segments, replaying to work-RAM SHA-1
+`575771d9bd7ca936b157d6c6f5d9ae43aa5e9331`. It is the Gleeok idea below, run and
+banked. Read its `VERIFICATION.txt` before citing it: 75 of its 161 segments were
+taken unpolished under `ACCEPT_AFTER`, and the route is wrong one segment past
+its end. It is not a finished route-5 run and it is not the whole game.
 
 ## Dungeon order is the main lever
 
@@ -59,24 +70,50 @@ It works because Gleeok needs the **White Sword, not the bow**, and 5 hearts is
 reachable without L1 (`3 + L3 + h_2C`). The candle is bought before the sword, so
 `h_47` can burn before L4 too. The swap costs 14 seconds on the whole game.
 
-Build needed: `route5.py` (route 4 with the two blocks transposed), a
-`ZELDA_ROUTE=5` branch at `fullgame.py:2272`, and `--until` at `fullgame.py:3006`
-so it stops after L1. The fiddly part is the overworld connectors — route 4's
-`_lane(d, at)` coordinates were pinned for its own order, so the two new legs
-(White Sword → L4's door, L4 → L1's door) need coordinates read off the router.
-`route_planner.py` has already priced both walks; the pinning is manual.
+Build needed, **all three of which now exist**: `route5.py` (route 4 with the
+two blocks transposed), the `ZELDA_ROUTE=5` branch at `fullgame.py:2332-2340`,
+and `--until` at `fullgame.py:3124` so a run can stop after a named segment. The
+branch also refuses anything that is not 3, 4 or 5: it used to match on `"4"`
+alone, so `ZELDA_ROUTE=5` fell through to route 3 and ran a four-and-a-half-hour
+dungeon order nobody asked for, with nothing but a log line to say so. The
+fiddly part was the overworld connectors — route 4's `_lane(d, at)` coordinates
+were pinned for its own order, so the two new legs (White Sword → L4's door, L4 →
+L1's door) need coordinates read off the router. `route_planner.py` priced both
+walks; the pinning was manual, and the return leg turned out to need eight
+crossings rather than the raft (FINDINGS.md §14).
 
 Start with `ZELDA_SCOUTS=4` (the default), not 6. Six concurrent emulators is the
 workload that exposed the Mono/X11 crash — see `SETUP-LINUX.md`.
 
-## "The dragon" is ambiguous — pick before spending hours
+**What it actually cost.** The ~1.6 h above is scaled search arithmetic from
+run6's log and it was low by a wide margin. One archived piece of the run,
+`logs/archive/gleeok_pre_dragon_20261002_014549/gleeok_run8.log`, spans its own
+attempt timestamps 2026-10-01 10:49:14 to 16:27:17 — 5 h 38 m of wall clock over
+16 wrapper restarts — and the run carried on past that log before it stopped on
+`l2_sail` at 20:59:47. The segment count moved the other way: ~127 predicted,
+**161 banked**, because `revenge` (the Blue Lynel on 0x0A, after 50 crossings home)
+and the leg out of the sword cave were not in the estimate. The comparison is
+unfair in the direction that matters (the estimate counts search, the log counts
+restarts and resumes too), but the order of magnitude gap is real and the table's
+"~" column should be read as optimistic.
+
+## "The dragon" was ambiguous — it has been picked, and paid for
 
 - **Level 6**, which `fullgame.py` labels `# --- Level 6 (the Dragon)`. Stop at
-  30.9 min, 289 seg / 8,912 att / **~3.9 h**.
+  30.9 min, 289 seg / 8,912 att / **~3.9 h**. Not run.
 - **Gleeok**, an actual dragon boss, which appears **twice** — L4 (segment
   `gleeok`, stop 13.2 min / ~1.6 h) and L8 (segment `l8_gleeok`, 17.1 min /
   ~2.1 h). Journal 13 is "Level 4, and hitting a wall called Gleeok"; journal 14
   says it beat him five ways before the White Sword made it tractable.
+
+**L4 Gleeok is the one that got run, on route 5, and it is banked.** The run is
+`runs/gleeok_dragon`: 161 segments, 60,589 frames, from power-on, MATCH on replay
+to `575771d9…`, Gleeok dead at f43620 and the head delivered at f60589. It then
+failed one segment later for a reason that has nothing to do with the dragon —
+`deliver` walks *into* the sword cave and `l2_sail`'s policy wants a dock, and
+there is no dock inside a cave. FINDINGS.md §14 has the fix and the measurement
+for the leg after it (eight crossings, 2,555 frames walked for real from the
+run's own bookmark). L6 and L8 Gleeok are still unrun.
 
 The harness's own dungeon names are L2 = the Moon, L5 = the Lizard,
 **L6 = the Dragon**, L8 = the Lion.
@@ -110,12 +147,12 @@ says so, and notes "Level 8 early nets +2 keys" as the reason route 4 works).
 
 ## Open threads
 
-**Fairies.** `fairy_policy` (`fullgame.py:860`) is a complete, carefully written
+**Fairies.** `fairy_policy` (`fullgame.py:909`) is a complete, carefully written
 policy — it reads the fairy's live position from RAM and works around the pond
 trap where the path planner cannot route Link out — and it is referenced by **no
 route**. Dead code. The harness otherwise treats fairies reactively:
-`zelda/combat.py:618` only takes a drop "while hurt". They were tried and cut:
-`patch_single_l8_l9.py:10` describes a route that sailed across the lake and back
+`zelda/combat.py:1136` only takes a drop "while hurt". They were tried and cut:
+`testing/patch_single_l8_l9.py:10` describes a route that sailed across the lake and back
 a third time, ~38,000 frames, and the replacement uses "no fairy detour".
 
 The cheap place to try is *not* a pond — it is the pre-sword bomb stretch route 4

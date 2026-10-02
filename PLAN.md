@@ -1,4 +1,19 @@
 
+## Where things stand (checked 2026-10-02)
+
+This file is standing goals and operating rules, not a status page. For current state read
+`README.md` (how to run and watch one), `FINDINGS.md` §9–§18 (what the last session measured),
+`journal/` (49 entries, newest at the end), and `runs/*/VERIFICATION.txt`.
+
+Two verified runs, not one: `runs/run6` is the video's run (37:02, route 4). `runs/gleeok_dragon`
+is a from-power-on route-5 run through the dragon, 60,589 frames and 161 segments — read its
+VERIFICATION.txt first, because 75 of those segments were taken unpolished under `ACCEPT_AFTER`
+and the route itself is wrong one segment past the end.
+
+The DONE entry at the bottom is dated 2026-09-15 and describes route 3 as it stood then. The
+segment list has been reorganised since; route 3 is now 351 segments, not 609, and the frame
+count it quotes (372,090, corroborated by `knowledge/baseline_milestones.tsv`) has not changed.
+
 ## 13. Standing goals added 2026-09-14 (user)
 
 - **Try the inventory.** When something will not die, do not grind the sword at it - run
@@ -24,7 +39,9 @@ lock by itself when the holder is gone. **Never `rm -rf` that lock before launch
 is how two and three runs ended up alive at once, six emulators fighting for the CPU and writing
 the same checkpoints, with every search crawling. To stop a run, kill the `run_until.sh` bash
 wrapper FIRST (killing python alone just makes the wrapper restart it), then python and EmuHawk.
-Two EmuHawk processes is correct: MAIN plays the real input log, SCOUT searches from copies.
+Two roles are always right, whatever the scout count: MAIN plays the real input log, SCOUTs search
+from copies of its checkpoints. One MAIN plus `ZELDA_SCOUTS` (default 4) EmuHawk processes is a normal
+run; five is what the watching setup in `README.md` tiles.
 
 ### Recording (learned 2026-09-15)
 
@@ -40,3 +57,8 @@ segments, replay from power-on MATCH, Link finished on 10/13 hearts with the Mag
 Ganon fell to four Magical Sword hits and one Silver Arrow. Remaining work is the video only:
 `python record_run.py fullgame` (ALONE - never while a run holds /tmp/zelda_run.lock), then
 `python render_overlay.py fullgame`.
+
+*(Written 2026-09-15, when that was true of route 3. Both jobs are since done and the video is
+published. The 609 is the segment count of route 3 as it stood that day; route 3 is 351 segments
+now and its checkpoints and segment names have changed since. The 372,090 frames still stand -
+`knowledge/baseline_milestones.tsv` has it at `g9_credits`.)*

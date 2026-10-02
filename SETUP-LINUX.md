@@ -72,7 +72,7 @@ Added: `setup_linux.sh`, `watch_run.py`, and this file.
 Then:
 
 ```
-python3 smoke_test.py     # boot, 300 frames, screenshot
+python3 testing/smoke_test.py   # boot, 300 frames, screenshot
 ```
 
 ## Watching it with sound
@@ -116,8 +116,42 @@ looks cosmetic and is not. `sudo pacman -S gtk2` fixes it; `setup_linux.sh`
 installs it.
 
 Audio goes out through SDL2 (`SoundOutputMethod: 2`) to PipeWire, and lands on
-whatever sink is default — check with `pactl list sink-inputs`, where the
+whatever sink you default to — check with `pactl list sink-inputs`, where the
 BizHawk stream should show up uncorked while the run is playing.
+
+### Watching a run *while it is being searched* (added 2026-10-02)
+
+`watch_run.py` above replays a finished log at game speed. Watching a live search
+is a different thing and needs two more packages, which `setup_linux.sh` does
+**not** install: **Xephyr** and **i3**, for the nested display and the tiling,
+since five emulator windows on the desktop is not a thing a person can read. On
+this machine (`pacman -Qo`): `/usr/bin/Xephyr` → `xorg-server-xephyr` 21.1.24, and
+`/usr/bin/i3` → `i3-wm` 4.25.1.
+
+```
+Xephyr :1 -screen 1920x1080 -resizeable -ac -nolisten tcp
+DISPLAY=:1 ZELDA_ROUTE=5 ZELDA_SCOUTS=4 bash run_until.sh logs/gleeok.log 40
+```
+
+Five windows: one MAIN plus one per scout. i3 tiles the workspace and
+`~/.config/i3/config` floats anything whose title contains `Legend of Zelda` or
+`Lua Console`. Neither the config nor that command line is in this repository —
+the config is at `~/.config/i3/config`, outside the tree and untracked, so a
+fresh clone gets neither and has to be given them again. Two rules, both
+load-bearing, and both only discoverable by getting it wrong:
+
+- **Never resize a BizHawk window.** The bridge blocks on `conn:receive`, so
+  there is no idle frame loop and an emulator nobody is stepping does not
+  repaint at all. A resize therefore leaves a stale surface — black after a
+  state load, colours from an hour ago otherwise. i3 floating the windows is the
+  mechanism: lay the mosaic out by *moving* them, never resizing.
+- **Match i3 rules on `title=`, never `class=`.** These windows have no WM_CLASS
+  at all.
+
+A black MAIN window between segments is normal and says nothing about the run;
+`bridge.lua` labels each window with the phase it is in, and `README.md` has the
+vocabulary. `FINDINGS.md` §11 has the measurements behind all three statements
+above.
 
 ## Video recording does not work here — use ZELDA_RECORD=0
 
@@ -182,6 +216,13 @@ replayed 136526 frames -> f136526 mode=13/04 L9 room=32 pos=(136,136) dir=2 hp=8
 
 That is byte-for-byte the fingerprint in `runs/run6/VERIFICATION.txt`, so the
 37:02 run is reproducible on this machine.
+
+There is a second verified run on this checkout, `runs/gleeok_dragon` — route 5,
+60,589 frames, replayed to work-RAM SHA-1
+`575771d9bd7ca936b157d6c6f5d9ae43aa5e9331`. **Quoted from that run's own
+`VERIFICATION.txt`, not re-run here**, and the file's own WHAT THIS RUN IS NOT
+section is part of the claim: 75 of its 161 segments were played unpolished under
+`ACCEPT_AFTER`, and the route is wrong one segment past its end.
 
 A note on the numbers, since two of them do not agree: 136,526 frames at the
 NES's 60.0988 Hz is 2271.7 s, or 37:52 of emulated time. The "37m02s" in the
