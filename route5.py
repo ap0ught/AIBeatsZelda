@@ -11,14 +11,17 @@ The swap costs 14 seconds on the whole game (route_planner: 39.24 -> 39.48 min) 
 **11:23 in-game** instead of 13:42, with Level 1 done by 14:03 - ~1.6 h of search for a run route 4 cannot reach
 at that stop. That is the whole reason this file exists: it is the cheapest genuinely NEW run.
 
-Two legs are new and neither is proven by a frame: White Sword -> L4's door and L4 -> L1's door. Both were priced
-by the router and both sets of lane coordinates were then CHECKED against the map, tile by tile, before being
-written here - every `lane()` below asserts nothing, but zelda/owroute.free() was asked directly whether both
-ends of the seam are walkable on the 8 px lattice. See the docstring on each lane group. A wrong coordinate does
-not fail: _lane() falls back to "leave wherever you can", so the symptom would be a mysteriously slow search
-rather than an error - which is exactly why they were verified here instead of trusted.
+Three legs are new and none of them is proven by a frame at the time it was written. White Sword ->
+L4's door and L4 -> L1's door were both priced by the router and their lane coordinates CHECKED
+against the map, tile by tile, before being written here - every `lane()` below asserts nothing, but
+zelda/owroute.free() was asked directly whether both ends of the seam are walkable on the 8 px
+lattice. See the docstring on each lane group. A wrong coordinate does not fail: _lane() falls back
+to "leave wherever you can", so the symptom would be a mysteriously slow search rather than an error
+- which is exactly why they were verified here instead of trusted. The third is the eight crossings
+from the sword cave to Level 1's door (hd_*), which replaced a raft leg that could not be walked
+from where this route is; that one was not just priced but walked, from the run's own bookmark.
 
-The third leg, L1 -> 0x6B, deliberately does NOT take the router's own shortest way. The router wants
+A fourth leg, L1 -> 0x6B, deliberately does NOT take the router's own shortest way. The router wants
 0x58 -> 0x59 -> down the ladder hole into 0x69 (1850 frames), and route 5 walks 0x58 -> 0x68 -> 0x69 -> 0x6A ->
 0x6B instead (1893 frames, +43). The router's road depends on a ladder seam that a fall can trap Link in, and
 0x68 -> 0x69 -> 0x6A -> 0x6B is the road run6 actually walked. 43 frames is not worth the risk.
@@ -266,18 +269,45 @@ def build(base: list, fg) -> list:
     # the corridor, out to the item row, up under the x the White Sword was measured at - and the
     # test is RAM: inside the cave, on the item row, on that x. `--until deliver` stops here.
     S.append((head.DELIVER, head.deliver_policy, head.delivered_test, 30))
-    # ---- NEW LEG 2 of 2: L4 -> Level 1's door (route 4 walked L2's door here) --------------------------------
-    # Router, 1859 frames, 7 screens: D55@128 R56@141 U46@112 R47@141 R48@141 U38@112 L37@141
-    # Every lane below was checked against zelda/owroute.free() before it was written: both ends of every seam are
-    # walkable on the 8 px lattice. 0x46's own left edge is NOT walkable at y=112 or y=141, so the approach has to
-    # come from 0x56 above rather than straight across from the island - which is what the router says, and is why
-    # the raft ride back is not optional.
-    S += take("l2_sail")
-    S.append(lane("r5_56_46", "Up", 0x46, 112))
-    S.append(lane("r5_46_47", "Right", 0x47, 141))
-    S.append(lane("r5_47_48", "Right", 0x48, 141))
-    S.append(lane("r5_48_38", "Up", 0x38, 112))
-    S.append(lane("r5_38_37", "Left", 0x37, 141))
+    # Back out of the cave. `deliver` ends with Link INSIDE it, on the item row, because that is
+    # what delivered_test insists on, and the segment that used to follow this one was `l2_sail` -
+    # dock_policy, on a Link standing in a cave. There is no dock in a cave: sixty attempts of
+    # "fail: no dock on this screen @ room 0A L0" and then RuntimeError: segment l2_sail failed.
+    #
+    # The phase, its policy and its test all come from zelda/head.py, with the delivery and the
+    # pickup, so "where the head's route ends" is one place rather than three.
+    S.append((head.LEAVE, head.leave_policy, head.left_test, 20))
+    # ---- THE WAY ON, from the sword cave to Level 1's door: eight crossings, and NOT the raft -------
+    #
+    # This replaces route 4's L4 -> Level 2 leg and its raft, and the replacement is not a
+    # preference. route5's old plan here was `l2_sail` (ride 0x45 -> 0x55) then five lanes to 0x37,
+    # and it was written for a Link standing on the ISLAND at 0x45 - which is where route 4's
+    # warp_L4 leaves him. Route 5 is not on the island when it gets here; it is at 0x0A having just
+    # walked fifty crossings home. owroute cannot get from 0x0A to 0x55 or to 0x45 in that direction
+    # at all (measured: NO PATH for both), so the whole raft leg was the wrong shape for where this
+    # route actually is, and not merely one missing lane.
+    #
+    # What the router does give, from the spot `revenge` banked (0x0A at 192,141):
+    #     0x0A -> 0x37   2,038 frames, 8 crossings: 0A 1A 19 18 17 27 28 38 37
+    # and walked for real from the run's own bookmark it is 2,555 frames including the walk out of
+    # the cave (testing/probe_head_exit.py, all eight lanes landing where they were asked to, four
+    # and a half hearts spent on Octoroks on the way). Seven of the eight crossings are the REVERSE
+    # of legs this route already walked home - rv_leg_47..50 and rv_leg_43..46 - so they are
+    # known-good in one direction; 0x38 -> 0x37 is the only new seam and it is pinned at y=141.
+    #
+    # Every seam's two ends were asked of owroute.free() before any of it was written, the same
+    # check the two legs above record: all eight are walkable on the 8 px lattice at the pinned
+    # column or row. `at` is x for Up/Down and y for Left/Right - Navigator.exit_screen's
+    # convention, which is not the router's arrival tuple, and getting that backwards is a lane
+    # that cannot be walked.
+    S.append(lane("hd_0a_1a", "Down", 0x1A, 208))
+    S.append(lane("hd_1a_19", "Left", 0x19, 141))
+    S.append(lane("hd_19_18", "Left", 0x18, 141))
+    S.append(lane("hd_18_17", "Left", 0x17, 141))
+    S.append(lane("hd_17_27", "Down", 0x27, 160))
+    S.append(lane("hd_27_28", "Right", 0x28, 141))
+    S.append(lane("hd_28_38", "Down", 0x38, 112))
+    S.append(lane("hd_38_37", "Left", 0x37, 141))
     # ---- Level 1, entered with the White Sword already in hand --------------------------------------------------
     S += block("enter_L1", "warp_L1")
     # ---- Level 1 -> the second hundred at 0x6B, on run6's road ------------------------------------------------

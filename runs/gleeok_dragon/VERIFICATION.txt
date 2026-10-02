@@ -1,0 +1,38 @@
+replayed 60589 frames -> f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+  ram sha1 575771d9bd7ca936b157d6c6f5d9ae43aa5e9331
+  MATCH
+  (matched against the sha1 of work RAM in the bookmark states/ckpt_gleeok_deliver.State, which the
+   run itself saved when it banked the `deliver` segment; see testing/probe_deliver_replay.py)
+
+WHAT THIS RUN IS
+  Route 5 (ZELDA_ROUTE=5: Gleeok before Level 1), from power-on, one input per frame, searched
+  segment by segment. 161 segments. Where the three Gleeok things happened, read out of the run's own
+  per-segment checkpoints:
+
+    f43620  (101/161)  `gleeok`        Gleeok dead in room $13 of level 4. $034D = $0A.
+    f43830  (103/161)  `gleeok_head`   Link standing on the floor where the dragon fell, (120,141).
+    f60251  (160/161)  `revenge`       the Blue Lynel in 0x0A dead, after 50 crossings home.
+    f60589  (161/161)  `deliver`       the head down in the sword cave, inside at x=120, mode $0B.
+
+  60,589 frames = 16m49s of game time. Six of seven hearts at the end, 48 rupees, White Sword.
+  Three RAM claims, each asked where it is a question at all (testing/probe_deliver_replay.py):
+    Gleeok dead     True   asked in room $13 of level 4, $034D = $0A
+    head taken      True   asked in ckpt_gleeok_gleeok_head: L4 room $13, Link at (120,141)
+    head delivered  True   asked in ckpt_gleeok_deliver: mode $0B, sub 0, L0 room $0A, x = 120
+  and gleeok_dead is False at the end of this run, which is not a failure of anything: $034D is set
+  per room when that room is finished, and the run ends in a cave, where it reads $00.
+
+WHAT THIS RUN IS NOT
+  It is not the whole game and it is not a finished route-5 run. It stopped at the segment after
+  `deliver`, which is `l2_sail` - `dock_policy`, on a Link standing inside a cave, which has no dock:
+  sixty attempts of "fail: no dock on this screen @ room 0A L0" and then
+  `RuntimeError: segment l2_sail failed` at 2026-10-01 20:59:47. The route, not the segment, was
+  wrong: see FINDINGS.md section 14.
+
+  It is not the fastest line through those rooms either. 75 of its segments were taken under
+  ACCEPT_AFTER (8 attempts without improvement) and written to logs/flagged.json unpolished, so
+  there is time on the table in nearly every one of them. These are the frames the run found, not
+  the frames that exist.
+
+  Nothing in this file was written by hand. Every line came out of the run's own checkpoints, which
+  store the whole input prefix so a resume can restore the log and not only the state.

@@ -817,3 +817,83 @@ winner, and that without a callback both workers stop as before. One thing that 
 a fake attempt that returns instantly lets one worker take every attempt index before the other thread
 is ever scheduled - the GIL, not a bug - so the fake sleeps to hand it over. A real attempt spends
 minutes inside the emulator with the GIL released, which is the case that matters.
+
+## 14. The route, not the segment: `deliver` leaves Link in a cave and the next segment wanted a dock (2026-10-02)
+
+The run named `gleeok` on route 5 stopped at `RuntimeError: segment l2_sail failed` on 2026-10-01
+20:59:47 with 161 segments and 60,589 frames banked. Every one of `l2_sail`'s sixty attempts read
+the same two lines:
+
+```
+  attempt 3: fail: no dock on this screen (3 frames)
+  ...
+  no success; most common: 58x fail: no dock on this screen @ room 0A L0
+```
+
+Sixty identical failures is the shape of a segment that was never going to succeed, and the
+mechanism is in the shape of the route rather than in `dock_policy`. `head.deliver_policy` walks
+**into** the sword cave - `delivered_test` insists on mode `$0B`, sub 0, on the item row, on the
+White Sword's x, so that is exactly the state the segment is required to leave behind - and the next
+segment in `route5.py` was `take("l2_sail")`, whose policy is `dock_policy`. There is no dock
+inside a cave. The policy was right and the route was wrong, and it is wrong **one segment further
+on as well**, which is the part that is easy to miss:
+
+`route5.py`'s "NEW LEG 2" planned the walk to Level 1's door from **0x45, the island bank** -
+`l2_sail` rides the raft to 0x55 and five lanes take 0x55 -> 0x56 -> 0x46 -> 0x47 -> 0x48 -> 0x38 ->
+0x37. That is correct for route 4, where `warp_L4` leaves Link on the island. Route 5 is not on the
+island when it gets there; it is on 0x0A having just walked fifty crossings home. Asked directly:
+
+```
+owroute.leg((0x0A, 192, 141), 0x55) -> NO PATH      # 12 crossings exist the other way
+owroute.leg((0x0A, 192, 141), 0x45) -> NO PATH      # 0x45 is only reachable by the raft
+owroute.leg((0x0A, 192, 141), 0x37) -> 2,038 frames, 8 crossings
+```
+
+So the entire raft leg was the wrong shape for where this route actually is, not one missing lane,
+and no amount of search would have found it.
+
+**The fix, and what it cost to be sure of.** Three things, in `zelda/head.py` and `route5.py`, all
+measured from the run's own bookmark `states/ckpt_gleeok_deliver.State` (`testing/probe_head_exit.py`):
+
+1. **A third phase to the head's route.** `head.LEAVE` / `leave_policy` / `left_test` walk back out
+   of the cave, reusing route 4's own `bot.exit_cave_down`. Measured **172 frames** from (120,141)
+   inside to (32,91) on 0x0A. Its hardcoded corridor `x=112` belongs to the candle cave at 0x0C and
+   has never been checked against the sword cave; a bare hold of DOWN also works and is 13 frames
+   quicker (159 frames, out at (32,77)), so the corridor is wider than the one column the routine
+   walks to. Reuse beat a new routine by 13 frames and 13 frames is not the thing to spend a new
+   function on - but the 112 is a measured fact now and was an assumption an hour ago.
+
+2. **The obvious alternative was measured and rejected.**
+   `Navigator.exit_screen` has a mode-`$0B` branch that walks out of a cave before crossing, so the
+   obvious fix is to delete the exit segment and let the first lane do it. It does not work: the
+   branch holds DOWN for up to 400 frames, and the overworld takes over mid-hold and keeps going
+   south. Measured **739 frames, arriving in 0x1A** - it eats the lane it was supposed to enable.
+   That is the kind of implicit behaviour worth knowing about rather than inheriting.
+
+3. **Eight crossings, and seven of them were already walked.** `hd_0a_1a hd_1a_19 hd_19_18 hd_18_17
+   hd_17_27 hd_27_28 hd_28_38 hd_38_37`, each pinned, every seam's two ends checked against
+   `owroute.free()` before anything was written - the check the other two lane groups in this file
+   record, because a wrong coordinate does not fail, it just searches slowly. Seven are the **reverse
+   of legs this route walked on the way home** (`rv_leg_47..50`, `rv_leg_43..46`), so they are
+   known-good in one direction; 0x38 -> 0x37 is the only new seam. Then walked for real, chained, from
+   the bookmark: **all eight landed where they were asked to, 2,555 frames including the walk out**,
+   four and a half hearts spent on Octoroks on the road. And run again through the actual search
+   machinery (`Run.segment`, four scouts, jitter on): `head_exit` 176 frames, `hd_0a_1a` 575,
+   `hd_1a_19` 411, `hd_19_18` 316, `hd_18_17` 296, `hd_17_27` 200 - the first success of each, not the
+   best.
+
+**What is deliberately not claimed.** The 2,038 and 2,555 are one walk with one seed's worth of
+jitter, and a search beat both of them on five of the six segments above; they establish that the
+road exists and is connected, not that it is quick. The eight lanes can still lose a search to an
+Octorok, which is what the 1.5 hearts on this walk was. And nothing here says anything about the rest
+of route 5 past Level 1's door, which has never been run.
+
+**One thing found on the way, not yet fixed.** Roughly one attempt in three of a crossing segment
+ends `error: ValueError: invalid literal for int() with base 10: ''` from `State.parse`, and the same
+log has `ValueError: non-hexadecimal number found in ...` from `BizHawk.ram`. Ten occurrences in a
+four-hour log. Both are a malformed bridge REPLY - a token with no `=` in it, or hex that is not hex -
+which is the signature of the reply stream coming out of step with the commands, and
+`bridge.lua`'s `send()` does not check what `conn:send` returned. Worse: the one in `gleeok_run8.log`
+at `search.py:479 s = emu.state()` killed a worker thread outright, which is the same class of
+uncaught-exception-in-the-worker that section 13 fixed one line earlier. Not chased yet; written down
+so it is not rediscovered from the log.

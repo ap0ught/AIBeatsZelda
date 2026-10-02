@@ -30,6 +30,7 @@ from __future__ import annotations
 
 TAKE = "gleeok_head"        # segment names. The route defines them; this is where they are agreed.
 DELIVER = "deliver"
+LEAVE = "head_exit"
 
 GONE, CARRIED, DELIVERED = 0, 1, 2
 TEXT = {GONE: "still lying in Level 4", CARRIED: "carried", DELIVERED: "left in the sword cave"}
@@ -249,6 +250,66 @@ def delivered_test(emu, s) -> bool:
     """
     x = _SPOT[0] if _SPOT[0] is not None else 120
     return (s.mode == 0x0B and s.sub == 0 and not s.level and abs(s.x - x) <= 2 and s.y <= 141)
+
+
+def leave_policy(nav):
+    """Walk back out of the sword cave, so the route has a screen to stand on.
+
+    This segment exists because of what `deliver` leaves behind. The delivery ends with Link INSIDE
+    the cave, on the item row at mode $0B - that is the point of it, and `delivered_test` insists on
+    it - and the next segment in route 5 was `l2_sail`, whose policy is `dock_policy`. There is no
+    dock inside a cave: sixty attempts of "fail: no dock on this screen @ room 0A L0", then
+    `RuntimeError: segment l2_sail failed`. Sixty identical failures that were never going to be a
+    search problem, because the segment had nothing to do from the state it was handed.
+
+    So the head's route has three phases and not two, and the third is this. What it is worth
+    saying plainly is that nothing about it is pretend: the frames are real (172 measured from
+    states/ckpt_gleeok_deliver.State, the bookmark the run banked `deliver` with, in
+    testing/probe_head_exit.py) and the end of it is a screen in the overworld where a route can
+    continue.
+
+    `bot.exit_cave_down` is route 4's own "walk back out of a cave or shop" routine, reused rather
+    than rewritten - including its hardcoded corridor x of 112, which belongs to the candle cave at
+    0x0C and which nobody has ever checked against the sword cave. It happens to work here: measured,
+    172 frames from (120,141) inside the cave to (32,91) on 0x0A in mode 5. A bare hold of DOWN also
+    works and is 13 frames quicker (159 frames, out at (32,77)), so the corridor is wider than the
+    one column the routine walks to - but reuse beat a new routine by 13 frames, and 13 frames is
+    not the thing to spend a new function on.
+    """
+    def policy(emu, rec, rng, max_frames):
+        from . import bot
+        from .overworld import NavError, LinkDied
+        orig = emu.step
+        emu.step = rec.step
+        try:
+            rec.step((), rng.randint(0, 6))
+            s0 = emu.state()
+            if s0.mode != 0x0B:
+                # Idempotent rather than a failure: a scout that starts outside has nothing to do
+                # and should succeed, not burn the segment's whole budget saying so. A segment that
+                # cannot succeed from where it was handed is what cost this route sixty attempts.
+                return ("already outside" if left_test(emu, s0)
+                        else f"not in the cave and not on 0x0A: {s0}")
+            emu.note("Head is down. Back out of the cave, onto 0x0A, so the route can carry on")
+            s = bot.exit_cave_down(emu, log=lambda *a: None)
+            if not left_test(emu, s):
+                return f"came out somewhere else: {s}"
+            emu.note(f"Outside, room {s.room:02X} at ({s.x},{s.y})")
+            return "outside"
+        except (NavError, LinkDied, bot.BotError, TimeoutError) as e:
+            return "fail: " + str(e)[:40]
+        finally:
+            emu.step = orig
+    return policy
+
+
+def left_test(emu, s) -> bool:
+    """RAM only. Out of the cave, on 0x0A, in normal overworld play.
+
+    Asymmetric on purpose: `left_test` requires room $0A and `delivered_test` requires mode $0B, so
+    the two cannot both be true and neither segment can be satisfied by standing still.
+    """
+    return s.mode == 5 and s.sub == 0 and not s.level and s.room == 0x0A and s.hearts > 0
 
 
 def taken_test(emu, s) -> bool:
