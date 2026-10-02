@@ -1,0 +1,27 @@
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(it seems EmuHawk is already running, NOT capturing output)
+parsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:39459 /home/cmayfield/code/games/aibeatszelda/src/roms/Legend of Zelda, The (USA) (Rev 1).nes
+
+Unhandled Exception:
+System.TypeInitializationException: The type initializer for 'System.Windows.Forms.XplatUI' threw an exception. ---> System.ArgumentNullException: Could not open display (X-Server required. Check your DISPLAY environment variable)
+Parameter name: Display
+  at System.Windows.Forms.XplatUIX11.SetDisplay (System.IntPtr display_handle) [0x003d0] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUIX11..ctor () [0x00077] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUIX11.GetInstance () [0x00019] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUI..cctor () [0x000c0] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+   --- End of inner exception stack trace ---
+  at System.Windows.Forms.Application.EnableVisualStyles () [0x00006] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at BizHawk.Client.EmuHawk.Program.EnsureWinFormsInitialized () [0x00000] in <923595f18a5244b8a77a3faa19fe4777>:0 
+  at BizHawk.Client.EmuHawk.Program.SubMain (System.String[] args) [0x001e3] in <923595f18a5244b8a77a3faa19fe4777>:0 
+  at BizHawk.Client.EmuHawk.Program.Main (System.String[] args) [0x00000] in <923595f18a5244b8a77a3faa19fe4777>:0 
+[ERROR] FATAL UNHANDLED EXCEPTION: System.TypeInitializationException: The type initializer for 'System.Windows.Forms.XplatUI' threw an exception. ---> System.ArgumentNullException: Could not open display (X-Server required. Check your DISPLAY environment variable)
+Parameter name: Display
+  at System.Windows.Forms.XplatUIX11.SetDisplay (System.IntPtr display_handle) [0x003d0] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUIX11..ctor () [0x00077] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUIX11.GetInstance () [0x00019] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at System.Windows.Forms.XplatUI..cctor () [0x000c0] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+   --- End of inner exception stack trace ---
+  at System.Windows.Forms.Application.EnableVisualStyles () [0x00006] in <2d80e034615447af8ea57d84fe9d6ddf>:0 
+  at BizHawk.Client.EmuHawk.Program.EnsureWinFormsInitialized () [0x00000] in <923595f18a5244b8a77a3faa19fe4777>:0 
+  at BizHawk.Client.EmuHawk.Program.SubMain (System.String[] args) [0x001e3] in <923595f18a5244b8a77a3faa19fe4777>:0 
+  at BizHawk.Client.EmuHawk.Program.Main (System.String[] args) [0x00000] in <923595f18a5244b8a77a3faa19fe4777>:0 

@@ -1,0 +1,48 @@
+--- 1. the road, asked of the router (no emulator)
+  0x0A (192,141) -> 0x55 (the dock route 5 planned): 3054 frames, 12 crossings  0A 1A 19 18 17 27 28 38 48 47 46 56 55
+  0x0A (192,141) -> 0x37 (Level 1's door): 2038 frames, 8 crossings  0A 1A 19 18 17 27 28 38 37
+  collapsed to one lane per crossing, with each seam's pinned coordinate:
+    0A Down  1A at 208
+    1A Left  19 at 141
+    19 Left  18 at 141
+    18 Left  17 at 141
+    17 Down  27 at 160
+    27 Right 28 at 141
+    28 Down  38 at 112
+    38 Left  37 at 141
+  each seam's two ends, asked of owroute.free() directly:
+    0A Down  1A at 208: leaves (208, 221) and lands (208, 61) -> both walkable
+    1A Left  19 at 141: leaves (0, 141) and lands (240, 141) -> both walkable
+    19 Left  18 at 141: leaves (0, 141) and lands (240, 141) -> both walkable
+    18 Left  17 at 141: leaves (0, 141) and lands (240, 141) -> both walkable
+    17 Down  27 at 160: leaves (160, 221) and lands (160, 61) -> both walkable
+    27 Right 28 at 141: leaves (240, 141) and lands (0, 141) -> both walkable
+    28 Down  38 at 112: leaves (112, 221) and lands (112, 61) -> both walkable
+    38 Left  37 at 141: leaves (0, 141) and lands (240, 141) -> both walkable
+  router's seams == the LANES list in this probe: True
+
+--- 2. out of the cave, two ways, each from its own load of the bookmark
+  [implicit (Navigator.exit_screen's mode $0B branch)] starting at f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+    -> f61328 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027   (739 frames so far)
+  [explicit (bot.exit_cave_down, corridor x=112)] starting at f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+    -> f60761 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977   (172 frames so far)
+  [plain hold Down until mode 05] starting at f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+    -> f60748 mode=05/00 L0 room=0a pos=(32,77) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977   (159 frames so far)
+
+--- 3. the whole walk, from the run's own bookmark, with the real policies
+  loaded ckpt_gleeok_deliver: f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947  (0 frames)
+  [implicit (Navigator.exit_screen's mode $0B branch)] starting at f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+    -> f61093 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027   (504 frames so far)
+    implicit exit did not land on 0x0A in the overworld (f61093 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027); reloading and using the explicit one
+  [explicit (bot.exit_cave_down, corridor x=112)] starting at f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947
+    -> f60761 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977   (676 frames so far)
+    explicit exit -> f60761 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977
+    hd_0a_1a     336 frames  crossed                -> f61097 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027  OK
+    hd_1a_19     443 frames  crossed                -> f61540 mode=05/00 L0 room=19 pos=(240,141) dir=2 hp=6.0/7 rup=48 sword=2 lag=11098  OK
+    hd_19_18     352 frames  crossed                -> f61892 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=5.5/7 rup=48 sword=2 lag=11169  OK
+    hd_18_17     359 frames  crossed                -> f62251 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=5.5/7 rup=48 sword=2 lag=11240  OK
+    hd_17_27     210 frames  crossed                -> f62461 mode=05/00 L0 room=27 pos=(160,61) dir=4 hp=5.5/7 rup=48 sword=2 lag=11290  OK
+    hd_27_28     300 frames  crossed                -> f62761 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=5.0/7 rup=48 sword=2 lag=11361  OK
+    hd_28_38     235 frames  crossed                -> f62996 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=5.0/7 rup=48 sword=2 lag=11411  OK
+    hd_38_37     320 frames  crossed                -> f63316 mode=05/00 L0 room=37 pos=(240,141) dir=2 hp=4.5/7 rup=48 sword=2 lag=11482  OK
+  total 2555 frames (43s of game time) from the head down in the cave to Level 1's door: every lane landed where it was asked to

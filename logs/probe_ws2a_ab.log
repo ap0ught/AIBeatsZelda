@@ -1,0 +1,125 @@
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(it seems EmuHawk is already running, NOT capturing output)
+parsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:36709 /home/cmayfield/code/games/aibeatszelda/src/roms/Legend of Zelda, The (USA) (Rev 1).nes
+
+(mono:3377374): Gtk-WARNING **: 06:14:33.359: Unable to locate theme engine in module_path: "adwaita",
+MESA-EGL: warning: DRI3 error: Could not get DRI3 device
+MESA-EGL: warning: Ensure your X server supports DRI3 to get accelerated rendering
+Using SDL2 for host input (keyboard + gamepads)
+ROM was not a multiple of 1024 bytes, and not a recognized header size: 16. Assume it's purely ROM data.
+Game was not in DB. CRC: E47960E0 MD5: 614FB3085826E62F3BE3A3FE0B931689
+4671517D72D09799403F6C672CD2B395933E926E
+quickerNES: Booted with Mapper #1 "mmc1"
+Hash for BootGod: BE2F5DC8C5BA8EC1A344A71F9FB204750AF24FE7
+BootGod entry found: Legend of Zelda, The
+Core reported BoardID: "mmc1"
+[Lua Console] loaded script /home/cmayfield/code/games/aibeatszelda/src/bridge.lua
+[Lua script: bridge] bridge: connected on port 36709
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 1 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 1 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 4 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 3 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 3 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 3 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 3 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms
+Read a zipstate of version 1.0.3
+Elapsed time for Load Core: 0 ms
+Elapsed time for Blit: 0 ms
+Elapsed time for Load Framebuffer: 0 ms

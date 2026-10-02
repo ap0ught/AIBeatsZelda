@@ -1,0 +1,13 @@
+
+*** UNVERIFIED CARTRIDGE ***
+  rom-backup/../../aibeatszelda/rom-backup/Rev1.stock.nes cannot be read
+
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(it seems EmuHawk is already running, NOT capturing output)
+parsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:32933 rom-backup/../../aibeatszelda/rom-backup/Rev1.stock.nes
+
+(mono:2571525): Gtk-WARNING **: 13:44:43.675: Unable to locate theme engine in module_path: "adwaita",
+Using SDL2 for host input (keyboard + gamepads)
+[Lua Console] loaded script /home/cmayfield/code/games/aibeatszelda/src/bridge.lua
+[Lua script: bridge] bridge: connected on port 32933
+[Lua script: bridge] Error: NullHawk does not implement memory domains

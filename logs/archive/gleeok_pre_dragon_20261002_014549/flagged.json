@@ -1,0 +1,602 @@
+{
+ "49_right": {
+  "frames": 326,
+  "hearts": 3.0,
+  "reason": "took the 327-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 9019,
+  "when": "2026-10-01 12:18:25"
+ },
+ "4a_right": {
+  "frames": 361,
+  "hearts": 3.0,
+  "reason": "took the 361-frame line after 10 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 9345,
+  "when": "2026-10-01 12:18:50"
+ },
+ "4b_right": {
+  "frames": 440,
+  "hearts": 3.0,
+  "reason": "took the 440-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 9706,
+  "when": "2026-10-01 12:19:59"
+ },
+ "59_up": {
+  "frames": 240,
+  "hearts": 3.0,
+  "reason": "took the 241-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 8779,
+  "when": "2026-10-01 12:17:52"
+ },
+ "69_stairs": {
+  "frames": 639,
+  "hearts": 3.0,
+  "reason": "took the 639-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 6949,
+  "when": "2026-10-01 12:11:09"
+ },
+ "L4_done": {
+  "frames": 1026,
+  "hearts": 7.0,
+  "reason": "took the 1026-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 43830,
+  "when": "2026-10-01 19:55:28"
+ },
+ "cdl_1c": {
+  "frames": 336,
+  "hearts": 3.5,
+  "reason": "took the 336-frame line after 13 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 21046,
+  "when": "2026-10-01 12:45:04"
+ },
+ "deliver": {
+  "frames": 338,
+  "hearts": 6.0,
+  "reason": "took the 338-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 60251,
+  "when": "2026-10-01 20:59:40"
+ },
+ "gleeok_head": {
+  "frames": 89,
+  "hearts": 2.0,
+  "reason": "took the 89-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 43741,
+  "when": "2026-10-01 19:55:03"
+ },
+ "l4_13": {
+  "frames": 820,
+  "hearts": 4.5,
+  "reason": "took the 820-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 38611,
+  "when": "2026-10-01 19:01:08"
+ },
+ "l4_32": {
+  "frames": 1146,
+  "hearts": 2.0,
+  "reason": "took the 1146-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 32211,
+  "when": "2026-10-01 15:58:00"
+ },
+ "l4_40": {
+  "frames": 469,
+  "hearts": 2.0,
+  "reason": "took the 469-frame line after 22 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 30808,
+  "when": "2026-10-01 14:32:14"
+ },
+ "l4_70_key": {
+  "frames": 698,
+  "hearts": 2.0,
+  "reason": "took the 698-frame line after 21 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 28503,
+  "when": "2026-10-01 14:24:03"
+ },
+ "l4_b31": {
+  "frames": 384,
+  "hearts": 2.5,
+  "reason": "took the 384-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 35846,
+  "when": "2026-10-01 18:32:01"
+ },
+ "l4_lad_st": {
+  "frames": 1691,
+  "hearts": 3.0,
+  "reason": "took the 1691-frame line after 19 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 33357,
+  "when": "2026-10-01 18:28:15"
+ },
+ "l4_ladder": {
+  "frames": 798,
+  "hearts": 2.5,
+  "reason": "took the 798-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 35048,
+  "when": "2026-10-01 18:31:43"
+ },
+ "l4w00_1a": {
+  "frames": 400,
+  "hearts": 1.5,
+  "reason": "took the 400-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 23374,
+  "when": "2026-10-01 13:11:24"
+ },
+ "ow1_66": {
+  "frames": 358,
+  "hearts": 4.0,
+  "reason": "took the 358-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 12779,
+  "when": "2026-10-01 12:35:33"
+ },
+ "revenge": {
+  "frames": 1180,
+  "hearts": 6.0,
+  "reason": "took the 1180-frame line after 17 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 59162,
+  "when": "2026-10-01 20:58:30"
+ },
+ "rv_leg_1": {
+  "frames": 166,
+  "hearts": 7.0,
+  "reason": "took the 166-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 45290,
+  "when": "2026-10-01 19:56:02"
+ },
+ "rv_leg_10": {
+  "frames": 258,
+  "hearts": 6.5,
+  "reason": "took the 258-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 48147,
+  "when": "2026-10-01 19:59:14"
+ },
+ "rv_leg_11": {
+  "frames": 227,
+  "hearts": 6.5,
+  "reason": "took the 227-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 48405,
+  "when": "2026-10-01 19:59:30"
+ },
+ "rv_leg_12": {
+  "frames": 135,
+  "hearts": 6.5,
+  "reason": "took the 135-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 48632,
+  "when": "2026-10-01 19:59:37"
+ },
+ "rv_leg_13": {
+  "frames": 319,
+  "hearts": 6.5,
+  "reason": "took the 319-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 48767,
+  "when": "2026-10-01 20:00:00"
+ },
+ "rv_leg_14": {
+  "frames": 483,
+  "hearts": 4.5,
+  "reason": "took the 483-frame line after 20 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 49086,
+  "when": "2026-10-01 20:00:40"
+ },
+ "rv_leg_15": {
+  "frames": 312,
+  "hearts": 4.5,
+  "reason": "took the 312-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 49569,
+  "when": "2026-10-01 20:01:00"
+ },
+ "rv_leg_16": {
+  "frames": 231,
+  "hearts": 4.5,
+  "reason": "took the 231-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 49881,
+  "when": "2026-10-01 20:01:17"
+ },
+ "rv_leg_17": {
+  "frames": 248,
+  "hearts": 4.5,
+  "reason": "took the 248-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 50112,
+  "when": "2026-10-01 20:01:33"
+ },
+ "rv_leg_18": {
+  "frames": 264,
+  "hearts": 4.5,
+  "reason": "took the 264-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 50360,
+  "when": "2026-10-01 20:01:51"
+ },
+ "rv_leg_19": {
+  "frames": 323,
+  "hearts": 7.0,
+  "reason": "took the 323-frame line after 13 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 50624,
+  "when": "2026-10-01 20:02:08"
+ },
+ "rv_leg_2": {
+  "frames": 250,
+  "hearts": 7.0,
+  "reason": "took the 250-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 45456,
+  "when": "2026-10-01 19:56:18"
+ },
+ "rv_leg_20": {
+  "frames": 128,
+  "hearts": 7.0,
+  "reason": "took the 128-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 50947,
+  "when": "2026-10-01 20:02:16"
+ },
+ "rv_leg_21": {
+  "frames": 300,
+  "hearts": 7.0,
+  "reason": "took the 300-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 51075,
+  "when": "2026-10-01 20:02:34"
+ },
+ "rv_leg_22": {
+  "frames": 427,
+  "hearts": 7.0,
+  "reason": "took the 427-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 51375,
+  "when": "2026-10-01 20:02:53"
+ },
+ "rv_leg_23": {
+  "frames": 265,
+  "hearts": 7.0,
+  "reason": "took the 265-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 51802,
+  "when": "2026-10-01 20:03:12"
+ },
+ "rv_leg_24": {
+  "frames": 218,
+  "hearts": 7.0,
+  "reason": "took the 218-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 52067,
+  "when": "2026-10-01 20:03:24"
+ },
+ "rv_leg_25": {
+  "frames": 331,
+  "hearts": 7.0,
+  "reason": "took the 331-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 52285,
+  "when": "2026-10-01 20:03:45"
+ },
+ "rv_leg_26": {
+  "frames": 352,
+  "hearts": 7.0,
+  "reason": "took the 352-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 52616,
+  "when": "2026-10-01 20:04:11"
+ },
+ "rv_leg_27": {
+  "frames": 298,
+  "hearts": 7.0,
+  "reason": "took the 298-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 52968,
+  "when": "2026-10-01 20:04:34"
+ },
+ "rv_leg_28": {
+  "frames": 154,
+  "hearts": 7.0,
+  "reason": "took the 154-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 53266,
+  "when": "2026-10-01 20:04:42"
+ },
+ "rv_leg_29": {
+  "frames": 212,
+  "hearts": 7.0,
+  "reason": "took the 212-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 53420,
+  "when": "2026-10-01 20:04:52"
+ },
+ "rv_leg_3": {
+  "frames": 348,
+  "hearts": 7.0,
+  "reason": "took the 348-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 45706,
+  "when": "2026-10-01 19:56:34"
+ },
+ "rv_leg_30": {
+  "frames": 253,
+  "hearts": 7.0,
+  "reason": "took the 253-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 53632,
+  "when": "2026-10-01 20:05:10"
+ },
+ "rv_leg_31": {
+  "frames": 179,
+  "hearts": 7.0,
+  "reason": "took the 179-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 53885,
+  "when": "2026-10-01 20:05:20"
+ },
+ "rv_leg_32": {
+  "frames": 321,
+  "hearts": 6.0,
+  "reason": "took the 321-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 54064,
+  "when": "2026-10-01 20:05:41"
+ },
+ "rv_leg_33": {
+  "frames": 195,
+  "hearts": 6.0,
+  "reason": "took the 195-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 54385,
+  "when": "2026-10-01 20:05:56"
+ },
+ "rv_leg_34": {
+  "frames": 277,
+  "hearts": 6.0,
+  "reason": "took the 277-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 54580,
+  "when": "2026-10-01 20:06:14"
+ },
+ "rv_leg_35": {
+  "frames": 158,
+  "hearts": 6.0,
+  "reason": "took the 158-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 54857,
+  "when": "2026-10-01 20:06:22"
+ },
+ "rv_leg_36": {
+  "frames": 320,
+  "hearts": 6.0,
+  "reason": "took the 320-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 55015,
+  "when": "2026-10-01 20:06:47"
+ },
+ "rv_leg_37": {
+  "frames": 357,
+  "hearts": 6.0,
+  "reason": "took the 357-frame line after 12 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 55335,
+  "when": "2026-10-01 20:07:06"
+ },
+ "rv_leg_38": {
+  "frames": 232,
+  "hearts": 6.0,
+  "reason": "took the 232-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 55692,
+  "when": "2026-10-01 20:07:22"
+ },
+ "rv_leg_39": {
+  "frames": 259,
+  "hearts": 6.0,
+  "reason": "took the 259-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 55924,
+  "when": "2026-10-01 20:07:39"
+ },
+ "rv_leg_4": {
+  "frames": 219,
+  "hearts": 7.0,
+  "reason": "took the 219-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 46054,
+  "when": "2026-10-01 19:56:49"
+ },
+ "rv_leg_40": {
+  "frames": 231,
+  "hearts": 6.0,
+  "reason": "took the 231-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 56183,
+  "when": "2026-10-01 20:07:56"
+ },
+ "rv_leg_41": {
+  "frames": 261,
+  "hearts": 6.0,
+  "reason": "took the 261-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 56414,
+  "when": "2026-10-01 20:08:14"
+ },
+ "rv_leg_42": {
+  "frames": 287,
+  "hearts": 6.0,
+  "reason": "took the 287-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 56675,
+  "when": "2026-10-01 20:08:33"
+ },
+ "rv_leg_43": {
+  "frames": 231,
+  "hearts": 6.0,
+  "reason": "took the 231-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 56962,
+  "when": "2026-10-01 20:08:49"
+ },
+ "rv_leg_44": {
+  "frames": 207,
+  "hearts": 6.0,
+  "reason": "took the 207-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 57193,
+  "when": "2026-10-01 20:09:04"
+ },
+ "rv_leg_45": {
+  "frames": 250,
+  "hearts": 6.0,
+  "reason": "took the 250-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 57400,
+  "when": "2026-10-01 20:09:22"
+ },
+ "rv_leg_46": {
+  "frames": 230,
+  "hearts": 6.0,
+  "reason": "took the 230-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 57650,
+  "when": "2026-10-01 20:09:40"
+ },
+ "rv_leg_47": {
+  "frames": 223,
+  "hearts": 6.0,
+  "reason": "took the 223-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 57880,
+  "when": "2026-10-01 20:09:56"
+ },
+ "rv_leg_48": {
+  "frames": 273,
+  "hearts": 5.5,
+  "reason": "took the 273-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 58103,
+  "when": "2026-10-01 20:10:19"
+ },
+ "rv_leg_49": {
+  "frames": 367,
+  "hearts": 5.0,
+  "reason": "took the 367-frame line after 20 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 58376,
+  "when": "2026-10-01 20:10:50"
+ },
+ "rv_leg_5": {
+  "frames": 238,
+  "hearts": 7.0,
+  "reason": "took the 238-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 46273,
+  "when": "2026-10-01 19:57:05"
+ },
+ "rv_leg_50": {
+  "frames": 419,
+  "hearts": 6.0,
+  "reason": "took the 419-frame line after 13 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 58743,
+  "when": "2026-10-01 20:11:14"
+ },
+ "rv_leg_6": {
+  "frames": 226,
+  "hearts": 7.0,
+  "reason": "took the 226-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 46511,
+  "when": "2026-10-01 19:57:22"
+ },
+ "rv_leg_7": {
+  "frames": 214,
+  "hearts": 7.0,
+  "reason": "took the 214-frame line after 16 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 46737,
+  "when": "2026-10-01 19:57:37"
+ },
+ "rv_leg_8": {
+  "frames": 336,
+  "hearts": 6.5,
+  "reason": "took the 336-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 47628,
+  "when": "2026-10-01 19:58:48"
+ },
+ "rv_leg_9": {
+  "frames": 183,
+  "hearts": 6.5,
+  "reason": "took the 183-frame line after 11 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 47964,
+  "when": "2026-10-01 19:58:58"
+ },
+ "rv_sail": {
+  "frames": 254,
+  "hearts": 7.0,
+  "reason": "took the 254-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 45036,
+  "when": "2026-10-01 19:55:53"
+ },
+ "rv_woods_0": {
+  "frames": 196,
+  "hearts": 7.0,
+  "reason": "took the 196-frame line after 15 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 46951,
+  "when": "2026-10-01 19:57:50"
+ },
+ "rv_woods_1": {
+  "frames": 301,
+  "hearts": 7.0,
+  "reason": "took the 301-frame line after 18 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 47147,
+  "when": "2026-10-01 19:58:13"
+ },
+ "rv_woods_2": {
+  "frames": 180,
+  "hearts": 7.0,
+  "reason": "took the 180-frame line after 17 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 47448,
+  "when": "2026-10-01 19:58:27"
+ },
+ "warp_L4": {
+  "frames": 180,
+  "hearts": 7.0,
+  "reason": "took the 180-frame line after 9 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 44856,
+  "when": "2026-10-01 19:55:38"
+ },
+ "white_sword": {
+  "frames": 1203,
+  "hearts": 1.5,
+  "reason": "took the 1203-frame line after 14 attempts (8 without improvement)",
+  "run": "gleeok",
+  "total_frames": 22171,
+  "when": "2026-10-01 13:10:44"
+ }
+}

@@ -1,0 +1,15 @@
+=== attempt 1 (2026-09-29 11:46:07) ===
+resumed checkpoint 'ws_0a': 21856 frames, f21856 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=3.5/5 rup=42 sword=1 lag=4422
+resuming after 61 segments
+  no success; most common: 60x approach: died @ room 0A L0
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3042, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3033, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 253, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment white_sword failed
+=== a segment genuinely failed; stopping (2026-09-29 11:47:35) ===

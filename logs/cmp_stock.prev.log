@@ -1,0 +1,9 @@
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(capturing output in /home/cmayfield/code/games/aibeatszelda/BizHawk-2.11.1-win-x64/EmuHawkMono_last*.txt)
+Using SDL2 for host input (keyboard + gamepads)
+[Lua Console] loaded script /home/cmayfield/code/games/aibeatszelda/src/bridge.lua
+[Lua script: bridge] bridge: connected on port 33145
+[Lua script: bridge] Error: NullHawk does not implement memory domains
+[31mparsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:33145 roms/Legend of Zelda, The (USA) (Rev 1).nes(B[m
+[31m(B[m
+[31m(mono:2552274): Gtk-WARNING **: 12:53:56.532: Unable to locate theme engine in module_path: "adwaita",(B[m

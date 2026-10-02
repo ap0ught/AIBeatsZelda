@@ -1,0 +1,811 @@
+resumed checkpoint 'L3_done': 11445 frames, f11445 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=1 sword=1 lag=2376
+resuming after 27 segments
+  attempt 2: success 180 frames, hearts 4.0
+  (early stop after 15 attempts)
+[warp_L3] 180 frames, hearts 4.0 -> f11625 mode=05/00 L0 room=74 pos=(128,125) dir=4 hp=4.0/4 rup=1 sword=1 lag=2388 (total 11625 frames, 12s wall)
+  attempt 2: success 209 frames, hearts 4.0
+  attempt 12: success 208 frames, hearts 4.0
+  (early stop after 24 attempts)
+[ow1_73] 208 frames, hearts 4.0 -> f11833 mode=05/00 L0 room=73 pos=(240,133) dir=2 hp=4.0/4 rup=1 sword=1 lag=2459 (total 11833 frames, 15s wall)
+  attempt 2: success 200 frames, hearts 3.5
+  attempt 4: success 198 frames, hearts 4.0
+  attempt 8: success 191 frames, hearts 4.0
+  attempt 12: success 189 frames, hearts 4.0
+  (early stop after 24 attempts)
+[ow1_63] 189 frames, hearts 4.0 -> f12022 mode=05/00 L0 room=63 pos=(176,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2511 (total 12022 frames, 18s wall)
+  attempt 2: success 201 frames, hearts 4.0
+  attempt 12: success 199 frames, hearts 4.0
+  (early stop after 24 attempts)
+[ow1_64] 199 frames, hearts 4.0 -> f12221 mode=05/00 L0 room=64 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2582 (total 12221 frames, 22s wall)
+  attempt 2: success 312 frames, hearts 4.0
+  (early stop after 15 attempts)
+[ow1_65] 312 frames, hearts 4.0 -> f12533 mode=05/00 L0 room=65 pos=(0,189) dir=1 hp=4.0/4 rup=1 sword=1 lag=2653 (total 12533 frames, 27s wall)
+  attempt 2: success 346 frames, hearts 4.0
+  (early stop after 15 attempts)
+[ow1_66] 346 frames, hearts 4.0 -> f12879 mode=05/00 L0 room=66 pos=(0,173) dir=1 hp=4.0/4 rup=1 sword=1 lag=2724 (total 12879 frames, 33s wall)
+  attempt 1: success 332 frames, hearts 4.0
+  attempt 7: success 323 frames, hearts 4.0
+  (early stop after 20 attempts)
+[ow1_67] 323 frames, hearts 4.0 -> f13202 mode=05/00 L0 room=67 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2795 (total 13202 frames, 39s wall)
+  attempt 2: success 310 frames, hearts 4.0
+  (early stop after 15 attempts)
+[ow1_68] 310 frames, hearts 4.0 -> f13512 mode=05/00 L0 room=68 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2866 (total 13512 frames, 44s wall)
+  attempt 2: success 192 frames, hearts 4.0
+  attempt 12: success 191 frames, hearts 4.0
+  (early stop after 25 attempts)
+[ow1_58] 191 frames, hearts 4.0 -> f13703 mode=05/00 L0 room=58 pos=(48,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2918 (total 13703 frames, 47s wall)
+  attempt 3: success 292 frames, hearts 4.0
+  attempt 6: success 289 frames, hearts 4.0
+  attempt 13: success 262 frames, hearts 4.0
+  attempt 18: success 257 frames, hearts 4.0
+  (early stop after 31 attempts)
+[ow1_48] 257 frames, hearts 4.0 -> f13960 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2970 (total 13960 frames, 53s wall)
+  attempt 2: success 304 frames, hearts 2.5
+  attempt 6: success 214 frames, hearts 3.5
+  attempt 15: success 200 frames, hearts 3.5
+  attempt 43: success 199 frames, hearts 3.5
+[ow1_38] 199 frames, hearts 3.5 -> f14159 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.5/4 rup=1 sword=1 lag=3022 (total 14159 frames, 62s wall)
+  attempt 2: success 208 frames, hearts 3.5
+  attempt 12: success 207 frames, hearts 3.5
+  (early stop after 24 attempts)
+[ws_28] 207 frames, hearts 3.5 -> f14366 mode=05/00 L0 room=28 pos=(112,221) dir=8 hp=3.5/4 rup=1 sword=1 lag=3074 (total 14366 frames, 65s wall)
+  attempt 2: success 236 frames, hearts 3.5
+  (early stop after 15 attempts)
+[ws_29] 236 frames, hearts 3.5 -> f14602 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=1 sword=1 lag=3145 (total 14602 frames, 68s wall)
+  attempt 2: success 354 frames, hearts 2.5
+  attempt 5: success 340 frames, hearts 2.5
+  attempt 11: success 339 frames, hearts 2.5
+  (early stop after 37 attempts)
+[ws_2a] 339 frames, hearts 2.5 -> f14941 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.5/4 rup=1 sword=1 lag=3216 (total 14941 frames, 75s wall)
+  attempt 2: success 288 frames, hearts 2.5
+  (early stop after 15 attempts)
+[ws_2b] 288 frames, hearts 2.5 -> f15229 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.5/4 rup=1 sword=1 lag=3287 (total 15229 frames, 77s wall)
+  attempt 2: success 399 frames, hearts 2.0
+  attempt 3: success 432 frames, hearts 2.5
+  (early stop after 16 attempts)
+[ws_2c] 432 frames, hearts 2.5 -> f15661 mode=05/00 L0 room=2c pos=(0,189) dir=1 hp=2.5/4 rup=1 sword=1 lag=3358 (total 15661 frames, 85s wall)
+  attempt 3: success 812 frames, hearts 3.5
+  attempt 7: success 824 frames, hearts 4.5
+  (early stop after 42 attempts)
+[h2c_heart] 824 frames, hearts 4.5 -> f16485 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=4.5/5 rup=1 sword=1 lag=3417 (total 16485 frames, 129s wall)
+  attempt 2: success 243 frames, hearts 4.5
+  attempt 1: success 242 frames, hearts 4.5
+  attempt 5: success 214 frames, hearts 4.5
+  attempt 10: success 213 frames, hearts 4.5
+  (early stop after 23 attempts)
+[h2c_2d] 213 frames, hearts 4.5 -> f16698 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=4.5/5 rup=1 sword=1 lag=3488 (total 16698 frames, 132s wall)
+  attempt 3: success 287 frames, hearts 4.5
+  attempt 5: success 279 frames, hearts 4.5
+  (early stop after 19 attempts)
+[c0f_1d] 279 frames, hearts 4.5 -> f16977 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=4.5/5 rup=1 sword=1 lag=3556 (total 16977 frames, 137s wall)
+  attempt 2: success 252 frames, hearts 4.5
+  (early stop after 15 attempts)
+[c0f_1e] 252 frames, hearts 4.5 -> f17229 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=4.5/5 rup=1 sword=1 lag=3627 (total 17229 frames, 140s wall)
+  attempt 2: success 294 frames, hearts 4.5
+  attempt 7: success 291 frames, hearts 4.5
+  (early stop after 19 attempts)
+[c0f_1f] 291 frames, hearts 4.5 -> f17520 mode=05/00 L0 room=1f pos=(0,141) dir=1 hp=4.5/5 rup=1 sword=1 lag=3698 (total 17520 frames, 145s wall)
+  attempt 2: success 293 frames, hearts 3.5
+  attempt 3: success 435 frames, hearts 4.5
+  (early stop after 18 attempts)
+[c0f_0f] 435 frames, hearts 4.5 -> f17955 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=4.5/5 rup=1 sword=1 lag=3750 (total 17955 frames, 149s wall)
+  attempt 2: success 756 frames, hearts 4.5
+  (early stop after 36 attempts)
+[cave_0f] 756 frames, hearts 4.5 -> f18711 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=4.5/5 rup=101 sword=1 lag=3809 (total 18711 frames, 165s wall)
+  attempt 2: success 177 frames, hearts 4.5
+  (early stop after 15 attempts)
+[c0f_b1f] 177 frames, hearts 4.5 -> f18888 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=4.5/5 rup=101 sword=1 lag=3859 (total 18888 frames, 166s wall)
+  attempt 1: success 253 frames, hearts 4.5
+  attempt 7: success 245 frames, hearts 4.5
+  (early stop after 19 attempts)
+[c0f_b1e] 245 frames, hearts 4.5 -> f19133 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=4.5/5 rup=101 sword=1 lag=3930 (total 19133 frames, 171s wall)
+  attempt 1: success 354 frames, hearts 4.5
+  (early stop after 15 attempts)
+[c0f_b1d] 354 frames, hearts 4.5 -> f19487 mode=05/00 L0 room=1d pos=(240,141) dir=2 hp=4.5/5 rup=101 sword=1 lag=4001 (total 19487 frames, 176s wall)
+  attempt 4: success 209 frames, hearts 4.5
+  attempt 1: success 208 frames, hearts 4.5
+  attempt 5: success 203 frames, hearts 4.5
+  (early stop after 19 attempts)
+[cdl_0d] 203 frames, hearts 4.5 -> f19690 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=4.5/5 rup=101 sword=1 lag=4053 (total 19690 frames, 178s wall)
+  attempt 4: success 429 frames, hearts 4.5
+  attempt 7: success 381 frames, hearts 4.5
+  attempt 12: success 350 frames, hearts 4.5
+  (early stop after 23 attempts)
+[cdl_0c] 350 frames, hearts 4.5 -> f20040 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=4.5/5 rup=101 sword=1 lag=4124 (total 20040 frames, 187s wall)
+  attempt 4: success 470 frames, hearts 4.5
+  attempt 10: success 466 frames, hearts 4.5
+  (early stop after 24 attempts)
+[buy_candle] 466 frames, hearts 4.5 -> f20506 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=4.5/5 rup=101 sword=1 lag=4153 (total 20506 frames, 194s wall)
+  attempt 4: success 310 frames, hearts 4.5
+  (early stop after 15 attempts)
+[candle_leave] 310 frames, hearts 4.5 -> f20816 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=4.5/5 rup=41 sword=1 lag=4183 (total 20816 frames, 196s wall)
+  attempt 4: success 319 frames, hearts 4.0
+  attempt 2: success 336 frames, hearts 4.5
+  attempt 1: success 340 frames, hearts 5.0
+  (early stop after 17 attempts)
+[cdl_1c] 340 frames, hearts 5.0 -> f21156 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=5.0/5 rup=41 sword=1 lag=4233 (total 21156 frames, 201s wall)
+  attempt 2: success 224 frames, hearts 5.0
+  attempt 12: success 223 frames, hearts 5.0
+  (early stop after 23 attempts)
+[ws_1b] 223 frames, hearts 5.0 -> f21379 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=5.0/5 rup=41 sword=1 lag=4304 (total 21379 frames, 203s wall)
+  attempt 2: success 352 frames, hearts 5.0
+  (early stop after 15 attempts)
+[ws_1a] 352 frames, hearts 5.0 -> f21731 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=5.0/5 rup=41 sword=1 lag=4375 (total 21731 frames, 207s wall)
+  attempt 2: success 213 frames, hearts 5.0
+  attempt 12: success 212 frames, hearts 5.0
+  (early stop after 23 attempts)
+[ws_0a] 212 frames, hearts 5.0 -> f21943 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=5.0/5 rup=41 sword=1 lag=4427 (total 21943 frames, 210s wall)
+  attempt 2: success 1557 frames, hearts 4.5
+  (early stop after 48 attempts)
+[white_sword] 1557 frames, hearts 4.5 -> f23500 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=4.5/5 rup=41 sword=2 lag=4486 (total 23500 frames, 392s wall)
+  attempt 1: success 370 frames, hearts 4.5
+  attempt 9: success 353 frames, hearts 4.5
+  attempt 24: success 352 frames, hearts 4.5
+  (early stop after 36 attempts)
+[l4w00_1a] 352 frames, hearts 4.5 -> f23852 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=4.5/5 rup=41 sword=2 lag=4536 (total 23852 frames, 401s wall)
+  attempt 3: success 475 frames, hearts 3.5
+  attempt 9: success 473 frames, hearts 4.0
+  attempt 13: success 471 frames, hearts 4.0
+  (early stop after 41 attempts)
+[ws_19] 471 frames, hearts 4.0 -> f24323 mode=05/00 L0 room=19 pos=(240,149) dir=2 hp=4.0/5 rup=41 sword=2 lag=4607 (total 24323 frames, 411s wall)
+  attempt 2: success 315 frames, hearts 4.0
+  (early stop after 15 attempts)
+[l4w04_18] 315 frames, hearts 4.0 -> f24638 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=4.0/5 rup=41 sword=2 lag=4678 (total 24638 frames, 415s wall)
+  attempt 2: success 326 frames, hearts 4.0
+  attempt 7: success 290 frames, hearts 4.0
+  (early stop after 19 attempts)
+[l4w05_17] 290 frames, hearts 4.0 -> f24928 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=4.0/5 rup=41 sword=2 lag=4749 (total 24928 frames, 419s wall)
+  attempt 2: success 227 frames, hearts 4.0
+  attempt 7: success 220 frames, hearts 4.0
+  (early stop after 19 attempts)
+[l4w06_27] 220 frames, hearts 4.0 -> f25148 mode=05/00 L0 room=27 pos=(144,61) dir=4 hp=4.0/5 rup=41 sword=2 lag=4799 (total 25148 frames, 422s wall)
+  attempt 4: success 248 frames, hearts 4.0
+  attempt 2: success 240 frames, hearts 4.0
+  (early stop after 16 attempts)
+[l4w07_28] 240 frames, hearts 4.0 -> f25388 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=4.0/5 rup=41 sword=2 lag=4870 (total 25388 frames, 425s wall)
+  attempt 4: success 239 frames, hearts 4.0
+  attempt 2: success 231 frames, hearts 4.0
+  (early stop after 16 attempts)
+[l4w08_38] 231 frames, hearts 4.0 -> f25619 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=4.0/5 rup=41 sword=2 lag=4920 (total 25619 frames, 428s wall)
+  attempt 2: success 243 frames, hearts 4.0
+  attempt 12: success 242 frames, hearts 4.0
+  (early stop after 24 attempts)
+[l4w09_48] 242 frames, hearts 4.0 -> f25861 mode=05/00 L0 room=48 pos=(112,61) dir=4 hp=4.0/5 rup=41 sword=2 lag=4970 (total 25861 frames, 432s wall)
+  attempt 2: success 251 frames, hearts 4.0
+  (early stop after 15 attempts)
+[l4w10_47] 251 frames, hearts 4.0 -> f26112 mode=05/00 L0 room=47 pos=(240,141) dir=2 hp=4.0/5 rup=41 sword=2 lag=5041 (total 26112 frames, 434s wall)
+  attempt 4: success 801 frames, hearts 4.5
+  attempt 2: success 796 frames, hearts 4.5
+  attempt 1: success 794 frames, hearts 4.5
+  attempt 7: success 793 frames, hearts 4.5
+  (early stop after 42 attempts)
+[h47_heart] 793 frames, hearts 4.5 -> f26905 mode=05/00 L0 room=47 pos=(176,157) dir=4 hp=4.5/6 rup=41 sword=2 lag=5100 (total 26905 frames, 457s wall)
+  attempt 2: success 239 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4w11_46] 239 frames, hearts 4.5 -> f27144 mode=05/00 L0 room=46 pos=(240,157) dir=2 hp=4.5/6 rup=41 sword=2 lag=5171 (total 27144 frames, 459s wall)
+  attempt 4: success 215 frames, hearts 4.0
+  attempt 2: success 217 frames, hearts 4.5
+  attempt 12: success 216 frames, hearts 4.5
+  (early stop after 25 attempts)
+[l4w12_56] 216 frames, hearts 4.5 -> f27360 mode=05/00 L0 room=56 pos=(128,61) dir=4 hp=4.5/6 rup=41 sword=2 lag=5221 (total 27360 frames, 462s wall)
+  attempt 1: success 300 frames, hearts 4.5
+  attempt 7: success 292 frames, hearts 4.5
+  (early stop after 19 attempts)
+[l4w13_55] 292 frames, hearts 4.5 -> f27652 mode=05/00 L0 room=55 pos=(240,141) dir=2 hp=4.5/6 rup=41 sword=2 lag=5292 (total 27652 frames, 467s wall)
+  attempt 2: success 277 frames, hearts 4.5
+  attempt 5: success 275 frames, hearts 4.5
+  attempt 10: success 274 frames, hearts 4.5
+  (early stop after 23 attempts)
+[l4_sail] 274 frames, hearts 4.5 -> f27926 mode=05/00 L0 room=45 pos=(128,221) dir=8 hp=4.5/6 rup=41 sword=2 lag=5344 (total 27926 frames, 471s wall)
+  attempt 2: success 273 frames, hearts 4.5
+  attempt 5: success 269 frames, hearts 4.5
+  (early stop after 19 attempts)
+[enter_L4] 269 frames, hearts 4.5 -> f28195 mode=05/00 L4 room=71 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=5363 (total 28195 frames, 474s wall)
+  attempt 4: success 330 frames, hearts 4.5
+  attempt 2: success 322 frames, hearts 4.5
+  (early stop after 16 attempts)
+[l4_70] 322 frames, hearts 4.5 -> f28517 mode=05/00 L4 room=70 pos=(224,141) dir=2 hp=4.5/6 rup=41 sword=2 lag=5499 (total 28517 frames, 477s wall)
+  attempt 4: success 543 frames, hearts 4.5
+  attempt 6: success 536 frames, hearts 4.5
+  attempt 30: success 533 frames, hearts 4.5
+  attempt 32: success 530 frames, hearts 4.5
+[l4_70_key] 530 frames, hearts 4.5 -> f29047 mode=05/00 L4 room=71 pos=(16,141) dir=1 hp=4.5/6 rup=41 sword=2 lag=5635 (total 29047 frames, 756s wall)
+  attempt 2: success 284 frames, hearts 4.5
+  attempt 12: success 283 frames, hearts 4.5
+  (early stop after 25 attempts)
+[l4_61] 283 frames, hearts 4.5 -> f29330 mode=05/00 L4 room=61 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=5732 (total 29330 frames, 759s wall)
+  attempt 1: success 287 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_51] 287 frames, hearts 4.5 -> f29617 mode=05/00 L4 room=51 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=5829 (total 29617 frames, 764s wall)
+  attempt 1: success 956 frames, hearts 4.5
+  attempt 4: success 934 frames, hearts 4.5
+  attempt 5: success 839 frames, hearts 4.5
+  attempt 7: success 796 frames, hearts 4.5
+  attempt 9: success 795 frames, hearts 4.5
+  attempt 11: success 793 frames, hearts 4.5
+  attempt 13: success 790 frames, hearts 4.5
+  attempt 14: success 743 frames, hearts 4.5
+  attempt 15: success 698 frames, hearts 4.5
+  (early stop after 50 attempts)
+[l4_51_key] 698 frames, hearts 4.5 -> f30315 mode=05/00 L4 room=50 pos=(224,141) dir=2 hp=4.5/6 rup=41 sword=2 lag=5966 (total 30315 frames, 1143s wall)
+  attempt 2: success 460 frames, hearts 4.5
+  attempt 13: success 433 frames, hearts 4.5
+  (early stop after 24 attempts)
+[l4_40] 433 frames, hearts 4.5 -> f30748 mode=05/00 L4 room=40 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=6064 (total 30748 frames, 1169s wall)
+  attempt 2: success 472 frames, hearts 4.5
+  attempt 9: success 464 frames, hearts 4.5
+  (early stop after 23 attempts)
+[l4_40_key] 464 frames, hearts 4.5 -> f31212 mode=05/00 L4 room=30 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=6162 (total 31212 frames, 1175s wall)
+  attempt 2: success 374 frames, hearts 4.5
+  attempt 11: success 370 frames, hearts 4.5
+  (early stop after 27 attempts)
+[l4_31] 370 frames, hearts 4.5 -> f31582 mode=05/00 L4 room=31 pos=(16,141) dir=1 hp=4.5/6 rup=41 sword=2 lag=6298 (total 31582 frames, 1183s wall)
+  attempt 1: success 738 frames, hearts 4.5
+  (early stop after 36 attempts)
+[l4_32] 738 frames, hearts 4.5 -> f32320 mode=05/00 L4 room=32 pos=(16,141) dir=1 hp=4.5/6 rup=41 sword=2 lag=6434 (total 32320 frames, 1606s wall)
+  attempt 1: success 776 frames, hearts 4.5
+  attempt 3: success 768 frames, hearts 4.5
+  attempt 21: success 765 frames, hearts 4.5
+  attempt 23: success 764 frames, hearts 4.5
+  (early stop after 58 attempts)
+[l4_lad_st] 764 frames, hearts 4.5 -> f33084 mode=09/09 L4 room=60 pos=(48,65) dir=4 hp=4.5/6 rup=41 sword=2 lag=6436 (total 33084 frames, 2196s wall)
+  attempt 4: success 780 frames, hearts 3.5
+  attempt 3: success 814 frames, hearts 4.0
+  attempt 2: success 859 frames, hearts 4.5
+  attempt 1: success 858 frames, hearts 4.5
+  attempt 5: success 857 frames, hearts 4.5
+  attempt 7: success 831 frames, hearts 4.5
+  attempt 8: success 818 frames, hearts 4.5
+  attempt 41: success 816 frames, hearts 4.5
+[l4_ladder] 816 frames, hearts 4.5 -> f33900 mode=05/00 L4 room=32 pos=(192,189) dir=4 hp=4.5/6 rup=41 sword=2 lag=6439 (total 33900 frames, 2371s wall)
+  attempt 2: success 391 frames, hearts 4.5
+  (early stop after 15 attempts)
+  attempt 17: success 390 frames, hearts 4.5
+[l4_b31] 390 frames, hearts 4.5 -> f34290 mode=05/00 L4 room=31 pos=(208,141) dir=2 hp=4.5/6 rup=41 sword=2 lag=6575 (total 34290 frames, 2375s wall)
+  attempt 4: success 437 frames, hearts 4.5
+  attempt 1: success 436 frames, hearts 4.5
+  attempt 7: success 435 frames, hearts 4.5
+  (early stop after 21 attempts)
+[l4_b30] 435 frames, hearts 4.5 -> f34725 mode=05/00 L4 room=30 pos=(224,141) dir=2 hp=4.5/6 rup=41 sword=2 lag=6712 (total 34725 frames, 2410s wall)
+  attempt 2: success 352 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_20] 352 frames, hearts 4.5 -> f35077 mode=05/00 L4 room=20 pos=(120,205) dir=8 hp=4.5/6 rup=41 sword=2 lag=6809 (total 35077 frames, 2425s wall)
+  attempt 2: success 383 frames, hearts 4.5
+  attempt 12: success 382 frames, hearts 4.5
+  attempt 20: success 376 frames, hearts 4.5
+  (early stop after 36 attempts)
+[l4_21] 376 frames, hearts 4.5 -> f35453 mode=05/00 L4 room=21 pos=(16,141) dir=1 hp=4.5/6 rup=41 sword=2 lag=6946 (total 35453 frames, 2447s wall)
+  attempt 2: success 955 frames, hearts 4.5
+  attempt 3: success 948 frames, hearts 4.5
+  attempt 7: success 947 frames, hearts 4.5
+  attempt 16: success 797 frames, hearts 4.5
+  (early stop after 49 attempts)
+[l4_11] 797 frames, hearts 4.5 -> f36250 mode=05/00 L4 room=11 pos=(120,189) dir=8 hp=4.5/6 rup=41 sword=2 lag=7043 (total 36250 frames, 2608s wall)
+  attempt 2: success 423 frames, hearts 4.5
+  attempt 4: success 420 frames, hearts 4.5
+  attempt 7: success 419 frames, hearts 4.5
+  attempt 5: success 410 frames, hearts 4.5
+  attempt 12: success 409 frames, hearts 4.5
+  (early stop after 26 attempts)
+[l4_12r] 409 frames, hearts 4.5 -> f36659 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36659 frames, 2644s wall)
+  attempt 3: success 2 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_10] 2 frames, hearts 4.5 -> f36661 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36661 frames, 2644s wall)
+  attempt 3: success 2 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_00] 2 frames, hearts 4.5 -> f36663 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36663 frames, 2644s wall)
+  attempt 4: success 2 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_01] 2 frames, hearts 4.5 -> f36665 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36665 frames, 2644s wall)
+  attempt 3: success 2 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_02] 2 frames, hearts 4.5 -> f36667 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36667 frames, 2644s wall)
+  attempt 3: success 2 frames, hearts 4.5
+  (early stop after 15 attempts)
+[l4_12] 2 frames, hearts 4.5 -> f36669 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=4.5/6 rup=44 sword=2 lag=7179 (total 36669 frames, 2644s wall)
+  attempt 2: success 903 frames, hearts 4.5
+  attempt 4: success 884 frames, hearts 4.5
+  attempt 8: success 837 frames, hearts 5.5
+  attempt 28: success 829 frames, hearts 5.5
+  attempt 35: success 827 frames, hearts 5.5
+  (early stop after 69 attempts)
+[l4_13] 827 frames, hearts 5.5 -> f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315 (total 37496 frames, 3107s wall)
+  attempt 7: success 4096 frames, hearts 3.0
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 7: success 1819 frames, hearts 3.5
+  attempt 16: success 1314 frames, hearts 5.5
+  attempt 21: success 1297 frames, hearts 2.5
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 7: success 1819 frames, hearts 3.5
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+Exception in thread Thread-1 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 351, in plan_fight
+    ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+                         ^^^^^^^^^^^^^^^^^^
+NameError: name 'read_ghost_objects' is not defined
+Exception in thread Thread-2 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 351, in plan_fight
+    ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+                         ^^^^^^^^^^^^^^^^^^
+NameError: name 'read_ghost_objects' is not defined
+Exception in thread Thread-3 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 351, in plan_fight
+    ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+                         ^^^^^^^^^^^^^^^^^^
+NameError: name 'read_ghost_objects' is not defined
+Exception in thread Thread-4 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 351, in plan_fight
+    ghosts = [g for g in read_ghost_objects(emu) if not immune_to(emu, g[0], DMG_SWORD)]
+                         ^^^^^^^^^^^^^^^^^^
+NameError: name 'read_ghost_objects' is not defined
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3042, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3033, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 269, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+Exception in thread Thread-1 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 436, in plan_fight
+    sk = emu.step(d, 8)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 268, in step
+    resp = self.cmd(f"step {frames} {','.join(btn) or '-'}")
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 252, in cmd
+    raise RuntimeError(f"bridge connection lost at {_time.strftime('%H:%M:%S')}: EmuHawk {how}; "
+                       f"log {getattr(self._logfile, 'name', '?')}")
+RuntimeError: bridge connection lost at 15:03:12: EmuHawk still running; log /home/cmayfield/code/games/aibeatszelda/src/logs/fullgame_scout.log
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 3 scouts split 0-90 frames between them rather than all drawing from it
+Exception in thread Thread-3 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 436, in plan_fight
+    sk = emu.step(d, 8)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 268, in step
+    resp = self.cmd(f"step {frames} {','.join(btn) or '-'}")
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 252, in cmd
+    raise RuntimeError(f"bridge connection lost at {_time.strftime('%H:%M:%S')}: EmuHawk {how}; "
+                       f"log {getattr(self._logfile, 'name', '?')}")
+RuntimeError: bridge connection lost at 15:09:01: EmuHawk exit code 0 (0x00000000); log /home/cmayfield/code/games/aibeatszelda/src/logs/fullgame_scout2.log
+Exception in thread Thread-2 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 436, in plan_fight
+    sk = emu.step(d, 8)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 268, in step
+    resp = self.cmd(f"step {frames} {','.join(btn) or '-'}")
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 252, in cmd
+    raise RuntimeError(f"bridge connection lost at {_time.strftime('%H:%M:%S')}: EmuHawk {how}; "
+                       f"log {getattr(self._logfile, 'name', '?')}")
+RuntimeError: bridge connection lost at 15:09:03: EmuHawk exit code 0 (0x00000000); log /home/cmayfield/code/games/aibeatszelda/src/logs/fullgame_scout1.log
+Exception in thread Thread-1 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 307, in work
+    outcome = policy(emu, rec, rng, max_frames)
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 229, in policy
+    return plan_fight(emu, rec, max_frames=budget, rollout=20, rng=rng, log=True,
+                      targets=gleeok_head_tracker(emu), done=gleeok_dead,
+                      hp_weight=140.0, miss_penalty=0.0)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/lookahead.py", line 493, in plan_fight
+    s2 = emu.step((), FUSE if m[0] == "bomb" else ARROW if (m[0] == "shoot" and lattice is not None)
+                  else BEAM_ROLL if (m[0] == "swing" and beam) else this_rollout)
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 268, in step
+    resp = self.cmd(f"step {frames} {','.join(btn) or '-'}")
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 252, in cmd
+    raise RuntimeError(f"bridge connection lost at {_time.strftime('%H:%M:%S')}: EmuHawk {how}; "
+                       f"log {getattr(self._logfile, 'name', '?')}")
+RuntimeError: bridge connection lost at 15:09:03: EmuHawk exit code 0 (0x00000000); log /home/cmayfield/code/games/aibeatszelda/src/logs/fullgame_scout.log
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3042, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3033, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 269, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 3 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 1: success 2446 frames, hearts 3.5
+  attempt 8: success 888 frames, hearts 4.5
+  attempt 43: success 490 frames, hearts 5.5
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 3 scouts split 0-90 frames between them rather than all drawing from it
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 1: died (2779 frames)
+  attempt 4: died (3118 frames)
+  attempt 5: died (1579 frames)
+  attempt 6: died (3117 frames)
+  attempt 2: timeout (6084 frames)
+  attempt 3: timeout (6177 frames)
+  attempt 7: died (3544 frames)
+  attempt 9: died (2525 frames)
+  attempt 8: died (3027 frames)
+  attempt 12: died (1829 frames)
+  attempt 11: died (2324 frames)
+  attempt 10: died (4099 frames)
+  attempt 14: success 1953 frames, hearts 0.5
+  attempt 13: over budget (3127 frames)
+  attempt 15: over budget (2588 frames)
+  attempt 16: over budget (2592 frames)
+  attempt 19: died (1182 frames)
+  attempt 17: over budget (2591 frames)
+  attempt 18: over budget (2588 frames)
+  attempt 20: died (2443 frames)
+  attempt 21: over budget (2588 frames)
+  attempt 24: success 1483 frames, hearts 0.5
+  attempt 22: over budget (2538 frames)
+  attempt 23: over budget (2123 frames)
+  attempt 25: died (1457 frames)
+  attempt 26: died (1925 frames)
+  attempt 27: died (1946 frames)
+  attempt 28: over budget (2118 frames)
+  attempt 29: died (2026 frames)
+  attempt 30: over budget (2120 frames)
+  attempt 31: over budget (2117 frames)
+  attempt 32: over budget (2119 frames)
+  attempt 33: died (2105 frames)
+  attempt 34: over budget (2120 frames)
+  attempt 35: over budget (2121 frames)
+  attempt 36: over budget (2122 frames)
+  attempt 37: over budget (2122 frames)
+  attempt 38: over budget (2116 frames)
+  attempt 39: over budget (2120 frames)
+  attempt 40: over budget (2119 frames)
+  attempt 41: died (1794 frames)
+  attempt 42: over budget (2122 frames)
+  attempt 44: over budget (2117 frames)
+  attempt 43: over budget (2118 frames)
+  attempt 46: over budget (2119 frames)
+  attempt 45: over budget (2121 frames)
+  attempt 47: over budget (2117 frames)
+  attempt 48: died (2077 frames)
+  attempt 49: over budget (2123 frames)
+  attempt 50: over budget (2119 frames)
+  attempt 51: over budget (2115 frames)
+  attempt 52: over budget (2119 frames)
+  attempt 53: over budget (2120 frames)
+  attempt 54: over budget (2122 frames)
+  attempt 55: over budget (2117 frames)
+  attempt 56: over budget (2116 frames)
+  attempt 59: died (1399 frames)
+  attempt 57: over budget (2120 frames)
+  attempt 58: over budget (2122 frames)
+  attempt 60: over budget (2123 frames)
+  attempt 61: over budget (2119 frames)
+  attempt 63: over budget (2116 frames)
+  attempt 66: died (1364 frames)
+  attempt 65: over budget (2117 frames)
+  attempt 64: over budget (2117 frames)
+  attempt 67: over budget (2120 frames)
+  attempt 68: died (2068 frames)
+  attempt 70: died (1504 frames)
+  attempt 69: over budget (2122 frames)
+  attempt 71: died (1258 frames)
+  attempt 72: died (2093 frames)
+  attempt 73: over budget (2116 frames)
+  attempt 74: over budget (2119 frames)
+  attempt 75: died (1853 frames)
+  attempt 78: died (1179 frames)
+  attempt 76: over budget (2119 frames)
+  attempt 79: died (1634 frames)
+  attempt 77: over budget (2119 frames)
+  attempt 80: over budget (2116 frames)
+[gleeok] 1483 frames, hearts 0.5 -> f38979 mode=05/00 L4 room=13 pos=(136,117) dir=2 hp=0.5/6 rup=44 sword=2 lag=7315 (total 38979 frames, 3773s wall)
+  attempt 2: success 119 frames, hearts 1.5
+  attempt 4: success 117 frames, hearts 1.5
+  attempt 5: success 98 frames, hearts 1.5
+  attempt 10: success 95 frames, hearts 1.5
+  (early stop after 51 attempts)
+[l4_heart] 95 frames, hearts 1.5 -> f39074 mode=05/00 L4 room=13 pos=(200,181) dir=1 hp=1.5/7 rup=44 sword=2 lag=7315 (total 39074 frames, 3776s wall)
+  attempt 3: success 1095 frames, hearts 7.0
+  (early stop after 45 attempts)
+[L4_done] 1095 frames, hearts 7.0 -> f40169 mode=02/00 L0 room=03 pos=(120,149) dir=8 hp=7.0/7 rup=44 sword=2 lag=7424 (total 40169 frames, 3794s wall)
+  attempt 3: success 160 frames, hearts 7.0
+  (early stop after 15 attempts)
+[warp_L4] 160 frames, hearts 7.0 -> f40329 mode=05/00 L0 room=45 pos=(128,125) dir=4 hp=7.0/7 rup=44 sword=2 lag=7431 (total 40329 frames, 3795s wall)
+  attempt 2: success 257 frames, hearts 7.0
+  attempt 1: success 256 frames, hearts 7.0
+  attempt 5: success 255 frames, hearts 7.0
+  attempt 10: success 254 frames, hearts 7.0
+  (early stop after 24 attempts)
+[l2_sail] 254 frames, hearts 7.0 -> f40583 mode=05/00 L0 room=55 pos=(128,127) dir=4 hp=7.0/7 rup=44 sword=2 lag=7481 (total 40583 frames, 3798s wall)
+  attempt 3: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 4: nav: no path to the Up edge from (128,127) ev (17 frames)
+  attempt 1: nav: no path to the Up edge from (128,127) ev (11 frames)
+  attempt 2: nav: no path to the Up edge from (128,127) ev (24 frames)
+  attempt 7: nav: no path to the Up edge from (128,127) ev (0 frames)
+  attempt 5: nav: no path to the Up edge from (128,127) ev (18 frames)
+  attempt 6: nav: no path to the Up edge from (128,127) ev (15 frames)
+  attempt 8: nav: no path to the Up edge from (128,127) ev (10 frames)
+  attempt 9: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 11: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 10: nav: no path to the Up edge from (128,127) ev (18 frames)
+  attempt 12: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 13: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 15: nav: no path to the Up edge from (128,127) ev (0 frames)
+  attempt 14: nav: no path to the Up edge from (128,127) ev (30 frames)
+  attempt 18: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 17: nav: no path to the Up edge from (128,127) ev (11 frames)
+  attempt 16: nav: no path to the Up edge from (128,127) ev (24 frames)
+  attempt 19: nav: no path to the Up edge from (128,127) ev (8 frames)
+  attempt 20: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 22: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 21: nav: no path to the Up edge from (128,127) ev (24 frames)
+  attempt 23: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 24: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 25: nav: no path to the Up edge from (128,127) ev (21 frames)
+  attempt 26: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 27: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 28: nav: no path to the Up edge from (128,127) ev (13 frames)
+  attempt 29: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 30: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 31: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 32: nav: no path to the Up edge from (128,127) ev (4 frames)
+  attempt 33: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 34: nav: no path to the Up edge from (128,127) ev (2 frames)
+  attempt 35: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 37: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 36: nav: no path to the Up edge from (128,127) ev (10 frames)
+  attempt 38: nav: no path to the Up edge from (128,127) ev (3 frames)
+  attempt 39: nav: no path to the Up edge from (128,127) ev (1 frames)
+  attempt 42: nav: no path to the Up edge from (128,127) ev (1 frames)
+  attempt 41: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 40: nav: no path to the Up edge from (128,127) ev (6 frames)
+  attempt 43: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 44: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 46: nav: no path to the Up edge from (128,127) ev (19 frames)
+  attempt 47: nav: no path to the Up edge from (128,127) ev (10 frames)
+  attempt 45: nav: no path to the Up edge from (128,127) ev (26 frames)
+  attempt 49: nav: no path to the Up edge from (128,127) ev (2 frames)
+  attempt 48: nav: no path to the Up edge from (128,127) ev (15 frames)
+  attempt 50: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 51: nav: no path to the Up edge from (128,127) ev (10 frames)
+  attempt 52: nav: no path to the Up edge from (128,127) ev (18 frames)
+  attempt 54: nav: no path to the Up edge from (128,127) ev (8 frames)
+  attempt 53: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 55: nav: no path to the Up edge from (128,127) ev (22 frames)
+  attempt 56: nav: no path to the Up edge from (128,127) ev (3 frames)
+  attempt 57: nav: no path to the Up edge from (128,127) ev (7 frames)
+  attempt 58: nav: no path to the Up edge from (128,127) ev (10 frames)
+  attempt 59: nav: no path to the Up edge from (128,127) ev (5 frames)
+  attempt 60: nav: no path to the Up edge from (128,127) ev (3 frames)
+  no success; most common: 60x nav: no path to the Up edge from (128,127) ev @ room 55 L0
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3042, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3033, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 269, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment r5_56_46 failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 1: died (4439 frames)
+  attempt 5: died (1532 frames)
+  attempt 4: died (5974 frames)
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  scout 0 lost its emulator (bridge connection lost at 20:36:11: EmuHawk exit code 0 (0x0); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 20:36:17: EmuHawk still running; l); that worker is done
+  scout 3 lost its emulator (bridge connection lost at 20:36:22: EmuHawk still running; l); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 20:36:36: EmuHawk exit code 0 (0x0); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3076, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3067, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 278, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 1: died (4439 frames)
+  attempt 5: died (1532 frames)
+  attempt 4: died (5974 frames)
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  scout 3 lost its emulator (bridge connection lost at 21:15:22: EmuHawk exit code 0 (0x0); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 21:15:24: EmuHawk exit code 0 (0x0); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 21:15:26: EmuHawk exit code 0 (0x0); that worker is done
+  scout 0 lost its emulator (bridge connection lost at 21:15:27: EmuHawk exit code 0 (0x0); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3076, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3067, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 278, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 1: died (4439 frames)
+  scout 3 lost its emulator (bridge connection lost at 21:31:09: EmuHawk exit code 0 (0x0); that worker is done
+  scout 0 lost its emulator (bridge connection lost at 21:31:16: EmuHawk exit code 0 (0x0); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 21:31:19: EmuHawk exit code 0 (0x0); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 21:31:21: EmuHawk exit code 0 (0x0); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+  no success; most common: 1x died @ room 13 L4
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3076, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3067, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 278, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+checkpoint 'l4_13' belongs to a different segment list (ff5e53ce0d58 != 3ea95dcefa81); refusing to resume
+no checkpoint 'l4_13'
+checkpoint 'l4_13' belongs to a different segment list (ff5e53ce0d58 != 3ea95dcefa81); refusing to resume
+no checkpoint 'l4_13'
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  scout 3 lost its emulator (bridge connection lost at 21:36:06: EmuHawk still running; l); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 21:36:07: EmuHawk still running; l); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 21:36:07: EmuHawk still running; l); that worker is done
+  scout 0 lost its emulator (bridge connection lost at 21:36:08: EmuHawk still running; l); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3076, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3067, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 278, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+resumed checkpoint 'l4_13': 37496 frames, f37496 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=5.5/6 rup=44 sword=2 lag=7315
+resuming after 100 segments
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  scout 3 lost its emulator (bridge connection lost at 21:38:36: EmuHawk exit code 0 (0x0); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 21:38:36: EmuHawk exit code 0 (0x0); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 21:38:36: EmuHawk exit code 0 (0x0); that worker is done
+  scout 0 lost its emulator (bridge connection lost at 21:38:37: EmuHawk exit code 0 (0x0); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3076, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3067, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 278, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed

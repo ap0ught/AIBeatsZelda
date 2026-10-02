@@ -1,0 +1,16 @@
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(it seems EmuHawk is already running, NOT capturing output)
+parsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:32943 /home/cmayfield/code/games/aibeatszelda/src/roms/Legend of Zelda, The (USA) (Rev 1).nes
+Could not set X locale modifiers
+
+(mono:2665036): Gtk-WARNING **: 17:51:46.268: Unable to locate theme engine in module_path: "adwaita",
+Using SDL2 for host input (keyboard + gamepads)
+ROM was not a multiple of 1024 bytes, and not a recognized header size: 16. Assume it's purely ROM data.
+Game was not in DB. CRC: E47960E0 MD5: 614FB3085826E62F3BE3A3FE0B931689
+4671517D72D09799403F6C672CD2B395933E926E
+quickerNES: Booted with Mapper #1 "mmc1"
+Hash for BootGod: BE2F5DC8C5BA8EC1A344A71F9FB204750AF24FE7
+BootGod entry found: Legend of Zelda, The
+Core reported BoardID: "mmc1"
+[Lua Console] loaded script /home/cmayfield/code/games/aibeatszelda/src/bridge.lua
+[Lua script: bridge] bridge: connected on port 32943

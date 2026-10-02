@@ -1,0 +1,823 @@
+=== attempt 1 (2026-09-30 11:38:45) ===
+resumed checkpoint '5b_bombs': 4634 frames, f4634 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1030
+resuming after 13 segments
+  attempt 4: done (1283 frames)
+  attempt 5: done (1731 frames)
+  attempt 1: timeout (2534 frames)
+  attempt 3: timeout (2528 frames)
+  attempt 2: timeout (2523 frames)
+  attempt 8: done (1280 frames)
+  attempt 9: done (2184 frames)
+  attempt 10: done (1541 frames)
+  attempt 6: timeout (2530 frames)
+  attempt 7: timeout (2533 frames)
+  attempt 11: timeout (2534 frames)
+  attempt 12: timeout (2522 frames)
+  attempt 14: timeout (2528 frames)
+  attempt 13: timeout (2528 frames)
+  attempt 18: done (2165 frames)
+  attempt 15: timeout (2531 frames)
+  attempt 16: timeout (2534 frames)
+  attempt 19: done (1963 frames)
+  scout 3 lost its emulator (bridge connection lost at 12:05:39: EmuHawk still running; l); that worker is done
+  attempt 17: timeout (2530 frames)
+  scout 0 lost its emulator (bridge connection lost at 12:05:41: EmuHawk exit code 0 (0x0); that worker is done
+  scout 2 lost its emulator (bridge connection lost at 12:05:48: EmuHawk exit code 0 (0x0); that worker is done
+  scout 1 lost its emulator (bridge connection lost at 12:05:50: EmuHawk exit code 0 (0x0); that worker is done
+  4 of 4 scouts lost their emulator mid-search; the remaining 0 covered the phase window between them
+  no success; most common: 12x timeout @ room 4B L3 | 7x done @ room 4A L3
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3114, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3105, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 295, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment 4b_left failed
+=== a segment genuinely failed; stopping (2026-09-30 12:05:52) ===
+=== attempt 1 (2026-09-30 12:39:30) ===
+resumed checkpoint '6b_up': 4381 frames, f4381 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=933
+resuming after 12 segments
+  attempt 1: success 896 frames, hearts 3.0
+  attempt 4: success 793 frames, hearts 3.0
+  attempt 3: over budget (793 frames)
+  attempt 2: over budget (789 frames)
+  attempt 5: over budget (793 frames)
+  attempt 8: success 672 frames, hearts 3.0
+  attempt 7: over budget (672 frames)
+  attempt 6: over budget (669 frames)
+  attempt 9: over budget (670 frames)
+  attempt 10: over budget (672 frames)
+  attempt 11: over budget (669 frames)
+  attempt 12: over budget (671 frames)
+  attempt 13: over budget (669 frames)
+  attempt 14: over budget (672 frames)
+  attempt 15: over budget (665 frames)
+  attempt 16: over budget (671 frames)
+  attempt 18: over budget (672 frames)
+  attempt 17: over budget (668 frames)
+  attempt 19: over budget (672 frames)
+  attempt 21: over budget (672 frames)
+  attempt 20: over budget (668 frames)
+  attempt 22: over budget (668 frames)
+  attempt 24: over budget (672 frames)
+  attempt 23: over budget (672 frames)
+  attempt 25: over budget (669 frames)
+  attempt 26: over budget (667 frames)
+  attempt 27: over budget (665 frames)
+  attempt 28: over budget (672 frames)
+  attempt 30: over budget (668 frames)
+  attempt 31: over budget (666 frames)
+  attempt 32: over budget (672 frames)
+  attempt 33: over budget (672 frames)
+  attempt 34: over budget (667 frames)
+  attempt 35: over budget (667 frames)
+  attempt 36: over budget (672 frames)
+  attempt 37: over budget (671 frames)
+  attempt 38: over budget (672 frames)
+  attempt 41: over budget (672 frames)
+  attempt 39: over budget (668 frames)
+  attempt 40: over budget (671 frames)
+  (early stop after 41 attempts)
+  attempt 42: over budget (671 frames)
+  attempt 43: over budget (665 frames)
+  attempt 44: over budget (672 frames)
+[5b_bombs] 672 frames, hearts 3.0 -> f5053 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1030 (total 5053 frames, 1594s wall)
+  attempt 3: success 346 frames, hearts 3.0
+  attempt 1: success 342 frames, hearts 3.0
+  attempt 2: success 331 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 331 - taking it
+[4b_left] 331 frames, hearts 3.0 -> f5384 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1166 (total 5384 frames, 1602s wall)
+  attempt 2: success 681 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 681 - taking it
+  attempt 6: done (601 frames)
+  attempt 4: success 677 frames, hearts 3.0
+  attempt 5: over budget (677 frames)
+[4a_bombs] 677 frames, hearts 3.0 -> f6061 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1302 (total 6061 frames, 1692s wall)
+  attempt 3: success 301 frames, hearts 3.0
+  attempt 4: success 297 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 297 - taking it
+  attempt 2: over budget (297 frames)
+  attempt 6: over budget (297 frames)
+  attempt 5: success 276 frames, hearts 3.0
+[49_key] 276 frames, hearts 3.0 -> f6337 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395 (total 6337 frames, 1700s wall)
+  attempt 2: success 825 frames, hearts 3.0
+  attempt 1: success 762 frames, hearts 3.0
+  attempt 5: success 490 frames, hearts 3.0
+  attempt 4: over budget (1148 frames)
+  attempt 3: over budget (1150 frames)
+  attempt 10: success 450 frames, hearts 3.0
+  attempt 9: success 580 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 580 - taking it
+[59_fight] 580 frames, hearts 3.0 -> f6917 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=3.0/3 rup=5 sword=1 lag=1488 (total 6917 frames, 2150s wall)
+  attempt 1: success 170 frames, hearts 3.0
+  attempt 3: reached (356 frames)
+  attempt 12: success 169 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 169 - taking it
+  attempt 10: over budget (607 frames)
+[69_stairs] 169 frames, hearts 3.0 -> f7086 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=3.0/3 rup=5 sword=1 lag=1516 (total 7086 frames, 2220s wall)
+  attempt 2: success 864 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 864 - taking it
+[cellar] 864 frames, hearts 2.5 -> f7950 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=2.5/3 rup=5 sword=1 lag=1521 (total 7950 frames, 2354s wall)
+  attempt 2: success 244 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 244 - taking it
+[69_up] 244 frames, hearts 2.5 -> f8194 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=2.5/3 rup=5 sword=1 lag=1627 (total 8194 frames, 2365s wall)
+  attempt 2: success 241 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 241 - taking it
+[59_up] 241 frames, hearts 2.5 -> f8435 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=2.5/3 rup=5 sword=1 lag=1724 (total 8435 frames, 2368s wall)
+  attempt 3: success 345 frames, hearts 2.5
+  attempt 1: success 328 frames, hearts 2.5
+  attempt 2: success 325 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 325 - taking it
+[49_right] 325 frames, hearts 2.5 -> f8760 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=2.5/3 rup=5 sword=1 lag=1860 (total 8760 frames, 2373s wall)
+  attempt 3: success 382 frames, hearts 2.5
+  attempt 2: success 361 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 361 - taking it
+[4a_right] 361 frames, hearts 2.5 -> f9121 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=2.5/3 rup=5 sword=1 lag=1996 (total 9121 frames, 2378s wall)
+  attempt 3: success 472 frames, hearts 2.5
+  attempt 1: success 452 frames, hearts 2.5
+  attempt 2: success 440 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 440 - taking it
+[4b_right] 440 frames, hearts 2.5 -> f9561 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=2.5/3 rup=5 sword=1 lag=2132 (total 9561 frames, 2394s wall)
+  attempt 3: success 505 frames, hearts 2.5
+  attempt 2: success 502 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 502 - taking it
+[4c_bomb] 502 frames, hearts 2.5 -> f10063 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=2.5/3 rup=5 sword=1 lag=2268 (total 10063 frames, 2399s wall)
+  manhandla is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 2: success 238 frames, hearts 3.5
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 3: timeout (796 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 4: timeout (719 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+[manhandla] 238 frames, hearts 3.5 -> f10301 mode=05/00 L3 room=4d pos=(131,133) dir=1 hp=3.5/4 rup=5 sword=1 lag=2298 (total 10301 frames, 2532s wall)
+  attempt 2: success 827 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 827 - taking it
+[L3_done] 827 frames, hearts 4.0 -> f11128 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=5 sword=1 lag=2404 (total 11128 frames, 2538s wall)
+  attempt 2: success 180 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 180 - taking it
+[warp_L3] 180 frames, hearts 4.0 -> f11308 mode=05/00 L0 room=74 pos=(128,125) dir=4 hp=4.0/4 rup=5 sword=1 lag=2414 (total 11308 frames, 2540s wall)
+  attempt 4: success 217 frames, hearts 4.0
+  attempt 2: success 209 frames, hearts 4.0
+  attempt 3: over budget (217 frames)
+  attempt 1: over budget (217 frames)
+  attempt 5: over budget (209 frames)
+  attempt 6: over budget (209 frames)
+  attempt 7: over budget (209 frames)
+  attempt 8: over budget (208 frames)
+  attempt 9: over budget (209 frames)
+  attempt 10: over budget (209 frames)
+  attempt 11: over budget (209 frames)
+  attempt 12: success 208 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 208 - taking it
+  attempt 13: over budget (208 frames)
+  attempt 14: over budget (208 frames)
+  attempt 15: over budget (208 frames)
+[ow1_73] 208 frames, hearts 4.0 -> f11516 mode=05/00 L0 room=73 pos=(240,133) dir=2 hp=4.0/4 rup=5 sword=1 lag=2485 (total 11516 frames, 2544s wall)
+  attempt 2: success 166 frames, hearts 4.0
+  attempt 1: over budget (172 frames)
+  attempt 3: over budget (172 frames)
+  attempt 5: over budget (166 frames)
+  attempt 6: over budget (166 frames)
+  attempt 8: over budget (165 frames)
+  attempt 7: over budget (166 frames)
+  attempt 9: over budget (166 frames)
+  attempt 11: over budget (166 frames)
+  attempt 10: over budget (166 frames)
+  attempt 12: success 165 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 165 - taking it
+  attempt 13: over budget (165 frames)
+  attempt 15: over budget (165 frames)
+  attempt 14: over budget (165 frames)
+[ow1_63] 165 frames, hearts 4.0 -> f11681 mode=05/00 L0 room=63 pos=(208,221) dir=8 hp=4.0/4 rup=5 sword=1 lag=2537 (total 11681 frames, 2548s wall)
+  attempt 2: success 178 frames, hearts 4.0
+  attempt 4: over budget (181 frames)
+  attempt 3: over budget (178 frames)
+  attempt 1: over budget (178 frames)
+  attempt 5: over budget (178 frames)
+  attempt 6: over budget (178 frames)
+  attempt 7: over budget (178 frames)
+  attempt 8: over budget (177 frames)
+  attempt 9: over budget (178 frames)
+  attempt 10: over budget (178 frames)
+  attempt 11: over budget (178 frames)
+  attempt 12: success 177 frames, hearts 4.0
+  attempt 13: over budget (177 frames)
+  attempt 14: over budget (177 frames)
+  attempt 15: over budget (177 frames)
+  attempt 16: over budget (177 frames)
+  attempt 17: over budget (177 frames)
+  attempt 18: over budget (177 frames)
+  attempt 19: over budget (176 frames)
+  attempt 20: over budget (177 frames)
+  attempt 21: over budget (177 frames)
+  attempt 23: over budget (177 frames)
+  attempt 22: over budget (177 frames)
+  attempt 24: over budget (177 frames)
+  attempt 25: over budget (177 frames)
+  attempt 27: over budget (177 frames)
+  (early stop after 26 attempts)
+  attempt 28: over budget (176 frames)
+  attempt 29: over budget (177 frames)
+[ow1_64] 177 frames, hearts 4.0 -> f11858 mode=05/00 L0 room=64 pos=(0,157) dir=1 hp=4.0/4 rup=5 sword=1 lag=2608 (total 11858 frames, 2554s wall)
+  attempt 2: success 312 frames, hearts 4.0
+  attempt 3: over budget (318 frames)
+  attempt 4: over budget (320 frames)
+  attempt 1: over budget (320 frames)
+  attempt 5: over budget (312 frames)
+  attempt 7: over budget (312 frames)
+  attempt 8: over budget (311 frames)
+  attempt 6: over budget (312 frames)
+  attempt 9: over budget (312 frames)
+  attempt 10: over budget (312 frames)
+  attempt 11: over budget (312 frames)
+  attempt 12: over budget (311 frames)
+  attempt 13: over budget (312 frames)
+  attempt 15: over budget (312 frames)
+  attempt 14: over budget (312 frames)
+  (early stop after 15 attempts)
+  attempt 16: over budget (312 frames)
+  attempt 17: over budget (312 frames)
+  attempt 18: over budget (312 frames)
+[ow1_65] 312 frames, hearts 4.0 -> f12170 mode=05/00 L0 room=65 pos=(0,189) dir=1 hp=4.0/4 rup=5 sword=1 lag=2679 (total 12170 frames, 2563s wall)
+  attempt 2: success 373 frames, hearts 4.0
+  attempt 1: over budget (375 frames)
+  attempt 3: over budget (383 frames)
+  attempt 4: over budget (373 frames)
+  attempt 5: over budget (373 frames)
+  attempt 6: over budget (373 frames)
+  attempt 7: over budget (373 frames)
+  attempt 8: over budget (372 frames)
+  attempt 10: over budget (373 frames)
+  attempt 11: over budget (373 frames)
+  attempt 9: over budget (373 frames)
+  attempt 12: over budget (372 frames)
+  attempt 14: over budget (373 frames)
+  attempt 13: over budget (373 frames)
+  attempt 15: over budget (373 frames)
+  (early stop after 15 attempts)
+  attempt 16: over budget (373 frames)
+  attempt 17: over budget (373 frames)
+  attempt 18: over budget (373 frames)
+[ow1_66] 373 frames, hearts 4.0 -> f12543 mode=05/00 L0 room=66 pos=(0,189) dir=1 hp=4.0/4 rup=5 sword=1 lag=2750 (total 12543 frames, 2574s wall)
+  attempt 4: success 408 frames, hearts 3.5
+  attempt 3: success 474 frames, hearts 4.0
+  converged: 4 of 4 scouts within 20 frames of 474 - taking it
+[ow1_67] 474 frames, hearts 4.0 -> f13017 mode=05/00 L0 room=67 pos=(0,117) dir=1 hp=4.0/4 rup=5 sword=1 lag=2821 (total 13017 frames, 2579s wall)
+  attempt 2: success 326 frames, hearts 4.0
+  attempt 4: over budget (339 frames)
+  attempt 3: over budget (346 frames)
+  attempt 1: over budget (337 frames)
+  attempt 5: over budget (326 frames)
+  attempt 6: over budget (326 frames)
+  attempt 7: over budget (326 frames)
+  attempt 8: over budget (326 frames)
+  attempt 9: over budget (326 frames)
+  attempt 10: over budget (326 frames)
+  attempt 11: over budget (326 frames)
+  attempt 12: over budget (325 frames)
+  attempt 15: over budget (326 frames)
+  attempt 14: over budget (326 frames)
+  attempt 13: over budget (326 frames)
+  (early stop after 15 attempts)
+  attempt 16: over budget (326 frames)
+  attempt 17: over budget (326 frames)
+  attempt 18: over budget (326 frames)
+[ow1_68] 326 frames, hearts 4.0 -> f13343 mode=05/00 L0 room=68 pos=(0,125) dir=1 hp=4.0/4 rup=5 sword=1 lag=2892 (total 13343 frames, 2588s wall)
+  attempt 2: success 168 frames, hearts 4.0
+  attempt 4: over budget (170 frames)
+  attempt 3: over budget (168 frames)
+  attempt 1: over budget (168 frames)
+  attempt 5: over budget (168 frames)
+  attempt 6: over budget (168 frames)
+  attempt 7: over budget (168 frames)
+  attempt 8: over budget (167 frames)
+  attempt 10: over budget (168 frames)
+  attempt 9: over budget (168 frames)
+  attempt 11: over budget (168 frames)
+  attempt 12: success 167 frames, hearts 4.0
+  attempt 13: over budget (167 frames)
+  attempt 14: over budget (167 frames)
+  attempt 15: over budget (167 frames)
+  attempt 16: over budget (167 frames)
+  attempt 17: over budget (167 frames)
+  attempt 18: over budget (167 frames)
+  attempt 19: over budget (166 frames)
+  attempt 20: over budget (167 frames)
+  attempt 21: over budget (167 frames)
+  attempt 22: over budget (167 frames)
+  attempt 23: over budget (167 frames)
+  attempt 24: over budget (167 frames)
+  attempt 25: over budget (167 frames)
+  (early stop after 26 attempts)
+  attempt 27: over budget (167 frames)
+  attempt 28: over budget (166 frames)
+  attempt 29: over budget (167 frames)
+[ow1_58] 167 frames, hearts 4.0 -> f13510 mode=05/00 L0 room=58 pos=(48,221) dir=8 hp=4.0/4 rup=5 sword=1 lag=2944 (total 13510 frames, 2594s wall)
+  attempt 4: success 334 frames, hearts 3.0
+  attempt 3: success 348 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 348 - taking it
+  attempt 2: over budget (348 frames)
+  attempt 5: over budget (348 frames)
+[ow1_48] 348 frames, hearts 4.0 -> f13858 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=5 sword=1 lag=2996 (total 13858 frames, 2598s wall)
+  attempt 2: success 228 frames, hearts 3.0
+  attempt 6: success 212 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 212 - taking it
+[ow1_38] 212 frames, hearts 3.5 -> f14070 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.5/4 rup=5 sword=1 lag=3048 (total 14070 frames, 2601s wall)
+  attempt 2: success 212 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 212 - taking it
+[ws_28] 212 frames, hearts 3.5 -> f14282 mode=05/00 L0 room=28 pos=(120,221) dir=8 hp=3.5/4 rup=5 sword=1 lag=3100 (total 14282 frames, 2604s wall)
+  attempt 2: success 230 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 230 - taking it
+[ws_29] 230 frames, hearts 3.5 -> f14512 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=5 sword=1 lag=3171 (total 14512 frames, 2606s wall)
+  attempt 2: success 354 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 354 - taking it
+  attempt 6: success 329 frames, hearts 2.5
+[ws_2a] 329 frames, hearts 2.5 -> f14841 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.5/4 rup=5 sword=1 lag=3242 (total 14841 frames, 2610s wall)
+  attempt 4: success 282 frames, hearts 1.5
+  attempt 2: success 288 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 288 - taking it
+[ws_2b] 288 frames, hearts 2.5 -> f15129 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.5/4 rup=5 sword=1 lag=3313 (total 15129 frames, 2614s wall)
+  attempt 1: success 392 frames, hearts 1.5
+  attempt 2: success 440 frames, hearts 2.0
+  attempt 6: success 409 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 409 - taking it
+[ws_2c] 409 frames, hearts 2.5 -> f15538 mode=05/00 L0 room=2c pos=(0,173) dir=1 hp=2.5/4 rup=5 sword=1 lag=3384 (total 15538 frames, 2625s wall)
+  attempt 4: success 809 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 809 - taking it
+  attempt 6: success 805 frames, hearts 3.5
+[h2c_heart] 805 frames, hearts 3.5 -> f16343 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=3.5/5 rup=5 sword=1 lag=3443 (total 16343 frames, 2640s wall)
+  attempt 4: success 223 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 223 - taking it
+  attempt 5: success 200 frames, hearts 3.0
+[h2c_2d] 200 frames, hearts 3.0 -> f16543 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=3.0/5 rup=5 sword=1 lag=3514 (total 16543 frames, 2642s wall)
+  attempt 1: success 289 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 289 - taking it
+  attempt 5: success 285 frames, hearts 3.0
+[c0f_1d] 285 frames, hearts 3.0 -> f16828 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=3.0/5 rup=5 sword=1 lag=3567 (total 16828 frames, 2646s wall)
+  attempt 2: success 252 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 252 - taking it
+[c0f_1e] 252 frames, hearts 3.0 -> f17080 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=3.0/5 rup=5 sword=1 lag=3638 (total 17080 frames, 2648s wall)
+  attempt 1: success 300 frames, hearts 3.0
+  attempt 7: success 291 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 291 - taking it
+[c0f_1f] 291 frames, hearts 3.0 -> f17371 mode=05/00 L0 room=1f pos=(0,141) dir=1 hp=3.0/5 rup=5 sword=1 lag=3709 (total 17371 frames, 2656s wall)
+  attempt 1: success 369 frames, hearts 1.5
+  attempt 2: success 449 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 449 - taking it
+[c0f_0f] 449 frames, hearts 3.0 -> f17820 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=3.0/5 rup=5 sword=1 lag=3761 (total 17820 frames, 2661s wall)
+  attempt 1: success 762 frames, hearts 3.0
+  attempt 2: success 758 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 758 - taking it
+[cave_0f] 758 frames, hearts 3.0 -> f18578 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=3.0/5 rup=105 sword=1 lag=3820 (total 18578 frames, 2669s wall)
+  attempt 1: success 182 frames, hearts 3.0
+  attempt 2: success 177 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 177 - taking it
+[c0f_b1f] 177 frames, hearts 3.0 -> f18755 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=3.0/5 rup=105 sword=1 lag=3870 (total 18755 frames, 2671s wall)
+  attempt 1: success 267 frames, hearts 3.0
+  attempt 2: success 263 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 263 - taking it
+[c0f_b1e] 263 frames, hearts 3.0 -> f19018 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=3.0/5 rup=105 sword=1 lag=3941 (total 19018 frames, 2674s wall)
+  attempt 2: success 449 frames, hearts 3.0
+  attempt 9: nav: no path to the Left edge from (144,149)  (317 frames)
+  converged: 3 of 4 scouts within 20 frames of 449 - taking it
+  attempt 14: crossed (293 frames)
+[c0f_b1d] 449 frames, hearts 3.0 -> f19467 mode=05/00 L0 room=1d pos=(240,141) dir=2 hp=3.0/5 rup=105 sword=1 lag=4012 (total 19467 frames, 2683s wall)
+  attempt 1: success 208 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 208 - taking it
+  attempt 5: success 203 frames, hearts 3.0
+[cdl_0d] 203 frames, hearts 3.0 -> f19670 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=3.0/5 rup=105 sword=1 lag=4064 (total 19670 frames, 2686s wall)
+  attempt 1: success 346 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 346 - taking it
+  attempt 5: success 390 frames, hearts 3.0
+[cdl_0c] 390 frames, hearts 3.0 -> f20060 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=3.0/5 rup=105 sword=1 lag=4135 (total 20060 frames, 2690s wall)
+  attempt 2: success 485 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 485 - taking it
+[buy_candle] 485 frames, hearts 3.0 -> f20545 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=3.0/5 rup=105 sword=1 lag=4164 (total 20545 frames, 2697s wall)
+  attempt 3: success 310 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 310 - taking it
+[candle_leave] 310 frames, hearts 3.0 -> f20855 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=3.0/5 rup=45 sword=1 lag=4194 (total 20855 frames, 2700s wall)
+  attempt 4: success 380 frames, hearts 2.5
+  attempt 2: success 366 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 366 - taking it
+  attempt 7: success 386 frames, hearts 5.0
+[cdl_1c] 386 frames, hearts 5.0 -> f21241 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=5.0/5 rup=45 sword=1 lag=4244 (total 21241 frames, 2705s wall)
+  attempt 4: success 232 frames, hearts 5.0
+  attempt 2: success 224 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 224 - taking it
+[ws_1b] 224 frames, hearts 5.0 -> f21465 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=5.0/5 rup=45 sword=1 lag=4315 (total 21465 frames, 2707s wall)
+  attempt 1: success 364 frames, hearts 5.0
+  attempt 2: success 352 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+[ws_1a] 352 frames, hearts 5.0 -> f21817 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=5.0/5 rup=45 sword=1 lag=4386 (total 21817 frames, 2711s wall)
+  attempt 2: success 213 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 213 - taking it
+[ws_0a] 213 frames, hearts 5.0 -> f22030 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=5.0/5 rup=45 sword=1 lag=4438 (total 22030 frames, 2713s wall)
+  attempt 2: approach: died (593 frames)
+  attempt 1: approach: died (837 frames)
+  attempt 3: approach: died (1281 frames)
+  attempt 6: approach: died (706 frames)
+  attempt 4: approach: died (1554 frames)
+  attempt 5: success 1773 frames, hearts 2.5
+  attempt 7: approach: died (788 frames)
+  attempt 9: approach: died (641 frames)
+  attempt 8: approach: died (1146 frames)
+  attempt 10: approach: died (861 frames)
+  attempt 12: approach: died (686 frames)
+  attempt 11: approach: died (1158 frames)
+  attempt 14: approach: died (684 frames)
+  attempt 13: approach: died (1032 frames)
+  attempt 17: approach: died (420 frames)
+  attempt 18: approach: died (420 frames)
+  attempt 15: approach: died (1083 frames)
+  attempt 19: approach: died (420 frames)
+  attempt 22: approach: died (599 frames)
+  attempt 20: approach: died (847 frames)
+  attempt 16: success 2421 frames, hearts 5.0
+  attempt 24: approach: died (485 frames)
+  attempt 21: approach: died (1218 frames)
+  attempt 25: approach: died (485 frames)
+  attempt 23: approach: died (1273 frames)
+  attempt 29: approach: died (444 frames)
+  attempt 26: approach: died (1514 frames)
+  attempt 28: approach: died (1106 frames)
+  converged: 3 of 4 scouts within 20 frames of 2421 - taking it
+  attempt 32: approach: died (438 frames)
+  attempt 30: approach: died (844 frames)
+  attempt 31: approach: died (862 frames)
+[white_sword] 2421 frames, hearts 5.0 -> f24451 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=5.0/5 rup=45 sword=2 lag=4497 (total 24451 frames, 2884s wall)
+  attempt 1: success 348 frames, hearts 5.0
+  attempt 2: success 336 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 336 - taking it
+[l4w00_1a] 336 frames, hearts 5.0 -> f24787 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=5.0/5 rup=45 sword=2 lag=4547 (total 24787 frames, 2888s wall)
+  attempt 2: success 444 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 444 - taking it
+[ws_19] 444 frames, hearts 5.0 -> f25231 mode=05/00 L0 room=19 pos=(240,149) dir=2 hp=5.0/5 rup=45 sword=2 lag=4618 (total 25231 frames, 2895s wall)
+  attempt 1: success 303 frames, hearts 4.5
+  attempt 4: success 317 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 317 - taking it
+[l4w04_18] 317 frames, hearts 5.0 -> f25548 mode=05/00 L0 room=18 pos=(240,157) dir=2 hp=5.0/5 rup=45 sword=2 lag=4689 (total 25548 frames, 2898s wall)
+  attempt 1: success 299 frames, hearts 5.0
+  attempt 2: success 297 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 297 - taking it
+[l4w05_17] 297 frames, hearts 5.0 -> f25845 mode=05/00 L0 room=17 pos=(240,173) dir=2 hp=5.0/5 rup=45 sword=2 lag=4760 (total 25845 frames, 2902s wall)
+  attempt 2: success 181 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 181 - taking it
+[l4w06_27] 181 frames, hearts 5.0 -> f26026 mode=05/00 L0 room=27 pos=(160,61) dir=4 hp=5.0/5 rup=45 sword=2 lag=4810 (total 26026 frames, 2904s wall)
+  attempt 1: success 259 frames, hearts 4.5
+  attempt 2: success 250 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 250 - taking it
+[l4w07_28] 250 frames, hearts 5.0 -> f26276 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=5.0/5 rup=45 sword=2 lag=4881 (total 26276 frames, 2906s wall)
+  attempt 1: success 242 frames, hearts 5.0
+  attempt 2: success 231 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 231 - taking it
+[l4w08_38] 231 frames, hearts 5.0 -> f26507 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=5.0/5 rup=45 sword=2 lag=4931 (total 26507 frames, 2909s wall)
+  attempt 2: success 205 frames, hearts 4.5
+  attempt 3: success 273 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 273 - taking it
+[l4w09_48] 273 frames, hearts 5.0 -> f26780 mode=05/00 L0 room=48 pos=(128,61) dir=4 hp=5.0/5 rup=45 sword=2 lag=4981 (total 26780 frames, 2912s wall)
+  attempt 1: success 274 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 274 - taking it
+[l4w10_47] 274 frames, hearts 5.0 -> f27054 mode=05/00 L0 room=47 pos=(240,141) dir=2 hp=5.0/5 rup=45 sword=2 lag=5052 (total 27054 frames, 2915s wall)
+  attempt 1: success 794 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 794 - taking it
+[h47_heart] 794 frames, hearts 6.0 -> f27848 mode=05/00 L0 room=47 pos=(176,157) dir=4 hp=6.0/6 rup=45 sword=2 lag=5111 (total 27848 frames, 2924s wall)
+  attempt 2: success 239 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 239 - taking it
+[l4w11_46] 239 frames, hearts 6.0 -> f28087 mode=05/00 L0 room=46 pos=(240,157) dir=2 hp=6.0/6 rup=45 sword=2 lag=5182 (total 28087 frames, 2926s wall)
+  attempt 2: success 217 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 217 - taking it
+[l4w12_56] 217 frames, hearts 6.0 -> f28304 mode=05/00 L0 room=56 pos=(128,61) dir=4 hp=6.0/6 rup=45 sword=2 lag=5232 (total 28304 frames, 2929s wall)
+  attempt 1: success 313 frames, hearts 5.5
+  attempt 4: success 458 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 458 - taking it
+  attempt 6: success 321 frames, hearts 6.0
+[l4w13_55] 321 frames, hearts 6.0 -> f28625 mode=05/00 L0 room=55 pos=(240,141) dir=2 hp=6.0/6 rup=45 sword=2 lag=5303 (total 28625 frames, 2933s wall)
+  attempt 1: success 313 frames, hearts 5.5
+  attempt 2: success 311 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 311 - taking it
+  attempt 5: success 309 frames, hearts 5.5
+[l4_sail] 309 frames, hearts 5.5 -> f28934 mode=05/00 L0 room=45 pos=(128,221) dir=8 hp=5.5/6 rup=45 sword=2 lag=5355 (total 28934 frames, 2936s wall)
+  attempt 2: success 272 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 272 - taking it
+  attempt 5: success 268 frames, hearts 5.5
+[enter_L4] 268 frames, hearts 5.5 -> f29202 mode=05/00 L4 room=71 pos=(120,205) dir=8 hp=5.5/6 rup=45 sword=2 lag=5374 (total 29202 frames, 2939s wall)
+  attempt 4: success 330 frames, hearts 5.5
+  attempt 2: success 322 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 322 - taking it
+[l4_70] 322 frames, hearts 5.5 -> f29524 mode=05/00 L4 room=70 pos=(224,141) dir=2 hp=5.5/6 rup=45 sword=2 lag=5510 (total 29524 frames, 2942s wall)
+  attempt 2: done (722 frames)
+  attempt 4: success 774 frames, hearts 5.5
+  attempt 3: success 757 frames, hearts 5.5
+  attempt 8: success 654 frames, hearts 5.5
+  attempt 6: success 633 frames, hearts 5.5
+  attempt 9: done (809 frames)
+  attempt 12: done (799 frames)
+  attempt 18: success 615 frames, hearts 5.5
+  attempt 19: done (788 frames)
+  attempt 26: done (823 frames)
+  attempt 28: done (789 frames)
+  attempt 29: success 611 frames, hearts 5.5
+  attempt 35: done (829 frames)
+  converged: 3 of 4 scouts within 20 frames of 611 - taking it
+  attempt 37: done (855 frames)
+[l4_70_key] 611 frames, hearts 5.5 -> f30135 mode=05/00 L4 room=71 pos=(16,141) dir=1 hp=5.5/6 rup=45 sword=2 lag=5646 (total 30135 frames, 3594s wall)
+  attempt 2: success 284 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 284 - taking it
+[l4_61] 284 frames, hearts 5.5 -> f30419 mode=05/00 L4 room=61 pos=(120,205) dir=8 hp=5.5/6 rup=45 sword=2 lag=5743 (total 30419 frames, 3598s wall)
+  attempt 2: success 274 frames, hearts 5.5
+  attempt 12: success 273 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 273 - taking it
+[l4_51] 273 frames, hearts 5.5 -> f30692 mode=05/00 L4 room=51 pos=(120,205) dir=8 hp=5.5/6 rup=45 sword=2 lag=5840 (total 30692 frames, 3608s wall)
+  attempt 2: success 827 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 827 - taking it
+  attempt 9: success 804 frames, hearts 5.5
+[l4_51_key] 804 frames, hearts 5.5 -> f31496 mode=05/00 L4 room=50 pos=(224,141) dir=2 hp=5.5/6 rup=45 sword=2 lag=5977 (total 31496 frames, 3761s wall)
+  attempt 1: success 444 frames, hearts 5.5
+  attempt 5: success 439 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 439 - taking it
+[l4_40] 439 frames, hearts 5.5 -> f31935 mode=05/00 L4 room=40 pos=(120,205) dir=8 hp=5.5/6 rup=45 sword=2 lag=6075 (total 31935 frames, 3789s wall)
+  attempt 4: success 441 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 441 - taking it
+  attempt 5: success 398 frames, hearts 6.0
+[l4_40_key] 398 frames, hearts 6.0 -> f32333 mode=05/00 L4 room=30 pos=(120,205) dir=8 hp=6.0/6 rup=45 sword=2 lag=6173 (total 32333 frames, 3794s wall)
+  attempt 2: success 358 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 358 - taking it
+  attempt 8: success 357 frames, hearts 6.0
+[l4_31] 357 frames, hearts 6.0 -> f32690 mode=05/00 L4 room=31 pos=(16,141) dir=1 hp=6.0/6 rup=45 sword=2 lag=6309 (total 32690 frames, 3801s wall)
+  attempt 1: success 1277 frames, hearts 6.0
+  attempt 6: success 1218 frames, hearts 6.0
+  attempt 3: over budget (1432 frames)
+  attempt 9: success 1156 frames, hearts 6.0
+  attempt 7: over budget (1369 frames)
+  attempt 8: over budget (1376 frames)
+  attempt 10: over budget (1370 frames)
+  attempt 11: over budget (1373 frames)
+  attempt 12: over budget (1371 frames)
+  attempt 13: over budget (1373 frames)
+  attempt 16: success 854 frames, hearts 6.0
+  attempt 14: over budget (1297 frames)
+  attempt 15: over budget (1072 frames)
+  attempt 17: over budget (1074 frames)
+  attempt 19: over budget (1074 frames)
+  attempt 18: over budget (1074 frames)
+  attempt 21: over budget (1074 frames)
+  attempt 22: over budget (1074 frames)
+  attempt 20: over budget (1064 frames)
+  attempt 23: over budget (1068 frames)
+  attempt 24: over budget (1074 frames)
+  attempt 27: over budget (1074 frames)
+  attempt 25: over budget (1067 frames)
+  attempt 26: over budget (1067 frames)
+  attempt 28: over budget (1073 frames)
+  attempt 29: over budget (1074 frames)
+  attempt 31: over budget (1072 frames)
+  attempt 34: over budget (1074 frames)
+  attempt 32: over budget (1068 frames)
+  attempt 35: over budget (1074 frames)
+  attempt 37: over budget (1074 frames)
+  attempt 36: over budget (1074 frames)
+  attempt 38: over budget (1068 frames)
+  attempt 39: over budget (1074 frames)
+  attempt 41: over budget (1071 frames)
+  attempt 40: over budget (1068 frames)
+  attempt 42: over budget (1074 frames)
+  attempt 43: over budget (1067 frames)
+  attempt 44: over budget (1073 frames)
+  attempt 45: over budget (1069 frames)
+  attempt 47: over budget (1074 frames)
+  attempt 48: over budget (1068 frames)
+  attempt 50: over budget (1074 frames)
+  (early stop after 49 attempts)
+  attempt 49: over budget (1070 frames)
+  attempt 51: over budget (1070 frames)
+[l4_32] 854 frames, hearts 6.0 -> f33544 mode=05/00 L4 room=32 pos=(16,141) dir=1 hp=6.0/6 rup=45 sword=2 lag=6445 (total 33544 frames, 5803s wall)
+  attempt 2: timeout (2534 frames)
+  attempt 3: timeout (2541 frames)
+  attempt 1: timeout (2528 frames)
+  attempt 4: timeout (2538 frames)
+  attempt 7: success 1130 frames, hearts 6.0
+  attempt 5: over budget (1344 frames)
+  attempt 6: over budget (1344 frames)
+  attempt 8: over budget (1345 frames)
+  attempt 12: success 1123 frames, hearts 6.0
+  attempt 9: over budget (1345 frames)
+  attempt 13: success 1122 frames, hearts 6.0
+  attempt 10: over budget (1340 frames)
+  attempt 11: over budget (1339 frames)
+  attempt 14: over budget (1336 frames)
+  attempt 15: over budget (1337 frames)
+  attempt 17: over budget (1340 frames)
+  attempt 16: over budget (1341 frames)
+  attempt 18: over budget (1338 frames)
+  attempt 19: over budget (1342 frames)
+  attempt 20: over budget (1341 frames)
+  attempt 21: over budget (1335 frames)
+  attempt 22: over budget (1342 frames)
+  attempt 23: over budget (1341 frames)
+  attempt 24: over budget (1339 frames)
+  attempt 25: over budget (1341 frames)
+  attempt 26: over budget (1339 frames)
+  attempt 27: over budget (1339 frames)
+  attempt 28: over budget (1335 frames)
+  attempt 29: over budget (1341 frames)
+  attempt 30: over budget (1335 frames)
+  attempt 31: over budget (1340 frames)
+  attempt 32: over budget (1337 frames)
+  attempt 34: success 1038 frames, hearts 6.0
+  attempt 33: over budget (1288 frames)
+  attempt 35: over budget (1256 frames)
+  attempt 36: over budget (1253 frames)
+  attempt 38: over budget (1252 frames)
+  attempt 37: over budget (1254 frames)
+  attempt 39: over budget (1255 frames)
+  attempt 40: over budget (1258 frames)
+  attempt 41: over budget (1253 frames)
+  attempt 42: over budget (1252 frames)
+  attempt 46: success 882 frames, hearts 6.0
+  attempt 43: over budget (1127 frames)
+  attempt 45: over budget (1097 frames)
+  attempt 47: over budget (1101 frames)
+  attempt 48: over budget (1102 frames)
+  attempt 49: over budget (1096 frames)
+  attempt 50: over budget (1100 frames)
+  attempt 54: over budget (1100 frames)
+  attempt 51: over budget (1102 frames)
+  attempt 52: over budget (1097 frames)
+  attempt 53: over budget (1096 frames)
+  attempt 55: over budget (1101 frames)
+  attempt 56: over budget (1095 frames)
+  attempt 58: over budget (1095 frames)
+  attempt 57: over budget (1095 frames)
+  attempt 60: over budget (1101 frames)
+  attempt 59: over budget (1099 frames)
+[l4_lad_st] 882 frames, hearts 6.0 -> f34426 mode=09/09 L4 room=60 pos=(48,65) dir=4 hp=6.0/6 rup=45 sword=2 lag=6447 (total 34426 frames, 8258s wall)
+  attempt 2: success 858 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 858 - taking it
+[l4_ladder] 858 frames, hearts 6.0 -> f35284 mode=05/00 L4 room=32 pos=(192,189) dir=4 hp=6.0/6 rup=45 sword=2 lag=6450 (total 35284 frames, 8282s wall)
+  attempt 1: success 404 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 404 - taking it
+[l4_b31] 404 frames, hearts 6.0 -> f35688 mode=05/00 L4 room=31 pos=(208,141) dir=2 hp=6.0/6 rup=45 sword=2 lag=6586 (total 35688 frames, 8286s wall)
+  attempt 3: success 559 frames, hearts 6.0
+  attempt 2: over budget (779 frames)
+  attempt 4: over budget (779 frames)
+  attempt 5: over budget (779 frames)
+  attempt 6: over budget (779 frames)
+  attempt 7: over budget (773 frames)
+  attempt 13: over budget (773 frames)
+  attempt 12: over budget (779 frames)
+  attempt 14: over budget (779 frames)
+  attempt 16: over budget (779 frames)
+  attempt 18: over budget (779 frames)
+  attempt 17: over budget (775 frames)
+  attempt 20: over budget (779 frames)
+  attempt 24: over budget (779 frames)
+  attempt 29: over budget (779 frames)
+  attempt 30: over budget (779 frames)
+  converged: 3 of 4 scouts within 20 frames of 559 - taking it
+  attempt 31: over budget (779 frames)
+  attempt 33: over budget (779 frames)
+[l4_b30] 559 frames, hearts 6.0 -> f36247 mode=05/00 L4 room=30 pos=(224,141) dir=2 hp=6.0/6 rup=45 sword=2 lag=6723 (total 36247 frames, 8415s wall)
+  attempt 2: success 326 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 326 - taking it
+  attempt 4: over budget (539 frames)
+  attempt 9: over budget (539 frames)
+  attempt 11: over budget (546 frames)
+[l4_20] 326 frames, hearts 6.0 -> f36573 mode=05/00 L4 room=20 pos=(120,205) dir=8 hp=6.0/6 rup=45 sword=2 lag=6820 (total 36573 frames, 8430s wall)
+  attempt 1: success 382 frames, hearts 5.0
+  attempt 3: success 400 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 400 - taking it
+  attempt 4: over budget (620 frames)
+[l4_21] 400 frames, hearts 6.0 -> f36973 mode=05/00 L4 room=21 pos=(16,141) dir=1 hp=6.0/6 rup=45 sword=2 lag=6957 (total 36973 frames, 8441s wall)
+  attempt 2: success 723 frames, hearts 6.0
+  attempt 3: success 721 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 721 - taking it
+  attempt 4: success 720 frames, hearts 6.0
+[l4_11] 720 frames, hearts 6.0 -> f37693 mode=05/00 L4 room=11 pos=(120,189) dir=8 hp=6.0/6 rup=45 sword=2 lag=7054 (total 37693 frames, 8462s wall)
+  attempt 2: success 423 frames, hearts 6.0
+  attempt 3: success 421 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 421 - taking it
+  attempt 4: success 420 frames, hearts 6.0
+  attempt 5: success 410 frames, hearts 6.0
+[l4_12r] 410 frames, hearts 6.0 -> f38103 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38103 frames, 8475s wall)
+  attempt 1: success 2 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_10] 2 frames, hearts 6.0 -> f38105 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38105 frames, 8475s wall)
+  attempt 2: success 2 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_00] 2 frames, hearts 6.0 -> f38107 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38107 frames, 8475s wall)
+  attempt 3: success 2 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_01] 2 frames, hearts 6.0 -> f38109 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38109 frames, 8475s wall)
+  attempt 2: success 2 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_02] 2 frames, hearts 6.0 -> f38111 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38111 frames, 8475s wall)
+  attempt 2: success 2 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_12] 2 frames, hearts 6.0 -> f38113 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=6.0/6 rup=48 sword=2 lag=7190 (total 38113 frames, 8475s wall)
+  attempt 2: success 754 frames, hearts 5.0
+  attempt 8: success 902 frames, hearts 6.0
+  attempt 6: over budget (1288 frames)
+  attempt 4: over budget (1431 frames)
+  attempt 7: over budget (1119 frames)
+  converged: 3 of 4 scouts within 20 frames of 902 - taking it
+  attempt 12: over budget (1122 frames)
+[l4_13] 902 frames, hearts 6.0 -> f39015 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=6.0/6 rup=49 sword=2 lag=7326 (total 39015 frames, 8779s wall)
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 2: died (3236 frames)
+  attempt 4: died (3858 frames)
+  attempt 3: died (4056 frames)
+  attempt 6: success 1417 frames, hearts 4.0
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 5: over budget (1789 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 1: over budget (4756 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 7: over budget (1637 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+[gleeok] 1417 frames, hearts 4.0 -> f40432 mode=05/00 L4 room=13 pos=(121,109) dir=1 hp=4.0/6 rup=49 sword=2 lag=7326 (total 40432 frames, 9672s wall)
+  attempt 2: success 139 frames, hearts 5.0
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 4: success 137 frames, hearts 5.0
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+[l4_heart] 137 frames, hearts 5.0 -> f40569 mode=05/00 L4 room=13 pos=(200,181) dir=1 hp=5.0/7 rup=49 sword=2 lag=7326 (total 40569 frames, 9673s wall)
+  attempt 4: success 995 frames, hearts 7.0
+  converged: 3 of 4 scouts within 20 frames of 995 - taking it
+[L4_done] 995 frames, hearts 7.0 -> f41564 mode=02/00 L0 room=03 pos=(120,149) dir=8 hp=7.0/7 rup=50 sword=2 lag=7432 (total 41564 frames, 9680s wall)
+  attempt 4: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 1: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 3: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 2: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 5: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 7: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 6: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 10: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 8: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 9: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 11: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 13: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 12: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 15: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 14: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 16: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 17: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 18: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 19: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 21: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 20: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 23: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 24: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 22: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 26: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 25: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 28: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 27: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 30: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 29: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 31: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 32: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 33: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 36: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 34: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 35: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 39: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 38: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 40: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 37: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 42: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 41: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 43: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 44: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 45: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 47: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 46: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 48: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 49: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 51: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 50: could not reach (120, 141): stopped at (120,149) (7 frames)
+  attempt 52: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 53: could not reach (120, 141): stopped at (120,149) (6 frames)
+  attempt 56: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 55: could not reach (120, 141): stopped at (120,149) (5 frames)
+  attempt 57: could not reach (120, 141): stopped at (120,149) (2 frames)
+  attempt 54: could not reach (120, 141): stopped at (120,149) (3 frames)
+  attempt 58: could not reach (120, 141): stopped at (120,149) (4 frames)
+  attempt 60: could not reach (120, 141): stopped at (120,149) (1 frames)
+  attempt 59: could not reach (120, 141): stopped at (120,149) (5 frames)
+  no success; most common: 60x could not reach (120, 141): stopped at (120,149) @ room 03 L0
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3130, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3121, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 295, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok_head failed
+=== a segment genuinely failed; stopping (2026-09-30 15:20:54) ===

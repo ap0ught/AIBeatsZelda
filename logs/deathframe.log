@@ -1,0 +1,16 @@
+Unknown distro, assuming system-wide libraries are in /usr/lib...
+(capturing output in /home/cmayfield/code/games/aibeatszelda/BizHawk-2.11.1-win-x64/EmuHawkMono_last*.txt)
+Using SDL2 for host input (keyboard + gamepads)
+ROM was not a multiple of 1024 bytes, and not a recognized header size: 18. Assume it's purely ROM data.
+Game was not in DB. CRC: 05E4F83B MD5: A6D95F620D67C52B16686E382A219A27
+79111BACD49028EFC52DB40D2A7A82A14068FFDF
+quickerNES: Booted with Mapper #1 "mmc1"
+Hash for BootGod: 8F806346DC688AA385F03F6143DAB45AA646BE26
+No BootGod entry found.
+Core reported BoardID: "mmc1"
+[Lua Console] loaded script /home/cmayfield/code/games/aibeatszelda/src/bridge.lua
+[Lua script: bridge] bridge: connected on port 39525
+[QuickerNES] Cart Mapper Info: Mapper: 1 - Submapper: 0
+[31mparsing command-line flags: --lua=/home/cmayfield/code/games/aibeatszelda/src/bridge.lua --userdata=port:39525 /home/cmayfield/code/games/aibeatszelda/src/roms/Legend of Zelda, The (USA) (Rev 1).nes(B[m
+[31m(B[m
+[31m(mono:2558504): Gtk-WARNING **: 13:14:36.895: Unable to locate theme engine in module_path: "adwaita",(B[m

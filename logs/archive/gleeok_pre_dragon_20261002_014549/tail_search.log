@@ -1,0 +1,185 @@
+start: f60589 mode=0b/00 L0 room=0a pos=(120,141) dir=8 hp=6.0/7 rup=48 sword=2 lag=10947  60589 frames
+  attempt 2: success 180 frames, hearts 6.0
+  attempt 3: success 176 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 176 - taking it
+  attempt 6: error: ValueError: invalid literal for int() with ba (180 frames)
+  attempt 5: error: ValueError: invalid literal for int() with ba (6 frames)
+  trimmed 3 idle frames off head_exit
+[head_exit] 176 frames, hearts 6.0 -> f60762 mode=05/00 L0 room=0a pos=(32,86) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977 (total 60762 frames, 17s wall)
+    head_exit: f60762 mode=05/00 L0 room=0a pos=(32,86) dir=4 hp=6.0/7 rup=48 sword=2 lag=10977  [5s]
+  attempt 1: success 581 frames, hearts 6.0
+  attempt 2: success 579 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 579 - taking it
+  attempt 6: error: ValueError: invalid literal for int() with ba (12 frames)
+  attempt 5: success 575 frames, hearts 6.0
+[hd_0a_1a] 575 frames, hearts 6.0 -> f61337 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027 (total 61337 frames, 34s wall)
+    hd_0a_1a: f61337 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=6.0/7 rup=48 sword=2 lag=11027  [21s]
+  attempt 1: success 411 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 411 - taking it
+  attempt 5: error: ValueError: invalid literal for int() with ba (8 frames)
+  attempt 6: error: ValueError: invalid literal for int() with ba (13 frames)
+  attempt 4: error: ValueError: invalid literal for int() with ba (401 frames)
+[hd_1a_19] 411 frames, hearts 6.0 -> f61748 mode=05/00 L0 room=19 pos=(240,141) dir=2 hp=6.0/7 rup=48 sword=2 lag=11098 (total 61748 frames, 43s wall)
+    hd_1a_19: f61748 mode=05/00 L0 room=19 pos=(240,141) dir=2 hp=6.0/7 rup=48 sword=2 lag=11098  [31s]
+  attempt 2: success 316 frames, hearts 6.0
+  converged: 3 of 4 scouts within 20 frames of 316 - taking it
+  attempt 4: error: ValueError: invalid literal for int() with ba (305 frames)
+Exception in thread Thread-14 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+[hd_19_18] 316 frames, hearts 6.0 -> f62064 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=6.0/7 rup=48 sword=2 lag=11169 (total 62064 frames, 171s wall)
+    hd_19_18: f62064 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=6.0/7 rup=48 sword=2 lag=11169  [159s]
+Exception in thread Thread-18 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 301 frames, hearts 5.5
+  attempt 7: success 299 frames, hearts 5.5
+  attempt 10: success 296 frames, hearts 5.5
+  converged: 3 of 4 scouts within 20 frames of 296 - taking it
+  attempt 9: error: ValueError: invalid literal for int() with ba (303 frames)
+[hd_18_17] 296 frames, hearts 5.5 -> f62360 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=5.5/7 rup=48 sword=2 lag=11240 (total 62360 frames, 189s wall)
+    hd_18_17: f62360 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=5.5/7 rup=48 sword=2 lag=11240  [177s]
+Exception in thread Thread-22 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 242 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 242 - taking it
+  attempt 5: success 200 frames, hearts 5.0
+[hd_17_27] 200 frames, hearts 5.0 -> f62560 mode=05/00 L0 room=27 pos=(160,61) dir=4 hp=5.0/7 rup=48 sword=2 lag=11290 (total 62560 frames, 197s wall)
+    hd_17_27: f62560 mode=05/00 L0 room=27 pos=(160,61) dir=4 hp=5.0/7 rup=48 sword=2 lag=11290  [185s]
+Exception in thread Thread-26 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 256 frames, hearts 5.0
+  attempt 1: success 255 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 255 - taking it
+  attempt 5: success 251 frames, hearts 5.0
+[hd_27_28] 251 frames, hearts 5.0 -> f62811 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=5.0/7 rup=48 sword=2 lag=11361 (total 62811 frames, 204s wall)
+    hd_27_28: f62811 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=5.0/7 rup=48 sword=2 lag=11361  [192s]
+Exception in thread Thread-30 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 236 frames, hearts 5.0
+  attempt 1: success 235 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 235 - taking it
+  attempt 5: success 231 frames, hearts 5.0
+[hd_28_38] 231 frames, hearts 5.0 -> f63042 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=5.0/7 rup=48 sword=2 lag=11411 (total 63042 frames, 210s wall)
+    hd_28_38: f63042 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=5.0/7 rup=48 sword=2 lag=11411  [198s]
+Exception in thread Thread-34 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 292 frames, hearts 5.0
+  attempt 5: success 287 frames, hearts 5.0
+  converged: 3 of 4 scouts within 20 frames of 287 - taking it
+Exception in thread Thread-36 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+TimeoutError: timed out
+[hd_38_37] 287 frames, hearts 5.0 -> f63329 mode=05/00 L0 room=37 pos=(240,141) dir=2 hp=5.0/7 rup=48 sword=2 lag=11482 (total 63329 frames, 339s wall)
+    hd_38_37: f63329 mode=05/00 L0 room=37 pos=(240,141) dir=2 hp=5.0/7 rup=48 sword=2 lag=11482  [327s]
+final f63329 mode=05/00 L0 room=37 pos=(240,141) dir=2 hp=5.0/7 rup=48 sword=2 lag=11482  63329 frames  327s

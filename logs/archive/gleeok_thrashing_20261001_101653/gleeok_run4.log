@@ -1,0 +1,102 @@
+=== attempt 1 (2026-10-01 09:48:08) ===
+--fresh: starting from power-on
+  attempt 2: success 1463 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 1463 - taking it
+  trimmed 2 idle frames off start
+[start] 1463 frames, hearts 3.0 -> f1461 mode=05/00 L0 room=77 pos=(64,88) dir=4 hp=3.0/3 rup=0 sword=1 lag=127 (total 1461 frames, 24s wall)
+  attempt 2: success 195 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 195 - taking it
+[ow_76] 195 frames, hearts 3.0 -> f1656 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=198 (total 1656 frames, 26s wall)
+  attempt 1: success 183 frames, hearts 3.0
+  attempt 2: success 172 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 172 - taking it
+[ow_66] 172 frames, hearts 3.0 -> f1828 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=250 (total 1828 frames, 28s wall)
+  attempt 2: success 287 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 287 - taking it
+[ow_65] 287 frames, hearts 3.0 -> f2115 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=321 (total 2115 frames, 32s wall)
+  attempt 1: success 358 frames, hearts 3.0
+  attempt 7: success 352 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+[ow_64] 352 frames, hearts 3.0 -> f2467 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=392 (total 2467 frames, 38s wall)
+  attempt 2: success 286 frames, hearts 2.5
+  attempt 3: success 475 frames, hearts 3.0
+  converged: 4 of 4 scouts within 20 frames of 475 - taking it
+  attempt 7: success 349 frames, hearts 3.0
+[ow_63] 349 frames, hearts 3.0 -> f2816 mode=05/00 L0 room=63 pos=(240,149) dir=2 hp=3.0/3 rup=0 sword=1 lag=463 (total 2816 frames, 43s wall)
+  attempt 2: success 161 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 161 - taking it
+[ow_73] 161 frames, hearts 3.0 -> f2977 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=0 sword=1 lag=513 (total 2977 frames, 44s wall)
+  attempt 2: success 180 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 180 - taking it
+[ow_74] 180 frames, hearts 3.0 -> f3157 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=0 sword=1 lag=584 (total 3157 frames, 46s wall)
+  attempt 2: success 305 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 305 - taking it
+[enter_L3] 305 frames, hearts 3.0 -> f3462 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=603 (total 3462 frames, 49s wall)
+  attempt 1: success 333 frames, hearts 3.0
+  attempt 2: success 322 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 322 - taking it
+[7c_left] 322 frames, hearts 3.0 -> f3784 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=739 (total 3784 frames, 53s wall)
+  attempt 2: success 316 frames, hearts 3.0
+  attempt 4: success 314 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 314 - taking it
+  attempt 5: success 297 frames, hearts 3.0
+[7b_key] 297 frames, hearts 3.0 -> f4081 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=836 (total 4081 frames, 56s wall)
+  attempt 1: success 301 frames, hearts 3.0
+  attempt 2: success 300 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 300 - taking it
+[6b_up] 300 frames, hearts 3.0 -> f4381 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=933 (total 4381 frames, 70s wall)
+  attempt 4: success 793 frames, hearts 3.0
+  attempt 1: over budget (793 frames)
+  attempt 3: over budget (793 frames)
+  attempt 2: over budget (789 frames)
+  attempt 5: over budget (793 frames)
+  attempt 6: over budget (792 frames)
+  attempt 8: success 672 frames, hearts 3.0
+  attempt 7: over budget (672 frames)
+  attempt 9: over budget (670 frames)
+  attempt 10: over budget (672 frames)
+  attempt 11: over budget (669 frames)
+  attempt 12: over budget (671 frames)
+  attempt 14: over budget (672 frames)
+  attempt 13: over budget (669 frames)
+  attempt 15: over budget (665 frames)
+  attempt 16: over budget (671 frames)
+  attempt 18: over budget (672 frames)
+  attempt 17: over budget (668 frames)
+  attempt 19: over budget (672 frames)
+  attempt 21: over budget (672 frames)
+  attempt 20: over budget (668 frames)
+  attempt 22: over budget (668 frames)
+  attempt 24: over budget (672 frames)
+  attempt 23: over budget (672 frames)
+  attempt 25: over budget (669 frames)
+  attempt 26: over budget (667 frames)
+  attempt 27: over budget (665 frames)
+  attempt 28: over budget (672 frames)
+  attempt 30: over budget (668 frames)
+  attempt 32: over budget (672 frames)
+  attempt 31: over budget (666 frames)
+  attempt 33: over budget (672 frames)
+  attempt 34: over budget (667 frames)
+  attempt 35: over budget (667 frames)
+  attempt 36: over budget (672 frames)
+  attempt 38: over budget (672 frames)
+  attempt 37: over budget (671 frames)
+  attempt 41: over budget (672 frames)
+  attempt 39: over budget (668 frames)
+  attempt 40: over budget (671 frames)
+  attempt 42: over budget (671 frames)
+  attempt 45: over budget (672 frames)
+  attempt 43: over budget (665 frames)
+  attempt 44: over budget (672 frames)
+  attempt 46: over budget (672 frames)
+  attempt 47: over budget (667 frames)
+  attempt 48: over budget (668 frames)
+  attempt 49: over budget (664 frames)
+  attempt 50: over budget (668 frames)
+  attempt 51: over budget (672 frames)
+  attempt 53: over budget (672 frames)
+  attempt 54: over budget (672 frames)
+  attempt 52: over budget (669 frames)
+  attempt 55: over budget (672 frames)
+  attempt 56: over budget (672 frames)

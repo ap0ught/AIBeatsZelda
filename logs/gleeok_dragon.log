@@ -1,0 +1,2070 @@
+=== attempt 1 (2026-10-02 01:45:52) ===
+--fresh: starting from power-on
+  attempt 2: success 1463 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 1463 - taking it
+  attempt 5: error: ValueError: invalid literal for int() with ba (20 frames)
+  trimmed 2 idle frames off start
+[start] 1463 frames, hearts 3.0 -> f1461 mode=05/00 L0 room=77 pos=(64,88) dir=4 hp=3.0/3 rup=0 sword=1 lag=127 (total 1461 frames, 48s wall)
+  attempt 2: success 195 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 195 - taking it
+  attempt 4: error: ValueError: invalid literal for int() with ba (199 frames)
+Exception in thread Thread-6 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+TimeoutError: timed out
+[ow_76] 195 frames, hearts 3.0 -> f1656 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=198 (total 1656 frames, 174s wall)
+Exception in thread Thread-10 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 4: success 180 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 180 - taking it
+Exception in thread Thread-12 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+[ow_66] 180 frames, hearts 3.0 -> f1836 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=250 (total 1836 frames, 299s wall)
+Exception in thread Thread-14 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-16 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 315 frames, hearts 3.0
+  attempt 1: success 299 frames, hearts 3.0
+  (accept-after 8: took the 299-frame line after 10 attempts (8 without improvement) - flagged for a later pass)
+  flagged ow_65 for a later improvement pass (took the 299-frame line after 10 attempts (8 without improvement)); 1 flagged in flagged.json
+[ow_65] 299 frames, hearts 3.0 -> f2135 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=321 (total 2135 frames, 317s wall)
+Exception in thread Thread-18 (work):
+Exception in thread Thread-20 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 335 frames, hearts 3.0
+  attempt 7: success 326 frames, hearts 3.0
+  (accept-after 8: took the 326-frame line after 13 attempts (8 without improvement) - flagged for a later pass)
+  flagged ow_64 for a later improvement pass (took the 326-frame line after 13 attempts (8 without improvement)); 2 flagged in flagged.json
+[ow_64] 326 frames, hearts 3.0 -> f2461 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=392 (total 2461 frames, 351s wall)
+Exception in thread Thread-24 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-22 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 377 frames, hearts 2.5
+  attempt 5: success 332 frames, hearts 3.0
+  attempt 10: success 309 frames, hearts 3.0
+  (accept-after 8: took the 309-frame line after 16 attempts (8 without improvement) - flagged for a later pass)
+  attempt 19: error: ValueError: invalid literal for int() with ba (75 frames)
+  flagged ow_63 for a later improvement pass (took the 309-frame line after 16 attempts (8 without improvement)); 3 flagged in flagged.json
+[ow_63] 309 frames, hearts 3.0 -> f2770 mode=05/00 L0 room=63 pos=(240,157) dir=2 hp=3.0/3 rup=0 sword=1 lag=463 (total 2770 frames, 390s wall)
+Exception in thread Thread-26 (work):
+Exception in thread Thread-28 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 167 frames, hearts 3.0
+  attempt 1: success 163 frames, hearts 3.0
+  attempt 7: success 157 frames, hearts 3.0
+  attempt 8: success 156 frames, hearts 3.0
+  attempt 12: success 154 frames, hearts 3.0
+  (accept-after 8: took the 154-frame line after 18 attempts (8 without improvement) - flagged for a later pass)
+  flagged ow_73 for a later improvement pass (took the 154-frame line after 18 attempts (8 without improvement)); 4 flagged in flagged.json
+[ow_73] 154 frames, hearts 3.0 -> f2924 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=0 sword=1 lag=513 (total 2924 frames, 408s wall)
+Exception in thread Thread-30 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-32 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 192 frames, hearts 3.0
+  attempt 1: success 188 frames, hearts 3.0
+  attempt 7: success 183 frames, hearts 3.0
+  attempt 8: success 181 frames, hearts 3.0
+  attempt 12: success 179 frames, hearts 3.0
+  (accept-after 8: took the 179-frame line after 18 attempts (8 without improvement) - flagged for a later pass)
+  flagged ow_74 for a later improvement pass (took the 179-frame line after 18 attempts (8 without improvement)); 5 flagged in flagged.json
+[ow_74] 179 frames, hearts 3.0 -> f3103 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=0 sword=1 lag=584 (total 3103 frames, 431s wall)
+Exception in thread Thread-34 (work):
+Exception in thread Thread-36 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 311 frames, hearts 3.0
+  attempt 5: success 307 frames, hearts 3.0
+  attempt 10: success 303 frames, hearts 3.0
+  (accept-after 8: took the 303-frame line after 16 attempts (8 without improvement) - flagged for a later pass)
+  flagged enter_L3 for a later improvement pass (took the 303-frame line after 16 attempts (8 without improvement)); 6 flagged in flagged.json
+[enter_L3] 303 frames, hearts 3.0 -> f3406 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=603 (total 3406 frames, 465s wall)
+Exception in thread Thread-38 (work):
+Exception in thread Thread-40 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 337 frames, hearts 3.0
+  attempt 1: success 333 frames, hearts 3.0
+  attempt 7: success 325 frames, hearts 3.0
+  attempt 8: success 323 frames, hearts 3.0
+  attempt 12: success 322 frames, hearts 3.0
+  (accept-after 8: took the 322-frame line after 18 attempts (8 without improvement) - flagged for a later pass)
+  flagged 7c_left for a later improvement pass (took the 322-frame line after 18 attempts (8 without improvement)); 7 flagged in flagged.json
+[7c_left] 322 frames, hearts 3.0 -> f3728 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=739 (total 3728 frames, 507s wall)
+Exception in thread Thread-42 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-44 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 3: success 321 frames, hearts 3.0
+  attempt 5: success 297 frames, hearts 3.0
+  attempt 10: success 292 frames, hearts 3.0
+  (accept-after 8: took the 292-frame line after 16 attempts (8 without improvement) - flagged for a later pass)
+Exception in thread Thread-43 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  flagged 7b_key for a later improvement pass (took the 292-frame line after 16 attempts (8 without improvement)); 8 flagged in flagged.json
+[7b_key] 292 frames, hearts 3.0 -> f4020 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=836 (total 4020 frames, 663s wall)
+Exception in thread Thread-46 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+Exception in thread Thread-47 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-48 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 286 frames, hearts 3.0
+  attempt 7: success 278 frames, hearts 3.0
+  attempt 8: success 276 frames, hearts 3.0
+  attempt 12: success 274 frames, hearts 3.0
+  (accept-after 8: took the 274-frame line after 17 attempts (8 without improvement) - flagged for a later pass)
+  flagged 6b_up for a later improvement pass (took the 274-frame line after 17 attempts (8 without improvement)); 9 flagged in flagged.json
+[6b_up] 274 frames, hearts 3.0 -> f4294 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=933 (total 4294 frames, 799s wall)
+Exception in thread Thread-51 (work):
+Exception in thread Thread-50 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Exception in thread Thread-52 (work):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 643 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[5b_bombs] 643 frames, hearts 3.0 -> f4937 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1030 (total 4937 frames, 1047s wall)
+Exception in thread Thread-54 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-55 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+Exception in thread Thread-56 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 342 frames, hearts 3.0
+  attempt 7: success 334 frames, hearts 3.0
+  attempt 8: success 332 frames, hearts 3.0
+  attempt 12: success 330 frames, hearts 3.0
+  (accept-after 8: took the 330-frame line after 17 attempts (8 without improvement) - flagged for a later pass)
+  flagged 4b_left for a later improvement pass (took the 330-frame line after 17 attempts (8 without improvement)); 10 flagged in flagged.json
+[4b_left] 330 frames, hearts 3.0 -> f5267 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1166 (total 5267 frames, 1127s wall)
+Exception in thread Thread-59 (work):
+Traceback (most recent call last):
+Exception in thread Thread-58 (work):
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+Exception in thread Thread-60 (work):
+OSError: cannot read from timed out object
+OSError: cannot read from timed out object
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/search.py", line 479, in work
+    s = emu.state()
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 283, in state
+    return State.parse(self.cmd("state"))
+                       ~~~~~~~~^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/emulator.py", line 240, in cmd
+    resp = self._rf.readline()
+  File "/usr/lib/python3.14/socket.py", line 727, in readinto
+    raise OSError("cannot read from timed out object")
+OSError: cannot read from timed out object
+  attempt 1: success 756 frames, hearts 3.0
+  attempt 5: over budget (751 frames)
+  attempt 6: success 735 frames, hearts 3.0
+  attempt 7: done (579 frames)
+  attempt 8: over budget (731 frames)
+  attempt 9: over budget (733 frames)
+=== attempt 1 (2026-10-02 02:32:04) ===
+resumed checkpoint '4b_left': 5267 frames, f5267 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1166
+resuming after 14 segments
+  attempt 3: success 543 frames, hearts 3.0
+  attempt 2: over budget (543 frames)
+  attempt 1: over budget (543 frames)
+  attempt 7: over budget (543 frames)
+  attempt 4: over budget (542 frames)
+  attempt 6: over budget (543 frames)
+  attempt 5: over budget (543 frames)
+  attempt 11: over budget (543 frames)
+  attempt 8: over budget (541 frames)
+  (accept-after 8: took the 543-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  scout 2: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 9: over budget (537 frames)
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+  flagged 4a_bombs for a later improvement pass (took the 543-frame line after 9 attempts (8 without improvement)); 11 flagged in flagged.json
+[4a_bombs] 543 frames, hearts 3.0 -> f5810 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=1302 (total 5810 frames, 860s wall)
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [2 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [3 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [4 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [5 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [6 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [7 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [8 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [9 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [10 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [11 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [12 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [13 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [14 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [15 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [16 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [17 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [18 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [19 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [20 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [21 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [22 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [23 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [24 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [25 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [26 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [27 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [28 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [29 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [30 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [31 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [32 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [33 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [34 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [35 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [36 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [37 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [38 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [39 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [40 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [41 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [42 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [43 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [44 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [45 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [46 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [47 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [48 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [49 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [50 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [51 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [52 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [53 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [54 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [55 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [56 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [57 so far this search]
+  attempt 5: success 312 frames, hearts 3.0
+  attempt 1: over budget (312 frames)
+  attempt 6: over budget (312 frames)
+  57 attempt(s) lost to a bridge reply that could not be read (1900.0% of them); the emulators were kept
+[49_key] 312 frames, hearts 3.0 -> f6122 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395 (total 6122 frames, 876s wall)
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [2 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [3 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [4 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [5 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [6 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [7 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [8 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [9 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [10 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [11 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [12 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [13 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [14 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [15 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [16 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [17 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [18 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [19 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [20 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [21 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [22 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [23 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [24 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [25 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [26 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [27 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [28 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [29 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [30 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [31 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [32 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [33 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [34 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [35 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [36 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [37 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [38 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [39 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [40 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [41 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [42 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [43 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [44 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [45 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [46 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [47 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [48 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [49 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [50 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [51 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [52 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [53 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [54 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [55 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [56 so far this search]
+  scout 1: unreadable bridge reply (cannot read from timed out object); the attempt is lost, the scout is not  [57 so far this search]
+  attempt 18: success 611 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+=== attempt 1 (2026-10-02 02:51:31) ===
+resumed checkpoint '49_key': 6122 frames, f6122 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395
+resuming after 16 segments
+  attempt 2: success 771 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (991 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (991 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[59_fight] 771 frames, hearts 3.0 -> f6893 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1488 (total 6893 frames, 602s wall)
+  attempt 1: success 175 frames, hearts 3.0
+  attempt 2: over budget (388 frames)
+  attempt 4: over budget (392 frames)
+  attempt 5: over budget (390 frames)
+  attempt 6: over budget (392 frames)
+  attempt 7: over budget (389 frames)
+  (accept-after 8: took the 175-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 12 -' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 12 -' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  attempt 10: over budget (394 frames)
+  2 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+  flagged 69_stairs for a later improvement pass (took the 175-frame line after 9 attempts (8 without improvement)); 12 flagged in flagged.json
+[69_stairs] 175 frames, hearts 3.0 -> f7068 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=3.0/3 rup=0 sword=1 lag=1504 (total 7068 frames, 731s wall)
+  attempt 2: success 1073 frames, hearts 1.5
+  attempt 3: success 983 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 983 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[cellar] 983 frames, hearts 3.0 -> f8051 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=3.0/3 rup=0 sword=1 lag=1509 (total 8051 frames, 938s wall)
+  attempt 2: success 263 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 263 - taking it
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 2 replacement(s) so far
+  2 scout emulator(s) died mid-search, 2 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[69_up] 263 frames, hearts 3.0 -> f8314 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=3.0/3 rup=0 sword=1 lag=1617 (total 8314 frames, 1082s wall)
+  attempt 4: success 249 frames, hearts 3.0
+  attempt 2: success 241 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 241 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[59_up] 241 frames, hearts 3.0 -> f8555 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=3.0/3 rup=0 sword=1 lag=1714 (total 8555 frames, 1211s wall)
+  attempt 2: success 325 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 325 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (10.0% of them); the emulators were kept
+[49_right] 325 frames, hearts 3.0 -> f8880 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=3.0/3 rup=0 sword=1 lag=1850 (total 8880 frames, 1236s wall)
+  attempt 2: success 361 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 361 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[4a_right] 361 frames, hearts 3.0 -> f9241 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=3.0/3 rup=0 sword=1 lag=1986 (total 9241 frames, 1248s wall)
+  attempt 2: success 440 frames, hearts 3.0
+  (accept-after 8: took the 440-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  scout 2: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 4: over budget (660 frames)
+  attempt 11: over budget (660 frames)
+  1 attempt(s) lost to a bridge reply that could not be read (9.1% of them); the emulators were kept
+  flagged 4b_right for a later improvement pass (took the 440-frame line after 9 attempts (8 without improvement)); 13 flagged in flagged.json
+[4b_right] 440 frames, hearts 3.0 -> f9681 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=3.0/3 rup=0 sword=1 lag=2122 (total 9681 frames, 1402s wall)
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  attempt 2: success 600 frames, hearts 1.5
+  attempt 4: success 573 frames, hearts 2.0
+  attempt 1: success 610 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 610 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 132 12' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[4c_bomb] 610 frames, hearts 2.5 -> f10291 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=2.5/3 rup=0 sword=1 lag=2258 (total 10291 frames, 1452s wall)
+  manhandla is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 2: success 224 frames, hearts 2.5
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 1: success 218 frames, hearts 2.5
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 4: over budget (875 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+[manhandla] 218 frames, hearts 2.5 -> f10509 mode=05/00 L3 room=4d pos=(144,131) dir=4 hp=2.5/3 rup=0 sword=1 lag=2273 (total 10509 frames, 1940s wall)
+  attempt 2: success 719 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 719 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[L3_done] 719 frames, hearts 4.0 -> f11228 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=0 sword=1 lag=2379 (total 11228 frames, 1974s wall)
+  attempt 3: success 160 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 160 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[warp_L3] 160 frames, hearts 4.0 -> f11388 mode=05/00 L0 room=74 pos=(128,125) dir=4 hp=4.0/4 rup=0 sword=1 lag=2389 (total 11388 frames, 1978s wall)
+  attempt 2: success 209 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 209 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ow1_73] 209 frames, hearts 4.0 -> f11597 mode=05/00 L0 room=73 pos=(240,133) dir=2 hp=4.0/4 rup=0 sword=1 lag=2460 (total 11597 frames, 1987s wall)
+  attempt 2: success 200 frames, hearts 3.5
+  attempt 3: success 205 frames, hearts 4.0
+  attempt 4: success 198 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 198 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ow1_63] 198 frames, hearts 4.0 -> f11795 mode=05/00 L0 room=63 pos=(176,221) dir=8 hp=4.0/4 rup=0 sword=1 lag=2512 (total 11795 frames, 1995s wall)
+  attempt 2: success 198 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 198 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[ow1_64] 198 frames, hearts 4.0 -> f11993 mode=05/00 L0 room=64 pos=(0,157) dir=1 hp=4.0/4 rup=0 sword=1 lag=2583 (total 11993 frames, 2002s wall)
+  attempt 2: success 322 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 322 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[ow1_65] 322 frames, hearts 4.0 -> f12315 mode=05/00 L0 room=65 pos=(0,173) dir=1 hp=4.0/4 rup=0 sword=1 lag=2654 (total 12315 frames, 2020s wall)
+  attempt 2: success 346 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 346 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (11.1% of them); the emulators were kept
+[ow1_66] 346 frames, hearts 4.0 -> f12661 mode=05/00 L0 room=66 pos=(0,189) dir=1 hp=4.0/4 rup=0 sword=1 lag=2725 (total 12661 frames, 2162s wall)
+  attempt 2: success 374 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 374 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[ow1_67] 374 frames, hearts 4.0 -> f13035 mode=05/00 L0 room=67 pos=(0,117) dir=1 hp=4.0/4 rup=0 sword=1 lag=2796 (total 13035 frames, 2180s wall)
+  attempt 2: success 370 frames, hearts 4.0
+  attempt 1: success 366 frames, hearts 4.0
+  attempt 5: success 351 frames, hearts 4.0
+  attempt 7: success 329 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 329 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (6.7% of them); the emulators were kept
+[ow1_68] 329 frames, hearts 4.0 -> f13364 mode=05/00 L0 room=68 pos=(0,125) dir=1 hp=4.0/4 rup=0 sword=1 lag=2867 (total 13364 frames, 2212s wall)
+  attempt 2: success 168 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 168 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ow1_58] 168 frames, hearts 4.0 -> f13532 mode=05/00 L0 room=58 pos=(48,221) dir=8 hp=4.0/4 rup=0 sword=1 lag=2919 (total 13532 frames, 2217s wall)
+  attempt 2: success 250 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 250 - taking it
+[ow1_48] 250 frames, hearts 4.0 -> f13782 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=0 sword=1 lag=2971 (total 13782 frames, 2233s wall)
+  attempt 2: success 272 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 272 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  2 attempt(s) lost to a bridge reply that could not be read (66.7% of them); the emulators were kept
+[ow1_38] 272 frames, hearts 3.0 -> f14054 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.0/4 rup=0 sword=1 lag=3023 (total 14054 frames, 2363s wall)
+  attempt 3: success 227 frames, hearts 3.0
+  attempt 4: success 217 frames, hearts 3.0
+  attempt 2: success 208 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 208 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[ws_28] 208 frames, hearts 3.0 -> f14262 mode=05/00 L0 room=28 pos=(112,221) dir=8 hp=3.0/4 rup=0 sword=1 lag=3075 (total 14262 frames, 2369s wall)
+  attempt 2: success 236 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 236 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[ws_29] 236 frames, hearts 3.0 -> f14498 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.0/4 rup=0 sword=1 lag=3146 (total 14498 frames, 2378s wall)
+  attempt 2: success 352 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (40.0% of them); the emulators were kept
+[ws_2a] 352 frames, hearts 2.0 -> f14850 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.0/4 rup=0 sword=1 lag=3217 (total 14850 frames, 2389s wall)
+  attempt 2: success 288 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 288 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (12.5% of them); the emulators were kept
+[ws_2b] 288 frames, hearts 2.0 -> f15138 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.0/4 rup=0 sword=1 lag=3288 (total 15138 frames, 2403s wall)
+  attempt 4: success 404 frames, hearts 2.0
+  (accept-after 8: took the 404-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+  flagged ws_2c for a later improvement pass (took the 404-frame line after 9 attempts (8 without improvement)); 14 flagged in flagged.json
+[ws_2c] 404 frames, hearts 2.0 -> f15542 mode=05/00 L0 room=2c pos=(0,189) dir=1 hp=2.0/4 rup=0 sword=1 lag=3359 (total 15542 frames, 2429s wall)
+  attempt 3: success 804 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 804 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  attempt 5: success 800 frames, hearts 3.0
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[h2c_heart] 800 frames, hearts 3.0 -> f16342 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=3.0/5 rup=0 sword=1 lag=3418 (total 16342 frames, 2472s wall)
+  attempt 2: success 301 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 301 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[h2c_2d] 301 frames, hearts 3.0 -> f16643 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=3.0/5 rup=0 sword=1 lag=3489 (total 16643 frames, 2480s wall)
+  attempt 2: success 305 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 305 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[c0f_1d] 305 frames, hearts 2.5 -> f16948 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=2.5/5 rup=0 sword=1 lag=3548 (total 16948 frames, 2492s wall)
+  attempt 2: success 252 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 252 - taking it
+[c0f_1e] 252 frames, hearts 2.5 -> f17200 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=2.5/5 rup=0 sword=1 lag=3619 (total 17200 frames, 2502s wall)
+  attempt 3: success 295 frames, hearts 2.0
+  attempt 2: success 401 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 401 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[c0f_1f] 401 frames, hearts 2.5 -> f17601 mode=05/00 L0 room=1f pos=(0,141) dir=1 hp=2.5/5 rup=0 sword=1 lag=3690 (total 17601 frames, 2635s wall)
+  attempt 4: success 362 frames, hearts 0.5
+  attempt 1: success 361 frames, hearts 0.5
+  attempt 2: success 424 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 424 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[c0f_0f] 424 frames, hearts 2.0 -> f18025 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=2.0/5 rup=0 sword=1 lag=3742 (total 18025 frames, 2658s wall)
+  attempt 2: success 758 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 758 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cave_0f] 758 frames, hearts 2.0 -> f18783 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=2.0/5 rup=100 sword=1 lag=3801 (total 18783 frames, 2815s wall)
+  scout 1 lost its emulator (cannot read from timed out object)
+  attempt 3: success 184 frames, hearts 2.0
+  attempt 4: success 183 frames, hearts 2.0
+  attempt 1: success 182 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 182 - taking it
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[c0f_b1f] 182 frames, hearts 2.0 -> f18965 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=2.0/5 rup=100 sword=1 lag=3851 (total 18965 frames, 2820s wall)
+  attempt 4: success 274 frames, hearts 2.0
+  attempt 1: success 267 frames, hearts 2.0
+  attempt 2: success 263 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 263 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[c0f_b1e] 263 frames, hearts 2.0 -> f19228 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=2.0/5 rup=100 sword=1 lag=3922 (total 19228 frames, 2948s wall)
+  attempt 2: success 357 frames, hearts 2.0
+  attempt 1: success 341 frames, hearts 2.0
+  attempt 7: success 332 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 332 - taking it
+[c0f_b1d] 332 frames, hearts 2.0 -> f19560 mode=05/00 L0 room=1d pos=(240,141) dir=2 hp=2.0/5 rup=100 sword=1 lag=3993 (total 19560 frames, 2962s wall)
+  attempt 3: success 209 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 209 - taking it
+  attempt 1: success 208 frames, hearts 2.0
+  attempt 5: success 203 frames, hearts 2.0
+[cdl_0d] 203 frames, hearts 2.0 -> f19763 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=2.0/5 rup=100 sword=1 lag=4045 (total 19763 frames, 2967s wall)
+  attempt 2: success 394 frames, hearts 1.0
+  converged: 3 of 4 scouts within 20 frames of 394 - taking it
+  attempt 5: success 421 frames, hearts 1.5
+=== attempt 1 (2026-10-02 03:41:46) ===
+resumed checkpoint 'cdl_0d': 19763 frames, f19763 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=2.0/5 rup=100 sword=1 lag=4045
+resuming after 54 segments
+  attempt 3: success 394 frames, hearts 1.0
+  converged: 3 of 4 scouts within 20 frames of 394 - taking it
+  attempt 5: success 421 frames, hearts 1.5
+[cdl_0c] 421 frames, hearts 1.5 -> f20184 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=1.5/5 rup=100 sword=1 lag=4116 (total 20184 frames, 22s wall)
+  attempt 3: success 486 frames, hearts 1.5
+  attempt 1: success 482 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 482 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[buy_candle] 482 frames, hearts 1.5 -> f20666 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=1.5/5 rup=100 sword=1 lag=4145 (total 20666 frames, 34s wall)
+  attempt 1: success 310 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 310 - taking it
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[candle_leave] 310 frames, hearts 1.5 -> f20976 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=1.5/5 rup=40 sword=1 lag=4175 (total 20976 frames, 162s wall)
+  attempt 2: success 273 frames, hearts 1.5
+  attempt 1: success 272 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 272 - taking it
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[cdl_1c] 272 frames, hearts 1.5 -> f21248 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=1.5/5 rup=40 sword=1 lag=4225 (total 21248 frames, 290s wall)
+  attempt 4: success 232 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 232 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 2: success 224 frames, hearts 1.5
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ws_1b] 224 frames, hearts 1.5 -> f21472 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=1.5/5 rup=40 sword=1 lag=4296 (total 21472 frames, 296s wall)
+  attempt 2: success 352 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'ram 172 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [2 so far this search]
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[ws_1a] 352 frames, hearts 1.5 -> f21824 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=1.5/5 rup=40 sword=1 lag=4367 (total 21824 frames, 427s wall)
+  attempt 3: success 228 frames, hearts 1.5
+  attempt 4: success 221 frames, hearts 1.5
+  converged: 3 of 4 scouts within 20 frames of 221 - taking it
+  attempt 2: success 213 frames, hearts 1.5
+[ws_0a] 213 frames, hearts 1.5 -> f22037 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=1.5/5 rup=40 sword=1 lag=4419 (total 22037 frames, 433s wall)
+  attempt 3: approach: died (183 frames)
+  attempt 4: approach: died (192 frames)
+  attempt 1: approach: died (185 frames)
+  attempt 2: approach: died (383 frames)
+  attempt 6: approach: died (194 frames)
+  attempt 7: approach: died (192 frames)
+  attempt 5: approach: died (273 frames)
+  attempt 8: approach: died (186 frames)
+  attempt 11: approach: died (188 frames)
+  attempt 10: approach: died (248 frames)
+  attempt 12: approach: died (184 frames)
+  attempt 9: approach: died (385 frames)
+  attempt 13: approach: died (194 frames)
+  attempt 15: approach: died (187 frames)
+  attempt 14: approach: died (184 frames)
+  attempt 16: approach: died (188 frames)
+  attempt 17: approach: died (190 frames)
+  attempt 18: approach: died (198 frames)
+  attempt 19: approach: died (194 frames)
+  attempt 20: approach: died (185 frames)
+  attempt 21: approach: died (188 frames)
+  attempt 23: approach: died (198 frames)
+  attempt 22: approach: died (279 frames)
+  attempt 25: approach: died (287 frames)
+  attempt 24: approach: died (287 frames)
+  attempt 27: approach: died (191 frames)
+  attempt 26: approach: died (184 frames)
+  attempt 28: approach: died (185 frames)
+  attempt 30: approach: died (192 frames)
+  attempt 31: approach: died (190 frames)
+  attempt 32: approach: died (192 frames)
+  attempt 29: approach: died (382 frames)
+  attempt 34: approach: died (188 frames)
+  attempt 33: approach: died (328 frames)
+  attempt 36: approach: died (274 frames)
+  attempt 38: approach: died (191 frames)
+  attempt 37: approach: died (193 frames)
+  attempt 35: approach: died (377 frames)
+  attempt 40: approach: died (187 frames)
+  attempt 39: approach: died (189 frames)
+  attempt 41: approach: died (186 frames)
+  attempt 42: approach: died (194 frames)
+  attempt 43: approach: died (194 frames)
+  attempt 44: approach: died (189 frames)
+  attempt 45: approach: died (185 frames)
+  attempt 46: approach: died (194 frames)
+  attempt 47: approach: died (191 frames)
+  attempt 48: approach: died (188 frames)
+  attempt 50: approach: died (188 frames)
+  attempt 49: approach: died (188 frames)
+  attempt 51: approach: died (190 frames)
+  attempt 52: approach: died (193 frames)
+  attempt 53: approach: died (189 frames)
+  attempt 54: approach: died (189 frames)
+  attempt 55: approach: died (188 frames)
+  attempt 56: approach: died (189 frames)
+  attempt 58: approach: died (278 frames)
+  attempt 60: approach: died (189 frames)
+  attempt 57: approach: died (386 frames)
+  attempt 59: approach: died (386 frames)
+  no success; most common: 60x approach: died @ room 0A L0
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3164, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3143, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 502, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment white_sword failed
+=== a segment genuinely failed; stopping (2026-10-02 03:54:27) ===
+=== attempt 1 (2026-10-02 04:19:11) ===
+resumed checkpoint 'ow1_48': 13782 frames, f13782 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=0 sword=1 lag=2971
+resuming after 37 segments
+  ow1_38: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 272 frames, hearts 3.0
+  not calling it converged: the best line is 272 frames and ends at 3.0 hearts, and the next screen needs 3.5. Keeping looking for one that keeps the heart.
+  attempt 6: success 212 frames, hearts 3.5
+  (accept-after 8: took the 212-frame line after 13 attempts (8 without improvement) - flagged for a later pass)
+  attempt 15: success 200 frames, hearts 3.5
+  flagged ow1_38 for a later improvement pass (took the 212-frame line after 13 attempts (8 without improvement)); 15 flagged in flagged.json
+[ow1_38] 200 frames, hearts 3.5 -> f13982 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.5/4 rup=0 sword=1 lag=3023 (total 13982 frames, 24s wall)
+  ws_28: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 208 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 208 - taking it
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[ws_28] 208 frames, hearts 3.5 -> f14190 mode=05/00 L0 room=28 pos=(112,221) dir=8 hp=3.5/4 rup=0 sword=1 lag=3075 (total 14190 frames, 150s wall)
+  ws_29: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 247 frames, hearts 3.5
+  attempt 4: success 244 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 244 - taking it
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 2 replacement(s) so far
+  2 scout emulator(s) died mid-search, 2 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[ws_29] 244 frames, hearts 3.5 -> f14434 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=0 sword=1 lag=3146 (total 14434 frames, 280s wall)
+  ws_2a: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 4: success 363 frames, hearts 2.5
+  not calling it converged: the best line is 363 frames and ends at 2.5 hearts, and the next screen needs 3.5. Keeping looking for one that keeps the heart.
+  attempt 2: success 354 frames, hearts 2.5
+  attempt 8: success 353 frames, hearts 2.5
+  attempt 11: success 336 frames, hearts 2.5
+  attempt 17: success 323 frames, hearts 2.5
+  (accept-after 8: took the 323-frame line after 25 attempts (8 without improvement) - flagged for a later pass)
+  flagged ws_2a for a later improvement pass (took the 323-frame line after 25 attempts (8 without improvement)); 16 flagged in flagged.json
+[ws_2a] 323 frames, hearts 2.5 -> f14757 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.5/4 rup=0 sword=1 lag=3217 (total 14757 frames, 311s wall)
+  ws_2b: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 300 frames, hearts 2.5
+  attempt 4: success 299 frames, hearts 2.5
+  attempt 2: success 288 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 288 - taking it
+[ws_2b] 288 frames, hearts 2.5 -> f15045 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.5/4 rup=0 sword=1 lag=3288 (total 15045 frames, 318s wall)
+  ws_2c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: crossed (219 frames)
+  attempt 1: success 484 frames, hearts 2.0
+  attempt 6: success 415 frames, hearts 2.5
+  (accept-after 8: took the 415-frame line after 14 attempts (8 without improvement) - flagged for a later pass)
+  attempt 16: success 398 frames, hearts 2.5
+  flagged ws_2c for a later improvement pass (took the 415-frame line after 14 attempts (8 without improvement)); 16 flagged in flagged.json
+[ws_2c] 398 frames, hearts 2.5 -> f15443 mode=05/00 L0 room=2c pos=(0,181) dir=1 hp=2.5/4 rup=0 sword=1 lag=3359 (total 15443 frames, 347s wall)
+  attempt 1: success 803 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 803 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 12 -' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[h2c_heart] 803 frames, hearts 3.5 -> f16246 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=3.5/5 rup=0 sword=1 lag=3418 (total 16246 frames, 381s wall)
+  h2c_2d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 243 frames, hearts 3.0
+  attempt 3: success 256 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 256 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (12.5% of them); the emulators were kept
+[h2c_2d] 256 frames, hearts 3.5 -> f16502 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=3.5/5 rup=0 sword=1 lag=3489 (total 16502 frames, 390s wall)
+  c0f_1d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: success 269 frames, hearts 3.5
+  attempt 1: success 268 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 268 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[c0f_1d] 268 frames, hearts 3.5 -> f16770 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=3.5/5 rup=0 sword=1 lag=3542 (total 16770 frames, 518s wall)
+  c0f_1e: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 252 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 252 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[c0f_1e] 252 frames, hearts 3.5 -> f17022 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=3.5/5 rup=0 sword=1 lag=3613 (total 17022 frames, 525s wall)
+  c0f_1f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 300 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 300 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'ram 172 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[c0f_1f] 300 frames, hearts 3.5 -> f17322 mode=05/00 L0 room=1f pos=(0,157) dir=1 hp=3.5/5 rup=0 sword=1 lag=3684 (total 17322 frames, 532s wall)
+  c0f_0f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: success 359 frames, hearts 2.0
+  attempt 4: success 358 frames, hearts 2.0
+  not calling it converged: the best line is 358 frames and ends at 2.0 hearts, and the next screen needs 3.5. Keeping looking for one that keeps the heart.
+  attempt 2: success 465 frames, hearts 3.5
+  converged: 4 of 4 scouts within 20 frames of 465 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[c0f_0f] 465 frames, hearts 3.5 -> f17787 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=3.5/5 rup=0 sword=1 lag=3736 (total 17787 frames, 663s wall)
+  cave_0f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 758 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 758 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[cave_0f] 758 frames, hearts 3.5 -> f18545 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=3.5/5 rup=100 sword=1 lag=3795 (total 18545 frames, 681s wall)
+  c0f_b1f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 177 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 177 - taking it
+[c0f_b1f] 177 frames, hearts 3.5 -> f18722 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=3.5/5 rup=100 sword=1 lag=3845 (total 18722 frames, 685s wall)
+  c0f_b1e: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 256 frames, hearts 3.5
+  attempt 1: success 253 frames, hearts 3.5
+  attempt 7: success 245 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 245 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (12.5% of them); the emulators were kept
+[c0f_b1e] 245 frames, hearts 3.5 -> f18967 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=3.5/5 rup=100 sword=1 lag=3916 (total 18967 frames, 694s wall)
+  c0f_b1d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 353 frames, hearts 3.0
+  attempt 2: success 435 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 435 - taking it
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[c0f_b1d] 435 frames, hearts 3.5 -> f19402 mode=05/00 L0 room=1d pos=(240,133) dir=2 hp=3.5/5 rup=100 sword=1 lag=3987 (total 19402 frames, 825s wall)
+  cdl_0d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 203 frames, hearts 3.5
+  attempt 1: success 202 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 202 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 5: success 197 frames, hearts 3.5
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cdl_0d] 197 frames, hearts 3.5 -> f19599 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=3.5/5 rup=100 sword=1 lag=4039 (total 19599 frames, 830s wall)
+  cdl_0c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 330 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 330 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[cdl_0c] 330 frames, hearts 3.5 -> f19929 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=3.5/5 rup=100 sword=1 lag=4110 (total 19929 frames, 959s wall)
+  buy_candle: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 531 frames, hearts 2.5
+  attempt 3: success 627 frames, hearts 3.5
+  converged: 4 of 4 scouts within 20 frames of 627 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[buy_candle] 627 frames, hearts 3.5 -> f20556 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=3.5/5 rup=100 sword=1 lag=4139 (total 20556 frames, 1093s wall)
+  candle_leave: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 310 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 310 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[candle_leave] 310 frames, hearts 3.5 -> f20866 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=3.5/5 rup=40 sword=1 lag=4169 (total 20866 frames, 1101s wall)
+  cdl_1c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 4: success 313 frames, hearts 3.0
+  attempt 1: success 363 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 363 - taking it
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[cdl_1c] 363 frames, hearts 4.0 -> f21229 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=4.0/5 rup=40 sword=1 lag=4219 (total 21229 frames, 1229s wall)
+  ws_1b: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 235 frames, hearts 4.0
+  attempt 4: success 232 frames, hearts 4.0
+  attempt 2: success 224 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 224 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ws_1b] 224 frames, hearts 4.0 -> f21453 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=4.0/5 rup=40 sword=1 lag=4290 (total 21453 frames, 1235s wall)
+  ws_1a: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 1: success 364 frames, hearts 4.0
+  attempt 4: success 363 frames, hearts 4.0
+  attempt 2: success 352 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[ws_1a] 352 frames, hearts 4.0 -> f21805 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=4.0/5 rup=40 sword=1 lag=4361 (total 21805 frames, 1365s wall)
+  attempt 1: success 224 frames, hearts 4.0
+  attempt 2: success 213 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 213 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[ws_0a] 213 frames, hearts 4.0 -> f22018 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413 (total 22018 frames, 1489s wall)
+  white_sword has failed 1 time(s) before; drawing seeds from 2000 instead of 1000 so this is a different search and not the same one again
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  attempt 1: approach: died (404 frames)
+  attempt 4: approach: died (396 frames)
+  attempt 3: approach: died (440 frames)
+  attempt 5: approach: died (407 frames)
+  attempt 6: approach: died (404 frames)
+  attempt 7: approach: died (405 frames)
+  attempt 8: approach: died (405 frames)
+  attempt 9: approach: died (408 frames)
+  attempt 10: approach: died (402 frames)
+  attempt 11: approach: died (407 frames)
+  attempt 12: approach: died (412 frames)
+  attempt 13: approach: died (439 frames)
+  attempt 14: approach: died (348 frames)
+  attempt 15: approach: died (398 frames)
+  attempt 16: approach: died (404 frames)
+  attempt 17: approach: died (404 frames)
+  attempt 18: approach: died (439 frames)
+  attempt 19: approach: died (416 frames)
+  attempt 20: approach: died (407 frames)
+  attempt 21: approach: died (407 frames)
+  attempt 22: approach: died (404 frames)
+  attempt 23: approach: died (407 frames)
+  attempt 24: approach: died (407 frames)
+  attempt 26: approach: died (407 frames)
+  attempt 25: approach: died (398 frames)
+  attempt 27: approach: died (245 frames)
+  attempt 28: approach: died (407 frames)
+  attempt 29: approach: died (398 frames)
+  attempt 30: approach: died (407 frames)
+  attempt 31: approach: died (430 frames)
+  attempt 32: approach: died (241 frames)
+  attempt 35: approach: died (241 frames)
+  attempt 33: approach: died (407 frames)
+  attempt 34: approach: died (346 frames)
+  attempt 36: approach: died (398 frames)
+  attempt 37: approach: died (398 frames)
+  attempt 38: approach: died (584 frames)
+  attempt 39: approach: died (407 frames)
+  attempt 40: approach: died (408 frames)
+  attempt 41: approach: died (404 frames)
+  attempt 42: approach: died (431 frames)
+  attempt 43: approach: died (351 frames)
+  attempt 44: approach: died (407 frames)
+  attempt 45: approach: died (405 frames)
+  attempt 46: approach: died (398 frames)
+  attempt 47: approach: died (405 frames)
+  attempt 48: approach: died (431 frames)
+  attempt 49: approach: died (407 frames)
+  attempt 50: approach: died (345 frames)
+  attempt 51: approach: died (351 frames)
+  attempt 52: approach: died (398 frames)
+  attempt 53: approach: died (404 frames)
+  attempt 54: approach: died (404 frames)
+  attempt 55: approach: died (404 frames)
+  attempt 56: approach: died (348 frames)
+  attempt 58: approach: died (404 frames)
+  attempt 57: approach: died (404 frames)
+  attempt 59: approach: died (404 frames)
+  attempt 60: approach: died (405 frames)
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  no success; most common: 59x approach: died @ room 0A L0
+resumed checkpoint 'ws_0a': 22018 frames, f22018 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413
+  BACKPROP: rewound to 'ws_0a' (60 segments done). ws_0a will be searched again and white_sword retried from a different state
+  attempt 2: success 1 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 1 - taking it
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[ws_0a] 1 frames, hearts 4.0 -> f22019 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413 (total 22019 frames, 2182s wall)
+  white_sword has failed 2 time(s) before; drawing seeds from 3000 instead of 1000 so this is a different search and not the same one again
+  attempt 1: approach: died (244 frames)
+  attempt 4: approach: died (403 frames)
+  attempt 3: approach: died (406 frames)
+  attempt 2: approach: died (403 frames)
+  attempt 5: approach: died (403 frames)
+  attempt 7: approach: died (404 frames)
+  attempt 6: approach: died (438 frames)
+  attempt 8: approach: died (406 frames)
+  attempt 9: approach: died (439 frames)
+  attempt 11: approach: died (397 frames)
+  attempt 10: approach: died (397 frames)
+  attempt 12: approach: died (432 frames)
+  attempt 13: approach: died (403 frames)
+  attempt 14: approach: died (404 frames)
+  attempt 16: approach: died (404 frames)
+  attempt 17: approach: died (404 frames)
+  attempt 15: approach: died (576 frames)
+  attempt 18: approach: died (344 frames)
+  attempt 19: approach: died (350 frames)
+  attempt 20: approach: died (406 frames)
+  attempt 22: approach: died (404 frames)
+  attempt 21: approach: died (575 frames)
+  attempt 23: approach: died (350 frames)
+  attempt 24: approach: died (439 frames)
+  attempt 25: approach: died (397 frames)
+  attempt 26: approach: died (404 frames)
+  attempt 27: approach: died (406 frames)
+  attempt 28: approach: died (430 frames)
+  attempt 29: approach: died (403 frames)
+  attempt 31: approach: died (244 frames)
+  attempt 30: approach: died (398 frames)
+  attempt 32: approach: died (406 frames)
+  attempt 33: approach: died (406 frames)
+  attempt 34: approach: died (345 frames)
+  attempt 35: approach: died (404 frames)
+  attempt 36: approach: died (404 frames)
+  attempt 37: approach: died (345 frames)
+  attempt 38: approach: died (397 frames)
+  attempt 39: approach: died (397 frames)
+  attempt 40: approach: died (403 frames)
+  attempt 41: approach: died (344 frames)
+  attempt 42: approach: died (344 frames)
+  attempt 43: approach: died (395 frames)
+  attempt 44: approach: died (429 frames)
+  attempt 45: approach: died (403 frames)
+  attempt 46: approach: died (398 frames)
+  attempt 47: approach: died (397 frames)
+  attempt 48: approach: died (438 frames)
+  attempt 49: approach: died (347 frames)
+  attempt 50: approach: died (404 frames)
+  attempt 51: approach: died (406 frames)
+  attempt 52: approach: died (404 frames)
+  attempt 53: approach: died (403 frames)
+  attempt 55: approach: died (244 frames)
+  attempt 56: approach: died (403 frames)
+  attempt 54: approach: died (406 frames)
+  attempt 57: approach: died (397 frames)
+  attempt 58: approach: died (438 frames)
+  attempt 59: approach: died (403 frames)
+  attempt 60: approach: died (404 frames)
+  no success; most common: 60x approach: died @ room 0A L0
+resumed checkpoint 'ws_0a': 22019 frames, f22019 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413
+  BACKPROP: rewound to 'ws_0a' (60 segments done). ws_0a will be searched again and white_sword retried from a different state
+  attempt 2: success 1 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 1 - taking it
+[ws_0a] 1 frames, hearts 4.0 -> f22020 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413 (total 22020 frames, 2770s wall)
+  white_sword has failed 3 time(s) before; drawing seeds from 4000 instead of 1000 so this is a different search and not the same one again
+  attempt 4: approach: died (403 frames)
+=== attempt 1 (2026-10-02 05:06:53) ===
+resumed checkpoint 'ws_0a': 22020 frames, f22020 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=4.0/5 rup=40 sword=1 lag=4413
+resuming after 61 segments
+  white_sword has failed 3 time(s) before; drawing seeds from 4000 instead of 1000 so this is a different search and not the same one again
+  attempt 3: approach: died (403 frames)
+  attempt 2: approach: died (402 frames)
+  attempt 1: approach: died (438 frames)
+  attempt 4: approach: died (403 frames)
+  attempt 6: approach: died (349 frames)
+  attempt 5: approach: died (437 frames)
+  attempt 7: approach: died (405 frames)
+  attempt 8: approach: died (396 frames)
+  attempt 9: approach: died (396 frames)
+  attempt 10: approach: died (396 frames)
+  attempt 11: approach: died (396 frames)
+  attempt 12: approach: died (402 frames)
+  attempt 13: approach: died (428 frames)
+  attempt 14: approach: died (405 frames)
+  attempt 16: approach: died (396 frames)
+  attempt 15: approach: died (398 frames)
+  attempt 17: approach: died (405 frames)
+  attempt 18: approach: died (405 frames)
+  attempt 19: approach: died (405 frames)
+  attempt 20: approach: died (395 frames)
+  attempt 21: approach: died (403 frames)
+  attempt 22: approach: died (405 frames)
+  attempt 23: approach: died (405 frames)
+  attempt 24: approach: died (431 frames)
+  attempt 25: approach: died (344 frames)
+  attempt 26: approach: died (396 frames)
+  attempt 27: approach: died (438 frames)
+  attempt 29: approach: died (583 frames)
+  attempt 28: approach: died (576 frames)
+  attempt 31: approach: died (400 frames)
+  attempt 30: approach: died (576 frames)
+  attempt 32: approach: died (428 frames)
+  attempt 34: approach: died (405 frames)
+  attempt 35: approach: died (396 frames)
+  attempt 33: approach: died (582 frames)
+  attempt 36: approach: died (402 frames)
+  attempt 37: approach: died (400 frames)
+  attempt 38: approach: died (403 frames)
+  attempt 39: approach: died (405 frames)
+  attempt 40: approach: died (405 frames)
+  attempt 41: approach: died (429 frames)
+  attempt 42: approach: died (394 frames)
+  attempt 44: approach: died (400 frames)
+  attempt 43: approach: died (428 frames)
+  attempt 45: approach: died (405 frames)
+  attempt 46: approach: died (396 frames)
+  attempt 48: approach: died (400 frames)
+  attempt 47: approach: died (576 frames)
+  attempt 50: approach: died (403 frames)
+  attempt 49: approach: died (576 frames)
+  attempt 52: approach: died (405 frames)
+  attempt 51: approach: died (403 frames)
+  attempt 55: approach: died (346 frames)
+  attempt 54: approach: died (438 frames)
+  attempt 53: approach: died (576 frames)
+  attempt 56: approach: died (428 frames)
+  attempt 57: approach: died (431 frames)
+  attempt 58: approach: died (402 frames)
+  attempt 59: approach: died (405 frames)
+  attempt 60: approach: died (396 frames)
+  no success; most common: 60x approach: died @ room 0A L0
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3164, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3143, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 579, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment white_sword failed
+=== a segment genuinely failed; stopping (2026-10-02 05:17:37) ===
+=== attempt 1 (2026-10-02 06:22:00) ===
+resumed checkpoint 'ws_29': 14434 frames, f14434 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=0 sword=1 lag=3146
+resuming after 40 segments
+  ws_2a: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: success 315 frames, hearts 3.5
+  attempt 2: success 309 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 309 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (10.0% of them); the emulators were kept
+[ws_2a] 309 frames, hearts 3.5 -> f14743 mode=05/00 L0 room=2a pos=(0,141) dir=1 hp=3.5/4 rup=0 sword=1 lag=3217 (total 14743 frames, 67s wall)
+  ws_2b: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 298 frames, hearts 2.5
+  attempt 7: success 277 frames, hearts 2.5
+  attempt 11: nav: Link died at f15042 mode=11/00 L0 room=2 (299 frames)
+  (accept-after 8: took the 277-frame line after 13 attempts (8 without improvement) - flagged for a later pass)
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (6.7% of them); the emulators were kept
+  flagged ws_2b for a later improvement pass (took the 277-frame line after 13 attempts (8 without improvement)); 17 flagged in flagged.json
+[ws_2b] 277 frames, hearts 2.5 -> f15020 mode=05/00 L0 room=2b pos=(0,141) dir=1 hp=2.5/4 rup=0 sword=1 lag=3288 (total 15020 frames, 85s wall)
+  ws_2c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 349 frames, hearts 1.5
+  attempt 5: success 414 frames, hearts 2.0
+  not calling it converged: the best line is 414 frames and ends at 2.0 hearts, and the next screen needs 2.5. Keeping looking for one that keeps the heart.
+  attempt 10: success 396 frames, hearts 2.0
+  (accept-after 8: took the 396-frame line after 18 attempts (8 without improvement) - flagged for a later pass)
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (5.0% of them); the emulators were kept
+  flagged ws_2c for a later improvement pass (took the 396-frame line after 18 attempts (8 without improvement)); 17 flagged in flagged.json
+[ws_2c] 396 frames, hearts 2.0 -> f15416 mode=05/00 L0 room=2c pos=(0,141) dir=1 hp=2.0/4 rup=0 sword=1 lag=3359 (total 15416 frames, 118s wall)
+  attempt 2: success 954 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 954 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 12 -' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[h2c_heart] 954 frames, hearts 3.0 -> f16370 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=3.0/5 rup=0 sword=1 lag=3418 (total 16370 frames, 185s wall)
+  h2c_2d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: success 244 frames, hearts 2.5
+  attempt 1: success 279 frames, hearts 3.0
+  converged: 4 of 4 scouts within 20 frames of 279 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[h2c_2d] 279 frames, hearts 3.0 -> f16649 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=3.0/5 rup=0 sword=1 lag=3489 (total 16649 frames, 192s wall)
+  c0f_1d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 276 frames, hearts 2.5
+  not calling it converged: the best line is 276 frames and ends at 2.5 hearts, and the next screen needs 3. Keeping looking for one that keeps the heart.
+  attempt 1: success 263 frames, hearts 2.5
+  attempt 7: success 298 frames, hearts 3.0
+  converged: 4 of 4 scouts within 20 frames of 298 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (10.0% of them); the emulators were kept
+[c0f_1d] 298 frames, hearts 3.0 -> f16947 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=3.0/5 rup=0 sword=1 lag=3542 (total 16947 frames, 203s wall)
+  c0f_1e: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 252 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 252 - taking it
+[c0f_1e] 252 frames, hearts 3.0 -> f17199 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=3.0/5 rup=0 sword=1 lag=3613 (total 17199 frames, 210s wall)
+  c0f_1f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 288 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 288 - taking it
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[c0f_1f] 288 frames, hearts 3.0 -> f17487 mode=05/00 L0 room=1f pos=(0,141) dir=1 hp=3.0/5 rup=0 sword=1 lag=3684 (total 17487 frames, 338s wall)
+  c0f_0f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 4: success 310 frames, hearts 2.0
+  attempt 1: success 309 frames, hearts 2.0
+  attempt 2: success 403 frames, hearts 2.5
+  not calling it converged: the best line is 403 frames and ends at 2.5 hearts, and the next screen needs 3. Keeping looking for one that keeps the heart.
+  attempt 3: success 395 frames, hearts 3.0
+  converged: 4 of 4 scouts within 20 frames of 395 - taking it
+[c0f_0f] 395 frames, hearts 3.0 -> f17882 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=3.0/5 rup=0 sword=1 lag=3736 (total 17882 frames, 350s wall)
+  cave_0f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 759 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 759 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cave_0f] 759 frames, hearts 3.0 -> f18641 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=3.0/5 rup=100 sword=1 lag=3795 (total 18641 frames, 369s wall)
+  c0f_b1f: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 177 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 177 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[c0f_b1f] 177 frames, hearts 3.0 -> f18818 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=3.0/5 rup=100 sword=1 lag=3845 (total 18818 frames, 495s wall)
+  c0f_b1e: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 263 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 263 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[c0f_b1e] 263 frames, hearts 3.0 -> f19081 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=3.0/5 rup=100 sword=1 lag=3916 (total 19081 frames, 503s wall)
+  c0f_b1d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 343 frames, hearts 2.5
+  attempt 9: success 356 frames, hearts 3.0
+  converged: 4 of 4 scouts within 20 frames of 356 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (9.1% of them); the emulators were kept
+[c0f_b1d] 356 frames, hearts 3.0 -> f19437 mode=05/00 L0 room=1d pos=(240,141) dir=2 hp=3.0/5 rup=100 sword=1 lag=3987 (total 19437 frames, 520s wall)
+  cdl_0d: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 209 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 209 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 5: success 203 frames, hearts 3.0
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cdl_0d] 203 frames, hearts 3.0 -> f19640 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=3.0/5 rup=100 sword=1 lag=4039 (total 19640 frames, 525s wall)
+  cdl_0c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 340 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 340 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cdl_0c] 340 frames, hearts 3.0 -> f19980 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=3.0/5 rup=100 sword=1 lag=4110 (total 19980 frames, 534s wall)
+  buy_candle: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 484 frames, hearts 3.0
+  attempt 4: success 480 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 480 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'ramd WRAM 1328 704' is not an answer to it: 'o); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[buy_candle] 480 frames, hearts 3.0 -> f20460 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=3.0/5 rup=100 sword=1 lag=4139 (total 20460 frames, 545s wall)
+  candle_leave: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 310 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 310 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[candle_leave] 310 frames, hearts 3.0 -> f20770 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=3.0/5 rup=40 sword=1 lag=4169 (total 20770 frames, 674s wall)
+  cdl_1c: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 3: success 341 frames, hearts 3.0
+  attempt 4: success 340 frames, hearts 3.0
+  attempt 2: success 390 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 390 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[cdl_1c] 390 frames, hearts 3.5 -> f21160 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=3.5/5 rup=41 sword=1 lag=4219 (total 21160 frames, 683s wall)
+  ws_1b: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 224 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 224 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ws_1b] 224 frames, hearts 3.5 -> f21384 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=3.5/5 rup=41 sword=1 lag=4290 (total 21384 frames, 688s wall)
+  ws_1a: the next screen needs 3.5 hearts, so this segment will keep searching past a converged frame count until it finds a line that has them
+  attempt 2: success 352 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 352 - taking it
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[ws_1a] 352 frames, hearts 3.5 -> f21736 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=3.5/5 rup=41 sword=1 lag=4361 (total 21736 frames, 817s wall)
+  attempt 2: success 213 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 213 - taking it
+  scout 3: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ws_0a] 213 frames, hearts 3.5 -> f21949 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=3.5/5 rup=41 sword=1 lag=4413 (total 21949 frames, 822s wall)
+  white_sword has failed 4 time(s) before; drawing seeds from 5000 instead of 1000 so this is a different search and not the same one again
+  attempt 1: approach: died (301 frames)
+  attempt 3: approach: died (446 frames)
+  attempt 6: approach: died (331 frames)
+  attempt 2: success 1573 frames, hearts 3.0
+  attempt 10: approach: died (331 frames)
+  attempt 11: approach: died (446 frames)
+  attempt 12: approach: died (446 frames)
+  attempt 14: approach: died (328 frames)
+  attempt 16: approach: died (331 frames)
+  attempt 13: success 1813 frames, hearts 3.5
+  attempt 17: approach: died (446 frames)
+  attempt 18: approach: died (331 frames)
+  attempt 20: approach: died (232 frames)
+  attempt 21: approach: died (328 frames)
+  attempt 23: approach: died (301 frames)
+  attempt 27: approach: died (446 frames)
+  attempt 30: approach: died (231 frames)
+  attempt 28: approach: died (447 frames)
+  attempt 29: approach: died (447 frames)
+  attempt 31: approach: died (446 frames)
+  (accept-after 16: took the 1813-frame line after 31 attempts (16 without improvement) - flagged for a later pass)
+  scout 0: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (3.0% of them); the emulators were kept
+  flagged white_sword for a later improvement pass (took the 1813-frame line after 31 attempts (16 without improvement)); 18 flagged in flagged.json
+[white_sword] 1813 frames, hearts 3.5 -> f23762 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=3.5/5 rup=41 sword=2 lag=4472 (total 23762 frames, 1580s wall)
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  attempt 2: success 346 frames, hearts 3.5
+  attempt 4: nav: Link died at f24315 mode=11/00 L0 room=0 (553 frames)
+  converged: 3 of 4 scouts within 20 frames of 346 - taking it
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 2 replacement(s) so far
+  2 scout emulator(s) died mid-search, 2 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[l4w00_1a] 346 frames, hearts 3.5 -> f24108 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=3.5/5 rup=41 sword=2 lag=4522 (total 24108 frames, 1716s wall)
+  attempt 2: success 494 frames, hearts 3.0
+  attempt 3: success 493 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 493 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 5: success 492 frames, hearts 3.0
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[ws_19] 492 frames, hearts 3.0 -> f24600 mode=05/00 L0 room=19 pos=(240,149) dir=2 hp=3.0/5 rup=41 sword=2 lag=4593 (total 24600 frames, 1729s wall)
+  attempt 2: success 328 frames, hearts 3.0
+  attempt 4: success 326 frames, hearts 3.0
+  converged: 3 of 4 scouts within 20 frames of 326 - taking it
+[l4w04_18] 326 frames, hearts 3.0 -> f24926 mode=05/00 L0 room=18 pos=(240,141) dir=2 hp=3.0/5 rup=41 sword=2 lag=4664 (total 24926 frames, 1738s wall)
+  attempt 2: success 332 frames, hearts 2.5
+  (accept-after 8: took the 332-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  flagged l4w05_17 for a later improvement pass (took the 332-frame line after 9 attempts (8 without improvement)); 19 flagged in flagged.json
+[l4w05_17] 332 frames, hearts 2.5 -> f25258 mode=05/00 L0 room=17 pos=(240,165) dir=2 hp=2.5/5 rup=41 sword=2 lag=4735 (total 25258 frames, 1754s wall)
+  attempt 2: success 202 frames, hearts 2.0
+  attempt 1: success 235 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 235 - taking it
+[l4w06_27] 235 frames, hearts 2.5 -> f25493 mode=05/00 L0 room=27 pos=(128,61) dir=4 hp=2.5/5 rup=41 sword=2 lag=4785 (total 25493 frames, 1762s wall)
+  attempt 2: success 252 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 252 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Right' is not an answer to it: 'ok'  (b); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (50.0% of them); the emulators were kept
+[l4w07_28] 252 frames, hearts 2.5 -> f25745 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=2.5/5 rup=41 sword=2 lag=4856 (total 25745 frames, 1768s wall)
+  attempt 2: success 259 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 259 - taking it
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[l4w08_38] 259 frames, hearts 2.5 -> f26004 mode=05/00 L0 room=38 pos=(120,61) dir=4 hp=2.5/5 rup=41 sword=2 lag=4906 (total 26004 frames, 1896s wall)
+  attempt 3: success 265 frames, hearts 2.5
+  attempt 2: success 247 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 247 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 3: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [2 so far this search]
+  2 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[l4w09_48] 247 frames, hearts 2.5 -> f26251 mode=05/00 L0 room=48 pos=(112,61) dir=4 hp=2.5/5 rup=41 sword=2 lag=4956 (total 26251 frames, 1906s wall)
+  attempt 2: success 251 frames, hearts 2.5
+  converged: 3 of 4 scouts within 20 frames of 251 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Down' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  scout 2 lost its emulator (cannot read from timed out object)
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  scout 2 replaced with a fresh emulator; the search continues on 4 scout(s), 2 replacement(s) so far
+  2 scout emulator(s) died mid-search, 2 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (25.0% of them); the emulators were kept
+[l4w10_47] 251 frames, hearts 2.5 -> f26502 mode=05/00 L0 room=47 pos=(240,141) dir=2 hp=2.5/5 rup=41 sword=2 lag=5027 (total 26502 frames, 2036s wall)
+  attempt 2: success 796 frames, hearts 3.5
+  attempt 1: success 794 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 794 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[h47_heart] 794 frames, hearts 3.5 -> f27296 mode=05/00 L0 room=47 pos=(176,157) dir=4 hp=3.5/6 rup=41 sword=2 lag=5086 (total 27296 frames, 2059s wall)
+  attempt 2: success 239 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 239 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4w11_46] 239 frames, hearts 3.5 -> f27535 mode=05/00 L0 room=46 pos=(240,157) dir=2 hp=3.5/6 rup=41 sword=2 lag=5157 (total 27535 frames, 2065s wall)
+  attempt 2: success 217 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 217 - taking it
+[l4w12_56] 217 frames, hearts 3.5 -> f27752 mode=05/00 L0 room=56 pos=(128,61) dir=4 hp=3.5/6 rup=41 sword=2 lag=5207 (total 27752 frames, 2070s wall)
+  attempt 2: success 326 frames, hearts 3.5
+  attempt 1: success 300 frames, hearts 3.5
+  attempt 7: success 292 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 292 - taking it
+[l4w13_55] 292 frames, hearts 3.5 -> f28044 mode=05/00 L0 room=55 pos=(240,141) dir=2 hp=3.5/6 rup=41 sword=2 lag=5278 (total 28044 frames, 2085s wall)
+  attempt 2: success 267 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 267 - taking it
+  attempt 5: success 265 frames, hearts 3.5
+[l4_sail] 265 frames, hearts 3.5 -> f28309 mode=05/00 L0 room=45 pos=(128,221) dir=8 hp=3.5/6 rup=41 sword=2 lag=5330 (total 28309 frames, 2092s wall)
+  attempt 2: success 272 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 272 - taking it
+  attempt 5: success 268 frames, hearts 3.5
+[enter_L4] 268 frames, hearts 3.5 -> f28577 mode=05/00 L4 room=71 pos=(120,205) dir=8 hp=3.5/6 rup=41 sword=2 lag=5349 (total 28577 frames, 2098s wall)
+  attempt 2: success 322 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 322 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_70] 322 frames, hearts 3.5 -> f28899 mode=05/00 L4 room=70 pos=(224,141) dir=2 hp=3.5/6 rup=41 sword=2 lag=5485 (total 28899 frames, 2106s wall)
+  attempt 2: done (796 frames)
+  attempt 1: done (857 frames)
+  attempt 4: success 844 frames, hearts 3.5
+  attempt 3: success 836 frames, hearts 3.5
+  attempt 5: success 776 frames, hearts 3.5
+  attempt 7: success 715 frames, hearts 3.5
+  attempt 12: done (856 frames)
+  attempt 11: done (877 frames)
+  attempt 13: success 709 frames, hearts 3.5
+  attempt 17: success 620 frames, hearts 3.5
+  attempt 19: done (916 frames)
+  (accept-after 8: took the 620-frame line after 22 attempts (8 without improvement) - flagged for a later pass)
+  attempt 25: done (810 frames)
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  flagged l4_70_key for a later improvement pass (took the 620-frame line after 22 attempts (8 without improvement)); 20 flagged in flagged.json
+[l4_70_key] 620 frames, hearts 3.5 -> f29519 mode=05/00 L4 room=71 pos=(16,141) dir=1 hp=3.5/6 rup=41 sword=2 lag=5621 (total 29519 frames, 3527s wall)
+  attempt 2: success 284 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 284 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'step 1 Up' is not an answer to it: 'ok'  (befo); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_61] 284 frames, hearts 3.5 -> f29803 mode=05/00 L4 room=61 pos=(120,205) dir=8 hp=3.5/6 rup=41 sword=2 lag=5718 (total 29803 frames, 3534s wall)
+  attempt 2: success 275 frames, hearts 3.5
+  attempt 1: success 264 frames, hearts 3.5
+  attempt 7: success 256 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 256 - taking it
+  scout 0: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (12.5% of them); the emulators were kept
+[l4_51] 256 frames, hearts 3.5 -> f30059 mode=05/00 L4 room=51 pos=(120,205) dir=8 hp=3.5/6 rup=41 sword=2 lag=5815 (total 30059 frames, 3544s wall)
+  attempt 2: success 901 frames, hearts 3.5
+  attempt 3: success 804 frames, hearts 3.5
+  (accept-after 8: took the 804-frame line after 10 attempts (8 without improvement) - flagged for a later pass)
+  attempt 12: nav: the Left door did not open: Link is stuc (620 frames)
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  flagged l4_51_key for a later improvement pass (took the 804-frame line after 10 attempts (8 without improvement)); 21 flagged in flagged.json
+[l4_51_key] 804 frames, hearts 3.5 -> f30863 mode=05/00 L4 room=50 pos=(224,141) dir=2 hp=3.5/6 rup=41 sword=2 lag=5952 (total 30863 frames, 4283s wall)
+  attempt 1: success 405 frames, hearts 3.5
+  (accept-after 8: took the 405-frame line after 9 attempts (8 without improvement) - flagged for a later pass)
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  flagged l4_40 for a later improvement pass (took the 405-frame line after 9 attempts (8 without improvement)); 22 flagged in flagged.json
+[l4_40] 405 frames, hearts 3.5 -> f31268 mode=05/00 L4 room=40 pos=(120,205) dir=8 hp=3.5/6 rup=41 sword=2 lag=6050 (total 31268 frames, 4426s wall)
+  attempt 2: success 423 frames, hearts 3.5
+  attempt 3: success 416 frames, hearts 3.5
+  attempt 1: success 411 frames, hearts 3.5
+  converged: 3 of 4 scouts within 20 frames of 411 - taking it
+[l4_40_key] 411 frames, hearts 3.5 -> f31679 mode=05/00 L4 room=30 pos=(120,205) dir=8 hp=3.5/6 rup=41 sword=2 lag=6148 (total 31679 frames, 4437s wall)
+  attempt 2: success 366 frames, hearts 3.5
+  attempt 12: success 352 frames, hearts 3.5
+  (accept-after 8: took the 352-frame line after 17 attempts (8 without improvement) - flagged for a later pass)
+  attempt 20: success 341 frames, hearts 3.5
+  scout 1 lost its emulator (cannot read from timed out object)
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  flagged l4_31 for a later improvement pass (took the 352-frame line after 17 attempts (8 without improvement)); 23 flagged in flagged.json
+[l4_31] 341 frames, hearts 3.5 -> f32020 mode=05/00 L4 room=31 pos=(16,141) dir=1 hp=3.5/6 rup=41 sword=2 lag=6284 (total 32020 frames, 4594s wall)
+  attempt 3: timeout (3032 frames)
+  attempt 2: success 2992 frames, hearts 2.5
+  attempt 4: timeout (3031 frames)
+  attempt 1: success 3161 frames, hearts 3.5
+  attempt 6: success 1184 frames, hearts 3.5
+  attempt 5: timeout (2641 frames)
+  attempt 9: timeout (3030 frames)
+  attempt 8: timeout (2939 frames)
+  (accept-after 8: took the 1184-frame line after 13 attempts (8 without improvement) - flagged for a later pass)
+  scout 3 lost its emulator (cannot read from timed out object)
+  scout 3 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  attempt 12: timeout (3029 frames)
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  flagged l4_32 for a later improvement pass (took the 1184-frame line after 13 attempts (8 without improvement)); 24 flagged in flagged.json
+[l4_32] 1184 frames, hearts 3.5 -> f33204 mode=05/00 L4 room=32 pos=(16,141) dir=1 hp=3.5/6 rup=41 sword=2 lag=6420 (total 33204 frames, 10561s wall)
+  attempt 2: timeout (2523 frames)
+  attempt 3: timeout (2531 frames)
+  attempt 4: timeout (2530 frames)
+  attempt 1: timeout (2525 frames)
+  attempt 6: timeout (2530 frames)
+  attempt 5: timeout (2531 frames)
+  attempt 9: success 979 frames, hearts 3.5
+  attempt 7: timeout (2533 frames)
+  attempt 8: timeout (2527 frames)
+  attempt 10: timeout (2526 frames)
+  attempt 11: timeout (2522 frames)
+  attempt 13: timeout (2527 frames)
+  attempt 14: timeout (2524 frames)
+  (accept-after 8: took the 979-frame line after 15 attempts (8 without improvement) - flagged for a later pass)
+  scout 2: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  attempt 16: timeout (2527 frames)
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+  1 attempt(s) lost to a bridge reply that could not be read (6.2% of them); the emulators were kept
+  flagged l4_lad_st for a later improvement pass (took the 979-frame line after 15 attempts (8 without improvement)); 25 flagged in flagged.json
+[l4_lad_st] 979 frames, hearts 3.5 -> f34183 mode=09/09 L4 room=60 pos=(48,65) dir=4 hp=3.5/6 rup=41 sword=2 lag=6422 (total 34183 frames, 18147s wall)
+  attempt 3: success 908 frames, hearts 1.0
+  attempt 2: item (1751 frames)
+  attempt 1: success 1059 frames, hearts 2.0
+  attempt 5: success 1007 frames, hearts 2.0
+  attempt 8: item (1784 frames)
+  attempt 11: success 956 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 956 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 -' is not an answer to it: 'ok'  (befor); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 16: item (1784 frames)
+  1 attempt(s) lost to a bridge reply that could not be read (6.2% of them); the emulators were kept
+[l4_ladder] 956 frames, hearts 2.0 -> f35139 mode=05/00 L4 room=32 pos=(192,189) dir=4 hp=2.0/6 rup=41 sword=2 lag=6425 (total 35139 frames, 18483s wall)
+  attempt 3: success 397 frames, hearts 2.0
+  attempt 1: success 384 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 384 - taking it
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[l4_b31] 384 frames, hearts 2.0 -> f35523 mode=05/00 L4 room=31 pos=(208,141) dir=2 hp=2.0/6 rup=41 sword=2 lag=6561 (total 35523 frames, 18613s wall)
+  attempt 2: success 396 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 396 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (16.7% of them); the emulators were kept
+[l4_b30] 396 frames, hearts 2.0 -> f35919 mode=05/00 L4 room=30 pos=(224,141) dir=2 hp=2.0/6 rup=41 sword=2 lag=6698 (total 35919 frames, 18644s wall)
+  attempt 2: success 326 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 326 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'step 1 Left' is not an answer to it: 'ok'  (be); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 4: dash: timeout (730 frames)
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_20] 326 frames, hearts 2.0 -> f36245 mode=05/00 L4 room=20 pos=(120,205) dir=8 hp=2.0/6 rup=41 sword=2 lag=6795 (total 36245 frames, 18681s wall)
+  attempt 2: success 383 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 383 - taking it
+[l4_21] 383 frames, hearts 2.0 -> f36628 mode=05/00 L4 room=21 pos=(16,141) dir=1 hp=2.0/6 rup=41 sword=2 lag=6932 (total 36628 frames, 18702s wall)
+  attempt 2: success 710 frames, hearts 2.0
+  attempt 3: success 708 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 708 - taking it
+  attempt 4: success 707 frames, hearts 2.0
+[l4_11] 707 frames, hearts 2.0 -> f37335 mode=05/00 L4 room=11 pos=(120,189) dir=8 hp=2.0/6 rup=41 sword=2 lag=7029 (total 37335 frames, 18784s wall)
+  attempt 2: success 417 frames, hearts 2.0
+  attempt 3: success 415 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 415 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'  (bef); the attempt is lost, the scout is not  [1 so far this search]
+  attempt 4: success 414 frames, hearts 2.0
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_12r] 414 frames, hearts 2.0 -> f37749 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37749 frames, 18929s wall)
+  scout 1 lost its emulator (cannot read from timed out object)
+  attempt 4: success 2 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+  scout 1 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[l4_10] 2 frames, hearts 2.0 -> f37751 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37751 frames, 18932s wall)
+  attempt 3: success 2 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+  scout 1: unreadable bridge reply (the bridge's answer to 'state' is not an answer to it: 'ok'  (before: ); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_00] 2 frames, hearts 2.0 -> f37753 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37753 frames, 18932s wall)
+  attempt 3: success 2 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+  scout 0 lost its emulator (cannot read from timed out object)
+  scout 0 replaced with a fresh emulator; the search continues on 4 scout(s), 1 replacement(s) so far
+  1 scout emulator(s) died mid-search, 1 replaced; the search ran on 4 of 4, so the phase window was covered unevenly
+[l4_01] 2 frames, hearts 2.0 -> f37755 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37755 frames, 19055s wall)
+  attempt 3: success 2 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_02] 2 frames, hearts 2.0 -> f37757 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37757 frames, 19055s wall)
+  attempt 4: success 2 frames, hearts 2.0
+  converged: 3 of 4 scouts within 20 frames of 2 - taking it
+[l4_12] 2 frames, hearts 2.0 -> f37759 mode=05/00 L4 room=12 pos=(32,141) dir=1 hp=2.0/6 rup=44 sword=2 lag=7165 (total 37759 frames, 19055s wall)
+  attempt 2: success 640 frames, hearts 3.0
+  attempt 4: success 662 frames, hearts 4.0
+  converged: 3 of 4 scouts within 20 frames of 662 - taking it
+  scout 2: unreadable bridge reply (the bridge's answer to 'step 8 -' is not an answer to it: 'ok'  (befor); the attempt is lost, the scout is not  [1 so far this search]
+  1 attempt(s) lost to a bridge reply that could not be read (20.0% of them); the emulators were kept
+[l4_13] 662 frames, hearts 4.0 -> f38421 mode=05/00 L4 room=13 pos=(32,141) dir=1 hp=4.0/6 rup=44 sword=2 lag=7301 (total 38421 frames, 19196s wall)
+  gleeok is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 3: died (2612 frames)
+  attempt 4: died (2496 frames)
+  attempt 2: died (4095 frames)
+  attempt 1: died (3508 frames)
+  attempt 5: died (3049 frames)
+  attempt 8: died (1479 frames)
+  scout 3 lost its emulator (bridge connection lost at 13:24:58: EmuHawk exit code 1 (0x00000001); log /home/)
+  scout 0 lost its emulator (bridge connection lost at 13:24:58: EmuHawk exit code 1 (0x00000001); log /home/)
+  scout 1 lost its emulator (bridge connection lost at 13:24:58: EmuHawk exit code 1 (0x00000001); log /home/)
+  scout 2 lost its emulator (bridge connection lost at 13:24:59: EmuHawk exit code 1 (0x00000001); log /home/)
+  scout 0 could not be replaced: EmuHawk never connected to the bridge; see /home/cmayfield/code/games/
+  scout 0 is not coming back this search; it is done
+  scout 3 could not be replaced: EmuHawk never connected to the bridge; see /home/cmayfield/code/games/
+  scout 3 is not coming back this search; it is done
+  scout 1 could not be replaced: EmuHawk never connected to the bridge; see /home/cmayfield/code/games/
+  scout 1 is not coming back this search; it is done
+  scout 2 could not be replaced: EmuHawk never connected to the bridge; see /home/cmayfield/code/games/
+  scout 2 is not coming back this search; it is done
+  4 scout emulator(s) died mid-search, 0 replaced; the search ran on 0 of 4 for at least part of it, so the phase window was covered unevenly
+  no success; most common: 6x died @ room 13 L4
+Traceback (most recent call last):
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3164, in <module>
+    main()
+    ~~~~^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/fullgame.py", line 3143, in main
+    run.segment(name, factory, success, tries=tries, max_frames=3000)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cmayfield/code/games/aibeatszelda/src/zelda/runner.py", line 579, in segment
+    raise RuntimeError(f"segment {name} failed")
+RuntimeError: segment gleeok failed
+=== a segment genuinely failed; stopping (2026-10-02 13:25:59) ===

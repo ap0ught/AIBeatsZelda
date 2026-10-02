@@ -1,0 +1,10 @@
+=== attempt 1 (2026-10-01 10:41:42) ===
+resumed checkpoint '49_key': 6440 frames, f6440 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=3.0/3 rup=0 sword=1 lag=1395
+resuming after 16 segments
+  attempt 3: success 509 frames, hearts 3.0
+  attempt 1: over budget (509 frames)
+  attempt 2: over budget (509 frames)
+  attempt 8: over budget (509 frames)
+  attempt 5: over budget (508 frames)
+  attempt 7: over budget (505 frames)
+  attempt 6: over budget (502 frames)

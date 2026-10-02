@@ -1,0 +1,12 @@
+1461	start: 1463 frames, 3.0 hearts
+1656	ow_76: 195 frames, 3.0 hearts
+1828	ow_66: 172 frames, 3.0 hearts
+2115	ow_65: 287 frames, 3.0 hearts
+2467	ow_64: 352 frames, 3.0 hearts
+2816	ow_63: 349 frames, 3.0 hearts
+2977	ow_73: 161 frames, 3.0 hearts
+3157	ow_74: 180 frames, 3.0 hearts
+3462	enter_L3: 305 frames, 3.0 hearts
+3784	7c_left: 322 frames, 3.0 hearts
+4081	7b_key: 297 frames, 3.0 hearts
+4381	6b_up: 300 frames, 3.0 hearts

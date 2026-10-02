@@ -1,0 +1,610 @@
+=== attempt 1 (2026-09-30 01:21:08) ===
+  attempt 3: fail: tap_until(Start) gave up at f9610 mode=0 (1800 frames)
+  attempt 4: success 1463 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  trimmed 2 idle frames off start
+[start] 1463 frames, hearts 3.0 -> f1461 mode=05/00 L0 room=77 pos=(64,88) dir=4 hp=3.0/3 rup=0 sword=1 lag=127 (total 1461 frames, 25s wall)
+  attempt 2: success 195 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_76] 195 frames, hearts 3.0 -> f1656 mode=05/00 L0 room=76 pos=(240,141) dir=2 hp=3.0/3 rup=0 sword=1 lag=198 (total 1656 frames, 27s wall)
+  attempt 2: success 172 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_66] 172 frames, hearts 3.0 -> f1828 mode=05/00 L0 room=66 pos=(208,221) dir=8 hp=3.0/3 rup=0 sword=1 lag=250 (total 1828 frames, 28s wall)
+  attempt 4: success 298 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 287 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_65] 287 frames, hearts 3.0 -> f2115 mode=05/00 L0 room=65 pos=(240,189) dir=2 hp=3.0/3 rup=0 sword=1 lag=321 (total 2115 frames, 31s wall)
+  attempt 1: success 358 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_64] 358 frames, hearts 3.0 -> f2473 mode=05/00 L0 room=64 pos=(240,141) dir=2 hp=3.0/3 rup=1 sword=1 lag=392 (total 2473 frames, 35s wall)
+  attempt 2: success 303 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_63] 303 frames, hearts 3.0 -> f2776 mode=05/00 L0 room=63 pos=(240,141) dir=2 hp=3.0/3 rup=1 sword=1 lag=464 (total 2776 frames, 38s wall)
+  attempt 1: success 175 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 167 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_73] 167 frames, hearts 3.0 -> f2943 mode=05/00 L0 room=73 pos=(208,61) dir=4 hp=3.0/3 rup=1 sword=1 lag=514 (total 2943 frames, 40s wall)
+  attempt 2: success 180 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow_74] 180 frames, hearts 3.0 -> f3123 mode=05/00 L0 room=74 pos=(0,125) dir=1 hp=3.0/3 rup=1 sword=1 lag=585 (total 3123 frames, 41s wall)
+  attempt 2: success 304 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[enter_L3] 304 frames, hearts 3.0 -> f3427 mode=05/00 L3 room=7c pos=(120,205) dir=8 hp=3.0/3 rup=1 sword=1 lag=604 (total 3427 frames, 44s wall)
+  attempt 2: success 322 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[7c_left] 322 frames, hearts 3.0 -> f3749 mode=05/00 L3 room=7b pos=(224,141) dir=2 hp=3.0/3 rup=1 sword=1 lag=740 (total 3749 frames, 46s wall)
+  attempt 4: success 317 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[7b_key] 317 frames, hearts 3.0 -> f4066 mode=05/00 L3 room=6b pos=(120,205) dir=8 hp=3.0/3 rup=1 sword=1 lag=837 (total 4066 frames, 48s wall)
+  attempt 2: success 275 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: dash: timeout (722 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[6b_up] 275 frames, hearts 3.0 -> f4341 mode=05/00 L3 room=5b pos=(120,205) dir=8 hp=3.0/3 rup=1 sword=1 lag=934 (total 4341 frames, 67s wall)
+  attempt 4: success 896 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: success 712 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: over budget (708 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (712 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[5b_bombs] 712 frames, hearts 3.0 -> f5053 mode=05/00 L3 room=4b pos=(120,205) dir=8 hp=3.0/3 rup=1 sword=1 lag=1031 (total 5053 frames, 133s wall)
+  attempt 4: success 930 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (2027 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: over budget (2025 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (2030 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[4b_left] 930 frames, hearts 3.0 -> f5983 mode=05/00 L3 room=4a pos=(224,141) dir=2 hp=3.0/3 rup=1 sword=1 lag=1167 (total 5983 frames, 330s wall)
+  attempt 3: success 890 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[4a_bombs] 890 frames, hearts 2.5 -> f6873 mode=05/00 L3 room=49 pos=(224,141) dir=2 hp=2.5/3 rup=1 sword=1 lag=1303 (total 6873 frames, 338s wall)
+  attempt 2: nav: the Down door did not open: Link is stuc (182 frames)
+  attempt 1: success 382 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 5: success 356 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[49_key] 356 frames, hearts 2.5 -> f7229 mode=05/00 L3 room=59 pos=(120,77) dir=4 hp=2.5/3 rup=1 sword=1 lag=1396 (total 7229 frames, 342s wall)
+  attempt 2: success 1020 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 1230 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[59_fight] 1230 frames, hearts 2.5 -> f8459 mode=05/00 L3 room=69 pos=(120,77) dir=4 hp=2.5/3 rup=1 sword=1 lag=1489 (total 8459 frames, 538s wall)
+  attempt 2: success 145 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[69_stairs] 145 frames, hearts 2.5 -> f8604 mode=09/02 L3 room=0f pos=(208,141) dir=1 hp=2.5/3 rup=1 sword=1 lag=1495 (total 8604 frames, 566s wall)
+  attempt 2: success 839 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[cellar] 839 frames, hearts 2.5 -> f9443 mode=05/00 L3 room=69 pos=(96,141) dir=4 hp=2.5/3 rup=1 sword=1 lag=1500 (total 9443 frames, 583s wall)
+  attempt 4: success 283 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 276 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[69_up] 276 frames, hearts 2.5 -> f9719 mode=05/00 L3 room=59 pos=(120,189) dir=8 hp=2.5/3 rup=1 sword=1 lag=1619 (total 9719 frames, 588s wall)
+  attempt 1: success 252 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: success 249 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 241 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[59_up] 241 frames, hearts 2.5 -> f9960 mode=05/00 L3 room=49 pos=(120,205) dir=8 hp=2.5/3 rup=1 sword=1 lag=1716 (total 9960 frames, 589s wall)
+  attempt 1: success 330 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 327 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[49_right] 327 frames, hearts 2.5 -> f10287 mode=05/00 L3 room=4a pos=(16,141) dir=1 hp=2.5/3 rup=1 sword=1 lag=1852 (total 10287 frames, 593s wall)
+  attempt 1: success 372 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 361 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[4a_right] 361 frames, hearts 2.5 -> f10648 mode=05/00 L3 room=4b pos=(16,141) dir=1 hp=2.5/3 rup=1 sword=1 lag=1988 (total 10648 frames, 596s wall)
+  attempt 2: success 440 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[4b_right] 440 frames, hearts 2.5 -> f11088 mode=05/00 L3 room=4c pos=(16,141) dir=1 hp=2.5/3 rup=1 sword=1 lag=2124 (total 11088 frames, 605s wall)
+  attempt 3: success 505 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 502 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[4c_bomb] 502 frames, hearts 2.5 -> f11590 mode=05/00 L3 room=4d pos=(32,141) dir=1 hp=2.5/3 rup=1 sword=1 lag=2260 (total 11590 frames, 609s wall)
+  manhandla is a phase-locked fight: 4 scouts split 0-90 frames between them rather than all drawing from it
+  attempt 4: died (241 frames)
+  attempt 2: success 322 frames, hearts 3.5
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 5: timeout (681 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+  attempt 3: over budget (975 frames)
+  first success in hand - taking it (a boss success IS the win; see HEARTS_FREE)
+[manhandla] 322 frames, hearts 3.5 -> f11912 mode=05/00 L3 room=4d pos=(137,149) dir=1 hp=3.5/4 rup=1 sword=1 lag=2260 (total 11912 frames, 737s wall)
+  attempt 3: success 844 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[L3_done] 844 frames, hearts 4.0 -> f12756 mode=02/00 L0 room=3d pos=(120,149) dir=8 hp=4.0/4 rup=1 sword=1 lag=2366 (total 12756 frames, 741s wall)
+  attempt 3: success 160 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[warp_L3] 160 frames, hearts 4.0 -> f12916 mode=05/00 L0 room=74 pos=(128,125) dir=4 hp=4.0/4 rup=1 sword=1 lag=2376 (total 12916 frames, 742s wall)
+  attempt 1: success 220 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 209 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (212 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_73] 209 frames, hearts 4.0 -> f13125 mode=05/00 L0 room=73 pos=(240,133) dir=2 hp=4.0/4 rup=1 sword=1 lag=2447 (total 13125 frames, 744s wall)
+  attempt 3: success 178 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 166 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (175 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (170 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_63] 166 frames, hearts 4.0 -> f13291 mode=05/00 L0 room=63 pos=(208,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2499 (total 13291 frames, 745s wall)
+  attempt 1: success 186 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (186 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 178 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (178 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_64] 178 frames, hearts 4.0 -> f13469 mode=05/00 L0 room=64 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2570 (total 13469 frames, 746s wall)
+  attempt 2: success 312 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (332 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (324 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (315 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_65] 312 frames, hearts 4.0 -> f13781 mode=05/00 L0 room=65 pos=(0,189) dir=1 hp=4.0/4 rup=1 sword=1 lag=2641 (total 13781 frames, 749s wall)
+  attempt 2: success 368 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (376 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (376 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (368 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_66] 368 frames, hearts 4.0 -> f14149 mode=05/00 L0 room=66 pos=(0,173) dir=1 hp=4.0/4 rup=1 sword=1 lag=2712 (total 14149 frames, 752s wall)
+  attempt 1: success 346 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (357 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (351 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: over budget (346 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_67] 346 frames, hearts 4.0 -> f14495 mode=05/00 L0 room=67 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2783 (total 14495 frames, 755s wall)
+  attempt 2: success 334 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (342 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (342 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (334 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_68] 334 frames, hearts 4.0 -> f14829 mode=05/00 L0 room=68 pos=(0,157) dir=1 hp=4.0/4 rup=1 sword=1 lag=2854 (total 14829 frames, 758s wall)
+  attempt 2: success 192 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (202 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (192 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (197 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_58] 192 frames, hearts 4.0 -> f15021 mode=05/00 L0 room=58 pos=(48,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2906 (total 15021 frames, 759s wall)
+  attempt 2: success 254 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (258 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_48] 254 frames, hearts 4.0 -> f15275 mode=05/00 L0 room=48 pos=(112,221) dir=8 hp=4.0/4 rup=1 sword=1 lag=2958 (total 15275 frames, 761s wall)
+  attempt 1: success 202 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ow1_38] 202 frames, hearts 3.5 -> f15477 mode=05/00 L0 room=38 pos=(112,221) dir=8 hp=3.5/4 rup=1 sword=1 lag=3010 (total 15477 frames, 763s wall)
+  attempt 3: success 226 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 208 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_28] 208 frames, hearts 3.5 -> f15685 mode=05/00 L0 room=28 pos=(112,221) dir=8 hp=3.5/4 rup=1 sword=1 lag=3062 (total 15685 frames, 765s wall)
+  attempt 2: success 236 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_29] 236 frames, hearts 3.5 -> f15921 mode=05/00 L0 room=29 pos=(0,173) dir=1 hp=3.5/4 rup=1 sword=1 lag=3133 (total 15921 frames, 767s wall)
+  attempt 2: success 354 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_2a] 354 frames, hearts 2.5 -> f16275 mode=05/00 L0 room=2a pos=(0,173) dir=1 hp=2.5/4 rup=1 sword=1 lag=3204 (total 16275 frames, 769s wall)
+  attempt 2: success 288 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_2b] 288 frames, hearts 2.5 -> f16563 mode=05/00 L0 room=2b pos=(0,173) dir=1 hp=2.5/4 rup=1 sword=1 lag=3275 (total 16563 frames, 771s wall)
+  attempt 3: success 457 frames, hearts 2.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_2c] 457 frames, hearts 2.0 -> f17020 mode=05/00 L0 room=2c pos=(0,181) dir=1 hp=2.0/4 rup=1 sword=1 lag=3346 (total 17020 frames, 776s wall)
+  attempt 3: success 845 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 841 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[h2c_heart] 841 frames, hearts 2.5 -> f17861 mode=05/00 L0 room=2c pos=(144,157) dir=4 hp=2.5/5 rup=1 sword=1 lag=3405 (total 17861 frames, 784s wall)
+  attempt 3: success 257 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 256 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[h2c_2d] 256 frames, hearts 2.5 -> f18117 mode=05/00 L0 room=2d pos=(0,141) dir=1 hp=2.5/5 rup=1 sword=1 lag=3476 (total 18117 frames, 786s wall)
+  attempt 3: success 271 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 270 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_1d] 270 frames, hearts 2.5 -> f18387 mode=05/00 L0 room=1d pos=(120,221) dir=8 hp=2.5/5 rup=1 sword=1 lag=3530 (total 18387 frames, 788s wall)
+  attempt 2: success 252 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_1e] 252 frames, hearts 2.5 -> f18639 mode=05/00 L0 room=1e pos=(0,141) dir=1 hp=2.5/5 rup=1 sword=1 lag=3601 (total 18639 frames, 790s wall)
+  attempt 4: success 345 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_1f] 345 frames, hearts 2.5 -> f18984 mode=05/00 L0 room=1f pos=(0,165) dir=1 hp=2.5/5 rup=1 sword=1 lag=3672 (total 18984 frames, 793s wall)
+  attempt 3: success 412 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_0f] 412 frames, hearts 2.5 -> f19396 mode=05/00 L0 room=0f pos=(128,221) dir=8 hp=2.5/5 rup=1 sword=1 lag=3724 (total 19396 frames, 797s wall)
+  attempt 3: success 765 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 761 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 757 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[cave_0f] 757 frames, hearts 2.5 -> f20153 mode=05/00 L0 room=0f pos=(128,125) dir=4 hp=2.5/5 rup=101 sword=1 lag=3783 (total 20153 frames, 802s wall)
+  attempt 3: success 184 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 182 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 177 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_b1f] 177 frames, hearts 2.5 -> f20330 mode=05/00 L0 room=1f pos=(128,61) dir=4 hp=2.5/5 rup=101 sword=1 lag=3833 (total 20330 frames, 803s wall)
+  attempt 1: success 267 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 263 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_b1e] 263 frames, hearts 2.5 -> f20593 mode=05/00 L0 room=1e pos=(240,85) dir=2 hp=2.5/5 rup=101 sword=1 lag=3904 (total 20593 frames, 806s wall)
+  attempt 1: success 351 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 349 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[c0f_b1d] 349 frames, hearts 2.5 -> f20942 mode=05/00 L0 room=1d pos=(240,141) dir=2 hp=2.5/5 rup=101 sword=1 lag=3975 (total 20942 frames, 809s wall)
+  attempt 3: success 209 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 208 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[cdl_0d] 208 frames, hearts 2.5 -> f21150 mode=05/00 L0 room=0d pos=(208,221) dir=8 hp=2.5/5 rup=101 sword=1 lag=4027 (total 21150 frames, 811s wall)
+  attempt 3: success 368 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[cdl_0c] 368 frames, hearts 2.5 -> f21518 mode=05/00 L0 room=0c pos=(240,157) dir=2 hp=2.5/5 rup=101 sword=1 lag=4098 (total 21518 frames, 814s wall)
+  attempt 2: success 474 frames, hearts 2.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 530 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[buy_candle] 530 frames, hearts 5.0 -> f22048 mode=0b/00 L0 room=0c pos=(152,157) dir=8 hp=5.0/5 rup=101 sword=1 lag=4127 (total 22048 frames, 818s wall)
+  attempt 3: success 310 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[candle_leave] 310 frames, hearts 5.0 -> f22358 mode=05/00 L0 room=0c pos=(128,91) dir=4 hp=5.0/5 rup=41 sword=1 lag=4157 (total 22358 frames, 820s wall)
+  attempt 3: success 309 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 308 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[cdl_1c] 308 frames, hearts 5.0 -> f22666 mode=05/00 L0 room=1c pos=(80,61) dir=4 hp=5.0/5 rup=41 sword=1 lag=4207 (total 22666 frames, 823s wall)
+  attempt 3: success 242 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 235 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 224 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_1b] 224 frames, hearts 5.0 -> f22890 mode=05/00 L0 room=1b pos=(240,125) dir=2 hp=5.0/5 rup=41 sword=1 lag=4278 (total 22890 frames, 824s wall)
+  attempt 2: success 352 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_1a] 352 frames, hearts 5.0 -> f23242 mode=05/00 L0 room=1a pos=(240,141) dir=2 hp=5.0/5 rup=41 sword=1 lag=4349 (total 23242 frames, 827s wall)
+  attempt 2: success 213 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_0a] 213 frames, hearts 5.0 -> f23455 mode=05/00 L0 room=0a pos=(208,221) dir=8 hp=5.0/5 rup=41 sword=1 lag=4401 (total 23455 frames, 829s wall)
+  attempt 3: approach: died (493 frames)
+  attempt 2: approach: died (633 frames)
+  attempt 4: approach: died (734 frames)
+  attempt 1: approach: died (771 frames)
+  attempt 8: approach: died (594 frames)
+  attempt 6: approach: died (980 frames)
+  attempt 7: approach: died (870 frames)
+  attempt 5: success 2079 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 9: approach: died (841 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 11: approach: died (888 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 10: approach: died (1536 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[white_sword] 2079 frames, hearts 5.0 -> f25534 mode=05/00 L0 room=0a pos=(32,91) dir=4 hp=5.0/5 rup=41 sword=2 lag=4460 (total 25534 frames, 905s wall)
+  attempt 2: success 369 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w00_1a] 369 frames, hearts 5.0 -> f25903 mode=05/00 L0 room=1a pos=(208,61) dir=4 hp=5.0/5 rup=41 sword=2 lag=4510 (total 25903 frames, 908s wall)
+  attempt 3: success 442 frames, hearts 4.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 441 frames, hearts 4.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[ws_19] 441 frames, hearts 4.5 -> f26344 mode=05/00 L0 room=19 pos=(240,149) dir=2 hp=4.5/5 rup=41 sword=2 lag=4581 (total 26344 frames, 911s wall)
+  attempt 3: success 339 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w04_18] 339 frames, hearts 4.0 -> f26683 mode=05/00 L0 room=18 pos=(240,157) dir=2 hp=4.0/5 rup=41 sword=2 lag=4652 (total 26683 frames, 915s wall)
+  attempt 3: success 338 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 311 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w05_17] 311 frames, hearts 4.0 -> f26994 mode=05/00 L0 room=17 pos=(240,141) dir=2 hp=4.0/5 rup=41 sword=2 lag=4723 (total 26994 frames, 918s wall)
+  attempt 2: success 225 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w06_27] 225 frames, hearts 4.0 -> f27219 mode=05/00 L0 room=27 pos=(128,61) dir=4 hp=4.0/5 rup=41 sword=2 lag=4773 (total 27219 frames, 920s wall)
+  attempt 3: success 273 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: success 260 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 252 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w07_28] 252 frames, hearts 4.0 -> f27471 mode=05/00 L0 room=28 pos=(0,141) dir=1 hp=4.0/5 rup=41 sword=2 lag=4844 (total 27471 frames, 922s wall)
+  attempt 1: success 242 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 231 frames, hearts 4.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w08_38] 231 frames, hearts 4.0 -> f27702 mode=05/00 L0 room=38 pos=(112,61) dir=4 hp=4.0/5 rup=41 sword=2 lag=4894 (total 27702 frames, 924s wall)
+  attempt 2: success 272 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w09_48] 272 frames, hearts 5.0 -> f27974 mode=05/00 L0 room=48 pos=(112,61) dir=4 hp=5.0/5 rup=41 sword=2 lag=4944 (total 27974 frames, 927s wall)
+  attempt 2: success 251 frames, hearts 5.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w10_47] 251 frames, hearts 5.0 -> f28225 mode=05/00 L0 room=47 pos=(240,141) dir=2 hp=5.0/5 rup=41 sword=2 lag=5015 (total 28225 frames, 930s wall)
+  attempt 3: success 796 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 794 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[h47_heart] 794 frames, hearts 5.5 -> f29019 mode=05/00 L0 room=47 pos=(176,157) dir=4 hp=5.5/6 rup=41 sword=2 lag=5074 (total 29019 frames, 937s wall)
+  attempt 2: success 239 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w11_46] 239 frames, hearts 5.5 -> f29258 mode=05/00 L0 room=46 pos=(240,157) dir=2 hp=5.5/6 rup=41 sword=2 lag=5145 (total 29258 frames, 939s wall)
+  attempt 3: success 235 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: success 225 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w12_56] 225 frames, hearts 5.5 -> f29483 mode=05/00 L0 room=56 pos=(128,61) dir=4 hp=5.5/6 rup=41 sword=2 lag=5195 (total 29483 frames, 940s wall)
+  attempt 2: success 289 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4w13_55] 289 frames, hearts 5.5 -> f29772 mode=05/00 L0 room=55 pos=(240,141) dir=2 hp=5.5/6 rup=41 sword=2 lag=5266 (total 29772 frames, 943s wall)
+  attempt 3: success 271 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 267 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_sail] 267 frames, hearts 5.5 -> f30039 mode=05/00 L0 room=45 pos=(128,221) dir=8 hp=5.5/6 rup=41 sword=2 lag=5318 (total 30039 frames, 945s wall)
+  attempt 3: success 274 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 270 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[enter_L4] 270 frames, hearts 5.5 -> f30309 mode=05/00 L4 room=71 pos=(120,205) dir=8 hp=5.5/6 rup=41 sword=2 lag=5337 (total 30309 frames, 947s wall)
+  attempt 2: success 322 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_70] 322 frames, hearts 5.5 -> f30631 mode=05/00 L4 room=70 pos=(224,141) dir=2 hp=5.5/6 rup=41 sword=2 lag=5473 (total 30631 frames, 949s wall)
+  attempt 4: success 628 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_70_key] 628 frames, hearts 5.5 -> f31259 mode=05/00 L4 room=71 pos=(16,141) dir=1 hp=5.5/6 rup=41 sword=2 lag=5609 (total 31259 frames, 982s wall)
+  attempt 2: success 284 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_61] 284 frames, hearts 5.5 -> f31543 mode=05/00 L4 room=61 pos=(120,205) dir=8 hp=5.5/6 rup=41 sword=2 lag=5706 (total 31543 frames, 984s wall)
+  attempt 1: success 274 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_51] 274 frames, hearts 5.5 -> f31817 mode=05/00 L4 room=51 pos=(120,205) dir=8 hp=5.5/6 rup=41 sword=2 lag=5803 (total 31817 frames, 988s wall)
+  attempt 3: success 838 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 763 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: success 727 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_51_key] 727 frames, hearts 5.5 -> f32544 mode=05/00 L4 room=50 pos=(224,141) dir=2 hp=5.5/6 rup=41 sword=2 lag=5940 (total 32544 frames, 1022s wall)
+  attempt 2: nav: no path to the Up door from (128,101) ev (345 frames)
+  attempt 1: success 494 frames, hearts 3.0
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: success 568 frames, hearts 3.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 5: success 571 frames, hearts 4.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: success 745 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_40] 745 frames, hearts 5.5 -> f33289 mode=05/00 L4 room=40 pos=(120,205) dir=8 hp=5.5/6 rup=41 sword=2 lag=6038 (total 33289 frames, 1038s wall)
+  attempt 3: success 546 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_40_key] 546 frames, hearts 5.5 -> f33835 mode=05/00 L4 room=30 pos=(120,205) dir=8 hp=5.5/6 rup=41 sword=2 lag=6136 (total 33835 frames, 1042s wall)
+  attempt 3: success 404 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 2: success 391 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: success 358 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_31] 358 frames, hearts 5.5 -> f34193 mode=05/00 L4 room=31 pos=(16,141) dir=1 hp=5.5/6 rup=41 sword=2 lag=6272 (total 34193 frames, 1046s wall)
+  attempt 2: success 1648 frames, hearts 5.5
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 4: over budget (2317 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 3: over budget (2318 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+  attempt 1: over budget (2316 frames)
+  first success in hand - taking it (JUST_GET_THROUGH: not searching for a better line)
+[l4_32] 1648 frames, hearts 5.5 -> f35841 mode=05/00 L4 room=32 pos=(16,141) dir=1 hp=5.5/6 rup=41 sword=2 lag=6408 (total 35841 frames, 1350s wall)
