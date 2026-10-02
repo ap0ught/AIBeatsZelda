@@ -296,9 +296,33 @@ local function tohex(arr)
   return table.concat(out)
 end
 
+-- Write the whole line, or as much of it as the socket will take.
+--
+-- LuaSocket's send() returns the NUMBER OF BYTES IT WROTE, and this function used to throw that
+-- away. A short write is not a hypothetical here: it leaves the tail of a reply sitting in the socket,
+-- and the tail is read as the answer to the NEXT command - which is what the run's log shows, twice,
+-- on the same night the check that names it was added:
+--
+--   the bridge's answer to 'step 12 -' is not an answer to it: 'ok'
+--   the bridge's answer to 'ram 847 12' is not an answer to it: 'ok'
+--
+-- 'ok' is what load, mload, mfree, phase and attempt answer, and a fight is a storm of mload/mfree, so
+-- a reply that never arrived leaves the next command reading 'ok'. It is the same class of damage as
+-- a send that writes NOTHING, which is the other thing this loop cannot fix - that one leaves the
+-- Python side blocked on readline until its own 120s timeout, which is the
+-- "cannot read from timed out object" in the same log - so `break` on a nil return is the honest end
+-- of it, not a recovery.
+--
+-- On loopback with a 5s timeout and a reply of a few hundred bytes this loop runs exactly once, so the
+-- only behaviour it changes is the case that was broken.
 local function send(line)
   conn:settimeout(5)
-  conn:send(line .. "\n")
+  local payload, from = line .. "\n", 1
+  while from <= #payload do
+    local n = conn:send(payload, from)
+    if not n then break end          -- timed out or the socket is gone; nothing more to try
+    from = from + n
+  end
   conn:settimeout(0.05)
 end
 

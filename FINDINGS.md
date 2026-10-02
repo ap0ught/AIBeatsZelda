@@ -929,11 +929,30 @@ thread. Not `msave`: `memorysavestate.savecorestate()` answers with a GUID
 (`17f1db10-c491-4f26-b6f7-ffdf264c4608`, 36 characters, no newline), measured, and the stream stayed
 in step across two of them. Not the socket in general: **65,149 commands against a live bridge on one
 thread over 900s, zero malformed** (`testing/probe_bridge_replies.py`, first version - a synthetic
-mix of `state`/`step`/`ram`). So the trigger is something about the run rather than about the socket,
-and it is still open. `bridge.lua`'s `send()` is the obvious suspect and it is written as if `conn:send`
-cannot fail: it sets a 5s timeout, calls `conn:send(line .. "\n")` and **ignores the return value**,
-which is the number of bytes actually written. A partial write of a `state` line is precisely a line
-truncated mid-token. That is a mechanism, not a measurement, and it is labelled as one.
+mix of `state`/`step`/`ram`). So the trigger is something about the run rather than about the socket.
+
+**Then the check caught two, live, and named both sides.** Within four minutes of the run picking the
+check up:
+
+```
+scout 1: the bridge's answer to 'step 12 -' is not an answer to it: 'ok'
+scout 3: the bridge's answer to 'step 12 -' is not an answer to it: 'ok'
+```
+
+`'ok'` is what `load`, `mload`, `mfree`, `phase` and `attempt` answer, and a fight is a storm of
+`mload`/`mfree` - `static_slots` alone does msave / step 10 / mload / mfree and `plan_fight` does it
+per branch. So what these two say is narrower and more useful than "a reply was garbled": **a reply
+that should have arrived did not, and the next command read it.** That is the same damage as the
+`ValueError` and the same damage as the 115 `cannot read from timed out object` in one search - one
+unanswered command - seen from three directions.
+
+**The change, and what it is not.** `bridge.lua`'s `send()` set a 5s timeout, called
+`conn:send(line .. "\n")` and **threw away the return value**, which in LuaSocket is the number of
+bytes actually written. It now loops until the whole line is out. That is a mechanism-based fix and it
+is labelled as one: it removes short writes, it does not explain what caused one, and it cannot fix a
+send that writes nothing at all - that leaves Python blocked on `readline` until its own 120s timeout,
+which is the other symptom in the same log. On loopback with a 5s timeout and a reply of a few hundred
+bytes the loop runs exactly once, so the only behaviour it changes is the case that was broken.
 
 **What is fixed is the invisibility, and the one place it was fatal.** `BizHawk.cmd` now checks the
 reply against the command it sent and raises `BadReply` naming both - `the bridge's answer to 'state'
